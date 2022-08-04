@@ -8,8 +8,6 @@ This tutorial takes a *comparative approach* by showing the Java syntax next to 
 
 By the end of this tutorial, you will not be a master at Java. To gain fluency in a language you need to practice and practice takes time. Our hope is that this guide will make practicing easier and act as a reference for when you are trying to write Java. You will become familiar with looking up "How do I do X in Java", but after practicing for long enough you will start to think in Java instead of your previous language.
 
-If you would like to request examples be added for another language or you spot a bug, please add a language to [this issue](https://github.com/cse12x/java-tutorial/issues/1) or vote on one someone else has suggested.
-
 ## Other Resources
 * [Learn X in Y minutes (where X=Java)](https://learnxinyminutes.com/docs/java/)
 

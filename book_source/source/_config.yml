@@ -25,12 +25,12 @@ html:
   use_repository_button: true
   use_issues_button: true
   # Kind of a hack, but I have to hardcode the GitHub URL to get this to work :(
-  extra_navbar: '<a href="https://cse12x.github.io/java-tutorail/acknowledgements.html">Acknowledgements</a><br/>Powered by <a href="https://jupyterbook.org">Jupyter Book</a>'
-  extra_footer: 'Have feedback or spotted a bug? Please make a <a href="https://github.com/cse12x/java-tutorial/issues">GitHub issue</a> or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!'
+  extra_navbar: '<a href="https://hschafer.github.io/Intro-ML/acknowledgements.html">Acknowledgements</a><br/>Powered by <a href="https://jupyterbook.org">Jupyter Book</a>'
+  extra_footer: 'Have feedback or spotted a bug? Please make a <a href="https://github.com/hschafer/Intro-ML/issues">GitHub issue</a> or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!'
 
   comments:
     utterances:
-      repo: "cse12x/java-tutorail"
+      repo: "hschafer/Intro-ML"
       issue-term: "pathname"
       label: "💬 Comments"
       theme: "preferred-color-scheme"
@@ -43,7 +43,7 @@ launch_buttons:
   colab_url: https://colab.research.google.com/
 
 repository:
-  url: https://github.com/cse12x/java-tutorial
+  url: https://github.com/hschafer/Intro-ML
   path_to_book: book_source/source/
   branch: main
 

@@ -1,10 +1,10 @@
-# CSE 122: CSE 122 Java Tutorial
+# CSE/STAT 416: Introduction to Machine Learning
 
-[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://cse12x.github.io/java-tutorial/)
+[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://hschafer.github.io/Intro-ML/)
 
 Author: [Hunter Schafer](https://homes.cs.washington.edu/~hschafer/)
 
-Contributors: Sumant Guha 
+Contributors: Sumant Guha
 
 This repository maintains the source code for our Java Tutorial. This tutorial is designed for students who already have programming experience
 in some text-based language (e.g., Python) but have not yet experienced Java.
@@ -12,7 +12,7 @@ in some text-based language (e.g., Python) but have not yet experienced Java.
 ## Feedback or Spot a Bug?
 
 If you have any feedback about the book text or structure, or you spot a bug somewhere in the book, please let us know! The best way to contact us
-is to make an [GitHub Issue](https://github.com/cse12x/java-tutorial/issues) or to contact [Hunter Schafer](https://homes.cs.washington.edu/~hschafer/) directly.
+is to make an [GitHub Issue](https://github.com/hschafer/Intro-ML/issues) or to contact [Hunter Schafer](https://homes.cs.washington.edu/~hschafer/) directly.
 
 ## Contributing
 
@@ -23,8 +23,8 @@ This book is built with the [Sphinx Book Theme](https://sphinx-book-theme.readth
 Create a virtual environment with Python 3.9 or higher. For example, if you use Anaconda you can write:
 
 ```bash
-conda create --name 12x-java-tutorial python=3.9
-conda activate 12x-java-tutorial
+conda create --name 416-book python=3.9
+conda activate 416-book
 ```
 
 Install the book theme dependencies. All of these are libraries used for themes/templating in the book. `Sphinx` is the documentation templating tool, `sphinx-book-theme` is the specific book theme, `myst-nb` changes the Sphinx langauge from rST to MyST (more similar to Markdown), and `sphinx-thebe` allows interactive notebooks in the browser.
