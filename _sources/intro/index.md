@@ -4,6 +4,8 @@ Welcome! 🎉 !!!
 
 If you're here, you've probably at least heard the term "machine learning" or "artificial intelligence" somewhere on the internet, the news, or somewhere in your day-to-day life. For better or for worse, machine learning has been an incredible force in shaping the modern world. You would be hard pressed to use any piece of modern technology (including any website) without the influence of machine learning powering some (most?) of your interactions.
 
+Before outlining what this book is and how it's different than other books, let's look at an example to try to get a better understanding of what this "machine learning" thing means.
+
 ## Machine Learning in the Wild
 
 We'll come back and formally define what machine learning is and the techniques to implement it. For now, let's just use the colloquial definition that *machine learning* is the tools and techniques that let a computer make predictions about the future given past data. This is a good enough approximation for us to begin to appreciate where this is used in our day-to-day tools.
