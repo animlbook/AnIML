@@ -1,0 +1,751 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction &#8212; &lt;b&gt;&lt;i&gt;AnIML&lt;/i&gt;&lt;/b&gt;&lt;br/&gt; Another Introduction to Machine Learning</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "hschafer/Intro-ML");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "preferred-color-scheme");
+    script.setAttribute("label", "💬 Comments");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Printing and Comments" href="../printing.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title"><b><i>AnIML</i></b><br/> Another Introduction to Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../printing.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Printing and Comments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../variables_expressions.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Variables, Types, Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../if_statements.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   If/Else Statements
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../loops.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Loops
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../strings.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Strings
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../methods.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../io_files.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Files and I/O
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../arrays.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Arrays
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            <a href="https://hschafer.github.io/Intro-ML/acknowledgements.html">Acknowledgements</a><br/>Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/hschafer/Intro-ML"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/hschafer/Intro-ML/issues/new?title=Issue%20on%20page%20%2Fintro/index.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/hschafer/Intro-ML/edit/main/book_source/source/intro/index.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/intro/index.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#machine-learning-in-the-wild">
+   Machine Learning in the Wild
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-learning-machine-learning-matters">
+   Why Learning Machine Learning Matters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-this-book">
+   What is this Book?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#our-values">
+     Our Values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-learning-works">
+     How Learning Works
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-to-machine-learning">
+   Introduction to Machine Learning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview-of-book">
+   Overview of Book
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#case-studies">
+     Case Studies
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#topics">
+     Topics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1><i class="fas fa-hand-sparkles fa-fw"></i> Introduction</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#machine-learning-in-the-wild">
+   Machine Learning in the Wild
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-learning-machine-learning-matters">
+   Why Learning Machine Learning Matters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-this-book">
+   What is this Book?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#our-values">
+     Our Values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-learning-works">
+     How Learning Works
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-to-machine-learning">
+   Introduction to Machine Learning
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview-of-book">
+   Overview of Book
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#case-studies">
+     Case Studies
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#topics">
+     Topics
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-hand-sparkles-fa-fw-i-introduction">
+<h1><i class="fas fa-hand-sparkles fa-fw"></i> Introduction<a class="headerlink" href="#i-class-fas-fa-hand-sparkles-fa-fw-i-introduction" title="Permalink to this headline">#</a></h1>
+<p>Welcome! 🎉 !!!</p>
+<p>If you’re here, you’ve probably at least heard the term “machine learning” or “artificial intelligence” somewhere on the internet, the news, or somewhere in your day-to-day life. For better or for worse, machine learning has been an incredible force in shaping the modern world. You would be hard pressed to use any piece of modern technology (including any website) without the influence of machine learning powering some (most?) of your interactions.</p>
+<section id="machine-learning-in-the-wild">
+<h2>Machine Learning in the Wild<a class="headerlink" href="#machine-learning-in-the-wild" title="Permalink to this headline">#</a></h2>
+<p>We’ll come back and formally define what machine learning is and the techniques to implement it. For now, let’s just use the colloquial definition that <em>machine learning</em> is the tools and techniques that let a computer make predictions about the future given past data. This is a good enough approximation for us to begin to appreciate where this is used in our day-to-day tools.</p>
+<p>Consider Netflix, the popular streaming platform for movies and TV shows. Just looking at their home page, where might you imagine all of the different places they might be using machine learning to power their website? Take a minute and try to list off places you think it might show up behind the scenes before expanding the box below.</p>
+<p><img alt="A screenshot of the Netflix home page showing the menu, a banner ad for the show &quot;Never Have I Ever&quot; and a list of recommended TV shows" src="../_images/netflix_home.png" /></p>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Where might there be Machine Learning in Netflix?</p>
+<p>Here are just a few of the ones we can think of at the top of our head, and almost all of these have to do with <strong>recommendation</strong>. Netflix uses computers to decide, based on your past viewing history, which shows it should recommend to make you more likely to watch the shows they recommend. Here are just a few places they shape their recommendations to you:</p>
+<ul>
+<li><p>Which show to show in the banner position (in the screenshot about it is “Never Have I Ever”)</p></li>
+<li><p>Which shows to list in the categories (e.g., “TV Shows”) below the banner</p></li>
+<li><p>Which categories to show you in the first place. If you like action movies, it will likely show you an action category.</p></li>
+<li><p>Even once they decide to recommend a show (e.g., “Stranger Things”), they also use machine learning to decide which cover art they should use that would make you more likely to watch that show.</p>
+<p><img alt="Various album arts in different styles for the show &quot;Stranger Things&quot;" src="../_images/netflix_stranger_things.png" /></p>
+</li>
+</ul>
+<p>And there are so many more that we might not even know about! There are likely even algorithms behind the scenes helping Netflix decide which shows to invest in and even create in the future!</p>
+</div>
+</section>
+<section id="why-learning-machine-learning-matters">
+<h2>Why Learning Machine Learning Matters<a class="headerlink" href="#why-learning-machine-learning-matters" title="Permalink to this headline">#</a></h2>
+<p>And all of this is just for one site used for watching TV! If there is so much going on behind the scenes there, imagine all of the ways it can be used in life-changing applications used in our society.</p>
+<p>Machine Learning has amazing power to make applications from ones that are fun (<a class="reference external" href="https://www.youtube.com/watch?v=Y_NvR5dIaOY">teaching a computer to make pasta</a>) to ones that can be used for great social good (<a class="reference external" href="https://www.youtube.com/watch?v=Y_NvR5dIaOY">detecting ear infections with a smartphone app</a>).</p>
+<p>But as the maxim of every superhero movie says, “with great power comes great responsibility.” These machine learning tools are also used in incredibly high-stakes applications such as the criminal justice system, <a class="reference external" href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">where they have been found to produce biased outcomes</a>. And what’s more, they are being used increasingly in more and more domains such as our elections, national defense, health, and transportation.</p>
+<p>Without being informed about what these models are doing and how they work, we have no hope of being able to assess and critique where we should and <em>should not</em> be using them. Our hope in this book is that we can show you the awesome potential of these systems and how you to build them well. At the same time, we want you to be considering the serious ramifications of automation that these models afford and how to avoid some dangerous pitfalls that can end up harming people.</p>
+<p>The remaining part of this chapter is broken into 3 parts. Before we give a broad overview of what ML is and the things you will see in this book at the end of this chapter, we we want to establish some of the values we are bringing in as authors of this book and how to effectively learn from this book.</p>
+</section>
+<section id="what-is-this-book">
+<h2>What is this Book?<a class="headerlink" href="#what-is-this-book" title="Permalink to this headline">#</a></h2>
+<section id="our-values">
+<h3>Our Values<a class="headerlink" href="#our-values" title="Permalink to this headline">#</a></h3>
+<p>Our values determine what we prioritize in structure and content. This is not to say these are the only things that should be valued, but these our the ones we use as a guiding principle for this book.</p>
+<p>First, <strong>it is critical that everyone understands how machine learning is used in our society</strong>. We’ve already highlighted why we think everyone learning this is important, but wanted to write it down as a core value.</p>
+<p>We intentionally used a pretty vague word there: “understand”. To understand something can mean different things to different people depending on their goals and where they are in their educational journey. We can’t determine the things you will get out of this book (we’ll talk in a bit about how learning works), but the examples and applications we show try to hit a wide range of possibilities to give you ideas of what these systems can do and how they work internally.</p>
+<p>Since there are so many concepts in ML and places they can be applied, we can’t feasibly show them all. If we leave out a concept or application, it’s not because it isn’t important! Instead, it’s almost always a matter of trying to use an example that’s easier for a broader audience to understand.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>1. See Carol Dweck’s <em>growth mindsets</em></p>
+</aside>
+<p>Second, <strong>anyone can learn machine learning!</strong> While this is true for any topic (1), it’s important to highlight in the case of machine learning. ML is notoriously seen as a difficult topic to master due to a traditional focus on advanced mathematical details and proofs. While those ideas are important for an expert in machine learning to know, they aren’t necessary for forming an intuition for the key ideas of ML. So this book is not going to go rigorously into the mathematics behind ML, but instead tries to make the ideas intuitive and show you how to apply them.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>2. We do rely on a base-level understanding of probability and a willingness to learn new notation and concepts.</p>
+</aside>
+<p>This does not mean we won’t use math at all! While we try to minimize pre-requisite knowledge, we still require some (2).  Mathematical notation can be very effective for communication and we use it frequently to communicate more precisely/effectively.</p>
+<p>These two values hopefully give you a good idea of our approach for how we teach machine learning to a broad audience. If this does not sound like the book that meets what you are hoping to learn (e.g., you want a much more rigorous mathematical discussion of ML or proofs behind the techniques), we recommend some other books that are fantastic in those spaces.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://web.stanford.edu/~hastie/ElemStatLearn/">The Elements of Statistical Learning</a>, Trevor Hastie, Robert Tibshirani, Jerome Friedman.</p></li>
+<li><p><a class="reference external" href="https://www.cs.ubc.ca/~murphyk/MLbook/">Machine Learning: A Probabilistic Perspective</a>, Kevin Murphy</p></li>
+<li><p><a class="reference external" href="https://cs.nyu.edu/~mohri/mlbook/">Foundations of Machine Learning</a>, Mehryar Mohri, Afshin Rostamizadeh, and Ameet Talwalkar</p></li>
+</ul>
+</section>
+<section id="how-learning-works">
+<h3>How Learning Works<a class="headerlink" href="#how-learning-works" title="Permalink to this headline">#</a></h3>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>3. This book is fantastic! I wish I read it while I was in college!</p>
+</aside>
+<p>Learning is a complex process that whole fields of research focus on learning how learning works. The research of effective learning was summarized very well in <a class="reference external" href="https://www.retrievalpractice.org/make-it-stick">Make it Stick</a> by Peter C. Brown, Henry L. Roediger III, and Mark A. McDaniel (3).</p>
+<p>The book outlines two very popular, but <strong>ineffective</strong>, learning strategies:</p>
+<ul class="simple">
+<li><p><em>Re-reading</em> the same text multiple times until you “get it”.</p></li>
+<li><p><em>Massed practice</em>, or practicing the same skill/concept over and over until you get it right. This is a tendency many people have when cramming for something like a test.</p></li>
+</ul>
+<p>Both of these strategies are popular because they make you <em>feel</em> like you are making progress. However, there is little evidence that they are actually effective strategies for longer-term retention or transfer of knowledge.</p>
+<p>It turns out that learning effectively is hard work and will challenge you throughout the process; often if a strategy feels easy, that might be a good sign it’s not effective. In “Make it Stick”, they argue the most important thing to learning effectively is being an active participant in the process. When you are taking charge of your learning, you will face many setbacks; you shouldn’t perceive those as failures, but instead as areas to grow. “Make it Stick” argues that active learning involves three key steps:</p>
+<ul>
+<li><p><strong>Practice retrieving new learning from memory</strong>. As you are reading, constantly pause and reflect on the new things you have read. Quiz yourself on the new content to make sure you understood it the first time around. Spend time <strong>generating</strong> knowledge by trying to answer questions on your own before looking at the answer. <strong>Elaborate</strong> on the concepts you are learning as if you were describing them to someone else; this forces you to summarize what you learned and synthesize it with your past knowledge.</p></li>
+<li><p><strong>Spaced repetition is incredibly important</strong>. Learning a concept isn’t a “one-then-done” ordeal. Effectively using what you learned requires retrieving information from memory. One of the best ways to practice this retrieval is to increasingly space out the times in which you test retrieving the information (e.g., 1 day, 1 week, 1 month, etc.).</p>
+<p>A great tool for managing this spacing is <a class="reference external" href="https://apps.ankiweb.net/">Anki</a>. Anki is a flashcard app that has a built-in features for spaced-repetition; it gives you a challenge to master a certain number of cards a day and spaces out when you see certain cards based on that mastery.</p>
+</li>
+<li><aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>4. See <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/8084699/">this study</a> about the effects of mixed-practice on professional baseball players.</p>
+</aside>
+<p><strong>Interleaving your practice</strong>. Instead of practicing all the concepts until mastery for Chapter 1 before moving to Chapter 2, you should mix it up and test them together. Retrieving knowledge in real life rarely has a context like “I’m studying for Chapter 1 right now, so I only need to think of Chapter 1 things”. In reality, you will need to practice bringing up any subset of knowledge. Therefore, your practice should reflect that goal if you want to see improvements of retrieval in realistic contexts (4).</p>
+</li>
+</ul>
+<p>When learning about ML in our book, we recommend that you employ these three study tips. You should be building up meaningful notes, reflecting what you’ve learned and relating it to past concepts, testing yourself regularly, and spacing-out and mixing-up your practice. We highly recommend (would require it if we could) using a tool like Anki to help you test yourself on concepts. It’s rare that we care about a word-for-word definition of a term or formula, but instead care about the intuition and understanding that comes from being familiar with that concept. Don’t penalize yourself when studying for messing up a single word as long as you can assess that you have understood that concept (don’t worry, it will always come back later in Anki).</p>
+</section>
+</section>
+<section id="introduction-to-machine-learning">
+<h2>Introduction to Machine Learning<a class="headerlink" href="#introduction-to-machine-learning" title="Permalink to this headline">#</a></h2>
+<p>One of the most general, albeit pretty abstract, definitions of <strong>machine learning</strong> is one of the most cited ones:</p>
+<blockquote class="epigraph">
+<div><p>A computer program is said to learn from experience <strong>E</strong> with respect to some class of tasks <strong>T</strong> and performance measure <strong>P</strong> if its performance at tasks in <strong>T</strong>, as measured by <strong>P</strong>, improves with experience <strong>E</strong>.</p>
+<p class="attribution">—Tom M. Mitchell</p>
+</div></blockquote>
+<figure class="margin align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/ml-steps.png"><img alt="A visual pipeline showing &quot;Data&quot; to &quot;ML Method&quot; to &quot;Intelligence&quot;" src="../_images/ml-steps.png" style="width: 246.0px; height: 52.5px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Pictorial representation of these steps.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This is just trying to state in a very formal manner that machine learning is a program that improves at some task by learning from data rather than a human hard-coding the rules of the task.</p>
+<p>For example, consider the task of building a system that classifies an image as containing a dog or a cat. One approach would be to try to write a program (e.g., a Python program) that looks at the pixels of the picture in a big <code class="docutils literal notranslate"><span class="pre">if/else</span></code> statement to make the decision. You (nor I) would really have any idea where to start writing such a program.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>6. We will call this the <em>training data</em> in future sections.</p>
+</aside>
+<p>Instead, the machine learning approach is to feed a bunch of images that have already been labelled as cat images or dog images as input to some learning algorithm (6), and letting that algorithm learn the patterns from the data itself. The ultimate goal of such a system is to train the computer to not just be able to answer this dog-vs.-cat question for images it has seen, but also to generalize to any dog or cat picture it might encounter in the future.</p>
+<p>We’ll come back to a more detailed explanation of this pipeline in the next chapter.</p>
+</section>
+<section id="overview-of-book">
+<h2>Overview of Book<a class="headerlink" href="#overview-of-book" title="Permalink to this headline">#</a></h2>
+<section id="case-studies">
+<h3>Case Studies<a class="headerlink" href="#case-studies" title="Permalink to this headline">#</a></h3>
+<p>We will tackle this introduction to machine learning with 5 overarching case studies to guide us. As we mentioned before, the contexts that these case studies focus on are not the only applications that are of import in machine learning. We spend the majority of our focus on these five examples for consistency and simplicity. This helps you form more explicit connections between the concepts. Each case study will span more than one chapter as indicated in the table of contents; each chapter corresponds roughly to one lecture of the UW CSE/STAT 416 course.</p>
+<p>The five case studies we will examine in this book are:</p>
+<ul class="simple">
+<li><p><strong>Regression</strong>: Learning how to predict the price of a house.</p></li>
+<li><p><strong>Classification</strong>: Learning how to identify if a restaurant review is good or bad (sentiment analysis).</p></li>
+<li><p><strong>Document Retrieval and Clustering</strong>: Given a news article, suggest similar ones that the reader might be interested in.</p></li>
+<li><p><strong>Recommender Systems</strong>: Given the past purchases of a user, what products should we recommend?</p></li>
+<li><p><strong>Deep Learning</strong>: Recognizing objects in images.</p></li>
+</ul>
+</section>
+<section id="topics">
+<h3>Topics<a class="headerlink" href="#topics" title="Permalink to this headline">#</a></h3>
+<p>As a brief (and incomplete) list of topics we will cover:</p>
+<ul class="simple">
+<li><p><strong>Models</strong>: Different machine learning models that can be used.</p>
+<ul>
+<li><p>Linear regression, regularized approaches (ridge, LASSO)</p></li>
+<li><p>Linear classifiers: logistic regression</p></li>
+<li><p>Non-linear models: decision trees and ensemble methods</p></li>
+<li><p>Nearest neighbors, clustering, kernel methods</p></li>
+<li><p>Recommender systems</p></li>
+<li><p>Neural networks and deep learning</p></li>
+</ul>
+</li>
+<li><p><strong>Algorithms</strong>: Different algorithms for learning these models.</p>
+<ul>
+<li><p>Gradient descent and its variations</p></li>
+<li><p>Boosting and bagging</p></li>
+<li><p>K-means</p></li>
+<li><p>Agglomerative and divisive clustering</p></li>
+<li><p>Hyperparameter optimization</p></li>
+</ul>
+</li>
+<li><p><strong>Concepts</strong>: High-level ideas from machine learning, computer science, statistics, and mathematics.</p>
+<ul>
+<li><p>Point estimation, Maximum likelihood estimation (MLE)</p></li>
+<li><p>Loss functions, bias-variance tradeoff, cross-validation</p></li>
+<li><p>Sparsity, overfitting, model selection</p></li>
+<li><p>Decision boundaries</p></li>
+</ul>
+</li>
+</ul>
+<p>With that, we have introduced what this book is about and some intentions for how it is structured. Our hope is that you find this book exciting and helps you build intuition for this incredibly important field!</p>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./intro"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='right-next' id="next-link" href="../printing.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><i class="fas fa-book fa-fw"></i> Printing and Comments</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Hunter Schafer<br/>
+  
+      &copy; Copyright 2022.<br/>
+    <div class="extra_footer">
+      Have feedback or spotted a bug? Please make a <a href="https://github.com/hschafer/Intro-ML/issues">GitHub issue</a> or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
+    </div>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Variables, Types, Expressions &#8212; Java Tutorial</title>
+    <title>Variables, Types, Expressions &#8212; &lt;b&gt;&lt;i&gt;AnIML&lt;/i&gt;&lt;/b&gt;&lt;br/&gt; Another Introduction to Machine Learning</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -135,7 +135,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Java Tutorial</h1>
+      <h1 class="site-logo" id="site-title"><b><i>AnIML</i></b><br/> Another Introduction to Machine Learning</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -146,8 +146,8 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="index.html">
-                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction and Hello World!
+                <a class="reference internal" href="intro/index.html">
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
                 </a>
             </li>
         </ul>
@@ -487,8 +487,8 @@ title="Print to PDF"
 <h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">#</a></h2>
 <p>Every variable and Java must be declared with a <strong>type</strong> to indicate which type of data will be stored in that variable. For example, the following program makes a variable called <code class="docutils literal notranslate"><span class="pre">x</span></code> and another variable called <code class="docutils literal notranslate"><span class="pre">y</span></code> and prints them out. Note that you have to specify when declaring the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> that it will store an integer number (<code class="docutils literal notranslate"><span class="pre">int</span></code>).</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="218147d4-e67d-4268-9d4b-33c70e5d64bc" name="2a822164-ff01-4bed-aa40-8cc5c17f892d" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="218147d4-e67d-4268-9d4b-33c70e5d64bc">
+<input checked="checked" id="8da6227d-e71b-4afa-9a3d-ae0baba6fd05" name="ec69134b-570e-49a2-99b0-8a5bd283bef6" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="8da6227d-e71b-4afa-9a3d-ae0baba6fd05">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Variables</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -501,8 +501,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="37909063-738a-4aff-b4c6-cd528168c226" name="2a822164-ff01-4bed-aa40-8cc5c17f892d" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="37909063-738a-4aff-b4c6-cd528168c226">
+<input id="d02b25dd-adcc-4eb0-808e-fcc284a8f9f7" name="ec69134b-570e-49a2-99b0-8a5bd283bef6" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="d02b25dd-adcc-4eb0-808e-fcc284a8f9f7">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
@@ -511,8 +511,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="7c7f1d78-4852-45ae-9766-5e3d6b5f6422" name="2a822164-ff01-4bed-aa40-8cc5c17f892d" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="7c7f1d78-4852-45ae-9766-5e3d6b5f6422">
+<input id="4c05b972-a1fb-4f75-9160-09bb1381225b" name="ec69134b-570e-49a2-99b0-8a5bd283bef6" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="4c05b972-a1fb-4f75-9160-09bb1381225b">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span><span class="w"></span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"></span>
@@ -521,8 +521,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="38c6033a-5aaf-46fe-8620-e6bb30f3979a" name="2a822164-ff01-4bed-aa40-8cc5c17f892d" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="38c6033a-5aaf-46fe-8620-e6bb30f3979a">
+<input id="2034e7ba-0046-4168-8eeb-95636f366c75" name="ec69134b-570e-49a2-99b0-8a5bd283bef6" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="2034e7ba-0046-4168-8eeb-95636f366c75">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
@@ -537,8 +537,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="fbbda233-849e-4acf-a2ed-f0d841a30bd2" name="2a822164-ff01-4bed-aa40-8cc5c17f892d" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="fbbda233-849e-4acf-a2ed-f0d841a30bd2">
+<input id="b3b36181-0c4f-481c-a448-cb41b8c7b77b" name="ec69134b-570e-49a2-99b0-8a5bd283bef6" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="b3b36181-0c4f-481c-a448-cb41b8c7b77b">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
@@ -567,8 +567,8 @@ C++</label><div class="sd-tab-content docutils">
 <h2>Assignment<a class="headerlink" href="#assignment" title="Permalink to this headline">#</a></h2>
 <p>Variables in Java operate like most other languages such that you can update their values with an assignment statement. The following program makes a variable <code class="docutils literal notranslate"><span class="pre">x</span></code>, prints it out and then updates the value before printing it again. Note that as we said above, we don’t need to specify the type in the assignment statement, only the initial declaration.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="5bed8898-931e-453b-9c0d-c4412b5d4d00" name="a301ab42-a5b6-41f6-b904-77421c2f8042" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="5bed8898-931e-453b-9c0d-c4412b5d4d00">
+<input checked="checked" id="116707b9-4f4c-4cd7-a009-95c1362a832a" name="870cddf0-c3dd-45e0-b2cc-ee75d07ed8e3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="116707b9-4f4c-4cd7-a009-95c1362a832a">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Assignment</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -581,8 +581,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="a94081bc-a341-4b75-a197-8eba64969e84" name="a301ab42-a5b6-41f6-b904-77421c2f8042" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="a94081bc-a341-4b75-a197-8eba64969e84">
+<input id="9e260cf0-7de6-445d-a558-90876a450d7f" name="870cddf0-c3dd-45e0-b2cc-ee75d07ed8e3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="9e260cf0-7de6-445d-a558-90876a450d7f">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -591,8 +591,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="97e99eac-4467-420f-afbb-290233bdc804" name="a301ab42-a5b6-41f6-b904-77421c2f8042" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="97e99eac-4467-420f-afbb-290233bdc804">
+<input id="137eea32-848a-45da-b3aa-b953f590cf99" name="870cddf0-c3dd-45e0-b2cc-ee75d07ed8e3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="137eea32-848a-45da-b3aa-b953f590cf99">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span><span class="w"></span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span><span class="w"></span>
@@ -601,8 +601,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="d61f50c7-9891-4f3c-bbe0-7d9dc8dfd5b3" name="a301ab42-a5b6-41f6-b904-77421c2f8042" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="d61f50c7-9891-4f3c-bbe0-7d9dc8dfd5b3">
+<input id="a69b2c13-fd7d-4b03-bc63-189e309221a1" name="870cddf0-c3dd-45e0-b2cc-ee75d07ed8e3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="a69b2c13-fd7d-4b03-bc63-189e309221a1">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
@@ -617,8 +617,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="5061ef2e-3140-48ed-832f-905c5ba881c9" name="a301ab42-a5b6-41f6-b904-77421c2f8042" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="5061ef2e-3140-48ed-832f-905c5ba881c9">
+<input id="e74efe1c-c756-4146-b8a5-987e59d92050" name="870cddf0-c3dd-45e0-b2cc-ee75d07ed8e3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="e74efe1c-c756-4146-b8a5-987e59d92050">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
@@ -650,8 +650,8 @@ C++</label><div class="sd-tab-content docutils">
 </ul>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">String</span></code> starts with a capital letter! This is because it is an “Object type” rather than a “primitive type”. We won’t cover this distinction in this section, but just note that <code class="docutils literal notranslate"><span class="pre">String</span></code>s can do more than simpler data types such as an <code class="docutils literal notranslate"><span class="pre">int</span></code> can. Also note that you surround a <code class="docutils literal notranslate"><span class="pre">char</span></code> value with single-quotes (<code class="docutils literal notranslate"><span class="pre">'</span></code>) and <code class="docutils literal notranslate"><span class="pre">String</span></code>s with double-quotes (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>).</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="c11bb29b-4fc5-4fcf-b99b-b77652cd2d8d" name="243a837d-5d6e-43f9-8f43-e33ad7c7c44a" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="c11bb29b-4fc5-4fcf-b99b-b77652cd2d8d">
+<input checked="checked" id="f6f1eae4-bde5-47fe-a67a-e0d685f31da0" name="9c57c94d-1d75-4918-87fe-0bc8346b0fea" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="f6f1eae4-bde5-47fe-a67a-e0d685f31da0">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Types</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -665,8 +665,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="d30206bf-f371-4e91-abdb-d6af69dac762" name="243a837d-5d6e-43f9-8f43-e33ad7c7c44a" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="d30206bf-f371-4e91-abdb-d6af69dac762">
+<input id="29b90eb8-ee38-49d1-87f0-43d129d6161a" name="9c57c94d-1d75-4918-87fe-0bc8346b0fea" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="29b90eb8-ee38-49d1-87f0-43d129d6161a">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">b</span> <span class="o">=</span> <span class="mf">4.5</span>
@@ -680,8 +680,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="35587e12-a756-47db-893f-a7a42a3bf846" name="243a837d-5d6e-43f9-8f43-e33ad7c7c44a" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="35587e12-a756-47db-893f-a7a42a3bf846">
+<input id="dcc50a2a-47e1-4f66-b710-adc5df715ec5" name="9c57c94d-1d75-4918-87fe-0bc8346b0fea" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="dcc50a2a-47e1-4f66-b710-adc5df715ec5">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"></span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.5</span><span class="p">;</span><span class="w"></span>
@@ -695,8 +695,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="6c264e01-7c6c-4f8f-8000-a90509f3fd37" name="243a837d-5d6e-43f9-8f43-e33ad7c7c44a" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="6c264e01-7c6c-4f8f-8000-a90509f3fd37">
+<input id="1ca91448-e8f2-4f26-8a5d-0f99e9b0b971" name="9c57c94d-1d75-4918-87fe-0bc8346b0fea" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="1ca91448-e8f2-4f26-8a5d-0f99e9b0b971">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
@@ -712,8 +712,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="cfaa62ab-c2b8-443b-b876-c11f4e0da600" name="243a837d-5d6e-43f9-8f43-e33ad7c7c44a" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="cfaa62ab-c2b8-443b-b876-c11f4e0da600">
+<input id="b903b317-42a1-4d5a-b5e5-527966adcdc6" name="9c57c94d-1d75-4918-87fe-0bc8346b0fea" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="b903b317-42a1-4d5a-b5e5-527966adcdc6">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
@@ -745,8 +745,8 @@ C++</label><div class="sd-tab-content docutils">
 <h2>Expressions<a class="headerlink" href="#expressions" title="Permalink to this headline">#</a></h2>
 <p>Java provides operators to combine values in a particular way for computation. All of the usual operators such as addition (<code class="docutils literal notranslate"><span class="pre">+</span></code>), subtraction (<code class="docutils literal notranslate"><span class="pre">-</span></code>), multiplication (<code class="docutils literal notranslate"><span class="pre">*</span></code>) and division (<code class="docutils literal notranslate"><span class="pre">/</span></code>) are present.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="ac4569f3-0f88-42ba-b7d8-ffeff28e7ab6" name="eb90e12e-c9dc-4c2f-b75f-fd71091477bd" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="ac4569f3-0f88-42ba-b7d8-ffeff28e7ab6">
+<input checked="checked" id="ed3bb038-6db3-4cf1-95a2-4133829aab52" name="a5511db0-9f07-4875-b342-cdce55b10b55" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="ed3bb038-6db3-4cf1-95a2-4133829aab52">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Expressions</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -759,8 +759,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="3e4fc3b8-c1d6-44f9-b1a3-7b47e94c11b3" name="eb90e12e-c9dc-4c2f-b75f-fd71091477bd" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="3e4fc3b8-c1d6-44f9-b1a3-7b47e94c11b3">
+<input id="31327494-2377-441c-9a32-dfc286192d58" name="a5511db0-9f07-4875-b342-cdce55b10b55" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="31327494-2377-441c-9a32-dfc286192d58">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span>
@@ -770,8 +770,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="62f475f7-ab9f-48a6-912d-1b0efd72acf6" name="eb90e12e-c9dc-4c2f-b75f-fd71091477bd" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="62f475f7-ab9f-48a6-912d-1b0efd72acf6">
+<input id="79e5e395-28ff-4895-aaf0-e4f287d08980" name="a5511db0-9f07-4875-b342-cdce55b10b55" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="79e5e395-28ff-4895-aaf0-e4f287d08980">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"></span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span><span class="w"></span>
@@ -781,8 +781,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="86b6445e-e927-4f2b-8cf7-497e8271f59c" name="eb90e12e-c9dc-4c2f-b75f-fd71091477bd" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="86b6445e-e927-4f2b-8cf7-497e8271f59c">
+<input id="b73e94fd-071f-4798-9581-9d139f86204b" name="a5511db0-9f07-4875-b342-cdce55b10b55" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="b73e94fd-071f-4798-9581-9d139f86204b">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
@@ -797,8 +797,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="59a7502b-8085-4f4c-add8-1dc67ca11d6e" name="eb90e12e-c9dc-4c2f-b75f-fd71091477bd" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="59a7502b-8085-4f4c-add8-1dc67ca11d6e">
+<input id="0f87d05c-b9b6-4aff-b6b8-e40ef362b8ce" name="a5511db0-9f07-4875-b342-cdce55b10b55" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="0f87d05c-b9b6-4aff-b6b8-e40ef362b8ce">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
@@ -819,8 +819,8 @@ C++</label><div class="sd-tab-content docutils">
 <p>Related to the concept of integer division is computing the remainder of a division operation. Java provides the <strong>modulo operator</strong> or <strong>mod</strong> to compute the remainder from integer division with the symbol <code class="docutils literal notranslate"><span class="pre">%</span></code>. Using the numbers from above, the expression <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></code> would equal 2 since the remainder of dividing 5 by 3 is 2.</p>
 <p>Java has no operator for exponentiation (e.g., <span class="math notranslate nohighlight">\(3^2\)</span>). Instead, you have to use the <code class="docutils literal notranslate"><span class="pre">Math</span></code> module to do powers.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="487acebf-0356-4c40-b382-83f9975cb31a" name="a0ef044b-15e7-4566-bb5e-7181d10bd37c" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="487acebf-0356-4c40-b382-83f9975cb31a">
+<input checked="checked" id="385a7f95-887d-4cf4-8cf6-dd922471b337" name="34a7a7e4-6291-4366-84bf-bce7aaf74de3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="385a7f95-887d-4cf4-8cf6-dd922471b337">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Expressions</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -831,24 +831,24 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="98e4ddc5-8c31-43ae-8bc1-36a8d57317b3" name="a0ef044b-15e7-4566-bb5e-7181d10bd37c" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="98e4ddc5-8c31-43ae-8bc1-36a8d57317b3">
+<input id="25c454bf-465e-4e4b-a514-fe8374bd3e85" name="34a7a7e4-6291-4366-84bf-bce7aaf74de3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="25c454bf-465e-4e4b-a514-fe8374bd3e85">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
 </pre></div>
 </div>
 </div>
-<input id="22e38f91-e5aa-433f-9209-1ae05a0c7dd3" name="a0ef044b-15e7-4566-bb5e-7181d10bd37c" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="22e38f91-e5aa-433f-9209-1ae05a0c7dd3">
+<input id="257c7f4d-6763-4dec-9d81-899577c4b3f7" name="34a7a7e4-6291-4366-84bf-bce7aaf74de3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="257c7f4d-6763-4dec-9d81-899577c4b3f7">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="p">;</span><span class="w"></span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
-<input id="da3cac7b-0a46-4533-afcf-e903ea138fbb" name="a0ef044b-15e7-4566-bb5e-7181d10bd37c" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="da3cac7b-0a46-4533-afcf-e903ea138fbb">
+<input id="27f37455-d08e-4190-b547-bbb1144716d0" name="34a7a7e4-6291-4366-84bf-bce7aaf74de3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="27f37455-d08e-4190-b547-bbb1144716d0">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
@@ -863,8 +863,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="2f56180e-ac67-4742-9060-1ad173ad9f01" name="a0ef044b-15e7-4566-bb5e-7181d10bd37c" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="2f56180e-ac67-4742-9060-1ad173ad9f01">
+<input id="90537240-d17d-4833-a4d0-5985ad15eb31" name="34a7a7e4-6291-4366-84bf-bce7aaf74de3" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="90537240-d17d-4833-a4d0-5985ad15eb31">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
@@ -893,8 +893,8 @@ C++</label><div class="sd-tab-content docutils">
 </ul>
 <p>The following program shows the syntax to cast from these two types. For example, <code class="docutils literal notranslate"><span class="pre">(double)</span> <span class="pre">a</span></code> is an expression that interprets the value stored in <code class="docutils literal notranslate"><span class="pre">a</span></code> as a double. Note that it doesn’t actually change the value stored in <code class="docutils literal notranslate"><span class="pre">a</span></code>, just returns the <code class="docutils literal notranslate"><span class="pre">double</span></code> version of whatever value is currently inside <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="77013c51-ba6d-4ce7-8cad-457ed8522eaa" name="a00678db-2ca6-45cb-8c64-5a156984ed2f" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="77013c51-ba6d-4ce7-8cad-457ed8522eaa">
+<input checked="checked" id="cff24562-4583-4857-96e3-b4eb2f33ace8" name="c68d2587-7040-4ab2-8287-fb3aa84b9e82" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="cff24562-4583-4857-96e3-b4eb2f33ace8">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Casting</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -909,8 +909,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="edaa4176-8ed5-4dc7-b725-b69ed5429b34" name="a00678db-2ca6-45cb-8c64-5a156984ed2f" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="edaa4176-8ed5-4dc7-b725-b69ed5429b34">
+<input id="088c6d53-4164-41e3-98bf-47a08b64cc18" name="c68d2587-7040-4ab2-8287-fb3aa84b9e82" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="088c6d53-4164-41e3-98bf-47a08b64cc18">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">b</span> <span class="o">=</span> <span class="mf">3.5</span>
@@ -921,16 +921,16 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="eb1b814e-1fee-48e8-b4e0-abcb0f882d7d" name="a00678db-2ca6-45cb-8c64-5a156984ed2f" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="eb1b814e-1fee-48e8-b4e0-abcb0f882d7d">
+<input id="6c8420c2-0689-4552-8ec3-5bfd97653cd7" name="c68d2587-7040-4ab2-8287-fb3aa84b9e82" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="6c8420c2-0689-4552-8ec3-5bfd97653cd7">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// JavaScript only has a Number type that stores floating point / doubles values</span><span class="w"></span>
 <span class="c1">// There is no distinction between integers and doubles, and no way to convert between them</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
-<input id="3862db85-e423-4190-b5cf-d3e471676924" name="a00678db-2ca6-45cb-8c64-5a156984ed2f" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="3862db85-e423-4190-b5cf-d3e471676924">
+<input id="f5012f1d-8c19-4cf0-a4bc-a631c3db37a0" name="c68d2587-7040-4ab2-8287-fb3aa84b9e82" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="f5012f1d-8c19-4cf0-a4bc-a631c3db37a0">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
@@ -947,8 +947,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="29e54e2c-5918-48a7-8c36-2e93e513d01c" name="a00678db-2ca6-45cb-8c64-5a156984ed2f" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="29e54e2c-5918-48a7-8c36-2e93e513d01c">
+<input id="45d1f1d6-07bd-4701-9d0b-05cc8aa61b78" name="c68d2587-7040-4ab2-8287-fb3aa84b9e82" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="45d1f1d6-07bd-4701-9d0b-05cc8aa61b78">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
