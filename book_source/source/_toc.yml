@@ -1,5 +1,5 @@
 format: jb-book
-root: index
+root: intro/index
 chapters:
   - file: printing
   - file: variables_expressions
