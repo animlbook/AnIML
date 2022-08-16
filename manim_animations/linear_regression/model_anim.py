@@ -11,7 +11,7 @@ class Animation(ModelScene):
         self.add(self.graph, self.text_group, self.dots)
 
         # Write Model
-        model_text = BTex(
+        model_text = BMathTex(
             r"\text{Model:}\ y_i = f(x_i) + \varepsilon_i",
             tex_to_color_map={
                 "f(": GREEN,
@@ -20,6 +20,7 @@ class Animation(ModelScene):
                 r"\varepsilon_i": MAROON,
             },
         )
+        model_text.scale(TEXT_SCALE)
 
         model_text.to_corner(UP + RIGHT)
         self.play(Write(model_text))
@@ -36,7 +37,7 @@ class Animation(ModelScene):
             end=[point[0], origin[1] + 0.1, 0],
             color=COL_BLACK,
         )
-        x_text = BTex(r"x_7")
+        x_text = BMathTex(r"x_7")
         x_text.next_to(x_mark, direction=DOWN)
         x_text.scale(TEXT_SCALE)
 
@@ -56,7 +57,7 @@ class Animation(ModelScene):
         )
         self.wait()
 
-        ev_text = BTex(r"f(x_i)", tex_to_color_map={"f(": GREEN, ")": GREEN,})
+        ev_text = BMathTex(r"f(x_i)", tex_to_color_map={"f(": GREEN, ")": GREEN,})
         self.play(
             ApplyMethod(
                 ev_line.next_to, origin - np.array([0.05, 0, 0]), UP, {"buff": 0}
@@ -68,17 +69,17 @@ class Animation(ModelScene):
 
         # Draw the epislon from the expected to observed
         epsilon = DashedLine(start=expected_value, end=point, color=MAROON)
-        epsilon_text = BTex(r"\epsilon_7", color=MAROON)
+        epsilon_text = BMathTex(r"\epsilon_7", color=MAROON)
         epsilon_text.scale(TEXT_SCALE)
         epsilon_text.next_to(epsilon, direction=LEFT * TEXT_LBUFF)
-        self.play(ShowCreation(epsilon, duration=1), Write(epsilon_text))
+        self.play(Write(epsilon, duration=1), Write(epsilon_text))
         self.wait()
 
         # Draw a line to show how it computes the y from that
         y_line = DashedLine(
             start=[point[0], origin[1], 0], end=[point[0], point[1], 0], color=BLUE
         )
-        y_text = BTex(r"y_7", color=BLUE)
+        y_text = BMathTex(r"y_7", color=BLUE)
         y_text.next_to(y_line, direction=LEFT * TEXT_LBUFF)
         y_text.scale(TEXT_SCALE)
         self.play(FadeIn(y_line, duration=2), Write(y_text), lag_ratio=0.5)

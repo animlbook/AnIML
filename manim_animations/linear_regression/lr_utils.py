@@ -85,7 +85,7 @@ class ModelScene(BScene):
         # Create text for data notation
         self.data_text = BTex(r"$(x_1, y_1), ..., (x_n, y_n)$")
         self.data_text.to_corner(LEFT + UP, 0.25)
-        self.data_text.scale(0.6)
+        self.data_text.scale(TEXT_SCALE)
 
         # Create function text
         self.function_text = BTex(
@@ -93,7 +93,7 @@ class ModelScene(BScene):
             tex_to_color_map={"f(": GREEN, ")": GREEN},
         )
         self.function_text.next_to(self.data_text, DOWN, buff=0.1)
-        self.function_text.scale(0.6)
+        self.function_text.scale(TEXT_SCALE)
 
         # Make a group of text for convenience of plotting
         self.text_group = Group(self.data_text, self.function_text)

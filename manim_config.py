@@ -9,6 +9,18 @@ COL_RED = RED_E
 COL_BLUE = BLUE_D
 COL_GOLD = "#ab7a22"
 
+TEXT_SCALE = 0.6
+
+
+def text_kwargs(kwargs):
+    text_kwargs = {
+        "color": COL_BLACK,
+        "background_stroke_width": 0.0,
+        "stroke_width": 1.5,
+    }
+    text_kwargs.update(**kwargs)
+    return text_kwargs
+
 
 class BScene(Scene):
     def __init__(self, **kwargs):
@@ -18,24 +30,17 @@ class BScene(Scene):
 
 class BTex(Tex):
     def __init__(self, *args, **kwargs):
-        new_kwargs = {
-            "color": COL_BLACK,
-            "background_stroke_width": 0.0,
-            "stroke_width": 1.5,
-        }
-        new_kwargs.update(**kwargs)
-        super().__init__(*args, **new_kwargs)
+        super().__init__(*args, **text_kwargs(kwargs))
+
+
+class BMathTex(MathTex):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **text_kwargs(kwargs))
 
 
 class BText(Text):
     def __init__(self, *args, **kwargs):
-        new_kwargs = {
-            "color": COL_BLACK,
-            "background_stroke_width": 0.0,
-            "stroke_width": 1.5,
-        }
-        new_kwargs.update(**kwargs)
-        super().__init__(*args, **new_kwargs)
+        super().__init__(*args, **text_kwargs(kwargs))
 
 
 def make_box(
