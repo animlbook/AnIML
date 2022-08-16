@@ -128,15 +128,20 @@ class LinearScene(ModelScene):
         super().custom_setup(**kwargs)
 
         # Create text for predictor
-        self.predictor_text = BTex(
+        self.predictor_text = BMathTex(
             r"\text{Predictor:}\ \hat{f}(x)",
             tex_to_color_map={"\\hat{f}(": BLUE, ")": BLUE},
         )
-        self.predictor_text.next_to(self.text_group, DOWN)
+        self.predictor_text.next_to(self.function_text, RIGHT)
+        self.predictor_text.scale(TEXT_SCALE)
 
         # Create line
         self.w_0, self.w_1 = 2, 0.4
-        self.line = self.linear_function(self.w_0, self.w_1, line_color)
+
+        self.f_hat = lambda x: self.w_0 + self.w_1 * x
+
+        # self.line = self.linear_function(self.w_0, self.w_1, line_color)
+        self.line = self.axes.plot(self.f_hat, x_range=[X_MIN, X_MAX], color=line_color)
 
     def linear_function(self, w_0, w_1, line_color):
         """
