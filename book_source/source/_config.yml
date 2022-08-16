@@ -55,5 +55,6 @@ sphinx:
     - "sphinx_copybutton"
     - "sphinx_design"
   config:
+    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
     suppress_warnings:
       - "myst.header"
