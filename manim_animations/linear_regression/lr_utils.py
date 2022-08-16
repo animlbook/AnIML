@@ -160,17 +160,23 @@ class GradientDescentScene(BScene):
 
         # Create axes
         axes = make_axes()
-
-        # Draw graph of original function
-        function = axes.get_graph(f, color=GREEN)
+        axes.scale(0.5)
 
         # Create axis labels
-        x_label = axes.get_x_axis_label(r"w_1")
-        y_label = axes.get_y_axis_label(r"RSS(w_1)")
+        x_label = axes.get_x_axis_label(r"w_1", edge=DOWN, direction=DOWN)\
+            .set_color(GREY_D)\
+            .scale(0.5)
+        y_label = axes.get_y_axis_label(r"RSS(w_1)", edge=LEFT, direction=LEFT)\
+            .set_color(GREY_D)\
+            .scale(0.5)\
+            .shift(0.5 * RIGHT)
         self.add(axes, x_label, y_label)
 
+        # Draw graph of original function
+        function = axes.plot(f, x_range=[X_MIN, X_MAX], color=GREEN)
+
         # Draw function
-        self.play(ShowCreation(function))
+        self.play(Create(function))
 
         # Draw start point
         dot = Dot(color=BLUE)
