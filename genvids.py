@@ -151,7 +151,8 @@ def manim(af, hard, tc, manim_args, copy=False):
     else:
         print(f"{tc.YELLOW}[CACHE]{tc.ENDC}   {af.srcfile} ~> {filepath}")
         if "--preview" in args:
-            preview_file(filepath)
+            # preview_file(filepath)
+            pass
     if copy:
         dstfile = os.path.join("website", "public", public_path)
         dstdir, _ = os.path.split(dstfile)
@@ -229,7 +230,7 @@ if __name__ == "__main__":
     if args.quiet:
         manim_args.append("--quiet")
     if args.preview:
-        manim_args.append("--open")
+        manim_args.append("--preview")
     if args.low_quality:
         manim_args.append("--low_quality")
     if args.save_last_frame:

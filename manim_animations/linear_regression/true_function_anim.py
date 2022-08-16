@@ -10,5 +10,5 @@ class Animation(ModelScene):
         # Draw Function
         self.play(Write(self.function_text))
         self.add(self.function, self.dots)
-        self.play(ShowCreation(self.function))
+        self.play(Write(self.function))
         self.wait(duration=1.5)

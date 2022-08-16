@@ -1,5 +1,4 @@
 import numpy as np
-
 from manim_config import *
 
 # Config
@@ -69,38 +68,51 @@ YS = np.array(
 
 
 def make_axes():
-    return Axes(
-        x_range=(X_MIN, X_MAX),
-        y_range=(Y_MIN, Y_MAX),
-        height=5,
-        width=5,
-        axis_config={
-            "stroke_color": GREY_D,
-            "stroke_width": 2,
-            "include_tip": False,
-            "include_ticks": False,
-        },
-    )
+    return  Axes(
+            x_range=(X_MIN, X_MAX),
+            y_range=(Y_MIN, Y_MAX),
+            axis_config={
+                "stroke_color": GREY_D,
+                "stroke_width": 2,
+                "include_tip": False,
+                "include_ticks": False
+            }
+        )
 
 
 class ModelScene(BScene):
     def custom_setup(self):
-        # Create text
-        self.data_text = BTex(r"(x_1, y_1), ..., (x_n, y_n)")
+        # Create text for data notation
+        self.data_text = BTex(r"$(x_1, y_1), ..., (x_n, y_n)$")
+        self.data_text.to_corner(LEFT + UP, 0.25)
+        self.data_text.scale(0.6)
 
+        # Create function text
         self.function_text = BTex(
             r"\text{True function:}\ {{f(}}x{{)}}",
             tex_to_color_map={"f(": GREEN, ")": GREEN},
         )
-        self.text_group = VGroup(self.data_text, self.function_text).arrange(DOWN)
-        self.text_group.fix_in_frame()
-        self.text_group.to_corner(UP + LEFT)
+        self.function_text.next_to(self.data_text, DOWN, buff=0.1)
+        self.function_text.scale(0.6)
+
+        # Make a group of text for convenience of plotting
+        self.text_group = Group(self.data_text, self.function_text)
+
+        # self.text_group = VGroup(self.data_text, self.function_text)#.arrange(DOWN)
+        # self.text_group.fix_in_frame()
+        # self.text_group.to_corner(UP + LEFT)
 
         # Create graph
         self.axes = make_axes()
+        self.axes.scale(0.85)
 
-        self.axes.next_to(self.text_group, BOTTOM + RIGHT, buff=0.25)
-        self.function = self.axes.get_graph(f, color=GREEN)
+        # self.axes.next_to(self.text_group, DOWN + RIGHT, buff=0.25)
+        # self.function = self.axes.get_graph(f, color=GREEN)
+
+        self.function = self.axes.plot(f,
+            x_range=[X_MIN, X_MAX],
+            color=GREEN,
+            stroke_width=2)
         self.graph = Group(self.axes, self.function)
 
         # Draw points

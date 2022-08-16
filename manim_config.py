@@ -1,3 +1,4 @@
+import colour
 from manim import *
 
 COL_BACKGROUND = "#fffff8"
@@ -11,7 +12,7 @@ COL_GOLD = "#ab7a22"
 
 class BScene(Scene):
     def __init__(self, **kwargs):
-        kwargs["camera_config"]["background_color"] = COL_BACKGROUND
+        config["background_color"] = colour.Color(COL_BACKGROUND)
         super().__init__(**kwargs)
 
 
