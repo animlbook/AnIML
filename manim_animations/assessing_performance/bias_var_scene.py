@@ -1,65 +1,64 @@
+from ctypes import alignment
+
 from manim_config import *
 
 from ap_utils import *
 
 
 class FunctionSet:
+    """
+    Represents a set of functions and com
+    """
     def __init__(self, axes, functions):
         # Need the axes to "undo" the transformation of the functions in the axes
+        # Have to p2c the output of the functions to get out of the axes' space
         self.axes = axes
         self.functions = functions
 
-    def mean(self, x):
-        val = 0.0
-        for f in self.functions:
-            val += self.axes.p2c(f.function(x))[1]
-        return val / len(self.functions)
+        # For efficiency, we should memo-ize the results so we don't have to recompute.
+        self._means = {}
+        self._upper_confidence = {}
+        self._lower_confidence = {}
 
-    def confidence_bound(self, x, upper: bool=True):
-        side = 1.0 if upper else -1.0
-        value = 0.0
-        mean = self.function(x)
-        for f in self.functions:
-            value += pow(self.axes.p2c(f.function(x))[1] - mean, 2)
-        return mean + side * (value / len(self.functions))
+    def mean(self, x):
+        if x in self._means:
+            return self._means[x]
+        else:
+            val = 0.0
+            for f in self.functions:
+                val += self.axes.p2c(f.function(x))[1]
+
+            result = val / len(self.functions)
+            self._means[x] = result
+            return result
+
+    def _confidence_bound(self, x, upper: bool):
+        if upper and x in self._upper_confidence:
+            return self._upper_confidence[x]
+        elif not upper and x in self._lower_confidence:
+            return self._lower_confidence[x]
+        else:
+            value = 0.0
+            mean = self.mean(x)
+            for f in self.functions:
+                value += pow(self.axes.p2c(f.function(x))[1] - mean, 2)
+
+            up_result = mean + (value / len(self.functions))
+            down_result = mean - (value / len(self.functions))
+
+            self._upper_confidence[x] = up_result
+            self._lower_confidence[x] = down_result
+
+            if upper:
+                return up_result
+            else:
+                return down_result
 
     def upper_confidence_bound(self, x):
-        return self.confidence_bound(x, True)
+        return self._confidence_bound(x, True)
 
     def lower_confidence_bound(self, x):
-        return self.confidence_bound(x, False)
-
-
-class MeanFunction(FunctionOffGraph):
-    def __init__(self, functions, **kwargs):
-        self.functions = functions
-
-        def func(x):
-            s = 0.0
-            for f in self.functions:
-                s += f.function(x)
-            return s / len(self.functions)
-
-        super().__init__(function=func, **kwargs)
-
-
-class VarianceFunction(FunctionOffGraph):
-    def __init__(self, upper_fn, mean_function, functions, **kwargs):
-        # If this is the upper bound of the variace. The symetric lower function
-        # bound will use upper_fn = False
-        self.upper_fn = upper_fn
-        self.mean_function = mean_function
-        self.functions = functions
-
-        def func(x):
-            side = 1.0 if self.upper_fn else -1.0
-            s = 0.0
-            mean = self.mean_function.function(x)
-            for f in self.functions:
-                s += pow(f.function(x) - mean, 2)
-            return mean + side * (s / len(self.functions))
-
-        super().__init__(function=func, **kwargs)
+        return self._confidence_bound(x, False)
 
 
 class BBiasVarianceScene(BScene):
@@ -70,6 +69,7 @@ class BBiasVarianceScene(BScene):
         self.nfirst = nfirst
         self.nextra = nextra
         self.degree = degree
+        self._function_set = None
         super().__init__(**kwargs)
 
     def construct(self):
@@ -187,46 +187,32 @@ class BBiasVarianceScene(BScene):
         self.play(FadeOut(VGroup(*self.fns_mobj)), run_time=1.0)
 
     def draw_mean_function(self):
-        function_set = FunctionSet(self.axes, self.fns_mobj)
-        self.meanf = self.axes.plot(function_set.mean, x_range=(self.x_min, self.x_max), color=COL_RED)
+        if not self._function_set:
+            self._function_set = FunctionSet(self.axes, self.fns_mobj)
+
+        self.meanf = self.axes.plot(self._function_set.mean, x_range=(self.x_min, self.x_max), color=COL_RED)
         meanf_label = BMathTex(r"\overline{f_{\hat{w}}}(x)", color=COL_RED)
-        # y_pos = min(max(self.meanf.function(self.x_max)[1], self.y_min), self.y_max) # TODO
-        # meanf_label.move_to(self.axes.c2p(self.x_max, y_pos, 0) + RIGHT * 0.75)
         meanf_label.move_to(self.meanf.function(self.x_max) + RIGHT * 0.75, aligned_edge=UP)
 
         self.play(Create(self.meanf))
         self.play(Write(meanf_label))
 
     def draw_variance_interval(self):
+        if not self._function_set:
+            self._function_set = FunctionSet(self.axes, self.fns_mobj)
+
         # want to draw upper and lower function bounds for the variance
-        self.upper_varf = VarianceFunction(
-            x_min=self.x_min,
-            x_max=self.x_max,
-            y_min=self.y_min,
-            y_max=self.y_max,
-            upper_fn=True,
-            mean_function=self.meanf,
-            functions=self.fns_mobj,
-            color=COL_GOLD,
-        )
-        self.lower_varf = VarianceFunction(
-            x_min=self.x_min,
-            x_max=self.x_max,
-            y_min=self.y_min,
-            y_max=self.y_max,
-            upper_fn=False,
-            mean_function=self.meanf,
-            functions=self.fns_mobj,
-            color=COL_GOLD,
-        )
-        self.upper_varf.shift(self.centershift)
-        self.lower_varf.shift(self.centershift)
+        self.upper_varf = self.axes.plot(self._function_set.upper_confidence_bound, x_range=(self.x_min, self.x_max), color=COL_GOLD)
+        self.lower_varf = self.axes.plot(self._function_set.lower_confidence_bound, x_range=(self.x_min, self.x_max), color=COL_GOLD)
+
+        print(self._function_set._lower_confidence)
+        print(self._function_set._upper_confidence)
 
         var_label = BMathTex(
             r"\overline{\left(\overline{f_{\hat{w}}} - f_{\hat{w}}\right)^2}",
             color=COL_GOLD,
         )
-        var_label.move_to(self.axes.c2p(self.x_max, self.y_min - 0.475, 0))
+        var_label.move_to(self.axes.c2p(self.x_max, self.y_min - 0.475, 0) + RIGHT * 0.75, aligned_edge=LEFT)
 
         self.play(
             Create(self.upper_varf),

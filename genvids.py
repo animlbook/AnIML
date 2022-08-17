@@ -232,7 +232,7 @@ if __name__ == "__main__":
     if args.preview:
         manim_args.append("--preview")
     if args.low_quality:
-        manim_args.append("--low_quality")
+        manim_args.append("-ql")
     if args.save_last_frame:
         manim_args.append("-s")
 
