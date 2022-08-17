@@ -1,4 +1,4 @@
-from config import *
+from ap_utils import *
 from poly_regression_with_error_scene import PolyRegressionWithErrorScene
 
 

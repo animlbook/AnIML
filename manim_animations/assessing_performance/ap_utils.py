@@ -166,7 +166,7 @@ def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), radius=DEFAULT_DOT_RADIUS
     return axes, dots
 
 
-def degfungraph(axes, Xtrain, Ytrain, deg, color, config):
+def degfungraph(axes, Xtrain, Ytrain, deg, color, config, **kwargs):
     assert Ytrain.shape[1] == 1
     assert Ytrain.shape[0] == len(Xtrain)
 
@@ -175,7 +175,7 @@ def degfungraph(axes, Xtrain, Ytrain, deg, color, config):
         return yhat
 
     return axes.plot(f, x_range=(config["X_MIN"], config["X_MAX"]),
-        color=color)
+        color=color, **kwargs)
 
     #return FunctionOffGraph(f
     #    ,
