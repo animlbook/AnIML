@@ -118,14 +118,22 @@ class BBiasVarianceScene(BScene):
         xs = np.arange(self.x_min + 0.015, self.x_max, dx) + (dx / 2.0)
         rects = VGroup()
         for x in xs:
-            xl, xr = x - dx / 2.0, x + dx / 2.0
-            y1, y2 = f1.function(x), f2.function(x)
-            upper = min(max(y1, y2), self.y_max) - 0.02
-            lower = max(min(y1, y2), self.y_min) + 0.02
-            up_left = np.array([xl, upper, 0])
-            up_right = np.array([xr, upper, 0])
-            down_left = np.array([xl, lower, 0])
-            down_right = np.array([xr, lower, 0])
+            # Evaluate functions (in axes space)
+            p1 = f1.function(x)
+            p2 = f2.function(x)
+
+            # Make bounding box (in axes space)
+            p_x = p1[0]
+            x_left = p_x - dx / 2
+            x_right = p_x + dx / 2
+            upper = max(p1[1], p2[1])
+            lower = min(p1[1], p2[1])
+
+            up_left = np.array([x_left, upper, 0])
+            up_right = np.array([x_right, upper, 0])
+            down_left = np.array([x_left, lower, 0])
+            down_right = np.array([x_right, lower, 0])
+
             rects.add(
                 Polygon(
                     up_left,
@@ -136,8 +144,7 @@ class BBiasVarianceScene(BScene):
                     stroke_opacity=opacity,
                 )
             )
-        rects.shift(self.centershift)
-        self.play(ShowCreation(rects))
+        self.play(Create(rects))
         self.wait(0.5)
 
     def explain_first_function(self):
