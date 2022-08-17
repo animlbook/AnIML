@@ -1,6 +1,4 @@
 from manim_config import *
-from config import *
-
 
 GRAPH_CONFIG = {
     "X_MIN": 0,
@@ -13,10 +11,8 @@ GRAPH_CONFIG = {
 class FunctionOffGraph(FunctionGraph):
     def __init__(self, function=None, **kwargs):
         self.y_min, self.y_max = 0, 1
-        if "y_min" in kwargs:
-            self.y_min = kwargs["y_max"]
-        if "y_max" in kwargs:
-            self.y_max = kwargs["y_max"]
+        if "y_range" in kwargs:
+            self.y_min, self.y_max = kwargs["y_range"]
 
         super().__init__(function=function, **kwargs)
 
@@ -147,6 +143,7 @@ def get_dots_for_axes(XS, YS, axes, config, radius=DEFAULT_DOT_RADIUS):
     # Draw points
     dots = VGroup()
     for x, y in zip(XS, YS):
+        y = y[0]
         if x > xmin and x < xmax and y > ymin and y < ymax:
             point = axes.coords_to_point(x, y, 0)
             dot = Dot(point, color=COL_BLACK, radius=radius)
@@ -159,11 +156,9 @@ def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), radius=DEFAULT_DOT_RADIUS
     xmin, xmax = config["X_MIN"], config["X_MAX"]
     ymin, ymax = config["Y_MIN"], config["Y_MAX"]
     axes = Axes(
-        x_min=xmin,
-        x_max=xmax,
-        y_min=ymin,
-        y_max=ymax,
-        center_point=pos,
+        x_range=(xmin, xmax),
+        y_range=(ymin, ymax),
+        #center_point=pos,
         axis_config={"include_tip": False, "include_ticks": False, "color": GREY_C},
     )
 
@@ -171,7 +166,7 @@ def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), radius=DEFAULT_DOT_RADIUS
     return axes, dots
 
 
-def degfungraph(Xtrain, Ytrain, deg, color, config):
+def degfungraph(axes, Xtrain, Ytrain, deg, color, config):
     assert Ytrain.shape[1] == 1
     assert Ytrain.shape[0] == len(Xtrain)
 
@@ -179,11 +174,12 @@ def degfungraph(Xtrain, Ytrain, deg, color, config):
         yhat = fhat(x, Xtrain, Ytrain, deg)
         return yhat
 
-    return FunctionOffGraph(
-        x_min=config["X_MIN"],
-        x_max=config["X_MAX"],
-        y_min=config["Y_MIN"],
-        y_max=config["Y_MAX"],
-        function=f,
-        color=color,
-    )
+    return axes.plot(f, x_range=(config["X_MIN"], config["X_MAX"]),
+        color=color)
+
+    #return FunctionOffGraph(f
+    #    ,
+    #    #y_range=(config["Y_MIN"], config["Y_MAX"]),
+    #    function=f,
+    #    color=color,
+    #)

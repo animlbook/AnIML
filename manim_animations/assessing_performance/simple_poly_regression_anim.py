@@ -1,5 +1,6 @@
 from manim_config import *
-from config import *
+
+from ap_utils import *
 
 
 class Animation(BScene):
@@ -15,12 +16,17 @@ class Animation(BScene):
         xs, ys, config = simple_poly_regression_get_data(seed=100399, N=10)
         axes, dots = axes_and_data(xs, ys, config)
 
+        # Position the plot
         plot = VGroup(axes, dots)
+        plot.center().shift(LEFT)
+
+
+        # Make all of the individual degree plots
         fns = []
         labels = []
 
         for deg, col in self.deg_col:
-            fns.append(degfungraph(xs, ys, deg, col, config))
+            fns.append(degfungraph(axes, xs, ys, deg, col, config))
 
             l = BTex(f"p = {deg}", color=col)
             if len(labels) > 0:
@@ -28,18 +34,15 @@ class Animation(BScene):
 
             labels.append(l)
 
+        fns_group = VGroup(*fns)
         labels_grp = VGroup(*labels)
+        labels_grp.next_to(plot, RIGHT)
 
-        graph_and_fns_grp = VGroup(plot, *fns)
-        labels_grp.next_to(graph_and_fns_grp, RIGHT)
+        # Add dots to foreground to make sure they are displayed above functions
+        self.add_foreground_mobject(dots)
 
-        graph_fns_labels_grp = VGroup(graph_and_fns_grp, labels_grp)
-        # model_text.next_to(graph_fns_labels_grp, UP)
-
-        grp = VGroup(graph_fns_labels_grp)  # , model_text)
-        grp.move_to((0, 0, 0))
-
-        self.play(ShowCreation(plot))  # , ShowCreation(model_text))
+        # Animate in
+        self.play(Create(plot))
         for f, l in zip(fns, labels):
             self.play(Write(l))
-            self.play(ShowCreation(f), run_time=1.5)
+            self.play(Create(f), run_time=1.5)
