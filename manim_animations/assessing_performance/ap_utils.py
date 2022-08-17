@@ -152,7 +152,7 @@ def get_dots_for_axes(XS, YS, axes, config, radius=DEFAULT_DOT_RADIUS):
     return dots
 
 
-def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), radius=DEFAULT_DOT_RADIUS):
+def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), axes_labels=None):
     xmin, xmax = config["X_MIN"], config["X_MAX"]
     ymin, ymax = config["Y_MIN"], config["Y_MAX"]
     axes = Axes(
@@ -163,7 +163,23 @@ def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), radius=DEFAULT_DOT_RADIUS
     )
 
     dots = get_dots_for_axes(XS, YS, axes, config)
-    return axes, dots
+
+    if axes_labels:
+        x_label_text, y_label_text = axes_labels
+
+        axes_labels_grp = VGroup()
+
+        if x_label_text:
+            x_label = axes.get_x_axis_label(x_label_text, edge=DOWN).shift(0.5 * DOWN).set_color(GRAY_C)
+            axes_labels_grp.add(x_label)
+
+        if y_label_text:
+            y_label = axes.get_y_axis_label(y_label_text, edge=LEFT, direction=LEFT, buff=0.4).set_color(GRAY_C)
+            axes_labels_grp.add(y_label)
+
+        return axes, axes_labels_grp, dots
+    else:
+        return axes, dots
 
 
 def degfungraph(axes, Xtrain, Ytrain, deg, color, config, **kwargs):
