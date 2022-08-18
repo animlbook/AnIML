@@ -10,7 +10,7 @@ class Animation(BScene):
             (3, COL_GOLD),
             (5, COL_PURPLE),
             (7, COL_BLUE),
-            (8, COL_GREEN),
+            #(8, COL_GREEN),
         ]
 
         xs, ys, config = simple_poly_regression_get_data(seed=100399, N=10)

@@ -31,9 +31,10 @@ class PolyRegressionWithErrorScene(BScene):
 
         # Make error plot axes
         x_range = (0, 0.4 / 0.6 * self.config["X_MAX"])
-        self.error_plot = Axes(
+        y_range = (0, self.config["Y_MAX"])
+        self.error_plot = BoundedAxes(
             x_range=x_range,
-            y_range=(0, self.config["Y_MAX"]),
+            y_range=y_range,
             axis_config={"include_tip": False, "include_ticks": False, "color": GRAY},
         )
         self.error_plot.scale(AXES_SCALE)
@@ -50,13 +51,13 @@ class PolyRegressionWithErrorScene(BScene):
         # Make function plots
         self.fngraphs = list(
             map(
-                lambda dc: degfungraph(self.axes, self.xs, self.ys, dc[0], dc[1], self.config, stroke_width=STROKE_WIDTH),
+                lambda dc: degfungraph(self.axes, self.xs, self.ys, dc[0], dc[1], self.config, stroke_width=STROKE_WIDTH)[1],
                 self.deg_col,
             )
         )
 
         # Make error function plot
-        self.error_fn = self.error_plot.plot(error_fn, x_range=(0.5, x_range[1]), color=BLACK, stroke_width=STROKE_WIDTH)
+        self.error_fn, self.error_fn_segments = self.error_plot.plot_bounded(error_fn, x_range=x_range, y_range=y_range, color=BLACK, stroke_width=STROKE_WIDTH)
 
         # Position error plot title
         self.error_label = BText(error_title)
@@ -73,7 +74,7 @@ class PolyRegressionWithErrorScene(BScene):
             pt = (x, self.loss_fn(d), 0, 0)
             self.error_pts.add(Dot(self.error_plot.c2p(*pt), color=c)) #, radius=DEFAULT_DOT_RADIUS))
 
-        self.error_grp = VGroup(self.error_plot, self.error_pts, self.error_fn)
+        self.error_grp = VGroup(self.error_plot, self.error_pts, self.error_fn_segments)
 
         self.main_grp = VGroup(
             self.plot_grp,
@@ -85,20 +86,6 @@ class PolyRegressionWithErrorScene(BScene):
 
         super().__init__(**kwargs)
 
-    def draw_residuals(self, fn):
-        dots = VGroup()
-        dashed = VGroup()
-        for x, y in zip(self.xs, self.ys):
-            yhat = fn.function(x)
-            dots.add(Dot(self.axes.c2p(x, yhat, 0), color=GRAY))
-            dashed.add(
-                DashedLine(
-                    self.axes.c2p(x, y, 0), self.axes.c2p(x, yhat, 0), color=GRAY
-                )
-            )
-
-        self.play(ShowCreation(dots))
-        self.play(ShowCreation(dashed))
 
     def loss_fn(self, x):
         raise NotImplementedError
@@ -122,4 +109,4 @@ class PolyRegressionWithErrorScene(BScene):
             self.play(Create(fg))
             self.play(Create(pt))
 
-        self.play(Create(self.error_fn))
+        self.play(Create(self.error_fn_segments))

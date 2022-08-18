@@ -143,7 +143,7 @@ def get_dots_for_axes(XS, YS, axes, config, radius=DEFAULT_DOT_RADIUS):
     return dots
 
 
-def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), axes_labels=None):
+def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), axes_labels=None, radius=DEFAULT_DOT_RADIUS):
     xmin, xmax = config["X_MIN"], config["X_MAX"]
     ymin, ymax = config["Y_MIN"], config["Y_MAX"]
     axes = BoundedAxes(
@@ -153,7 +153,7 @@ def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), axes_labels=None):
         axis_config={"include_tip": False, "include_ticks": False, "color": GREY_C},
     )
 
-    dots = get_dots_for_axes(XS, YS, axes, config)
+    dots = get_dots_for_axes(XS, YS, axes, config, radius)
 
     if axes_labels:
         x_label_text, y_label_text = axes_labels
