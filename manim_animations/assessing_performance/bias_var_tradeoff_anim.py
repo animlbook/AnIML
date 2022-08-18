@@ -19,31 +19,25 @@ def true_error(x):
 
 class Animation(BTrainTestScene):
     def function_and_label(self, fn, text, color):
-        fng = FunctionOffGraph(
-            x_min=self.x_min,
-            x_max=self.x_max,
-            y_min=self.y_min,
-            y_max=self.y_max,
-            function=fn,
-            color=color,
-        )
+        fng = self.axes.plot(fn, x_range=(self.x_min, self.x_max), color=color)
 
-        fnl = BText(text, color=color)
-        fnl.scale(0.75)
-        ypos = max(self.y_min, min(self.y_max, fng.function(self.x_max)))
+        fnl = BTex(text, color=color)
+        fnl.scale(0.6)
+        ypos = max(self.y_min, min(self.y_max, fn(self.x_max)))
         fnl.move_to(self.axes.c2p(self.x_max, ypos, 0) + RIGHT * 0.75)
 
         return VGroup(fng, fnl)
 
     def construct(self):
         self.setup_axes()
+        self.set_axes_labels()
 
         bias_grp = self.function_and_label(bias, "Bias", COL_BLUE)
         var_grp = self.function_and_label(var, "Variance", COL_GREEN)
         noise_grp = self.function_and_label(noise, "Noise", COL_PURPLE)
-        true_grp = self.function_and_label(true_error, r"True \\ Error", COL_GOLD)
+        true_grp = self.function_and_label(true_error, r"True Error", COL_GOLD)
 
-        title = BText(
+        title = BTex(
             "True Error = Bias$^2$ + Variance + Noise",
             tex_to_color_map={
                 "True Error": COL_GOLD,
@@ -58,13 +52,11 @@ class Animation(BTrainTestScene):
         self.axes_and_fn_label = VGroup(
             self.axes, bias_grp, var_grp, noise_grp, true_grp, title, *self.axes_labels
         )
-        self.centershift = -self.axes_and_fn_label.get_center()
-        self.axes_and_fn_label.move_to((0, 0, 0))
 
         self.play(
-            ShowCreation(self.axes), Write(VGroup(*self.axes_labels)), Write(title)
+            Create(self.axes), Write(VGroup(*self.axes_labels)), Write(title)
         )
-        self.play(ShowCreation(bias_grp))
-        self.play(ShowCreation(var_grp))
-        self.play(ShowCreation(noise_grp))
-        self.play(ShowCreation(true_grp))
+        self.play(Create(bias_grp))
+        self.play(Create(var_grp))
+        self.play(Create(noise_grp))
+        self.play(Create(true_grp))
