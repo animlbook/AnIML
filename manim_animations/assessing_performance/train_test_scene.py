@@ -58,7 +58,10 @@ class BTrainTestScene(BScene):
         self.setup_axes()
         self.set_axes_labels()
 
-        self.true_fn = self.axes.plot(self.true_error, x_range=(self.x_min, self.x_max), color=COL_GOLD)
+        self.true_fn, self.true_fn_segments = self.axes.plot_bounded(self.true_error,
+            x_range=(self.x_min, self.x_max),
+            y_range=(self.y_min, self.y_max),
+            color=COL_GOLD)
 
         self.true_flabel = BTex(r"True \\ Error", color=COL_GOLD)
         self.true_flabel.scale(0.75)
@@ -67,7 +70,10 @@ class BTrainTestScene(BScene):
         ypos = max(self.y_min, min(self.y_max, self.true_error(self.x_max)))
         self.true_flabel.move_to(self.axes.c2p(self.x_max, ypos, 0) + RIGHT * 0.75)
 
-        self.train_fn = self.axes.plot(self.train_error, x_range=(self.x_min, self.x_max), color=COL_BLUE)
+        self.train_fn, self.train_fn_segments = self.axes.plot_bounded(self.train_error,
+            x_range=(self.x_min, self.x_max),
+            y_range=(self.y_min, self.y_max),
+            color=COL_BLUE)
 
         self.train_flabel = BTex(r"Train \\ Error", color=COL_BLUE)
         self.train_flabel.scale(0.75)
@@ -88,7 +94,7 @@ class BTrainTestScene(BScene):
         #self.axes_and_fn_label.move_to((0, 0, 0))
 
         self.play(Create(self.axes), Write(VGroup(*self.axes_labels)))
-        self.play(Create(self.true_fn))
+        self.play(Create(self.true_fn_segments))
         self.play(Write(self.true_flabel))
-        self.play(Create(self.train_fn))
+        self.play(Create(self.train_fn_segments))
         self.play(Write(self.train_flabel))
