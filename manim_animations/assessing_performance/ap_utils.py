@@ -35,7 +35,7 @@ class BoundedAxes(Axes):
 
             if curr_y < min_y or curr_y > max_y:
                 if start_curr_range is not None:
-                    ranges.append((start_curr_range, curr_x))
+                    ranges.append((start_curr_range, curr_x - dt))  # Want to stop one before
                     start_curr_range = None
             else:
                 if start_curr_range is None:

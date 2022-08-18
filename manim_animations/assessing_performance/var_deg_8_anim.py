@@ -1,4 +1,5 @@
 from manim_config import *
+
 from bias_var_scene import BBiasVarianceScene
 
 
