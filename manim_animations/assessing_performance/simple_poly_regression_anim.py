@@ -20,13 +20,13 @@ class Animation(BScene):
         plot = VGroup(axes, dots)
         plot.center().shift(LEFT)
 
-
         # Make all of the individual degree plots
         fns = []
         labels = []
 
         for deg, col in self.deg_col:
-            fns.append(degfungraph(axes, xs, ys, deg, col, config))
+            fn, segments = degfungraph(axes, xs, ys, deg, col, config)
+            fns.append(segments)
 
             l = BTex(f"p = {deg}", color=col)
             if len(labels) > 0:

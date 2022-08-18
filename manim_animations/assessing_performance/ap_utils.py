@@ -7,64 +7,55 @@ GRAPH_CONFIG = {
     "Y_MAX": 6,
 }
 
+class BoundedAxes(Axes):
+    def plot_bounded(self, function, x_range=None, y_range=None, use_vectorized=None, **kwargs):
+        """
+        Same as plot, but hides regions with values outside the y-range
+        """
+        # TODO Ignores use_vectorized at the moment
 
-class FunctionOffGraph(FunctionGraph):
-    def __init__(self, function=None, **kwargs):
-        self.y_min, self.y_max = 0, 1
-        if "y_range" in kwargs:
-            self.y_min, self.y_max = kwargs["y_range"]
+        min_y, max_y = y_range[:2]
+        min_x, max_x = x_range[:2]
 
-        super().__init__(function=function, **kwargs)
-
-    def get_y_bound(self, lp):
-        if lp[1] > ((self.y_max - self.y_min) / 2):
-            return self.y_max
+        # Figure out evaluation deltas
+        if "dt" in kwargs:
+            dt = kwargs["dt"]
+        elif len(x_range) == 3:
+            dt = x_range[2]
         else:
-            return self.y_min
+            dt = 0.01
 
-    def generate_points(self):
-        t_min, t_max = self.t_min, self.t_max
-        dt = self.dt
+        # Go through and find the distinct ranges of xs where the output is within the y range
+        ranges = []
+        start_curr_range = None
 
-        discontinuities = filter(lambda t: t_min <= t <= t_max, self.discontinuities)
-        discontinuities = np.array(list(discontinuities))
-        boundary_times = [
-            self.t_min,
-            self.t_max,
-            *(discontinuities - dt),
-            *(discontinuities + dt),
-        ]
-        boundary_times.sort()
-        for t1, t2 in zip(boundary_times[0::2], boundary_times[1::2]):
-            step_size = self.get_step_size(t1)
-            t_range = list(np.arange(t1, t2, step_size))
-            if t_range[-1] != t2:
-                t_range.append(t2)
-            points = np.array([self.function(t) for t in t_range])
-            cur_draw = []
-            for p in points:
-                if p[1] > self.y_min and p[1] < self.y_max:
-                    # add an interpolation point if we're just starting a new line
-                    if len(cur_draw) == 0 and not (
-                        np.isclose(p[0], self.x_min) or np.isclose(p[1], self.x_max)
-                    ):
-                        cur_draw.append(
-                            np.array([p[0] - step_size, self.get_y_bound(p), p[2]])
-                        )
-                    cur_draw.append(p)
-                elif len(cur_draw) > 0:
-                    # if the last point was close to the top, then use the
-                    # top as the last point, and vice/versa with the min
-                    lp = cur_draw[-1]
-                    cur_draw.append(np.array([p[0], self.get_y_bound(lp), p[2]]))
-                    self.start_new_path(cur_draw[0])
-                    self.add_points_as_corners(cur_draw[1:])
-                    cur_draw = []
-            if len(cur_draw) > 0:
-                self.start_new_path(cur_draw[0])
-                self.add_points_as_corners(cur_draw[1:])
-        self.make_smooth()
-        return self
+        curr_x = min_x
+        while curr_x < max_x:
+            curr_y = function(curr_x)
+
+            if curr_y < min_y or curr_y > max_y:
+                if start_curr_range is not None:
+                    ranges.append((start_curr_range, curr_x))
+                    start_curr_range = None
+            else:
+                if start_curr_range is None:
+                    start_curr_range = curr_x
+
+            curr_x += dt
+
+        if start_curr_range is not None:
+            ranges.append((start_curr_range, curr_x))
+
+        # Go through and make plots for all of the discrete sections
+        segments = VGroup(*[
+            self.plot(function, x_range=sub_x_range, use_vectorized=use_vectorized, **kwargs)
+            for sub_x_range in ranges
+        ])
+
+        # Want to also return the "full" function for usability
+        full_function = self.plot(function, x_range=x_range, use_vectorized=use_vectorized, **kwargs)
+
+        return full_function, segments
 
 
 def simple_poly_regression_true_data():
@@ -155,7 +146,7 @@ def get_dots_for_axes(XS, YS, axes, config, radius=DEFAULT_DOT_RADIUS):
 def axes_and_data(XS, YS, config, pos=(0.0, 0.0, 0.0), axes_labels=None):
     xmin, xmax = config["X_MIN"], config["X_MAX"]
     ymin, ymax = config["Y_MIN"], config["Y_MAX"]
-    axes = Axes(
+    axes = BoundedAxes(
         x_range=(xmin, xmax),
         y_range=(ymin, ymax),
         #center_point=pos,
@@ -190,7 +181,7 @@ def degfungraph(axes, Xtrain, Ytrain, deg, color, config, **kwargs):
         yhat = fhat(x, Xtrain, Ytrain, deg)
         return yhat
 
-    return axes.plot(f, x_range=(config["X_MIN"], config["X_MAX"]),
+    return axes.plot_bounded(f, x_range=(config["X_MIN"], config["X_MAX"]), y_range=(config["Y_MIN"], config["Y_MAX"]),
         color=color, **kwargs)
 
     #return FunctionOffGraph(f
