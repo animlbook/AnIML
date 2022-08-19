@@ -9,80 +9,81 @@ AXES_SCALE = 0.5
 TEXT_SCALE = 0.5
 STROKE_WIDTH = 2
 
+DATA_X_RANGE = (0, 12)
+DATA_Y_RANGE = (0, 8)
+
+ERROR_X_RANGE = (0, 10, .1)  # Needs to match degree polynomials + 1
+ERROR_Y_RANGE = (0, 8)
+
 
 class PolyRegressionWithErrorScene(BScene):
-    def __init__(self, plot_title, error_title, error_fn, **kwargs):
+    def __init__(self, data_plot_title, error_plot_title, error_fn, error_y_range=ERROR_Y_RANGE, **kwargs):
         self.deg_col = [
             (1, COL_RED),
             (3, COL_GOLD),
             (5, COL_PURPLE),
             (7, COL_BLUE),
-            (8, COL_GREEN),
-            (10, GREY),
+            (9, COL_GREEN),
         ]
 
-        self.xs, self.ys, self.config = simple_poly_regression_get_data(scale=0.6)
-        self.axes, self.dots = axes_and_data(self.xs, self.ys, self.config, radius=0.05)
+        # should be sorted by degree
+        assert all(self.deg_col[i][0] < self.deg_col[i + 1][0]
+                   for i in range(len(self.deg_col) - 1))
 
+        # Make data
+        self.Xs, self.ys = generate_train_data(x_range=DATA_X_RANGE, n=10, seed=100399)
 
-        # Position the function plot axes
-        self.plot_grp = VGroup(self.axes, self.dots)
-        self.plot_grp.scale(AXES_SCALE)
+        # Make axes for data and errors
+        self.data_axes, self.data_axes_labels = make_bounded_axes(x_range=DATA_X_RANGE, y_range=DATA_Y_RANGE,
+                axes_labels=("x", "y"))
+        self.error_axes, self.error_axes_labels = make_bounded_axes(x_range=ERROR_X_RANGE, y_range=error_y_range,
+                axes_labels=("p", "Error"), axes_labels_rotations=(0, 90), y_label_buff=0.25)
 
-        # Make error plot axes
-        x_range = (0, 0.4 / 0.6 * self.config["X_MAX"])
-        y_range = (0, self.config["Y_MAX"])
-        self.error_plot = BoundedAxes(
-            x_range=x_range,
-            y_range=y_range,
-            axis_config={"include_tip": False, "include_ticks": False, "color": GRAY},
-        )
-        self.error_plot.scale(AXES_SCALE)
-        self.error_plot.next_to(self.plot_grp, RIGHT, buff=1.2)
+        # Make groups for plots and position them
+        self.data_plot_grp = VGroup(self.data_axes, self.data_axes_labels)
+        self.data_plot_grp.scale(AXES_SCALE)
+        self.error_plot_grp = VGroup(self.error_axes, self.error_axes_labels)
 
-        # Position the axes appropriately
-        self.axes_grp = VGroup(self.plot_grp, self.error_plot)
-        self.axes_grp.center()
+        self.error_plot_grp.scale(AXES_SCALE)
+        self.error_plot_grp.next_to(self.data_plot_grp, RIGHT, buff=1.2)
 
-        # Position function axes title
-        self.plot_text = BText(plot_title)
-        self.plot_text.next_to(self.plot_grp, 2 * UP).scale(TEXT_SCALE)
+        # Position both axes to be centered
+        self.both_plots = VGroup(self.data_plot_grp, self.error_plot_grp)
+        self.both_plots.center()
+
+        # Generate data
+        self.data_dots = get_dots_for_data(self.data_axes, self.Xs, self.ys, x_range=DATA_X_RANGE)
+        self.data_plot_grp.add(self.data_dots)
+
+        # Make plot titles
+        self.data_plot_title = BText(data_plot_title)
+        self.data_plot_title.next_to(self.data_plot_grp, 2 * UP).scale(TEXT_SCALE)
+
+        self.error_plot_title = BText(error_plot_title)
+        self.error_plot_title.next_to(self.error_plot_grp, 2 * UP).scale(TEXT_SCALE)
 
         # Make function plots
-        self.fngraphs = list(
-            map(
-                lambda dc: degfungraph(self.axes, self.xs, self.ys, dc[0], dc[1], self.config, stroke_width=STROKE_WIDTH)[1],
-                self.deg_col,
-            )
-        )
+        self.model_graphs = []
+        for deg, color in self.deg_col:
+            f_hat = train_and_plot_function(self.data_axes,
+                    self.Xs, self.ys, deg,
+                    x_range=DATA_X_RANGE, y_range=DATA_Y_RANGE,
+                    color=color,
+                    stroke_width=STROKE_WIDTH)
+            self.model_graphs.append(f_hat)
 
         # Make error function plot
-        self.error_fn, self.error_fn_segments = self.error_plot.plot_bounded(error_fn, x_range=x_range, y_range=y_range, color=BLACK, stroke_width=STROKE_WIDTH)
+        self.error_fn = self.error_axes.plot_bounded(error_fn,
+                x_range=ERROR_X_RANGE, y_range=ERROR_Y_RANGE,
+                color=BLACK,
+                stroke_width=STROKE_WIDTH)
 
-        # Position error plot title
-        self.error_label = BText(error_title)
-        self.error_label.next_to(self.error_plot, 2 * UP).scale(TEXT_SCALE)
-
-        # Make points showing errors
-        self.error_pts = VGroup()
-        max_d = np.max(np.array(list(map(itemgetter(0), self.deg_col))))
-
-        # hack so largest one isn't the too far to the right
-        max_d += 2
+        # Make error dots
+        self.error_dots = VGroup()
         for d, c in self.deg_col:
-            x = d / max_d * x_range[1]
-            pt = (x, self.loss_fn(d), 0, 0)
-            self.error_pts.add(Dot(self.error_plot.c2p(*pt), color=c)) #, radius=DEFAULT_DOT_RADIUS))
+            pt = (d, self.loss_fn(d), 0, 0)
+            self.error_dots.add(Dot(self.error_axes.c2p(*pt), color=c))
 
-        self.error_grp = VGroup(self.error_plot, self.error_pts, self.error_fn_segments)
-
-        self.main_grp = VGroup(
-            self.plot_grp,
-            self.plot_text,
-            *self.fngraphs,
-            self.error_grp,
-            self.error_label
-        )
 
         super().__init__(**kwargs)
 
@@ -92,21 +93,18 @@ class PolyRegressionWithErrorScene(BScene):
 
     def construct(self):
         self.play(
-            Create(self.plot_grp),
-            Write(self.plot_text),
-            Create(self.error_plot),
-            Write(self.error_label),
+            Create(self.data_plot_grp),
+            Write(self.data_plot_title),
+            Create(self.error_plot_grp),
+            Write(self.error_plot_title),
         )
 
         # Add dots to foreground to avoid curves drawing over them
-        self.add_foreground_mobject(self.dots)
-
-        # Move to side by side graph
-
+        self.add_foreground_mobject(self.data_dots)
 
         # Play functions while adding the loss to the the train_loss function
-        for fg, pt in zip(self.fngraphs, self.error_pts):
-            self.play(Create(fg))
+        for f, pt in zip(self.model_graphs, self.error_dots):
+            self.play(Create(f.segments))
             self.play(Create(pt))
 
-        self.play(Create(self.error_fn_segments))
+        self.play(Create(self.error_fn.segments))

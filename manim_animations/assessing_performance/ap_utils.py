@@ -12,8 +12,8 @@ GRAPH_CONFIG = {
     "Y_MAX": 6,
 }
 
-X_RANGE = (0, 12)
-Y_RANGE = (0, 6)
+X_RANGE = np.array([0, 12])
+Y_RANGE = np.array([0, 6])
 
 SegmentedParametricFunction = ParametricFunction
 
@@ -104,23 +104,26 @@ def true_function(x):
     return predict(x, true_coeffs)
 
 
-def generate_train_data(x_range, n=25, seed=100394, clip_y_range=None):
+def generate_train_data(x_range=None, Xs=None, n=25, noise=0.6, seed=100394, clip_y_range=None):
     """
     Generates n data points on the range x_range using given seed.
 
     If clip_y_range is specified, will clip any examples outside of the range
     """
+    assert (x_range is None and Xs is not None) or (x_range is not None and Xs is None)
+
     np.random.seed(seed)
 
-    x_min, x_max = x_range
-    Xs = np.random.uniform(x_min, x_max, n).reshape((n, 1))
-    ys = true_function(Xs) + np.random.normal(0, 0.6, size=(n, 1))
+    if x_range is not None:  # Xs is None
+        x_min, x_max = x_range
+        Xs = np.random.uniform(x_min, x_max, n).reshape((n, 1))
+    ys = true_function(Xs) + np.random.normal(0, noise, size=(len(Xs), 1))
 
     if clip_y_range:
         y_min, y_max = clip_y_range
         valid_mask = (ys >= y_min) & (ys <= y_max)
-        Xs = Xs[valid_mask]
-        ys = ys[valid_mask]
+        Xs = Xs[valid_mask][:, None]
+        ys = ys[valid_mask][:, None]
 
     return Xs, ys
 
@@ -134,7 +137,7 @@ def train(X_train, y_train, deg):
 
 
 # Manim code
-def make_bounded_axes(x_range, y_range, axes_labels=None):
+def make_bounded_axes(x_range, y_range, axes_labels=None, axes_labels_rotations=None, y_label_buff=0):
     axes = BoundedAxes(
         x_range=x_range,
         y_range=y_range,
@@ -144,14 +147,25 @@ def make_bounded_axes(x_range, y_range, axes_labels=None):
     if axes_labels:
         x_label_text, y_label_text = axes_labels
 
+        if axes_labels_rotations:
+            x_label_rotation, y_label_rotation = axes_labels_rotations
+        else:
+            x_label_rotation, y_label_rotation = 0, 0
+
         axes_labels_grp = VGroup()
 
         if x_label_text:
-            x_label = axes.get_x_axis_label(x_label_text, edge=DOWN).shift(0.5 * DOWN).set_color(GRAY_C)
+            x_label = axes.get_x_axis_label(x_label_text, edge=DOWN)\
+                    .shift(0.75 * DOWN)\
+                    .rotate(x_label_rotation * DEGREES)\
+                    .set_color(GRAY_C)
             axes_labels_grp.add(x_label)
 
         if y_label_text:
-            y_label = axes.get_y_axis_label(y_label_text, edge=LEFT, direction=LEFT, buff=0.4).set_color(GRAY_C)
+            y_label = axes.get_y_axis_label(y_label_text, edge=RIGHT, direction=LEFT, buff=0.4)\
+                    .set_color(GRAY_C)\
+                    .rotate(y_label_rotation * DEGREES)\
+                    .shift(y_label_buff * LEFT)
             axes_labels_grp.add(y_label)
 
         return axes, axes_labels_grp
@@ -159,14 +173,12 @@ def make_bounded_axes(x_range, y_range, axes_labels=None):
         return axes
 
 
-def get_dots_for_data(axes, Xs, ys, x_range, y_range, radius=DEFAULT_DOT_RADIUS):
-    x_min, x_max = x_range
-    y_min, y_max = y_range
-
-    # Make mobjects for points
+def get_dots_for_data(axes, Xs, ys, x_range=None, y_range=None, radius=DEFAULT_DOT_RADIUS):
     dots = VGroup()
     for x, y in zip(Xs[:, 0], ys[:, 0]):
-        if x > x_min and x < x_max and y > y_min and y < y_max:
+        valid_x = x_range is None or (x >= x_range[0] and x <= x_range[1])
+        valid_y = y_range is None or (y >= y_range[0] and y <= y_range[1])
+        if valid_x and valid_y:
             point = axes.coords_to_point(x, y, 0)
             dot = Dot(point, color=COL_BLACK, radius=radius)
             dots.add(dot)
