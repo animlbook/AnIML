@@ -64,8 +64,7 @@ class BBiasVarianceScene(BScene):
         self.nfirst = nfirst
         self.nextra = nextra
         self.degree = degree
-        self.fns = []
-        self.fns_segments_mobj = []
+        self.functions = []
 
         self._function_set = None
         super().__init__(**kwargs)
@@ -73,46 +72,54 @@ class BBiasVarianceScene(BScene):
     def construct(self):
         raise NotImplementedError
 
+    def _function_label_pos(self, f, x):
+        y = f(x)
+        y = min(y, self.y_max)
+        y = max(y, self.y_min)
+
+        return self.axes.c2p(x, y)
+
     def setup_scene(self):
-        (
-            self.true_dim,
-            self.xtrue,
-            self.ytrue,
-            config,
-        ) = simple_poly_regression_true_data()
-        self.axes, self.axes_labels, _ = axes_and_data([], [], config, axes_labels=("x", "y"))
+        self.x_min = X_RANGE[0]
+        self.x_max = X_RANGE[1]
+        self.y_min = Y_RANGE[0]
+        self.y_max = Y_RANGE[1]
+
+        # Generate axes
+        self.axes, self.axes_labels = make_bounded_axes(x_range=X_RANGE, y_range=Y_RANGE,
+            axes_labels=("x", "y"))
         VGroup(self.axes, self.axes_labels).scale(0.7).center()
 
-        self.x_min = config["X_MIN"]
-        self.x_max = config["X_MAX"]
-        self.y_min = config["Y_MIN"]
-        self.y_max = config["Y_MAX"]
+        # Make true function
+        self.true_fn = self.axes.plot_bounded(
+            lambda x: true_function(x)[0][0],
+            x_range=X_RANGE, y_range=Y_RANGE,
+            color=COL_BLUE)
 
-        self.true_fn, self.true_fn_segments = degfungraph(
-            self.axes, self.xtrue, self.ytrue, self.true_dim, COL_BLUE, config
-        )
         self.true_flabel = BMathTex("f(x)", color=COL_BLUE)
 
         # move to the right of the axes
         self.true_flabel.move_to(
-            self.true_fn.function(self.x_max)
+            self._function_label_pos(self.true_fn.underlying_function, self.x_max)
             + RIGHT * 0.75
         )
 
-        axes_and_fn_label = VGroup(self.axes, self.true_fn, self.true_flabel)
-
         self.play(Create(self.axes), Create(self.axes_labels))
-        self.play(Create(self.true_fn_segments))
+        self.play(Create(self.true_fn.segments))
         self.play(Write(self.true_flabel))
 
     def fns_and_dots(self, seed):
-        xs, ys, config = simple_poly_regression_get_data(seed=seed)
-        fg, fg_segments = degfungraph(self.axes, xs, ys, self.degree, COL_PURPLE, config)
-        dots = get_dots_for_axes(xs, ys, self.axes, config)
+        Xs, ys = generate_train_data(x_range=X_RANGE, clip_y_range=Y_RANGE,
+            seed=seed)
 
-        return fg, fg_segments, dots
+        function = train_and_plot_function(self.axes, Xs, ys,
+            x_range=X_RANGE, y_range=Y_RANGE,
+            deg=self.degree, color=COL_PURPLE)
 
-    def highlight_area_between_fn(self, f1, f2, dx=0.001, color=COL_RED, opacity=0.01):
+        dots = get_dots_for_data(self.axes, Xs, ys)
+        return function, dots
+
+    def highlight_area_between_fn(self, f1, f2, dx=0.01, color=COL_RED, opacity=0.01):
         xs = np.arange(self.x_min + 0.015, self.x_max, dx) + (dx / 2.0)
         rects = VGroup()
         for x in xs:
@@ -143,73 +150,75 @@ class BBiasVarianceScene(BScene):
         self.wait(0.5)
 
     def explain_first_function(self):
-        fg, fg_segments, dots = self.fns_and_dots(seed=1001001)
-        self.fns.append(fg.underlying_function)
-        self.fns_segments_mobj.append(fg_segments)
+        function, dots = self.fns_and_dots(seed=1001001)
+        self.functions.append(function)
 
         flabel = BMathTex("f_{\hat{w}}(x)", color=COL_PURPLE)
 
         # move to the right of the axes
         flabel.move_to(
-            fg.function(self.x_max) + RIGHT * 0.75
+            self._function_label_pos(function.underlying_function, self.x_max) + RIGHT * 0.75
         )
 
         self.play(Create(dots))
-        self.play(Create(fg_segments))
+        self.play(Create(function.segments))
         self.play(Write(flabel))
         self.wait(0.5)
-        self.play(fg_segments.animate.set_stroke(GRAY), FadeOut(dots), FadeOut(flabel))
+        self.play(function.segments.animate.set_stroke(GRAY), FadeOut(dots), FadeOut(flabel))
 
     def slow_draw_functions(self):
         for i in range(1, self.nfirst):
-            fg, fg_segments, dots = self.fns_and_dots(seed=1001001 + 147 * i)
-            self.fns.append(fg.underlying_function)
-            self.fns_segments_mobj.append(fg_segments)
+            function, dots = self.fns_and_dots(seed=1001001 + 147 * i)
+            self.functions.append(function)
             self.play(Create(dots), run_time=0.5)
-            self.play(Create(fg_segments), run_time=0.5)
-            self.play(fg_segments.animate.set_stroke(GRAY), FadeOut(dots))
+            self.play(Create(function.segments), run_time=0.5)
+            self.play(function.segments.animate.set_stroke(GRAY), FadeOut(dots))
 
     def fast_draw_functions(self):
         for i in range(self.nextra):
-            fg, fg_segments, dots = self.fns_and_dots(seed=1101001 + 147 * i)
-            fg_segments.set_stroke(GRAY)
+            function, dots = self.fns_and_dots(seed=1101001 + 147 * i)
+            function.segments.set_stroke(GRAY)
             dots.set_color(GRAY)
-            self.fns.append(fg.underlying_function)
-            self.fns_segments_mobj.append(fg_segments)
+            self.functions.append(function)
             self.play(Create(dots), run_time=0.1)
-            self.play(Create(fg_segments), run_time=0.1)
+            self.play(Create(function.segments), run_time=0.1)
             self.play(FadeOut(dots), run_time=0.1)
 
     def remove_dots_and_fns(self):
-        self.play(FadeOut(VGroup(*self.fns_segments_mobj)), run_time=0.2)
+        mobjects = [f.segments for f in self.functions]
+        self.play(FadeOut(VGroup(*mobjects)), run_time=0.75)
 
-    def draw_mean_function(self):
+    def draw_mean_function(self, label_loc=None):
         if not self._function_set:
-            self._function_set = FunctionSet(self.fns)
+            functions = [f.underlying_function for f in self.functions]
+            self._function_set = FunctionSet(functions)
 
-        self.meanf, mean_segments = self.axes.plot_bounded(self._function_set.mean,
+        self.meanf = self.axes.plot_bounded(self._function_set.mean,
             x_range=(self.x_min, self.x_max),
             y_range=(self.y_min, self.y_max),
             color=COL_RED)
 
         meanf_label = BMathTex(r"\overline{f_{\hat{w}}}(x)", color=COL_RED)
-        meanf_label.next_to(self.axes, UP + RIGHT)
-        # meanf_label.move_to(min(self.meanf.function(self.x_max), self.y_max) + RIGHT * 0.75, aligned_edge=UP)
+        if label_loc is None:
+            pt = self._function_label_pos(self._function_set.mean, self.x_max)
+            meanf_label.move_to(pt + RIGHT * 0.75, aligned_edge=UP)
+        else:
+            meanf_label.next_to(self.axes, label_loc)
 
-
-        self.play(Create(mean_segments))
+        self.play(Create(self.meanf.segments))
         self.play(Write(meanf_label))
 
     def draw_variance_interval(self):
         if not self._function_set:
-            self._function_set = FunctionSet(self.fns)
+            functions = [f.underlying_function for f in self.functions]
+            self._function_set = FunctionSet(functions)
 
         # want to draw upper and lower function bounds for the variance
-        self.upper_varf, upper_varf_segments = self.axes.plot_bounded(self._function_set.upper_confidence_bound,
+        self.upper_varf = self.axes.plot_bounded(self._function_set.upper_confidence_bound,
             x_range=(self.x_min, self.x_max),
             y_range=(self.y_min, self.y_max),
             color=COL_GOLD)
-        self.lower_varf, lower_varf_segments = self.axes.plot_bounded(self._function_set.lower_confidence_bound,
+        self.lower_varf = self.axes.plot_bounded(self._function_set.lower_confidence_bound,
             x_range=(self.x_min, self.x_max),
             y_range=(self.y_min, self.y_max),
             color=COL_GOLD)
@@ -222,7 +231,7 @@ class BBiasVarianceScene(BScene):
         # var_label.move_to(self.axes.c2p(self.x_max, self.y_min - 0.475, 0) + RIGHT * 0.75, aligned_edge=LEFT)
 
         self.play(
-            Create(upper_varf_segments),
-            Create(lower_varf_segments),
+            Create(self.upper_varf.segments),
+            Create(self.lower_varf.segments),
             Write(var_label),
         )

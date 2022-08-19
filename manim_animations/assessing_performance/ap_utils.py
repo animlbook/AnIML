@@ -119,7 +119,7 @@ def generate_train_data(x_range=None, Xs=None, n=25, noise=0.6, seed=100394, cli
         Xs = np.random.uniform(x_min, x_max, n).reshape((n, 1))
     ys = true_function(Xs) + np.random.normal(0, noise, size=(len(Xs), 1))
 
-    if clip_y_range:
+    if clip_y_range is not None:
         y_min, y_max = clip_y_range
         valid_mask = (ys >= y_min) & (ys <= y_max)
         Xs = Xs[valid_mask][:, None]

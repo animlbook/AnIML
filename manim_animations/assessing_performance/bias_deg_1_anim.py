@@ -13,5 +13,5 @@ class Animation(BBiasVarianceScene):
         self.slow_draw_functions()
         self.fast_draw_functions()
         self.draw_mean_function()
-        self.remove(*self.fns_mobj)
+        self.remove_dots_and_fns()
         self.highlight_area_between_fn(self.meanf, self.true_fn)
