@@ -19,12 +19,14 @@ def true_error(x):
 
 class Animation(BTrainTestScene):
     def function_and_label(self, fn, text, color):
-        fng = self.axes.plot(fn, x_range=(self.x_min, self.x_max), color=color)
+        fng = self.axes.plot(fn, x_range=X_RANGE, color=color)
 
         fnl = BTex(text, color=color)
         fnl.scale(0.6)
-        ypos = max(self.y_min, min(self.y_max, fn(self.x_max)))
-        fnl.move_to(self.axes.c2p(self.x_max, ypos, 0) + RIGHT * 0.75)
+
+        pos = self.axes.function_label_pos(fn, X_RANGE[1],
+            y_range=Y_RANGE)
+        fnl.move_to(pos + RIGHT * 0.75)
 
         return VGroup(fng, fnl)
 

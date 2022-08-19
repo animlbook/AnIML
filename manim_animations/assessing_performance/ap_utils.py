@@ -69,6 +69,14 @@ class BoundedAxes(Axes):
 
         return full_function
 
+    def function_label_pos(self, f, x, y_range):
+        y_min, y_max = y_range
+        y = f(x)
+        y = min(y, y_max)
+        y = max(y, y_min)
+
+        return self.c2p(x, y)
+
 
 
 def polynomial_expand(x: typing.Union[float, Sequence[float]] , deg: int) -> np.ndarray:

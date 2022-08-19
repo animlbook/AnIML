@@ -18,11 +18,14 @@ class Animation(BTrainTestScene):
         self.play(Create(opt_line))
         self.play(Write(opt_label))
 
+        x_min, x_max = X_RANGE
+        y_min, y_max = Y_RANGE
+
         underfit_rect = Polygon(
-            self.axes.c2p(1.0, self.y_max, 0),
-            self.axes.c2p(3.5, self.y_max, 0),
-            self.axes.c2p(3.5, self.y_min, 0),
-            self.axes.c2p(1.0, self.y_min, 0),
+            self.axes.c2p(1.0, y_max, 0),
+            self.axes.c2p(3.5, y_max, 0),
+            self.axes.c2p(3.5, y_min, 0),
+            self.axes.c2p(1.0, y_min, 0),
             stroke_opacity=0.0,
             fill_color=COL_RED,
             fill_opacity=0.1,
@@ -36,10 +39,10 @@ class Animation(BTrainTestScene):
         self.play(Write(underfit_text))
 
         overfit_rect = Polygon(
-            self.axes.c2p(7.5, self.y_max, 0),
-            self.axes.c2p(self.x_max, self.y_max, 0),
-            self.axes.c2p(self.x_max, self.y_min, 0),
-            self.axes.c2p(7.5, self.y_min, 0),
+            self.axes.c2p(7.5, y_max, 0),
+            self.axes.c2p(x_max, y_max, 0),
+            self.axes.c2p(x_max, y_min, 0),
+            self.axes.c2p(7.5, y_min, 0),
             stroke_opacity=0.0,
             fill_color=COL_RED,
             fill_opacity=0.1,

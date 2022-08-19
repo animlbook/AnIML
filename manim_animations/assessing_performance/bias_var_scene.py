@@ -70,14 +70,7 @@ class BBiasVarianceScene(BScene):
         super().__init__(**kwargs)
 
     def construct(self):
-        raise NotImplementedError
-
-    def _function_label_pos(self, f, x):
-        y = f(x)
-        y = min(y, self.y_max)
-        y = max(y, self.y_min)
-
-        return self.axes.c2p(x, y)
+        raise NotImplementedError()
 
     def setup_scene(self):
         self.x_min = X_RANGE[0]
@@ -100,7 +93,8 @@ class BBiasVarianceScene(BScene):
 
         # move to the right of the axes
         self.true_flabel.move_to(
-            self._function_label_pos(self.true_fn.underlying_function, self.x_max)
+            self.axes.function_label_pos(self.true_fn.underlying_function, self.x_max,
+                y_range=(self.y_min, self.y_max))
             + RIGHT * 0.75
         )
 
@@ -157,7 +151,9 @@ class BBiasVarianceScene(BScene):
 
         # move to the right of the axes
         flabel.move_to(
-            self._function_label_pos(function.underlying_function, self.x_max) + RIGHT * 0.75
+            self.axes.function_label_pos(function.underlying_function, self.x_max,
+                y_range=(self.y_min, self.y_max))
+            + RIGHT * 0.75
         )
 
         self.play(Create(dots))
@@ -200,7 +196,8 @@ class BBiasVarianceScene(BScene):
 
         meanf_label = BMathTex(r"\overline{f_{\hat{w}}}(x)", color=COL_RED)
         if label_loc is None:
-            pt = self._function_label_pos(self._function_set.mean, self.x_max)
+            pt = self.axes.function_label_pos(self._function_set.mean, self.x_max,
+                y_range=(self.y_min, self.y_max))
             meanf_label.move_to(pt + RIGHT * 0.75, aligned_edge=UP)
         else:
             meanf_label.next_to(self.axes, label_loc)
