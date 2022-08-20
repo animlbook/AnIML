@@ -1,3 +1,5 @@
+from sklearn.metrics import mean_squared_error
+
 from ap_utils import *
 from poly_regression_with_error_scene import PolyRegressionWithErrorScene
 
@@ -15,8 +17,6 @@ class Animation(PolyRegressionWithErrorScene):
                 error_y_range=TRAIN_ERROR_Y_RANGE, **kwargs)
 
     def loss_fn(self, deg):
-        w_hat = train(self.Xs, self.ys, deg)
-        y_hat = predict(self.Xs, w_hat)
-        return np.square(np.linalg.norm(self.ys - y_hat)) / len(self.Xs)
-        # Kludge: divide by 5?
-
+        model = train(self.Xs, self.ys, deg)
+        y_hat = model.predict(self.Xs)
+        return mean_squared_error(self.ys, y_hat)

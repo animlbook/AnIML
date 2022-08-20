@@ -11,7 +11,7 @@ class Animation(BScene):
             (3, COL_GOLD),
             (5, COL_PURPLE),
             (7, COL_BLUE),
-            (9, COL_GREEN)
+            (9, COL_GREEN),
         ]
 
         # Generate axes

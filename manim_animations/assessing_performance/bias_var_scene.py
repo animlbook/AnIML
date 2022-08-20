@@ -85,7 +85,7 @@ class BBiasVarianceScene(BScene):
 
         # Make true function
         self.true_fn = self.axes.plot_bounded(
-            lambda x: true_function(x)[0][0],
+            lambda x: true_function(x)[0],
             x_range=X_RANGE, y_range=Y_RANGE,
             color=COL_BLUE)
 

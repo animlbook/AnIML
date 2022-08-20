@@ -4,6 +4,9 @@ from typing import Sequence, Union
 
 import numpy as np
 from manim_config import *
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import FunctionTransformer, PolynomialFeatures
 
 GRAPH_CONFIG = {
     "X_MIN": 0,
@@ -79,37 +82,47 @@ class BoundedAxes(Axes):
 
 
 
-def polynomial_expand(x: typing.Union[float, Sequence[float]] , deg: int) -> np.ndarray:
+def ensure_shape(x):
+    """
+    Ensures the given input x is a valid sklearn input of an (n, 1) ndarray.
+    If a scalar is given, returns it as a (1, 1).
+    """
     if np.isscalar(x):
-        features = np.zeros((1, deg + 1))
-        for i in range(deg + 1):
-            features[0, i] = pow(x, i)
-        return features
-    else:  # Is list of xs
-        n = x.shape[0]
-        new_X = np.empty((n, deg + 1))
-        for i in range(n):
-            new_X[i] = polynomial_expand(x[i], deg)[0, :]  # Recurse one level to expand single x
-        return new_X
+        return np.array([x]).reshape(-1, 1)
+    elif len(x.shape) == 1:
+        return x.reshape(-1, 1)
+    else:
+        return x
 
 
-def predict(x, coeffs):
-    x = polynomial_expand(x, len(coeffs) - 1)
-    result = x @ coeffs
-    return result
+def make_poly_pipeline(degree):
+    """
+    Builds a polynomial regression pipeline with the given degree polynomial
+    """
+    pipeline = make_pipeline(
+        FunctionTransformer(ensure_shape),
+        PolynomialFeatures(degree, include_bias=False),
+        LinearRegression()
+    )
+    return pipeline
 
 
-def true_function(x):
-    dim = 6  # Includes intercept
-    true_coeffs = np.array([
-        -9.77643998e+00,
+TRUE_MODEL_COEFS = np.array([
         1.77393973e+01,
         -7.34515366e+00,
         1.27881487e+00,
         -9.94748672e-02,
         2.85635347e-03
-    ]).reshape((dim, 1))
-    return predict(x, true_coeffs)
+    ])
+TRUE_MODEL_INTERCEPT = -9.77643998e+00
+TRUE_MODEL = make_poly_pipeline(len(TRUE_MODEL_COEFS))
+TRUE_MODEL.fit(np.array([[0]]), [0])
+TRUE_MODEL.named_steps["linearregression"].coef_ = TRUE_MODEL_COEFS
+TRUE_MODEL.named_steps["linearregression"].intercept_ = TRUE_MODEL_INTERCEPT
+
+
+def true_function(x):
+    return TRUE_MODEL.predict(x)
 
 
 def generate_train_data(x_range=None, Xs=None, n=25, noise=0.6, seed=100394, clip_y_range=None):
@@ -123,25 +136,26 @@ def generate_train_data(x_range=None, Xs=None, n=25, noise=0.6, seed=100394, cli
     np.random.seed(seed)
 
     if x_range is not None:  # Xs is None
-        x_min, x_max = x_range
+        x_min, x_max = x_range[:2]
         Xs = np.random.uniform(x_min, x_max, n).reshape((n, 1))
-    ys = true_function(Xs) + np.random.normal(0, noise, size=(len(Xs), 1))
+
+    if len(Xs.shape) < 2:
+        Xs = Xs[:, None]  # Make 2D
+
+    ys = true_function(Xs) + np.random.normal(0, noise, size=len(Xs))
 
     if clip_y_range is not None:
         y_min, y_max = clip_y_range
         valid_mask = (ys >= y_min) & (ys <= y_max)
-        Xs = Xs[valid_mask][:, None]
-        ys = ys[valid_mask][:, None]
+        Xs = Xs[valid_mask]
+        ys = ys[valid_mask]
 
     return Xs, ys
 
 def train(X_train, y_train, deg):
-    assert y_train.shape[1] == 1
-
-    X_train = polynomial_expand(X_train, deg)
-    w_hat = np.matmul(np.linalg.inv(np.matmul(X_train.T, X_train)), np.matmul(X_train.T, y_train))
-
-    return w_hat
+    pipeline = make_poly_pipeline(deg)
+    pipeline.fit(X_train, y_train)
+    return pipeline
 
 
 # Manim code
@@ -183,7 +197,7 @@ def make_bounded_axes(x_range, y_range, axes_labels=None, axes_labels_rotations=
 
 def get_dots_for_data(axes, Xs, ys, x_range=None, y_range=None, radius=DEFAULT_DOT_RADIUS):
     dots = VGroup()
-    for x, y in zip(Xs[:, 0], ys[:, 0]):
+    for x, y in zip(Xs[:, 0], ys):
         valid_x = x_range is None or (x >= x_range[0] and x <= x_range[1])
         valid_y = y_range is None or (y >= y_range[0] and y <= y_range[1])
         if valid_x and valid_y:
@@ -195,13 +209,10 @@ def get_dots_for_data(axes, Xs, ys, x_range=None, y_range=None, radius=DEFAULT_D
 
 
 def train_and_plot_function(axes, X_train, y_train, deg, x_range, y_range, color, **kwargs):
-    assert y_train.shape[1] == 1
-    assert y_train.shape[0] == len(X_train)
-
-    w_hat = train(X_train, y_train, deg)
+    model = train(X_train, y_train, deg)
 
     def f(x):
-        return predict(x, w_hat)[0, 0]
+        return model.predict(x)[0]
 
     return axes.plot_bounded(f, x_range=x_range, y_range=y_range,
         color=color, **kwargs)
