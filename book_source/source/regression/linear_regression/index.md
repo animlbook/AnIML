@@ -22,7 +22,10 @@ The way we represent our data is a $n$ input/output pairs where we use the varia
 
 It is sometimes helpful to visualize the relationship between input and output. Visually, we could plot these points on a graph to see if there is a relationship between the input and the target.
 
-TODO Video
+```{video} ../../_static/manim_animations/linear_regression/data_anim.mp4
+:width: 100%
+:autoplay:
+```
 
 When using machine learning, we generally make an assumption that there is a relationship between the input and the target (i.e., square footage of the house and its sale price). We are going to say that there exists some secret (unknown) function $f$ such that the price of a house is approximately equal to the function's output for the houses input data.
 

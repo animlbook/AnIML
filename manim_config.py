@@ -1,7 +1,7 @@
 import colour
 from manim import *
 
-COL_BACKGROUND = "#fffff8"
+COL_BACKGROUND = "#ffffff" #fffff8"
 COL_BLACK = "#111111"
 COL_GREEN = GREEN_E
 COL_PURPLE = PURPLE

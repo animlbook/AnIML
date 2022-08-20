@@ -10,3 +10,6 @@ docs
 # Manim output
 media
 videos
+
+# Mac Files
+.DS_Store

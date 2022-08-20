@@ -6,6 +6,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import time
 
 ANIMATION_CLASS_NAME = "Animation"
 
@@ -37,18 +38,17 @@ class AnimationFile:
         self.srcfile = os.path.join(dirname, filename)
         self.video_output_dir = os.path.join(outdir, self.reldir)
 
-        quality_string = "_hq" if hq else "_lq"
         # manim is smart enough to know that videos go in out_dir/manim_file_name, without extension
         # will be somthing like: anim_dir/{}/{}/*_anim.py, and wait to remove that extra anim_dir
         self.file_name, _ = os.path.splitext(filename)
-        self.manim_file_name_vid = self.file_name + quality_string
-        self.manim_file_name_img = self.file_name + quality_string
+        self.manim_file_name_vid = self.file_name
+        self.manim_file_name_img = self.file_name
 
         self.imgloc = os.path.join(
             outdir, self.reldir, "images", self.manim_file_name_img + ".png"
         )
         self.vidloc = os.path.join(
-            outdir, self.reldir, self.manim_file_name_vid + ".mp4"
+            outdir, self.reldir, "videos", self.manim_file_name_vid, "1080p60", self.manim_file_name_vid + ".mp4"
         )
 
         self.public_path_vid = os.path.join(self.dirname, self.file_name + ".mp4")
@@ -132,17 +132,21 @@ def manim(af, hard, tc, manim_args, copy=False):
     args.extend(["--output_file", manim_file_name])
 
     if hard or gen:
+
         sys.stdout.write(f"{tc.BLUE}[RUNNING]{tc.ENDC} {af.srcfile} ~> {filepath}")
         sys.stdout.flush()
 
+        start_time = time.time()
         r = subprocess.run(args, capture_output=True, env=env)
         sys.stdout.write("\r")
         sys.stdout.flush()
 
+        end_time = time.time()
+
         if r.returncode == 0:
-            print(f"{tc.GREEN}[SUCCESS]{tc.ENDC} {af.srcfile} ~> {filepath}")
+            print(f"{tc.GREEN}[SUCCESS]{tc.ENDC} ({end_time - start_time:.2f}) {af.srcfile} ~> {filepath}")
         else:
-            print(f"{tc.RED}[FAIL]{tc.ENDC}    {af.srcfile} ~> {filepath}")
+            print(f"{tc.RED}[FAIL]{tc.ENDC} ({end_time - start_time:.2f})   {af.srcfile} ~> {filepath}")
 
         print("STD OUT")
         print(f"{r.stdout.decode()}")
@@ -154,7 +158,7 @@ def manim(af, hard, tc, manim_args, copy=False):
             # preview_file(filepath)
             pass
     if copy:
-        dstfile = os.path.join("website", "public", public_path)
+        dstfile = os.path.join("book_source", "source", "_static", public_path)
         dstdir, _ = os.path.split(dstfile)
         if not os.path.exists(dstdir):
             os.makedirs(dstdir)
@@ -184,7 +188,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=DESCRIPTION)
     parser.add_argument(
         "files",
-        default=["animations"],
+        default=["manim_animations"],
         nargs="*",
         help="Compile specific files, if no files are specified then all animations will be compiled",
     )

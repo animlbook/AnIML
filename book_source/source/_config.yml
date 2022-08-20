@@ -16,6 +16,7 @@ parse:
   myst_enable_extensions:
     - amsmath
     - dollarmath
+    - html_image
 
 #######################################################################################
 # HTML-specific settings
@@ -54,6 +55,7 @@ sphinx:
     - "sphinx_comments"
     - "sphinx_copybutton"
     - "sphinx_design"
+    - "sphinxcontrib.video"
   config:
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
     suppress_warnings:
