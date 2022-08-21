@@ -2,6 +2,12 @@
 // Source: https://stackoverflow.com/questions/32554260/html5-video-run-when-completely-visible
 
 (function() {
+    function stripHtml(html) {
+       let tmp = document.createElement("DIV");
+       tmp.innerHTML = html;
+       return tmp.textContent || tmp.innerText || "";
+    }
+
     function isScrolledIntoView(element) {
         const elementTop = element.getBoundingClientRect().top;
         const elementBottom = element.getBoundingClientRect().bottom;
@@ -21,6 +27,11 @@
     }
 
     window.onload = function () {
+        // Remove HTML from page title D:
+        document.title = stripHtml(document.title);
+
+
+        // Control video autoplay
         const videos = document.querySelectorAll("video");
 
         // Play any videos currently in view
