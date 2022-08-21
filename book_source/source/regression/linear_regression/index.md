@@ -24,12 +24,14 @@ It is sometimes helpful to visualize the relationship between input and output. 
 
 ```{video} ../../_static/manim_animations/linear_regression/data_anim.mp4
 :width: 100%
-:autoplay:
 ```
 
 When using machine learning, we generally make an assumption that there is a relationship between the input and the target (i.e., square footage of the house and its sale price). We are going to say that there exists some secret (unknown) function $f$ such that the price of a house is approximately equal to the function's output for the houses input data.
 
-TODO video
+```{video} ../../_static/manim_animations/linear_regression/true_function_anim.mp4
+:width: 100%
+```
+
 
 Note that we really do need the qualifier "approximately" above. We are not saying that the output has to be exactly equal, but rather that it is close. The reason we allow for this wiggle-room is that we are allowing for the fact that our model of the world might be slightly wrong. There are probably more factors outside the square footage that affect a house's price, so we are never hoping to find an exact relationship between this input and our output; just one that is "good enough". Alternatively, another reason to only need approximately equal for our model is to allow for the fact that there might be uncertainty in the process of measuring the input (square footage) or output (price).
 
