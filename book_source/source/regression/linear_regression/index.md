@@ -32,7 +32,6 @@ When using machine learning, we generally make an assumption that there is a rel
 :width: 100%
 ```
 
-
 Note that we really do need the qualifier "approximately" above. We are not saying that the output has to be exactly equal, but rather that it is close. The reason we allow for this wiggle-room is that we are allowing for the fact that our model of the world might be slightly wrong. There are probably more factors outside the square footage that affect a house's price, so we are never hoping to find an exact relationship between this input and our output; just one that is "good enough". Alternatively, another reason to only need approximately equal for our model is to allow for the fact that there might be uncertainty in the process of measuring the input (square footage) or output (price).
 
 ```{margin}
@@ -50,7 +49,9 @@ To be a bit more precise, we will specify how we believe "approximately equal" w
 The way to read this formula above is to say that the outcomes we saw, $y_i$, come from the true function $f$ being applied to the input data $x_i$, but that there was some noise $\varepsilon_i$ added to it from some source of error. We also will make an assumption about how the $\varepsilon_i$ as well: we assume that $\mathbb{E}\left[\varepsilon_i\right] = 0$, which means on average, we expect the noise to average out to 0 (i.e., it's not biased to be positive or negative). The animation below shows a visual representation of this model (2)
 
 
-TODO video
+```{video} ../../_static/manim_animations/linear_regression/model_anim.mp4
+:width: 100%
+```
 
 Earlier, we said a common goal for machine learning is to make predictions about future data. Since we won't necessarily be given the correct output ahead of time, we often focus on trying to learn what the true function $f$ is. So commonly we try to estimate $f$ from the data we are provided, and then use this learned function to make predictions about the future. You might be able to tell what makes this challenging: we don't know what $f$ is! We only have access to this (noisy) data of inputs/outputs and will have to somehow try to approximate $f$ from just the given data.
 
@@ -59,6 +60,10 @@ Earlier, we said a common goal for machine learning is to make predictions about
 ```
 
 To phrase this challenge mathematically, a common goal in machine learning is to learn a function (3) $\hat{f}$​ from the data that approximates $f$ as best as we can. We can then use this $\hat{f}$​ to make predictions about new data by evaluating $\hat{y} = \hat{f}(x)$. In English, for a given example ($x$), we are predicting what we think the label should be ($\hat{y}$) based on this function we *think* is a good estimate ($\hat{f}$) of the unknown true function ($f$). It's likely our estimate won't be exactly correct, but our hope is to get one that is as close to this unknown truth as possible. We will come back to *how* we estimate this function later, but it has something to do with finding a function that closely matches the data were given.
+
+```{video} ../../_static/manim_animations/linear_regression/predictor_anim.mp4
+:width: 100%
+```
 
 Since we can't actual observe the true function $f$, assessing how good a potential $\hat{f}$ is will be quite challenging. The animation above previews how we will do this by comparing how $\hat{f}$ does on the data we trained it from. More on this in the next section.
 
