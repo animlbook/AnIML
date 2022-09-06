@@ -1,3 +1,16 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
+
 # <i class="fas fa-book fa-fw"></i> Linear Regression
 
 One of the central goals of machine learning is to make predictions about the future using data you have collected from the past. Machine learning is particularly effective when you have large amounts of data that allow the machine to automatically learn the patterns of interest from the data itself.
@@ -352,10 +365,12 @@ We specifically discussed the context of regression and linear regression. Under
 
 TODO recap questions / concepts
 
+```{code-cell} ipython3
+:tags: ["remove-input"]
 
-
-
-
+from jupyterquiz import display_quiz
+display_quiz("./questions.json")
+```
 
 
 
