@@ -171,9 +171,8 @@ Now we define an ML Algorithm to find the parameters that is the "best" accordin
 
 Abstractly, the goal of the ML Algorithm is to solve the following optimization problem:
 
-TODO argmin
 
-$$\hat{w}_0, \hat{w}_1 = \min_{w_0, w_1} MSE(w_0, w_1)$$
+$$\hat{w}_0, \hat{w}_1 = \argmin{w_0, w_1} MSE(w_0, w_1)$$
 
 In English, this is finding the settings of $w_0, w_1$​ that minimize MSE and using those for our predictor by claiming they are our best estimates $\hat{w}_0, \hat{w}_1$​. Stating the problem we want to solve is much easier than actually solving it in practice though! It's not the case that we can try every possible $w_0, w_1$​ since they can be real numbers (e.g., 14.3 or -7.4568). This means there are an infinite combination of $w_0, w_1$ pairs to try out before we can claim to have found the one that minimizes MSE!
 
@@ -200,7 +199,11 @@ While the algorithm is concise enough to explain in English, the details end up 
 
 In the context of our original problem where we are trying to optimize both $w_0, w_1$​, this idea is the same in theory but only moderately different practice.  A "gradient" is just a multi-dimensional extension of the concept of a derivative (slope) of a function of more than one input that tells us the direction the function increases and by how much. Instead of using the slope to identify how we "roll down the hill" we compute a "gradient" to do identify which direction to travel; hence the name **gradient descent** It's the exact same idea as the animation above, but now we use this gradient idea to find the direction to go down.
 
-TODO Grad descent anim
+
+```{video} ../../_static/regression/linear_regression/gradient_descent.mp4
+:width: 100%
+:alt: Animation showing a 3D MSE function (bowl) and the accompanying line as the current estimate rolls down the hill
+```
 
 Visually, this gradient descent algorithm looks like rolling down the MSE hill until it converges at the bottom. It's important to highlight that the MSE function's input are the $w_0, w_1$ parameters  that we trying to use for our predictor. The right-hand side of the animation above is showing the predictor that would result by using the particular setting of $w_0, w_1$​ at each step of the algorithm. Notice that as the algorithm runs, the line seems to fit the data better and better! This is precisely because the algorithm is updating the coefficients bit-by-bit to reduce the error according to MSE.
 
@@ -278,19 +281,27 @@ So far, we have considered the case where our learning task only has a single da
 * Each row is a single example (e.g,, one house)
 * Each column (except one) is a data input. There is usually one column reserved for the outcome value or target you want to predict.
 
-TODO Table
+| sq. ft. | # bathrooms | owner's age | ... | price   |
+|---------|-------------|-------------|-----|---------|
+| 1400    | 3           | 47          | ... | 65,000  |
+| ...     | ...         | ...         | ... | ...     |
+| 1250    | 2           | 36          | ... | 100,000 |
 
-TODO side by side image of 2D plane
+```{margin}
+![A plane passing through a bunch of points in 3 dimensions (x1, x2, y)](./two_features.png)
+```
 
 Adding more data inputs that we can turn into more features allows us to make a model allows for more complex relationships to be learned. For example, a regression model that uses two of the inputs as features for this house price problem might look like the following.
 
 
 $$y_i = w_0 + w_1 (sq. ft.) + w_2 + (\# bathrooms) + \varepsilon_i$$
 
+Which we visualize as a plane instead of a line.
+
 ```{margin}
 13\. 📝 *Notation*:
 
-* Data Input: $x_i = \left(x_i[1], x_i[2], ..., x_i[d]\right)# where there are $d$ input columns and we use array notation to access them (e.g., $x[2]$).
+* Data Input: $x_i = \left(x_i[1], x_i[2], ..., x_i[d]\right)$ where there are $d$ input columns and we use array notation to access them (e.g., $x[2]$).
 * Output: $y_i$.
 * $x_i$ is the $i^{th}$ row of our input data table.
 * $x_i[j]$ is the $j^{th}$ column of the $i^{th}$ row.
@@ -303,19 +314,21 @@ It's important that we highlight the difference between a **data input** and a *
 * Features are values (possible transformed) that the model will use. This is performed by the feature extraction $h(x)$ and are explicitly modelling choice by you, the machine learning practitioner, decides are relevant for the learning task.
 
 ```{margin}
-14. More on this in the next chapter on Assessing Performance
+14\. More on this in the next chapter on Assessing Performance
 ```
 
 You have the freedom to choose which data inputs you select to use as features and how you transform them. Conventionally, you use $h_0(x) = 1$ so that $w_0$ is the intercept. But then for example, you could make $h_1(x) = x[1]$ (the sq. ft.) and make $h_{12}(x) = \log(x[7]) * x[2]$. Generally adding more features means your model will be more complex which is not necessarily a good thing (14). Choosing how many features and what (if any) transformations to use a bit of an art and a science, so understanding in the next chapter how we evaluate our model is extremely important.
 
 📝 As a notational remark, we should highlight that it's very common for people to assume that the data table you are working with has already been preprocessed to contain the features you want. They do this to avoid having to write $h_0(x) = 1$, $h_1(x) = ...$, everywhere in their work. It's important to remember that there is an explicit modeling step of transforming raw data to features (even if its implicit and not shown in the notation) and should double check what type of data you are working with.
 
-```{admonition}  Garbage in Garbage out
+```{admonition}  Garbage in $\rightarrow$ Garbage out
 :class: tip
 
 It can't be overstated the importance of how deciding which data you use and which features you derive from it have on your resulting model. Not even the fanciest machine learning algorithms can save you from disaster if you, as the modeller, choose features that have no relation, or worse, trick you into thinking there is a relation there when there is not. Most machine learning techniques rely on finding **correlations**  between the input/output. As you have hopefully heard **correlation is not causation**. Just because your model can find a relationship between the features you choose and your output doesn't actually mean such a relationship exists. A common example is that you can find a good linear relationship with the number of ice cream cones sold in a month (input) and the number of shark attacks (output), although most people don't think ice cream causes shark attacks.
 
-Remember that which data you include is *the first and most important** modelling step, even if most machine learning practitioners rush past that part and focus more on the fanciest machine learning method the can apply.
+It is incredibly important that you think carefully about what data you are including as it can effect the real-world decisions your model might make. In the data table above, we listed "owner's age" as a data input. Is that something that is appropriate to use a feature for our model? Why does that seem less appropriate to include than something like square footage? And these choices have real consequences. For example, [some companies problematically underestimate a house's value by a wide margin when they assume the house is owned by a Black family](https://www.nytimes.com/2022/08/18/realestate/housing-discrimination-maryland.html). This happens because they (intentionally or, more likely, unintentionally) use the owner's race as part of their modeling process.
+
+Remember that which data you include is *the first and most important* modelling step, even if most machine learning practitioners rush past that part and focus more on the fanciest machine learning method the can apply.
 ```
 
 ## Recap / Reflection
