@@ -215,7 +215,18 @@ The $\nabla$ is the notation mathematicians use for the gradient (multi-dimensio
 
 While the exact notation isn't incredibly important for our course, we still think it is useful to at least see the algorithm of gradient descent written out with a mathematical notation (11).
 
-TODO algorithm from jupyterbook before writing algorithm
+
+```{prf:algorithm} Gradient Descent
+:label: grad-descent
+
+1. Start at some (random) point $w^{(0)}$ at $t = 0$
+2. While we haven't converged:
+
+    1. Compute gradient at current point (direction of ascent) $d \gets \nabla RSS(w^{(t)})$
+    2. Update point $w^{(t + 1)} \gets w^{(t)} - \eta d$
+    3. Update time $t \gets t + 1$
+3. Output current $w^{(t)}$
+```
 
 In this algorithm, we repeatedly adjust our predictor until we reach the bottom of the bowl. There are some mathematical details we are omitting about how to compute this gradient, but the big idea of rolling down a hill is extremely important to know as an ML algorithm. We'll see over and over again that gradient descent is the algorithm used in almost any ML algorithm to find the best parameters of a model.
 
