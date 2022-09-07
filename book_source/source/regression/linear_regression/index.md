@@ -363,13 +363,118 @@ We introduced some terminology that we will use throughout the book like the dif
 
 We specifically discussed the context of regression and linear regression. Understanding how to formulate a problem as a regression problem and use linear regression to help you learn a predictor is a very important skill as part of your journey to mastering machine learning! Additionally, understanding how linear regression and polynomial regression are really the same model with different sets of features is a very powerful building-block on that journey.
 
-TODO recap questions / concepts
+### Test your Understanding
 
 ```{code-cell} ipython3
 :tags: ["remove-input"]
 
+questions = [
+    {
+        "question": r"""
+            Suppose we were testing a new drug treatment for a particular disease. We have gathered data from various trials that recorded the average response (a number, where 0 is low response and a higher number is a high response) in an experiment that used a particular dosage (measured in mg).
+            <br /><br />
+
+            We suspect there is a linear relationship between the response ($y$) and the dosage in mg ($x$), so we decide to model this data with a linear regression model.
+
+            $$y_i = w_0 + w_1x_i + \varepsilon_i$$
+
+            Suppose that after training a model, we find $\hat{w}_0 = 1$ $\hat{w}_1 = 2$. Which of the following interpretations of the learned predictor are true? 
+            <br /><br />
+
+            <i>Select all that apply</i>.
+            """,
+        "type": "many_choice",
+        "answers": [
+            {
+                "answer": "The predicted response for a 0mg dose is expected to be 0.",
+                "correct": False
+            },
+            {
+                "answer": "The predicted response for a 0mg dose is expected to be 1.",
+                "correct": True
+            },
+            {
+                "answer": "The predicted response for a 0mg dose is expected to be 2.",
+                "correct": False
+            },
+            {
+                "answer": "If we were to increase the dosage by 2mg, we expect that the response would increase by 1.",
+                "correct": False
+            },
+            {
+                "answer": "If were to increase the dosage by 1mg, we expect that the response would increase by 0.002.",
+                "correct": False
+            },
+            {
+                "answer": "If we were to increase the dosage by 1mg, we expect that the response would increase by 2.",
+                "correct": True
+            },
+        ]
+    },
+    {
+        "question": r"""
+            Suppose in the setup for the last question, we had the following dataset.<br /><br />
+            <table class="tg" style="undefined;table-layout: fixed; width: 284px">
+                <colgroup>
+                    <col style="width: 117px">
+                    <col style="width: 167px">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th class="tg-0pky">Drug Dosage</th>
+                    <th class="tg-0pky">Response</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="tg-2bhk">10</td>
+                    <td class="tg-2bhk">19</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-0pky">2</td>
+                    <td class="tg-0pky">8</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-2bhk">3</td>
+                    <td class="tg-2bhk"><span style="font-weight:400;font-style:normal">7</span></td>
+                  </tr>
+                  <tr>
+                    <td class="tg-0pky">9</td>
+                    <td class="tg-0pky"><span style="font-weight:400;font-style:normal">18</span></td>
+                  </tr>
+                </tbody>
+            </table>
+
+            <br />
+            Consider our learned predictor $\hat{w}_0 = 1$ and $\hat{w}_1 = 2$. What is the $MSE$ of this learned predictor on this training dataset?
+        """,
+        "type": "numeric",
+        "answers": [
+            {
+                "type": "value",
+                "value": 3.5,
+                "correct": True,
+                "feedback": r"""
+                    Recall that the $MSE$ or residual sum of squares is defined as
+
+                    $$MSE(w_0, w_1) = \frac{1}{n}\sum_{i=1}^n \left(y_i - (w_0 + w_1 x_i)\right)^2$$
+
+                    This means our $MSE$ is (scroll for calculation)
+
+                    $$\frac{1}{4}\left(19 - (1 + 2 \cdot 10)\right)^2 + \left(8 - (1 + 2 \cdot 2)\right)^2 + \left(7 - (1 + 2 \cdot 3)\right)^2 + \left(18 - (1 + 2 \cdot 9)\right)^2 = \frac{14}{4} = 3.5$$
+                """
+            },
+            {
+                "type": "default",
+                "correct": False,
+                "feedback": "Try to use our MSE formula to compute the average error on each data point!"
+            },
+        ]
+    },
+]
+
 from jupyterquiz import display_quiz
-display_quiz("./questions.json")
+display_quiz(questions, shuffle_answers=False)
 ```
 
 
