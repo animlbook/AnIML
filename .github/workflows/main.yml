@@ -20,7 +20,6 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          sudo apt install libcairo2-dev libpango1.0-dev ffmpeg texlive-latex-extra
           pip install -r requirements.txt
           make html  # TODO set up manim to build on Github Actions
 
