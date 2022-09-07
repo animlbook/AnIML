@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
@@ -77,6 +78,7 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
+    <script src="_static/script.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -148,7 +150,26 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  1. Regression
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="regression/linear_regression/index.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Linear Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  6. Others
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="printing.html">
    <i class="fas fa-book fa-fw">
@@ -455,8 +476,8 @@ title="Print to PDF"
 <p>One of the most important capabilities in programming comes from the ability to process some <em>sequence of data</em>. For example we might write programs to process grades of students in a class, information about respondents to the US Census, or many other applications. Most programming languages provide a first introduction to processing sequences of data with the concept of <em>arrays</em>. An array is a <em>fixed-length</em> structure that stores multiple values of the same type.</p>
 <p>In Java, the array syntax is mostly the same to how arrays are used in other languages. The largest difference is how you specify the type of an array. If you want an array storing integer values, the type is <code class="docutils literal notranslate"><span class="pre">int[]</span></code> (read as “int array”). The following code snippet makes an int array storing 5 elements, and uses assignment statements to fill in the array. One thing to note is that Java starts arrays with index 0. So an array of length 5 has valid indices <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4</span></code>.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="696224e8-82fc-4cae-8508-5c3a37ec13bf" name="fcf6e6ff-9b70-437b-bc4d-4f2bdcb9f802" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="696224e8-82fc-4cae-8508-5c3a37ec13bf">
+<input checked="checked" id="52cd797b-db00-4bb4-b4c6-d5ff78b9b8ed" name="20ca1ba4-e7fb-4178-896b-3ffbec062863" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="52cd797b-db00-4bb4-b4c6-d5ff78b9b8ed">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
 <span class="n">array</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
@@ -468,8 +489,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="a18c8c50-9b9e-49ee-8e85-040031f7a0fa" name="fcf6e6ff-9b70-437b-bc4d-4f2bdcb9f802" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="a18c8c50-9b9e-49ee-8e85-040031f7a0fa">
+<input id="88e7f3f0-0faa-4e5a-962c-dbdbef9c82ad" name="20ca1ba4-e7fb-4178-896b-3ffbec062863" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="88e7f3f0-0faa-4e5a-962c-dbdbef9c82ad">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>  <span class="c1"># Short-hand to make a length 5 list</span>
 <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
@@ -481,8 +502,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="df37cb82-448c-41bc-98c5-a283ff8efdf6" name="fcf6e6ff-9b70-437b-bc4d-4f2bdcb9f802" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="df37cb82-448c-41bc-98c5-a283ff8efdf6">
+<input id="ec3772cc-8c69-4644-953b-64d7cc37ea40" name="20ca1ba4-e7fb-4178-896b-3ffbec062863" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="ec3772cc-8c69-4644-953b-64d7cc37ea40">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span><span class="w"></span>
 
@@ -495,8 +516,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="f4383399-a639-484b-a81c-2aabf7dcc64c" name="fcf6e6ff-9b70-437b-bc4d-4f2bdcb9f802" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="f4383399-a639-484b-a81c-2aabf7dcc64c">
+<input id="97a0aab5-8c08-42d1-ae82-3a2ce8722dcc" name="20ca1ba4-e7fb-4178-896b-3ffbec062863" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="97a0aab5-8c08-42d1-ae82-3a2ce8722dcc">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">array</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span><span class="w"></span>
 <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
@@ -513,8 +534,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="a24cc492-9b9b-42fb-961d-8f0116abbb35" name="fcf6e6ff-9b70-437b-bc4d-4f2bdcb9f802" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="a24cc492-9b9b-42fb-961d-8f0116abbb35">
+<input id="8f1774d1-a44e-44c5-834f-913b8540a3f1" name="20ca1ba4-e7fb-4178-896b-3ffbec062863" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="8f1774d1-a44e-44c5-834f-913b8540a3f1">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">array</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span><span class="w"></span>
 <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
@@ -544,8 +565,8 @@ C++</label><div class="sd-tab-content docutils">
 <h2>Looping over Arrays<a class="headerlink" href="#looping-over-arrays" title="Permalink to this headline">#</a></h2>
 <p>Since arrays are designed to hold sequences of values, it is often useful to be able to process all of the values inside a loop rather than hard coding indices. In Java, an array knows how many elements are inside of it by accessing the <code class="docutils literal notranslate"><span class="pre">array.length</span></code> property. The loop is just using a for loop over all of the possible indices in the array. In our example above we said that for an array of length 5, the possible indices are <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4</span></code> since the array indices start at 0. For a general array of length <code class="docutils literal notranslate"><span class="pre">array.length</span></code>, the possible indices are <code class="docutils literal notranslate"><span class="pre">0</span></code> (inclusive) to <code class="docutils literal notranslate"><span class="pre">array.length</span> <span class="pre">-</span> <span class="pre">1</span></code> (inclusive). This is often equivalently written as <code class="docutils literal notranslate"><span class="pre">0</span></code> (inclusive) to <code class="docutils literal notranslate"><span class="pre">array.length</span></code> (exclusive), which is how the loop below is written.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="43c19119-83fe-4cbb-a23b-c15fcfb4e823" name="f596b417-13fa-42ef-a7dd-d6eb58d670b3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="43c19119-83fe-4cbb-a23b-c15fcfb4e823">
+<input checked="checked" id="95d64685-9e76-47e3-825a-76b04f4c91ec" name="de494134-b114-4944-9ec6-6ac9b1481430" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="95d64685-9e76-47e3-825a-76b04f4c91ec">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
 <span class="c1">// Code to fill array with some values</span><span class="w"></span>
@@ -557,8 +578,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="8761dba1-89e0-4174-a565-29c449f5b46a" name="f596b417-13fa-42ef-a7dd-d6eb58d670b3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="8761dba1-89e0-4174-a565-29c449f5b46a">
+<input id="79ccd558-6168-4f82-b75d-181f1859d61b" name="de494134-b114-4944-9ec6-6ac9b1481430" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="79ccd558-6168-4f82-b75d-181f1859d61b">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>  <span class="c1"># Short-hand to make a length 5 list</span>
 <span class="c1"># Code to fill array with some values</span>
@@ -569,8 +590,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="96e42c96-8759-4a55-b08b-0acf542cb627" name="f596b417-13fa-42ef-a7dd-d6eb58d670b3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="96e42c96-8759-4a55-b08b-0acf542cb627">
+<input id="16cb8400-a42f-4a98-ae32-619afdb38458" name="de494134-b114-4944-9ec6-6ac9b1481430" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="16cb8400-a42f-4a98-ae32-619afdb38458">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">];</span><span class="w"></span>
 <span class="c1">// Code to fill array with some values</span><span class="w"></span>
@@ -582,8 +603,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="f409081e-9e2b-477b-abce-7b552bc4a174" name="f596b417-13fa-42ef-a7dd-d6eb58d670b3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="f409081e-9e2b-477b-abce-7b552bc4a174">
+<input id="a28b4a24-de9f-41c7-aed0-06b7471daa52" name="de494134-b114-4944-9ec6-6ac9b1481430" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="a28b4a24-de9f-41c7-aed0-06b7471daa52">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">array</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span><span class="w"></span>
 <span class="c1">// Code to fill array with some values</span>
@@ -596,8 +617,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="b34e6281-e7e4-4870-b6eb-7d69f5c84d3b" name="f596b417-13fa-42ef-a7dd-d6eb58d670b3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="b34e6281-e7e4-4870-b6eb-7d69f5c84d3b">
+<input id="b45271a7-dfa7-40ce-91d6-7936aa8f4ce7" name="de494134-b114-4944-9ec6-6ac9b1481430" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="b45271a7-dfa7-40ce-91d6-7936aa8f4ce7">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">array</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span><span class="w"></span>
 <span class="c1">// Code to fill array with some values</span>
@@ -610,8 +631,8 @@ C++</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="fb796c4f-8b86-4af2-8173-eb1aa2d2f0d1" name="f596b417-13fa-42ef-a7dd-d6eb58d670b3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="fb796c4f-8b86-4af2-8173-eb1aa2d2f0d1">
+<input id="8247c770-a888-4fa1-83ad-4bc27219fa49" name="de494134-b114-4944-9ec6-6ac9b1481430" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="8247c770-a888-4fa1-83ad-4bc27219fa49">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">array</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span><span class="w"></span>
 <span class="c1">// Code to fill array with some values</span>
@@ -627,8 +648,8 @@ C++</label><div class="sd-tab-content docutils">
 <p>Array manipulations can be more complicated when it involves reading or accessing multiple indices at a time. Special care must be taken to make sure you never go <strong>out of bounds</strong> of an array. An <code class="docutils literal notranslate"><span class="pre">ArrayIndexOutOfBoundsException</span></code> occurs if you ever try to access an invalid index which is any index <code class="docutils literal notranslate"><span class="pre">&lt;</span> <span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">array.length</span></code>.</p>
 <p>The following code snippet shows how to write code that is careful about array indices in the task of trying to shift all the array elements to the left one index. So for example, if <code class="docutils literal notranslate"><span class="pre">array</span></code> stores the numbers <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>, then <code class="docutils literal notranslate"><span class="pre">shift(array)</span></code> should modify the array to store the numbers <code class="docutils literal notranslate"><span class="pre">[2,</span> <span class="pre">3,</span> <span class="pre">1]</span></code>. Note that since the loop is written to access both the values at index <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+</span> <span class="pre">1</span></code>, we have to stop our loop one early so it doesn’t cause an <code class="docutils literal notranslate"><span class="pre">ArrayOutOfBoundsException</span></code>. Also note the special case to handle the <em>empty array</em> case where the array length is 0!</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="5e6da86e-0e78-41c5-bc8f-e70a11f68c51" name="b2ec78f7-1212-4d64-967e-5c04f885526b" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="5e6da86e-0e78-41c5-bc8f-e70a11f68c51">
+<input checked="checked" id="656c9f4a-02c2-4aa2-9213-fa7cad5369cb" name="bfd68ad6-77e6-4868-ba45-c7feffbba196" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="656c9f4a-02c2-4aa2-9213-fa7cad5369cb">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -647,8 +668,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="88fd7ceb-c6b9-43d6-9617-13ddfa1e3c19" name="b2ec78f7-1212-4d64-967e-5c04f885526b" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="88fd7ceb-c6b9-43d6-9617-13ddfa1e3c19">
+<input id="670ec733-39af-4ea4-8f7e-5ad5aec03953" name="bfd68ad6-77e6-4868-ba45-c7feffbba196" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="670ec733-39af-4ea4-8f7e-5ad5aec03953">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shift</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">numbers</span><span class="p">:</span>
@@ -661,8 +682,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="d8cb3972-01c4-4410-b1d7-121f3b8607da" name="b2ec78f7-1212-4d64-967e-5c04f885526b" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="d8cb3972-01c4-4410-b1d7-121f3b8607da">
+<input id="e34e268a-2911-45c9-8066-1958b7ed6720" name="bfd68ad6-77e6-4868-ba45-c7feffbba196" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="e34e268a-2911-45c9-8066-1958b7ed6720">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">shift</span><span class="p">(</span><span class="nx">numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">numbers</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -681,8 +702,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="ee434473-8d4f-471c-aa50-970c16abf50d" name="b2ec78f7-1212-4d64-967e-5c04f885526b" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="ee434473-8d4f-471c-aa50-970c16abf50d">
+<input id="d2090818-1a79-4b63-8339-32823ee93d6b" name="bfd68ad6-77e6-4868-ba45-c7feffbba196" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="d2090818-1a79-4b63-8339-32823ee93d6b">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">numbers</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
@@ -702,8 +723,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="49754f89-a5e1-4992-bc1b-58b4e0eb05ac" name="b2ec78f7-1212-4d64-967e-5c04f885526b" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="49754f89-a5e1-4992-bc1b-58b4e0eb05ac">
+<input id="e47fc147-29e3-4387-be80-b526677d73fb" name="bfd68ad6-77e6-4868-ba45-c7feffbba196" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="e47fc147-29e3-4387-be80-b526677d73fb">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">numbers</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
@@ -723,8 +744,8 @@ C++</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="48ed09a3-f274-469a-bec6-44457cc0b887" name="b2ec78f7-1212-4d64-967e-5c04f885526b" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="48ed09a3-f274-469a-bec6-44457cc0b887">
+<input id="5b95bdd2-93a7-490d-8526-51ba06fbfdee" name="bfd68ad6-77e6-4868-ba45-c7feffbba196" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="5b95bdd2-93a7-490d-8526-51ba06fbfdee">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">numbers</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>

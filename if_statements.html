@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
@@ -77,6 +78,7 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
+    <script src="_static/script.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -149,7 +151,26 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  1. Regression
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="regression/linear_regression/index.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Linear Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  6. Others
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="printing.html">
    <i class="fas fa-book fa-fw">
@@ -469,8 +490,8 @@ title="Print to PDF"
 <h2>Comparisons<a class="headerlink" href="#comparisons" title="Permalink to this headline">#</a></h2>
 <p>Very commonly, we use <code class="docutils literal notranslate"><span class="pre">boolean</span></code>s when comparing two numbers. Java provides operators to compare two numbers with the following syntax.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="8142b517-f415-4c0f-a94e-7954ffd3b6c0" name="425a3e18-9625-4f06-9eb8-6124d9f29316" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="8142b517-f415-4c0f-a94e-7954ffd3b6c0">
+<input checked="checked" id="39a05dfe-3cfd-4c03-bfca-7e0dff634cbe" name="264d47a0-f9c0-4f40-a525-1176286dc8c7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="39a05dfe-3cfd-4c03-bfca-7e0dff634cbe">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
 <span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
@@ -483,8 +504,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="8850b87a-88d4-45fd-8772-076d26b46fba" name="425a3e18-9625-4f06-9eb8-6124d9f29316" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="8850b87a-88d4-45fd-8772-076d26b46fba">
+<input id="47bbaa77-caa3-4664-b11c-3eec42f9c9bb" name="264d47a0-f9c0-4f40-a525-1176286dc8c7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="47bbaa77-caa3-4664-b11c-3eec42f9c9bb">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
@@ -497,8 +518,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="385367df-ee84-4da2-9906-47e67f11b40f" name="425a3e18-9625-4f06-9eb8-6124d9f29316" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="385367df-ee84-4da2-9906-47e67f11b40f">
+<input id="cff7e4b7-fc43-4ae1-9b01-7c8ea982c9d1" name="264d47a0-f9c0-4f40-a525-1176286dc8c7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="cff7e4b7-fc43-4ae1-9b01-7c8ea982c9d1">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span><span class="w"></span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"></span>
@@ -511,8 +532,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="e08d11e3-d1c9-4633-a4ba-be20b5b34731" name="425a3e18-9625-4f06-9eb8-6124d9f29316" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="e08d11e3-d1c9-4633-a4ba-be20b5b34731">
+<input id="0b6df482-f9bd-4c7b-91b2-96dbc0cf37d8" name="264d47a0-f9c0-4f40-a525-1176286dc8c7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="0b6df482-f9bd-4c7b-91b2-96dbc0cf37d8">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
 <span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
@@ -525,8 +546,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="db9762e6-1992-4880-9652-f7d6f7d7facf" name="425a3e18-9625-4f06-9eb8-6124d9f29316" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="db9762e6-1992-4880-9652-f7d6f7d7facf">
+<input id="11ad59b2-4e97-4c40-872c-532751fcdff8" name="264d47a0-f9c0-4f40-a525-1176286dc8c7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="11ad59b2-4e97-4c40-872c-532751fcdff8">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
 <span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
@@ -551,8 +572,8 @@ C++</label><div class="sd-tab-content docutils">
 </ul>
 <p>The following code shows how to use these operators.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="78c6e7ca-ecf6-47d0-a305-0dd141512e6f" name="2487e4ef-5681-49c9-970e-c8df2ef6bce7" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="78c6e7ca-ecf6-47d0-a305-0dd141512e6f">
+<input checked="checked" id="e93c9e5c-4257-4362-9ec4-690fceaa396b" name="75809ed7-39d0-458c-8c62-f940536eba70" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="e93c9e5c-4257-4362-9ec4-690fceaa396b">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">boolean</span><span class="w"> </span><span class="n">b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w"></span>
 <span class="kt">boolean</span><span class="w"> </span><span class="n">b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"></span>
@@ -562,8 +583,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="faf5970e-7f0b-4885-bf69-0e4d2dbd6c31" name="2487e4ef-5681-49c9-970e-c8df2ef6bce7" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="faf5970e-7f0b-4885-bf69-0e4d2dbd6c31">
+<input id="235d90e7-8442-46ff-a106-c0a0e84fe1e0" name="75809ed7-39d0-458c-8c62-f940536eba70" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="235d90e7-8442-46ff-a106-c0a0e84fe1e0">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b1</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">b2</span> <span class="o">=</span> <span class="kc">False</span>
@@ -573,8 +594,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="bba70b07-f26c-47ec-b3d7-7247b66ebfcb" name="2487e4ef-5681-49c9-970e-c8df2ef6bce7" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="bba70b07-f26c-47ec-b3d7-7247b66ebfcb">
+<input id="23f68ea8-3045-4e11-894b-06ccf803d039" name="75809ed7-39d0-458c-8c62-f940536eba70" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="23f68ea8-3045-4e11-894b-06ccf803d039">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w"></span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"></span>
@@ -584,8 +605,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="29bd7ae3-88ae-432c-b95d-216f048be611" name="2487e4ef-5681-49c9-970e-c8df2ef6bce7" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="29bd7ae3-88ae-432c-b95d-216f048be611">
+<input id="8d4caec4-407e-4055-93cd-7d487f429aee" name="75809ed7-39d0-458c-8c62-f940536eba70" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="8d4caec4-407e-4055-93cd-7d487f429aee">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="kt">int</span><span class="w"> </span><span class="n">b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
@@ -595,8 +616,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="56a1a39f-31bf-4164-aea1-55db1d2ee06b" name="2487e4ef-5681-49c9-970e-c8df2ef6bce7" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="56a1a39f-31bf-4164-aea1-55db1d2ee06b">
+<input id="a207c1bc-712f-4f44-84b3-362d4a6fafc6" name="75809ed7-39d0-458c-8c62-f940536eba70" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="a207c1bc-712f-4f44-84b3-362d4a6fafc6">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="n">b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
 <span class="kt">bool</span><span class="w"> </span><span class="n">b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
@@ -628,8 +649,8 @@ C++</label><div class="sd-tab-content docutils">
 <li><p>Proper indentation is not a requirement of the Java language, but it is <strong>strongly recommended</strong> that you use proper indentation to show what lines of code belong inside/outside the body of an if statement.</p></li>
 </ul>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="81580955-8695-4939-a099-3042be1b92e1" name="f600f3f0-f7b1-48a8-8ffa-0ba4aab03382" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="81580955-8695-4939-a099-3042be1b92e1">
+<input checked="checked" id="085279bf-14d9-475d-8462-4a4c8cb71752" name="8674dccb-e275-4bb7-b716-652fd4875271" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="085279bf-14d9-475d-8462-4a4c8cb71752">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -643,8 +664,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="abfb4214-6f15-43d8-85e9-3de981a3ce7d" name="f600f3f0-f7b1-48a8-8ffa-0ba4aab03382" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="abfb4214-6f15-43d8-85e9-3de981a3ce7d">
+<input id="a921befc-81e0-40d6-8de9-f41c01a6b1dc" name="8674dccb-e275-4bb7-b716-652fd4875271" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="a921befc-81e0-40d6-8de9-f41c01a6b1dc">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -657,8 +678,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="5914dc4b-2b69-458a-969b-ee812cfe988c" name="f600f3f0-f7b1-48a8-8ffa-0ba4aab03382" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="5914dc4b-2b69-458a-969b-ee812cfe988c">
+<input id="f8cee4bf-39a2-4df5-86b1-bf6e0c8fdfe7" name="8674dccb-e275-4bb7-b716-652fd4875271" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="f8cee4bf-39a2-4df5-86b1-bf6e0c8fdfe7">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">;</span><span class="w"></span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -672,8 +693,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="d75e1dc8-368a-47ac-b60d-7738be6a7c81" name="f600f3f0-f7b1-48a8-8ffa-0ba4aab03382" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="d75e1dc8-368a-47ac-b60d-7738be6a7c81">
+<input id="8c8f37d5-67d9-40fb-8c49-1cfc7882b656" name="8674dccb-e275-4bb7-b716-652fd4875271" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="8c8f37d5-67d9-40fb-8c49-1cfc7882b656">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -687,8 +708,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="485641be-25bf-4d3a-b708-4e2da782bf90" name="f600f3f0-f7b1-48a8-8ffa-0ba4aab03382" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="485641be-25bf-4d3a-b708-4e2da782bf90">
+<input id="a919514e-1fdf-4349-88c2-fc70a71c4b88" name="8674dccb-e275-4bb7-b716-652fd4875271" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="a919514e-1fdf-4349-88c2-fc70a71c4b88">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>

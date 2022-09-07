@@ -1,0 +1,1908 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Linear Regression &#8212; &lt;b&gt;&lt;i&gt;AnIML&lt;/i&gt;&lt;/b&gt;&lt;br/&gt; Another Introduction to Machine Learning</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "hschafer/Intro-ML");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "preferred-color-scheme");
+    script.setAttribute("label", "💬 Comments");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="../../_static/script.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Printing and Comments" href="../../printing.html" />
+    <link rel="prev" title="Introduction" href="../../intro/index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title"><b><i>AnIML</i></b><br/> Another Introduction to Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro/index.html">
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  1. Regression
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Linear Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  6. Others
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../printing.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Printing and Comments
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../variables_expressions.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Variables, Types, Expressions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../if_statements.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   If/Else Statements
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../loops.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Loops
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../strings.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Strings
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../methods.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../io_files.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Files and I/O
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../arrays.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Arrays
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            <a href="https://hschafer.github.io/Intro-ML/acknowledgements.html">Acknowledgements</a><br/>Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/hschafer/Intro-ML/main?urlpath=lab/tree/book_source/source/regression/linear_regression/index.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/hschafer/Intro-ML/blob/main/book_source/source/regression/linear_regression/index.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/hschafer/Intro-ML"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/hschafer/Intro-ML/issues/new?title=Issue%20on%20page%20%2Fregression/linear_regression/index.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/hschafer/Intro-ML/edit/main/book_source/source/regression/linear_regression/index.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/regression/linear_regression/index.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="../../_sources/regression/linear_regression/index.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ml-pipeline">
+   ML Pipeline
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-regression-model">
+   Linear Regression Model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-regression-statistical-model">
+     Linear Regression Statistical Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quality-metric">
+     Quality Metric
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ml-algorithm">
+     ML Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#feature-extraction">
+     Feature Extraction
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-data-inputs">
+   Multiple Data Inputs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recap-reflection">
+   Recap / Reflection
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-your-understanding">
+     Test your Understanding
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1><i class="fas fa-book fa-fw"></i> Linear Regression</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ml-pipeline">
+   ML Pipeline
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-regression-model">
+   Linear Regression Model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-regression-statistical-model">
+     Linear Regression Statistical Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quality-metric">
+     Quality Metric
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ml-algorithm">
+     ML Algorithm
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#feature-extraction">
+     Feature Extraction
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-data-inputs">
+   Multiple Data Inputs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recap-reflection">
+   Recap / Reflection
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-your-understanding">
+     Test your Understanding
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-book-fa-fw-i-linear-regression">
+<h1><i class="fas fa-book fa-fw"></i> Linear Regression<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-linear-regression" title="Permalink to this headline">#</a></h1>
+<p>One of the central goals of machine learning is to make predictions about the future using data you have collected from the past. Machine learning is particularly effective when you have large amounts of data that allow the machine to automatically learn the patterns of interest from the data itself.</p>
+<p>For example, say we are thinking about selling our house and we want to predict how much it will sell for based on the information about the house (e.g., how big it is, how many bathrooms, if there is a garage, etc.). Instead of trying to write out a program to determine the price by hand, we will give historical data to the computer and let it learn the pattern.</p>
+<p>The most crucial thing in machine learning is the data you give it to learn from. A popular saying amongst machine learning practitioners goes <strong>“Garbage in, Garbage out”</strong>. So before we actually talk about how to make a machine learn, we need to talk about data and the assumptions we will make about the world.</p>
+<p>Sticking with the housing example our goal will be to predict how much our house will sell for by using data from previous house-sales in neighborhoods similar to mine. We’ll suppose we have a dataset with this information that has examples of <span class="math notranslate nohighlight">\(n\)</span> houses and what they sold for.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+    (x_1, y_1) &amp;= (2318\ \text{sq.ft.}, \$315\text{k})\\
+    (x_2, y_2) &amp;= (1985\ \text{sq.ft.}, \$295\text{k})\\
+    (x_3, y_3) &amp;= (2861\ \text{sq.ft.}, \$370\text{k})\\
+    \ &amp;\vdots \\
+    (x_n, y_n) &amp;= (2055\ \text{sq.ft.}, \$320\text{k})\\
+\end{aligned}
+\end{split}\]</div>
+<p>The way we represent our data is a <span class="math notranslate nohighlight">\(n\)</span> input/output pairs where we use the variable <span class="math notranslate nohighlight">\(x\)</span> to represent the input and <span class="math notranslate nohighlight">\(y\)</span> to be the output. Each example in our dataset will have <strong>input data</strong>, represented with the variable <span class="math notranslate nohighlight">\(x\)</span>. In our context of housing prices, there is one data input for each house (the square footage), but in other contexts, we will see that we are allowed to have multiple data inputs. The outcome for the house is its sale price, and we use the variable <span class="math notranslate nohighlight">\(y\)</span> to represent that. Do note that this <span class="math notranslate nohighlight">\(y\)</span> variable generally goes by many names such as <strong>outcome/response/target/label/dependent variable</strong>.</p>
+<p>It is sometimes helpful to visualize the relationship between input and output. Visually, we could plot these points on a graph to see if there is a relationship between the input and the target.</p>
+
+    <video width="100%"  controls >
+    <source src="../../_static/manim_animations/linear_regression/data_anim.mp4" type="video/mp4">
+    Video
+    </video>
+    <p>When using machine learning, we generally make an assumption that there is a relationship between the input and the target (i.e., square footage of the house and its sale price). We are going to say that there exists some secret (unknown) function <span class="math notranslate nohighlight">\(f\)</span> such that the price of a house is approximately equal to the function’s output for the houses input data.</p>
+
+    <video width="100%"  controls >
+    <source src="../../_static/manim_animations/linear_regression/true_function_anim.mp4" type="video/mp4">
+    Video
+    </video>
+    <p>Note that we really do need the qualifier “approximately” above. We are not saying that the output has to be exactly equal, but rather that it is close. The reason we allow for this wiggle-room is that we are allowing for the fact that our model of the world might be slightly wrong. There are probably more factors outside the square footage that affect a house’s price, so we are never hoping to find an exact relationship between this input and our output; just one that is “good enough”. Alternatively, another reason to only need approximately equal for our model is to allow for the fact that there might be uncertainty in the process of measuring the input (square footage) or output (price).</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>1. 📝 <em>Notation</em>: When we subscript a variable like <span class="math notranslate nohighlight">\(x_i\)</span>, it means we are talking about the <span class="math notranslate nohighlight">\(i^{th}\)</span> example from our given dataset. In our example, when we say <span class="math notranslate nohighlight">\(x_{12}\)</span>, we are talking about the 12th house in the dataset we were given.</p>
+<p>When we use <span class="math notranslate nohighlight">\(x\)</span> without subscripts, we are talking about any input from our domain. In our example, when we say <span class="math notranslate nohighlight">\(x\)</span>, I mean some arbitrary house.</p>
+</aside>
+<p>To be a bit more precise, we will specify how we believe “approximately equal” works for this scenario. Another term for “the assumptions we make” is the <strong>model</strong> we are using. In this example, we will use a very common model about how the input and target relate. We first show the formula, and then explain the parts (1).</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>2. 📝 <em>Notation</em>: <span class="math notranslate nohighlight">\(\mathbb{E}\left[X\right]\)</span> is the expected value of a random variable (the “average” outcome). See more <a class="reference external" href="https://www.investopedia.com/terms/e/expected-value.asp">here</a>.</p>
+</aside>
+<p>The way to read this formula above is to say that the outcomes we saw, <span class="math notranslate nohighlight">\(y_i\)</span>, come from the true function <span class="math notranslate nohighlight">\(f\)</span> being applied to the input data <span class="math notranslate nohighlight">\(x_i\)</span>, but that there was some noise <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> added to it from some source of error. We also will make an assumption about how the <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> as well: we assume that <span class="math notranslate nohighlight">\(\mathbb{E}\left[\varepsilon_i\right] = 0\)</span>, which means on average, we expect the noise to average out to 0 (i.e., it’s not biased to be positive or negative). The animation below shows a visual representation of this model (2)</p>
+
+    <video width="100%"  controls >
+    <source src="../../_static/manim_animations/linear_regression/model_anim.mp4" type="video/mp4">
+    Video
+    </video>
+    <p>Earlier, we said a common goal for machine learning is to make predictions about future data. Since we won’t necessarily be given the correct output ahead of time, we often focus on trying to learn what the true function <span class="math notranslate nohighlight">\(f\)</span> is. So commonly we try to estimate <span class="math notranslate nohighlight">\(f\)</span> from the data we are provided, and then use this learned function to make predictions about the future. You might be able to tell what makes this challenging: we don’t know what <span class="math notranslate nohighlight">\(f\)</span> is! We only have access to this (noisy) data of inputs/outputs and will have to somehow try to approximate <span class="math notranslate nohighlight">\(f\)</span> from just the given data.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>3. 📝 Notation: A  <span class="math notranslate nohighlight">\(\hat{\ }\)</span> in math notation almost always means “estimate”. In other words, <span class="math notranslate nohighlight">\(\hat{f}\)</span>​ is our best estimate of this unknown function <span class="math notranslate nohighlight">\(f\)</span>. What do you think <span class="math notranslate nohighlight">\(\hat{y}\)</span>​ is supposed to represent?</p>
+</aside>
+<p>To phrase this challenge mathematically, a common goal in machine learning is to learn a function (3) <span class="math notranslate nohighlight">\(\hat{f}\)</span>​ from the data that approximates <span class="math notranslate nohighlight">\(f\)</span> as best as we can. We can then use this <span class="math notranslate nohighlight">\(\hat{f}\)</span>​ to make predictions about new data by evaluating <span class="math notranslate nohighlight">\(\hat{y} = \hat{f}(x)\)</span>. In English, for a given example (<span class="math notranslate nohighlight">\(x\)</span>), we are predicting what we think the label should be (<span class="math notranslate nohighlight">\(\hat{y}\)</span>) based on this function we <em>think</em> is a good estimate (<span class="math notranslate nohighlight">\(\hat{f}\)</span>) of the unknown true function (<span class="math notranslate nohighlight">\(f\)</span>). It’s likely our estimate won’t be exactly correct, but our hope is to get one that is as close to this unknown truth as possible. We will come back to <em>how</em> we estimate this function later, but it has something to do with finding a function that closely matches the data were given.</p>
+
+    <video width="100%"  controls >
+    <source src="../../_static/manim_animations/linear_regression/predictor_anim.mp4" type="video/mp4">
+    Video
+    </video>
+    <p>Since we can’t actual observe the true function <span class="math notranslate nohighlight">\(f\)</span>, assessing how good a potential <span class="math notranslate nohighlight">\(\hat{f}\)</span> is will be quite challenging. The animation above previews how we will do this by comparing how <span class="math notranslate nohighlight">\(\hat{f}\)</span> does on the data we trained it from. More on this in the next section.</p>
+<section id="ml-pipeline">
+<h2>ML Pipeline<a class="headerlink" href="#ml-pipeline" title="Permalink to this headline">#</a></h2>
+<p>Machine learning is a broad field with many algorithms and techniques that solve different parts of a learning task. We provide a generic framework of most machine learning systems that we call the <strong>ML Pipeline</strong>, which is shown in the image below. Whenever we are learning a new topic, try to identify which part of the pipeline it works in.</p>
+<p>TODO ML Pipeline imageo</p>
+<p>TODO rest of section</p>
+</section>
+<section id="linear-regression-model">
+<h2>Linear Regression Model<a class="headerlink" href="#linear-regression-model" title="Permalink to this headline">#</a></h2>
+<p>A great place to start talking about machine learning and its components is <strong>linear regression</strong>w. This is a popular starting point because it is simpler than many other types of models (e.g., that “deep learning” thing you might have heard of in the news). In fact, its simplicity is generally one of its biggest strengths! Linear regression is commonly used as a good place to start on a new project since it can form a good baseline.</p>
+<p>In each of the following section, we will show a picture of the ML Pipeline in the margin to highlight how the piece we are introducing fits in the overall picture.</p>
+<section id="linear-regression-statistical-model">
+<h3>Linear Regression Statistical Model<a class="headerlink" href="#linear-regression-statistical-model" title="Permalink to this headline">#</a></h3>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>5. TODO highlight in ML pipeline what we are talking about</p>
+</aside>
+<p>A <strong>statistical model</strong> is an assumption about how the world works (5). In the <strong>linear regression model</strong>, we assume the the input variable and target variable are related by a linear function (i.e., a line)</p>
+<div class="math notranslate nohighlight">
+\[y_i = w_0 + w_1x_1 + \epsilon_i\]</div>
+<p>This is a more specific case of the general model we were discussing earlier. We are assuming a linear structure between the input and target, and allowing for some fluctuation (<span class="math notranslate nohighlight">\(\varepsilon_i\)</span>) since we don’t expect our model to be perfect. In other words, we are stating that our unknown true function <span class="math notranslate nohighlight">\(f(x)\)</span> is of the form <span class="math notranslate nohighlight">\(w_0 + w_1 x\)</span> where <span class="math notranslate nohighlight">\(w_0\)</span> and <span class="math notranslate nohighlight">\(w_1\)</span> are unknown to us.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>6. This step of making an assumption on how we believe the world works is often called an <em>“inductive bias”</em>.</p>
+</aside>
+<p>Assuming a statistical model is a simplification of the learning task. Our journey started with a very broad task of relating input and output variables, where there are an infinite number of possibilities for plausible relationships. We reduce the possibilities here by <em>making the assumption</em> (6) that there is a linear relationship between input and output.</p>
+<p>These (unknown) constants <span class="math notranslate nohighlight">\(w_0\)</span> and <span class="math notranslate nohighlight">\(w_1\)</span> are known as the <strong>parameters</strong> of the model. These parameters are values that need to be learned by our ML system. While we are making the assumption the function is linear, we need to learn exactly which values dictate this <span class="math notranslate nohighlight">\(w_0\)</span> and <span class="math notranslate nohighlight">\(w_1\)</span>.</p>
+<p>One benefit of linear regresssion is that we can interpret the value of each of the parameters. Using our example of interpreting housing prices:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(w_0\)</span> is the intercept of the line. In other words, this is the price we assume a house with 0 sq.ft would have.</p></li>
+<li><p><span class="math notranslate nohighlight">\(w_1\)</span> is the slope of the line. In other words, this is the increase in price per additional sq.ft. in the house.</p></li>
+</ul>
+
+    <video width="100%"  controls >
+    <source src="../../_static/manim_animations/linear_regression/interpret_coefficients_anim.mp4" type="video/mp4">
+    Video
+    </video>
+    <p>Under this statistical model, our machine learning task is to find our best estimates <span class="math notranslate nohighlight">\(\hat{w}_0\)</span> and <span class="math notranslate nohighlight">\(\hat{w}_1\)</span> of these parameters so that we can use them to make predictions about future inputs. We will learn these parameters using a <em>learning algorithm</em> (currently unspecified). When making a prediction with our learned parameters, we will use the following formula.</p>
+<div class="math notranslate nohighlight">
+\[\hat{y} = \hat{w}_0 + \hat{w}_1 x\]</div>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>7. A more technical reason comes from the mathematical formulation of the linear regression problem. Under our model that includes this uncertainty, the formula above defines the most likely outcome given the dataset we were given to train on. This comes from the fact that the noise of the model is equally likely to be positive/negative. In other words, there is no benefit predicting something above/below this most likely value. The technical name for this procedure is <em>maximum likelihood estimation</em>.</p>
+</aside>
+<p>One note on notation: You might be wondering, “Why don’t we add a term like <span class="math notranslate nohighlight">\(+ \varepsilon\)</span> in that equation above?” This is because that <span class="math notranslate nohighlight">\(\varepsilon\)</span> term is to account in the uncertainty in the input data we received. It wouldn’t necessarily help us to add randomness to our predictions since the learned parameters are our “best guess” at what the true parameter values are (7).</p>
+<p>In a few sections, we will define the specifics of how we estimate these unknown parameters using some ML algorithm. As a brief preview, many ML algorithms for linear regression essentially boil down to trying many possible lines and identify which one is “best” from that set. So before we describe an algorithm, we should describe what makes one predictor the “best” over some others.</p>
+
+    <video width="100%"  controls >
+    <source src="../../_static/manim_animations/linear_regression/many_lines_anim.mp4" type="video/mp4">
+    Video
+    </video>
+    <p>What does “best” mean in this context? That is yet another judgement call we must make as modelers, and we call this the <strong>Quality Metric</strong>.</p>
+</section>
+<section id="quality-metric">
+<h3>Quality Metric<a class="headerlink" href="#quality-metric" title="Permalink to this headline">#</a></h3>
+<p>TODO highlight quality metric</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>8. Different choices of quality metrics lead to different results of the “best” model. For example, the majority of the quality metrics we introduce at the start of this book don’t include any notion of fairness or anti-discrimination in them. If this notion is not included, the “best” model could permit one that discriminates since that might not violate your definition of “best”. We will talk about this important field of fairness in ML later in this book.</p>
+</aside>
+<p>The way we define how well a particular predictor fits the data is the <strong>quality metric</strong> (8). A common way to define the quality metric is to define the “cost” of using this model by trying to quantify the errors it makes. Defining the quality metric this way situates the ML algorithm as a process of trying to find the predictor that minimizes this cost.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>9. 📝 <em>Notation</em>: The <span class="math notranslate nohighlight">\(\Sigma\)</span> notation below means “sum”. It is a concise of writing the sum of multiple items. If you are familiar with programming, think of it as summing up some values inside a loop. The number at the bottom of the notation is the starting value and the number at the top is the stopping value.</p>
+</aside>
+<p>For the linear regression setting, a common definition of the quality metric is the <strong>mean squared error</strong> (or <strong>MSE</strong>) (9).</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+MSE(w_0, w_1) &amp;= \frac{1}{n} \left( (y_1 - \hat{y}_1)^2 + (y_2 - \hat{y}_2)^2 + ... + (y_n - \hat{y}_n)^2 \right)\\
+&amp;= \frac{1}{n}\sum_{i=1}^n \left(\hat{y}_i - y_i\right)^2\\
+&amp;= \frac{1}{n}\sum_{i=1}^n \left((w_0 + w_1x_i) - y_i\right)^2\\
+\end{align}
+\end{split}\]</div>
+<p>The English explanation of this definition is the sum of the errors made by our model (squared) on the training dataset. This is visually shown in the animation below. Notice this <span class="math notranslate nohighlight">\(MSE\)</span> function is parameterized by <span class="math notranslate nohighlight">\(w_0, w_1\)</span>. This lets us think of <span class="math notranslate nohighlight">\(MSE\)</span> as a function that lets you ask “what is this MSE error if I use were to use this line?” A “better” model using this quality metric is one that has predictions closer to what our training dataset indicates.</p>
+<p>As mentioned before, there are many different functions you could use to determine the quality of a particular model. For example, the Residual Sum of Square (RSS) or the Mean Absolute Error (MAE) are also used in some contexts. RSS is simply MSE but not divided by <span class="math notranslate nohighlight">\(n\)</span>, or, <span class="math notranslate nohighlight">\(MSE(w_0, w_1) = \frac{1}{n}RSS(w_0, w_1)\)</span>. Mean Absolute Error (MAE) is the sum of the errors but using the absolute value instead of squaring <span class="math notranslate nohighlight">\(MAE(w_0, w_1) = \sum_{i=1}^n \left| \hat{y}_i - y_i \right|\)</span>. In most of our regression settings, we will focus on MSE.</p>
+</section>
+<section id="ml-algorithm">
+<h3>ML Algorithm<a class="headerlink" href="#ml-algorithm" title="Permalink to this headline">#</a></h3>
+<p>TODO highlight ml pipeline</p>
+<p>As a quick recap, we have defined the following steps:</p>
+<ul class="simple">
+<li><p>The linear regression model (how we assume the world works and what we will try to learn)</p></li>
+<li><p>The quality metric (how good a possible setting of the model parameters are)</p></li>
+</ul>
+<p>Now we define an ML Algorithm to find the parameters that is the “best” according to our chosen quality metric.</p>
+<p>Abstractly, the goal of the ML Algorithm is to solve the following optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[\hat{w}_0, \hat{w}_1 = \argmin{w_0, w_1} MSE(w_0, w_1)\]</div>
+<p>In English, this is finding the settings of <span class="math notranslate nohighlight">\(w_0, w_1\)</span>​ that minimize MSE and using those for our predictor by claiming they are our best estimates <span class="math notranslate nohighlight">\(\hat{w}_0, \hat{w}_1\)</span>​. Stating the problem we want to solve is much easier than actually solving it in practice though! It’s not the case that we can try every possible <span class="math notranslate nohighlight">\(w_0, w_1\)</span>​ since they can be real numbers (e.g., 14.3 or -7.4568). This means there are an infinite combination of <span class="math notranslate nohighlight">\(w_0, w_1\)</span> pairs to try out before we can claim to have found the one that minimizes MSE!</p>
+<aside class="sidebar">
+<p><img alt="3D plot of the Mean Square Error. Looks like a piece of paper folded up by the corners with a low point near the center." src="../../_images/mse.png" /></p>
+</aside>
+<p>Despite the impossibility of trying every possible <span class="math notranslate nohighlight">\(w_0, w_1\)</span>, in many cases we can still tractably solve this problem! Remember that MSE is a function that takes a particular setting of <span class="math notranslate nohighlight">\(w_0, w_1\)</span> as inputs and returns the error using those particular parameters. In the case of two inputs like this, we can visualize <span class="math notranslate nohighlight">\(MSE(w_0, w_1)\)</span> as a 3D plot that shows the MSE value for any particular setting of <span class="math notranslate nohighlight">\(w_0, w_1\)</span>.</p>
+<p>In practice we don’t actually need to plot this whole function to find the best <span class="math notranslate nohighlight">\(w_0, w_1\)</span>! It turns out with a little ML theory, we can prove that this function will be “bowl-like” as it is shown in the image above. Proving this is a bit more complex than we care to handle, but the intuition comes from the fact hat MSE is the sum of a bunch of squared functions, and since squared functions look “bowl-like” their sum will also look “bowl-like”. Now what we care to know is that if we know that our function is shaped like a bowl, there is a clever algorithm called <strong>gradient descent</strong> that helps us minimize the function without trying <em>every possible input</em>.</p>
+<p>The idea behind gradient descent is to start at one point (any point) and “roll down” the hill until you reach the bottom. If we know our function is “bowl-like”, then this procedure will lead to the bottom of the bowl regardless of where we start!</p>
+<p>Let’s consider an example with one parameter instead of two: suppose we know what the best <span class="math notranslate nohighlight">\(w_0\)</span> is and our job is to just find <span class="math notranslate nohighlight">\(w_1\)</span> that minimizes the MSE. In this context, we don’t have to visualize this 3D bowl but rather just a 2D bowl since there is only one degree of freedom.</p>
+
+    <video width="100%"  controls >
+    <source src="../../_static/manim_animations/linear_regression/convex_anim.mp4" type="video/mp4">
+    Video
+    </video>
+    <p>As described above, the idea of the gradient descent algorithm is to start at some point, and then repeatedly “roll down the hill” until we reach the bottom of the bowl. In this sense, it is an iterative algorithm that repeatedly performs some minor updates until it converges to what it thinks is the best solution.</p>
+<p>While the algorithm is concise enough to explain in English, the details end up being slightly more complex. If you are familiar with calculus, you might remember derivative of a function tells you the slope at each point of a function. You don’t need to ever compute a derivative for our course, but just know that there is a mathematical way to find the slope of many functions.</p>
+<p>In the context of our original problem where we are trying to optimize both <span class="math notranslate nohighlight">\(w_0, w_1\)</span>​, this idea is the same in theory but only moderately different practice.  A “gradient” is just a multi-dimensional extension of the concept of a derivative (slope) of a function of more than one input that tells us the direction the function increases and by how much. Instead of using the slope to identify how we “roll down the hill” we compute a “gradient” to do identify which direction to travel; hence the name <strong>gradient descent</strong> It’s the exact same idea as the animation above, but now we use this gradient idea to find the direction to go down.</p>
+
+    <video width="100%"  controls >
+    <source src="../../_static/regression/linear_regression/gradient_descent.mp4" type="video/mp4">
+    Animation showing a 3D MSE function (bowl) and the accompanying line as the current estimate rolls down the hill
+    </video>
+    <p>Visually, this gradient descent algorithm looks like rolling down the MSE hill until it converges at the bottom. It’s important to highlight that the MSE function’s input are the <span class="math notranslate nohighlight">\(w_0, w_1\)</span> parameters  that we trying to use for our predictor. The right-hand side of the animation above is showing the predictor that would result by using the particular setting of <span class="math notranslate nohighlight">\(w_0, w_1\)</span>​ at each step of the algorithm. Notice that as the algorithm runs, the line seems to fit the data better and better! This is precisely because the algorithm is updating the coefficients bit-by-bit to reduce the error according to MSE.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>11. 📝 <em>Notation</em>: We use <span class="math notranslate nohighlight">\(w\)</span> to mean the vector <span class="math notranslate nohighlight">\(w = [w_0, w_1]\)</span> and <span class="math notranslate nohighlight">\(w(t)\)</span> to mean our predictor coefficients at step <span class="math notranslate nohighlight">\(t\)</span> of the algorithm.</p>
+<p>The <span class="math notranslate nohighlight">\(\nabla\)</span> is the notation mathematicians use for the gradient (multi-dimensional slope) of a function.</p>
+</aside>
+<p>While the exact notation isn’t incredibly important for our course, we still think it is useful to at least see the algorithm of gradient descent written out with a mathematical notation (11).</p>
+<div class="proof algorithm admonition" id="grad-descent">
+<p class="admonition-title"><span class="caption-number">Algorithm 1 </span> (Gradient Descent)</p>
+<section class="algorithm-content" id="proof-content">
+<ol class="simple">
+<li><p>Start at some (random) point <span class="math notranslate nohighlight">\(w^{(0)}\)</span> at <span class="math notranslate nohighlight">\(t = 0\)</span></p></li>
+<li><p>While we haven’t converged:</p>
+<ol class="simple">
+<li><p>Compute gradient at current point (direction of ascent) <span class="math notranslate nohighlight">\(d \gets \nabla RSS(w^{(t)})\)</span></p></li>
+<li><p>Update point <span class="math notranslate nohighlight">\(w^{(t + 1)} \gets w^{(t)} - \eta d\)</span></p></li>
+<li><p>Update time <span class="math notranslate nohighlight">\(t \gets t + 1\)</span></p></li>
+</ol>
+</li>
+<li><p>Output current <span class="math notranslate nohighlight">\(w^{(t)}\)</span></p></li>
+</ol>
+</section>
+</div><p>In this algorithm, we repeatedly adjust our predictor until we reach the bottom of the bowl. There are some mathematical details we are omitting about how to compute this gradient, but the big idea of rolling down a hill is extremely important to know as an ML algorithm. We’ll see over and over again that gradient descent is the algorithm used in almost any ML algorithm to find the best parameters of a model.</p>
+<p>As a technical detail, there is a constant in the pseudo-code above <span class="math notranslate nohighlight">\(\eta\)</span> called the <em>step-size</em>. <span class="math notranslate nohighlight">\(\eta\)</span> controls how far we move on each iteration of the algorithm. In a future chapter we will discuss how your choice of <span class="math notranslate nohighlight">\(\eta\)</span> effects the result of the algorithm, but for now all you need to know is you can choose how much you adjust the parameters at each step.</p>
+<p>You might be wondering if this gradient-descent algorithm is always guaranteed to actually work for any function we want to roll down the hill. “Work” in this context would probably mean that it finds the settings of <span class="math notranslate nohighlight">\(w_0, w_1\)</span>​ that minimize the MSE. Gradient descent can only guarantee you that it will eventually converge to this global optimum if the MSE function is “bowl-like”. Mathematically we say a function is “bowl-like” if it is <strong>convex</strong>; there are more fancy ways of defining what a convex function is, but we will suffice with saying a function is convex if it looks like a bowl when plotted!</p>
+<p>If you don’t have a guarantee that the function you are trying to minimize is convex, then there is no guarantee your gradient descent algorithm will find the best solution. Since gradient descent is always looking at the “locally optimal” direction to go, a function that is not convex might result in our algorithm getting stuck in a <em>local optima</em>.</p>
+
+    <video width="100%"  controls >
+    <source src="../../_static/manim_animations/linear_regression/non_convex_anim.mp4" type="video/mp4">
+    Video
+    </video>
+    <p>As mentioned above, we are lucky that in the case of linear regression our MSE quality metric will be convex! So that means running gradient descent will guarantee a global optimum.</p>
+</section>
+<section id="feature-extraction">
+<h3>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this headline">#</a></h3>
+<p>TODO highlight ML pipeline</p>
+<p>TODO image of data and model</p>
+<p>If you think back to our original dataset when introducing the chapter (12), you might notice that our linear regression model is doomed to fail if we believe the true (unknown) function is not actually linear. In the original animation, we drew this data from something that had a curve to it (i.e., not linear).</p>
+<p>Any time you are deciding to use some type of model, you are making an <strong>assumption</strong> about how the world works. When you want to use linear regression, you are assuming the world operates linearly. Unfortunately there is no way to actually verify if that assumption is correct. Even with the data that we showed above that looks sufficiently curvey, it’s entirely possible (albeit unlikely) that it is actually coming from a linear function and the noise just so happened to make the data look like it came from a curve!  We will revisit later this idea of using a model that does not match reality.</p>
+<p>If we believe that the true function is more complex than a linear one, we could use a more complicated model. We could instead use <strong>polynomial regression</strong> model to model the unknown function as some polynomial. For example, if we thought the true function was a cubic function (a polynomial of degree 3), we could use the statistical model</p>
+<div class="math notranslate nohighlight">
+\[y_i = w_0 + w_1x_i + w_2x_i^2 + w_3x_i^3 + \varepsilon_i\]</div>
+<p><strong>Polynomial regression</strong> is the general term for using a polynomial of any particular degree to model the task. In general, using polynomial regression with degree <span class="math notranslate nohighlight">\(p\)</span> is using the statistical assumption that the world operates as:</p>
+<div class="math notranslate nohighlight">
+\[y_i = w_0 + w_1x_i + w_2x_i^2 + ... + w_p x_i^p + \varepsilon_i\]</div>
+<p>How do you go about training a polynomial regression model to find the right setting of paramters <span class="math notranslate nohighlight">\(w_0, ... w_p\)</span>? The exact same as linear regression! We use MSE as the quality metric, but with an input for every setting of $w_jl, and use an algorithm like gradient descent to find the optimal setting of the parameters. One of the very powerful things about gradient descent is it actually works really well for learning many different types of models! We will see gradient descent come up many times throughout the book.</p>
+<p>You might be wondering if we can easily learn parameters for polynomial regression regardless of the degree, how do we choose what the right degree <span class="math notranslate nohighlight">\(p\)</span> by just looking at the data? That is a central question in the next chapter, Assessing Performance.</p>
+<p>Importantly, there is a more important lesson here for this section than just polynomials. In general, we call a <strong>feature</strong> some value that we derive from our data that we want to use in our model. <strong>Feature extraction</strong> is the process of generate some set of features from our raw input data.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>12. 📝 <em>Notation</em>: We use <span class="math notranslate nohighlight">\(h_j(x_i)\)</span> to represent the jth feature we extract from the data input <span class="math notranslate nohighlight">\(x_i\)</span>. We choose a number <span class="math notranslate nohighlight">\(D\)</span> for how many features we want to use in total.</p>
+<p>It’s common to also use the notation <span class="math notranslate nohighlight">\(h(x_i)\)</span> (no subscript) to denote all <span class="math notranslate nohighlight">\(D\)</span> features as one array of numbers (also called a feature vector) <span class="math notranslate nohighlight">\(h(x) = [h_0(x), ..., h_D(x)\)</span>$].</p>
+</aside>
+<p>In general, we can generalize our model to the most general <strong>regression</strong> model with any set of features for our input data (12).</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+y_i &amp;= w_0h_0(x_i) + w_1h_1(x_i) + ... + h_Dh_D(x_i)\\
+    &amp;= \sum_{j=0}^D h_j(x_i)
+\end{align}
+\end{split}\]</div>
+<p>It’s common to use <span class="math notranslate nohighlight">\(h_0(x) = 1\)</span> so that the parameter <span class="math notranslate nohighlight">\(w_0\)</span> represents an intercept term. But in general, you aren’t limited to how you want to transform your input <span class="math notranslate nohighlight">\(x\)</span> into features! For example, you could make <span class="math notranslate nohighlight">\(h_1(x) = x^2\)</span> and <span class="math notranslate nohighlight">\(h_2(x) = \log(x)\)</span>. Each feature <span class="math notranslate nohighlight">\(h_j(x)\)</span> will have its own associated parameter <span class="math notranslate nohighlight">\(w_j\)</span>.</p>
+<p>Minor Note: It turns out that our general regression model, including the special case of polynomial regression, are actually just linear regression but in a more complex <em>feature space</em>! Note that the equation above for general regression is still a linear function (<span class="math notranslate nohighlight">\(ax + by + ...\)</span>) in the space of considering each feature its own value. In reality, it’s possible and common for each feature to be related to our input <span class="math notranslate nohighlight">\(x\)</span>. The learned function doesn’t look linear in the <em>input space</em> (<span class="math notranslate nohighlight">\(x\)</span>) but is linear in the <em>feature space</em> (<span class="math notranslate nohighlight">\(h(x)\)</span>). The reasoning for this point is not particularly important, but it is useful to know that all of these regression models we have discussed really do boil-down to linear regression with more/less complicated <em>features</em>.</p>
+</section>
+</section>
+<section id="multiple-data-inputs">
+<h2>Multiple Data Inputs<a class="headerlink" href="#multiple-data-inputs" title="Permalink to this headline">#</a></h2>
+<p>So far, we have considered the case where our learning task only has a single data input <span class="math notranslate nohighlight">\(x\)</span> such as square footage in our housing price example. What if we wanted to include more than just square footage in our model for house prices? You might imagine we know the number of bathrooms in the house as well as whether or not it is a new construction. Generally, we are given a data table of values that we might be interested in looking at in our model. In a data table, it’s common to have a format like the following:</p>
+<ul class="simple">
+<li><p>Each row is a single example (e.g,, one house)</p></li>
+<li><p>Each column (except one) is a data input. There is usually one column reserved for the outcome value or target you want to predict.</p></li>
+</ul>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>sq. ft.</p></th>
+<th class="head"><p># bathrooms</p></th>
+<th class="head"><p>owner’s age</p></th>
+<th class="head"><p>…</p></th>
+<th class="head"><p>price</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1400</p></td>
+<td><p>3</p></td>
+<td><p>47</p></td>
+<td><p>…</p></td>
+<td><p>65,000</p></td>
+</tr>
+<tr class="row-odd"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+<tr class="row-even"><td><p>1250</p></td>
+<td><p>2</p></td>
+<td><p>36</p></td>
+<td><p>…</p></td>
+<td><p>100,000</p></td>
+</tr>
+</tbody>
+</table>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p><img alt="A plane passing through a bunch of points in 3 dimensions (x1, x2, y)" src="../../_images/two_features.png" /></p>
+</aside>
+<p>Adding more data inputs that we can turn into more features allows us to make a model allows for more complex relationships to be learned. For example, a regression model that uses two of the inputs as features for this house price problem might look like the following.</p>
+<div class="math notranslate nohighlight">
+\[y_i = w_0 + w_1 (sq. ft.) + w_2 + (\# bathrooms) + \varepsilon_i\]</div>
+<p>Which we visualize as a plane instead of a line.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>13. 📝 <em>Notation</em>:</p>
+<ul class="simple">
+<li><p>Data Input: <span class="math notranslate nohighlight">\(x_i = \left(x_i[1], x_i[2], ..., x_i[d]\right)\)</span> where there are <span class="math notranslate nohighlight">\(d\)</span> input columns and we use array notation to access them (e.g., <span class="math notranslate nohighlight">\(x[2]\)</span>).</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(y_i\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_i\)</span> is the <span class="math notranslate nohighlight">\(i^{th}\)</span> row of our input data table.</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_i[j]\)</span> is the <span class="math notranslate nohighlight">\(j^{th}\)</span> column of the <span class="math notranslate nohighlight">\(i^{th}\)</span> row.</p></li>
+<li><p><span class="math notranslate nohighlight">\(h_j(x_i)\)</span> is the <span class="math notranslate nohighlight">\(j^{th}\)</span> feature extracted from the <span class="math notranslate nohighlight">\(i^{th}\)</span> row (e.g., <span class="math notranslate nohighlight">\(h_2(x) = x[1] + x[3]^2\)</span>).</p></li>
+</ul>
+</aside>
+<p>It’s important that we highlight the difference between a <strong>data input</strong> and a <strong>feature</strong> and some notation used for them (13):</p>
+<ul class="simple">
+<li><p>Data input: Are columns of the raw data table provided/collected.</p></li>
+<li><p>Features are values (possible transformed) that the model will use. This is performed by the feature extraction <span class="math notranslate nohighlight">\(h(x)\)</span> and are explicitly modelling choice by you, the machine learning practitioner, decides are relevant for the learning task.</p></li>
+</ul>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>14. More on this in the next chapter on Assessing Performance</p>
+</aside>
+<p>You have the freedom to choose which data inputs you select to use as features and how you transform them. Conventionally, you use <span class="math notranslate nohighlight">\(h_0(x) = 1\)</span> so that <span class="math notranslate nohighlight">\(w_0\)</span> is the intercept. But then for example, you could make <span class="math notranslate nohighlight">\(h_1(x) = x[1]\)</span> (the sq. ft.) and make <span class="math notranslate nohighlight">\(h_{12}(x) = \log(x[7]) * x[2]\)</span>. Generally adding more features means your model will be more complex which is not necessarily a good thing (14). Choosing how many features and what (if any) transformations to use a bit of an art and a science, so understanding in the next chapter how we evaluate our model is extremely important.</p>
+<p>📝 As a notational remark, we should highlight that it’s very common for people to assume that the data table you are working with has already been preprocessed to contain the features you want. They do this to avoid having to write <span class="math notranslate nohighlight">\(h_0(x) = 1\)</span>, <span class="math notranslate nohighlight">\(h_1(x) = ...\)</span>, everywhere in their work. It’s important to remember that there is an explicit modeling step of transforming raw data to features (even if its implicit and not shown in the notation) and should double check what type of data you are working with.</p>
+<div class="tip admonition">
+<p class="admonition-title">Garbage in <span class="math notranslate nohighlight">\(\rightarrow\)</span> Garbage out</p>
+<p>It can’t be overstated the importance of how deciding which data you use and which features you derive from it have on your resulting model. Not even the fanciest machine learning algorithms can save you from disaster if you, as the modeller, choose features that have no relation, or worse, trick you into thinking there is a relation there when there is not. Most machine learning techniques rely on finding <strong>correlations</strong>  between the input/output. As you have hopefully heard <strong>correlation is not causation</strong>. Just because your model can find a relationship between the features you choose and your output doesn’t actually mean such a relationship exists. A common example is that you can find a good linear relationship with the number of ice cream cones sold in a month (input) and the number of shark attacks (output), although most people don’t think ice cream causes shark attacks.</p>
+<p>It is incredibly important that you think carefully about what data you are including as it can effect the real-world decisions your model might make. In the data table above, we listed “owner’s age” as a data input. Is that something that is appropriate to use a feature for our model? Why does that seem less appropriate to include than something like square footage? And these choices have real consequences. For example, <a class="reference external" href="https://www.nytimes.com/2022/08/18/realestate/housing-discrimination-maryland.html">some companies problematically underestimate a house’s value by a wide margin when they assume the house is owned by a Black family</a>. This happens because they (intentionally or, more likely, unintentionally) use the owner’s race as part of their modeling process.</p>
+<p>Remember that which data you include is <em>the first and most important</em> modelling step, even if most machine learning practitioners rush past that part and focus more on the fanciest machine learning method the can apply.</p>
+</div>
+</section>
+<section id="recap-reflection">
+<h2>Recap / Reflection<a class="headerlink" href="#recap-reflection" title="Permalink to this headline">#</a></h2>
+<p>In this chapter we introduced the machine learning pipeline as it is applied to regression models, namely linear regression.</p>
+<p>We introduced some terminology that we will use throughout the book like the difference between a model and a predictor, the format of the data we learn from, how we can determine features of the model, and how to learn and assess a predictor. We will see these general ideas in the ML pipeline surface frequently in this book. It is always good to start using that as a reference point for the new concepts you are learning.</p>
+<p>We specifically discussed the context of regression and linear regression. Understanding how to formulate a problem as a regression problem and use linear regression to help you learn a predictor is a very important skill as part of your journey to mastering machine learning! Additionally, understanding how linear regression and polynomial regression are really the same model with different sets of features is a very powerful building-block on that journey.</p>
+<section id="test-your-understanding">
+<h3>Test your Understanding<a class="headerlink" href="#test-your-understanding" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html"><div id="DbpsfmUByFsA" data-shufflequestions="False"
+               data-shuffleanswers="False"
+               data-preserveresponses="false"
+               data-numquestions="1000000"> <style>:root {
+    --medium-slate-blue: #6f78ffff;
+    --orange-pantone: #f75c03ff;
+    --russian-violet: #392061ff;
+    --maximum-yellow-red: #ffc857ff;
+    --viridian-green: #119da4ff;
+    --incorrect-red: #c80202;
+    --correct-green: #009113;
+}
+
+.Quiz {
+    max-width: 600px;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    line-height: 1.1;
+    font-size: 16pt;
+}
+
+.QuizCode {
+    font-size: 14pt;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.QuizCode>pre {
+    padding: 4px;
+}
+
+.Answer {
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+}
+
+.Feedback {
+    font-size: 16pt;
+    text-align: center;
+    min-height: 2em;
+}
+
+.Input {
+    align: left;
+    font-size: 20pt;
+}
+
+.Input-text {
+    display: block;
+    margin: 10px;
+    color: inherit;
+    width: 140px;
+    background-color: #c0c0c0;
+    color: #fff;
+    padding: 5px;
+    padding-left: 10px;
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: inherit;
+    line-height: 20pt;
+    border: none;
+    border-radius: 0.2rem;
+    transition: box-shadow 0.1s);
+}
+
+.Input-text:focus {
+    outline: none;
+    background-color: #c0c0c0;
+    box-shadow: 0.6rem 0.8rem 1.4rem -0.5rem #999999;
+}
+
+.MCButton {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.MCButton p {
+    color: inherit;
+}
+
+.MultipleChoiceQn {
+    padding: 10px;
+    background: var(--medium-slate-blue);
+    color: #fafafa;
+    border-radius: 10px;
+}
+
+.ManyChoiceQn {
+    padding: 10px;
+    background: var(--orange-pantone);
+    color: #fafafa;
+    border-radius: 10px;
+}
+
+.NumericQn {
+    padding: 10px;
+    background: var(--russian-violet);
+    color: #fafafa;
+    border-radius: 10px;
+}
+
+.NumericQn p {
+    color: inherit;
+}
+
+.InpLabel {
+    line-height: 34px;
+    float: left;
+    margin-right: 10px;
+    color: #101010;
+    font-size: 15pt;
+}
+
+.incorrect {
+    color: var(--incorrect-red);
+}
+
+.correct {
+    color: var(--correct-green);
+}
+
+.correctButton {
+    /*
+    background: var(--correct-green);
+   */
+    animation: correct-anim 0.6s ease;
+    animation-fill-mode: forwards;
+    color: #fafafa;
+    box-shadow: inset 0px 0px 5px #555555;
+    outline: none;
+}
+
+.incorrectButton {
+    animation: incorrect-anim 0.8s ease;
+    animation-fill-mode: forwards;
+    color: #fafafa;
+    box-shadow: inset 0px 0px 5px #555555;
+    outline: none;
+}
+
+@keyframes incorrect-anim {
+    100% {
+        background-color: var(--incorrect-red);
+    }
+}
+
+@keyframes correct-anim {
+    100% {
+        background-color: var(--correct-green);
+    }
+}</style></div><script type="application/javascript">var questionsDbpsfmUByFsA=[{"question": "\n            Suppose we were testing a new drug treatment for a particular disease. We have gathered data from various trials that recorded the average response (a number, where 0 is low response and a higher number is a high response) in an experiment that used a particular dosage (measured in mg).\n            <br /><br />\n\n            We suspect there is a linear relationship between the response ($y$) and the dosage in mg ($x$), so we decide to model this data with a linear regression model.\n\n            $$y_i = w_0 + w_1x_i + \\varepsilon_i$$\n\n            Suppose that after training a model, we find $\\hat{w}_0 = 1$ $\\hat{w}_1 = 2$. Which of the following interpretations of the learned predictor are true? \n            <br /><br />\n\n            <i>Select all that apply</i>.\n            ", "type": "many_choice", "answers": [{"answer": "The predicted response for a 0mg dose is expected to be 0.", "correct": false}, {"answer": "The predicted response for a 0mg dose is expected to be 1.", "correct": true}, {"answer": "The predicted response for a 0mg dose is expected to be 2.", "correct": false}, {"answer": "If we were to increase the dosage by 2mg, we expect that the response would increase by 1.", "correct": false}, {"answer": "If were to increase the dosage by 1mg, we expect that the response would increase by 0.002.", "correct": false}, {"answer": "If we were to increase the dosage by 1mg, we expect that the response would increase by 2.", "correct": true}]}, {"question": "\n            Suppose in the setup for the last question, we had the following dataset.<br /><br />\n            <table class=\"tg\" style=\"undefined;table-layout: fixed; width: 284px\">\n                <colgroup>\n                    <col style=\"width: 117px\">\n                    <col style=\"width: 167px\">\n                </colgroup>\n                <thead>\n                  <tr>\n                    <th class=\"tg-0pky\">Drug Dosage</th>\n                    <th class=\"tg-0pky\">Response</th>\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td class=\"tg-2bhk\">10</td>\n                    <td class=\"tg-2bhk\">19</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">2</td>\n                    <td class=\"tg-0pky\">8</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-2bhk\">3</td>\n                    <td class=\"tg-2bhk\"><span style=\"font-weight:400;font-style:normal\">7</span></td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">9</td>\n                    <td class=\"tg-0pky\"><span style=\"font-weight:400;font-style:normal\">18</span></td>\n                  </tr>\n                </tbody>\n            </table>\n\n            <br />\n            Consider our learned predictor $\\hat{w}_0 = 1$ and $\\hat{w}_1 = 2$. What is the $MSE$ of this learned predictor on this training dataset?\n        ", "type": "numeric", "answers": [{"type": "value", "value": 3.5, "correct": true, "feedback": "\n                    Recall that the $MSE$ or residual sum of squares is defined as\n\n                    $$MSE(w_0, w_1) = \\frac{1}{n}\\sum_{i=1}^n \\left(y_i - (w_0 + w_1 x_i)\\right)^2$$\n\n                    This means our $MSE$ is (scroll for calculation)\n\n                    $$\\frac{1}{4}\\left(19 - (1 + 2 \\cdot 10)\\right)^2 + \\left(8 - (1 + 2 \\cdot 2)\\right)^2 + \\left(7 - (1 + 2 \\cdot 3)\\right)^2 + \\left(18 - (1 + 2 \\cdot 9)\\right)^2 = \\frac{14}{4} = 3.5$$\n                "}, {"type": "default", "correct": false, "feedback": "Try to use our MSE formula to compute the average error on each data point!"}]}];
+    // Make a random ID
+function makeid(length) {
+    var result = [];
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+    }
+    return result.join('');
+}
+
+// Choose a random subset of an array. Can also be used to shuffle the array
+function getRandomSubarray(arr, size) {
+    var shuffled = arr.slice(0), i = arr.length, temp, index;
+    while (i--) {
+        index = Math.floor((i + 1) * Math.random());
+        temp = shuffled[index];
+        shuffled[index] = shuffled[i];
+        shuffled[i] = temp;
+    }
+    return shuffled.slice(0, size);
+}
+
+function printResponses(responsesContainer) {
+    var responses=JSON.parse(responsesContainer.dataset.responses);
+    var stringResponses='<B>IMPORTANT!</B>To preserve this answer sequence for submission, when you have finalized your answers: <ol> <li> Copy the text in this cell below "Answer String"</li> <li> Double click on the cell directly below the Answer String, labeled "Replace Me"</li> <li> Select the whole "Replace Me" text</li> <li> Paste in your answer string and press shift-Enter.</li><li>Save the notebook using the save icon or File->Save Notebook menu item</li></ul><br><br><br><b>Answer String:</b><br> ';
+    console.log(responses);
+    responses.forEach((response, index) => {
+        if (response) {
+            console.log(index + ': ' + response);
+            stringResponses+= index + ': ' + response +"<BR>";
+        }
+    });
+    responsesContainer.innerHTML=stringResponses;
+}
+function check_mc() {
+    var id = this.id.split('-')[0];
+    //var response = this.id.split('-')[1];
+    //console.log(response);
+    //console.log("In check_mc(), id="+id);
+    //console.log(event.srcElement.id)           
+    //console.log(event.srcElement.dataset.correct)   
+    //console.log(event.srcElement.dataset.feedback)
+
+    var label = event.srcElement;
+    //console.log(label, label.nodeName);
+    var depth = 0;
+    while ((label.nodeName != "LABEL") && (depth < 20)) {
+        label = label.parentElement;
+        console.log(depth, label);
+        depth++;
+    }
+
+
+
+    var answers = label.parentElement.children;
+
+    //console.log(answers);
+
+
+    // Split behavior based on multiple choice vs many choice:
+    var fb = document.getElementById("fb" + id);
+
+
+
+
+    if (fb.dataset.numcorrect == 1) {
+        // What follows is for the saved responses stuff
+        var outerContainer = fb.parentElement.parentElement;
+        var responsesContainer = document.getElementById("responses" + outerContainer.id);
+        if (responsesContainer) {
+            //console.log(responsesContainer);
+            var response = label.firstChild.innerText;
+            if (label.querySelector(".QuizCode")){
+                response+= label.querySelector(".QuizCode").firstChild.innerText;
+            }
+            console.log(response);
+            //console.log(document.getElementById("quizWrap"+id));
+            var qnum = document.getElementById("quizWrap"+id).dataset.qnum;
+            console.log("Question " + qnum);
+            //console.log(id, ", got numcorrect=",fb.dataset.numcorrect);
+            var responses=JSON.parse(responsesContainer.dataset.responses);
+            console.log(responses);
+            responses[qnum]= response;
+            responsesContainer.setAttribute('data-responses', JSON.stringify(responses));
+            printResponses(responsesContainer);
+        }
+        // End code to preserve responses
+        
+        for (var i = 0; i < answers.length; i++) {
+            var child = answers[i];
+            //console.log(child);
+            child.className = "MCButton";
+        }
+
+
+
+        if (label.dataset.correct == "true") {
+            // console.log("Correct action");
+            if ("feedback" in label.dataset) {
+                fb.textContent = jaxify(label.dataset.feedback);
+            } else {
+                fb.textContent = "Correct!";
+            }
+            label.classList.add("correctButton");
+
+            fb.className = "Feedback";
+            fb.classList.add("correct");
+
+        } else {
+            if ("feedback" in label.dataset) {
+                fb.textContent = jaxify(label.dataset.feedback);
+            } else {
+                fb.textContent = "Incorrect -- try again.";
+            }
+            //console.log("Error action");
+            label.classList.add("incorrectButton");
+            fb.className = "Feedback";
+            fb.classList.add("incorrect");
+        }
+    }
+    else {
+        var reset = false;
+        var feedback;
+         if (label.dataset.correct == "true") {
+            if ("feedback" in label.dataset) {
+                feedback = jaxify(label.dataset.feedback);
+            } else {
+                feedback = "Correct!";
+            }
+            if (label.dataset.answered <= 0) {
+                if (fb.dataset.answeredcorrect < 0) {
+                    fb.dataset.answeredcorrect = 1;
+                    reset = true;
+                } else {
+                    fb.dataset.answeredcorrect++;
+                }
+                if (reset) {
+                    for (var i = 0; i < answers.length; i++) {
+                        var child = answers[i];
+                        child.className = "MCButton";
+                        child.dataset.answered = 0;
+                    }
+                }
+                label.classList.add("correctButton");
+                label.dataset.answered = 1;
+                fb.className = "Feedback";
+                fb.classList.add("correct");
+
+            }
+        } else {
+            if ("feedback" in label.dataset) {
+                feedback = jaxify(label.dataset.feedback);
+            } else {
+                feedback = "Incorrect -- try again.";
+            }
+            if (fb.dataset.answeredcorrect > 0) {
+                fb.dataset.answeredcorrect = -1;
+                reset = true;
+            } else {
+                fb.dataset.answeredcorrect--;
+            }
+
+            if (reset) {
+                for (var i = 0; i < answers.length; i++) {
+                    var child = answers[i];
+                    child.className = "MCButton";
+                    child.dataset.answered = 0;
+                }
+            }
+            label.classList.add("incorrectButton");
+            fb.className = "Feedback";
+            fb.classList.add("incorrect");
+        }
+        // What follows is for the saved responses stuff
+        var outerContainer = fb.parentElement.parentElement;
+        var responsesContainer = document.getElementById("responses" + outerContainer.id);
+        if (responsesContainer) {
+            //console.log(responsesContainer);
+            var response = label.firstChild.innerText;
+            if (label.querySelector(".QuizCode")){
+                response+= label.querySelector(".QuizCode").firstChild.innerText;
+            }
+            console.log(response);
+            //console.log(document.getElementById("quizWrap"+id));
+            var qnum = document.getElementById("quizWrap"+id).dataset.qnum;
+            console.log("Question " + qnum);
+            //console.log(id, ", got numcorrect=",fb.dataset.numcorrect);
+            var responses=JSON.parse(responsesContainer.dataset.responses);
+            if (label.dataset.correct == "true") {
+                if (typeof(responses[qnum]) == "object"){
+                    if (!responses[qnum].includes(response))
+                        responses[qnum].push(response);
+                } else{
+                    responses[qnum]= [ response ];
+                }
+            } else {
+                responses[qnum]= response;
+            }
+            console.log(responses);
+            responsesContainer.setAttribute('data-responses', JSON.stringify(responses));
+            printResponses(responsesContainer);
+        }
+        // End save responses stuff
+
+
+
+        var numcorrect = fb.dataset.numcorrect;
+        var answeredcorrect = fb.dataset.answeredcorrect;
+        if (answeredcorrect >= 0) {
+            fb.textContent = feedback + " [" + answeredcorrect + "/" + numcorrect + "]";
+        } else {
+            fb.textContent = feedback + " [" + 0 + "/" + numcorrect + "]";
+        }
+
+
+    }
+
+    if (typeof MathJax != 'undefined') {
+        var version = MathJax.version;
+        console.log('MathJax version', version);
+        if (version[0] == "2") {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        } else if (version[0] == "3") {
+            MathJax.typeset([fb]);
+        }
+    } else {
+        console.log('MathJax not detected');
+    }
+
+}
+
+function make_mc(qa, shuffle_answers, outerqDiv, qDiv, aDiv, id) {
+    var shuffled;
+    if (shuffle_answers == "True") {
+        //console.log(shuffle_answers+" read as true");
+        shuffled = getRandomSubarray(qa.answers, qa.answers.length);
+    } else {
+        //console.log(shuffle_answers+" read as false");
+        shuffled = qa.answers;
+    }
+
+
+    var num_correct = 0;
+
+
+
+    shuffled.forEach((item, index, ans_array) => {
+        //console.log(answer);
+
+        // Make input element
+        var inp = document.createElement("input");
+        inp.type = "radio";
+        inp.id = "quizo" + id + index;
+        inp.style = "display:none;";
+        aDiv.append(inp);
+
+        //Make label for input element
+        var lab = document.createElement("label");
+        lab.className = "MCButton";
+        lab.id = id + '-' + index;
+        lab.onclick = check_mc;
+        var aSpan = document.createElement('span');
+        aSpan.classsName = "";
+        //qDiv.id="quizQn"+id+index;
+        if ("answer" in item) {
+            aSpan.innerHTML = jaxify(item.answer);
+            //aSpan.innerHTML=item.answer;
+        }
+        lab.append(aSpan);
+
+        // Create div for code inside question
+        var codeSpan;
+        if ("code" in item) {
+            codeSpan = document.createElement('span');
+            codeSpan.id = "code" + id + index;
+            codeSpan.className = "QuizCode";
+            var codePre = document.createElement('pre');
+            codeSpan.append(codePre);
+            var codeCode = document.createElement('code');
+            codePre.append(codeCode);
+            codeCode.innerHTML = item.code;
+            lab.append(codeSpan);
+            //console.log(codeSpan);
+        }
+
+        //lab.textContent=item.answer;
+
+        // Set the data attributes for the answer
+        lab.setAttribute('data-correct', item.correct);
+        if (item.correct) {
+            num_correct++;
+        }
+        if ("feedback" in item) {
+            lab.setAttribute('data-feedback', item.feedback);
+        }
+        lab.setAttribute('data-answered', 0);
+
+        aDiv.append(lab);
+
+    });
+
+    if (num_correct > 1) {
+        outerqDiv.className = "ManyChoiceQn";
+    } else {
+        outerqDiv.className = "MultipleChoiceQn";
+    }
+
+    return num_correct;
+
+}
+function check_numeric(ths, event) {
+
+    if (event.keyCode === 13) {
+        ths.blur();
+
+        var id = ths.id.split('-')[0];
+
+        var submission = ths.value;
+        if (submission.indexOf('/') != -1) {
+            var sub_parts = submission.split('/');
+            //console.log(sub_parts);
+            submission = sub_parts[0] / sub_parts[1];
+        }
+        //console.log("Reader entered", submission);
+
+        if ("precision" in ths.dataset) {
+            var precision = ths.dataset.precision;
+            // console.log("1:", submission)
+            submission = Math.round((1 * submission + Number.EPSILON) * 10 ** precision) / 10 ** precision;
+            // console.log("Rounded to ", submission, " precision=", precision  );
+        }
+
+
+        //console.log("In check_numeric(), id="+id);
+        //console.log(event.srcElement.id)           
+        //console.log(event.srcElement.dataset.feedback)
+
+        var fb = document.getElementById("fb" + id);
+        fb.style.display = "none";
+        fb.textContent = "Incorrect -- try again.";
+
+        var answers = JSON.parse(ths.dataset.answers);
+        //console.log(answers);
+
+        var defaultFB = "";
+        var correct;
+        var done = false;
+        answers.every(answer => {
+            //console.log(answer.type);
+
+            correct = false;
+            // if (answer.type=="value"){
+            if ('value' in answer) {
+                if (submission == answer.value) {
+                    fb.textContent = jaxify(answer.feedback);
+                    correct = answer.correct;
+                    //console.log(answer.correct);
+                    done = true;
+                }
+                // } else if (answer.type=="range") {
+            } else if ('range' in answer) {
+                //console.log(answer.range);
+                if ((submission >= answer.range[0]) && (submission < answer.range[1])) {
+                    fb.textContent = jaxify(answer.feedback);
+                    correct = answer.correct;
+                    //console.log(answer.correct);
+                    done = true;
+                }
+            } else if (answer.type == "default") {
+                defaultFB = answer.feedback;
+            }
+            if (done) {
+                return false; // Break out of loop if this has been marked correct
+            } else {
+                return true; // Keep looking for case that includes this as a correct answer
+            }
+        });
+
+        if ((!done) && (defaultFB != "")) {
+            fb.innerHTML = jaxify(defaultFB);
+            //console.log("Default feedback", defaultFB);
+        }
+
+        fb.style.display = "block";
+        if (correct) {
+            ths.className = "Input-text";
+            ths.classList.add("correctButton");
+            fb.className = "Feedback";
+            fb.classList.add("correct");
+        } else {
+            ths.className = "Input-text";
+            ths.classList.add("incorrectButton");
+            fb.className = "Feedback";
+            fb.classList.add("incorrect");
+        }
+
+        // What follows is for the saved responses stuff
+        var outerContainer = fb.parentElement.parentElement;
+        var responsesContainer = document.getElementById("responses" + outerContainer.id);
+        if (responsesContainer) {
+            console.log(submission);
+            var qnum = document.getElementById("quizWrap"+id).dataset.qnum;
+            //console.log("Question " + qnum);
+            //console.log(id, ", got numcorrect=",fb.dataset.numcorrect);
+            var responses=JSON.parse(responsesContainer.dataset.responses);
+            console.log(responses);
+            if (submission == ths.value){
+                responses[qnum]= submission;
+            } else {
+                responses[qnum]= ths.value + "(" + submission +")";
+            }
+            responsesContainer.setAttribute('data-responses', JSON.stringify(responses));
+            printResponses(responsesContainer);
+        }
+        // End code to preserve responses
+
+        if (typeof MathJax != 'undefined') {
+            var version = MathJax.version;
+            console.log('MathJax version', version);
+            if (version[0] == "2") {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            } else if (version[0] == "3") {
+                MathJax.typeset([fb]);
+            }
+        } else {
+            console.log('MathJax not detected');
+        }
+        return false;
+    }
+
+}
+
+function isValid(el, charC) {
+    //console.log("Input char: ", charC);
+    if (charC == 46) {
+        if (el.value.indexOf('.') === -1) {
+            return true;
+        } else if (el.value.indexOf('/') != -1) {
+            var parts = el.value.split('/');
+            if (parts[1].indexOf('.') === -1) {
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    } else if (charC == 47) {
+        if (el.value.indexOf('/') === -1) {
+            if ((el.value != "") && (el.value != ".")) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else if (charC == 45) {
+        var edex = el.value.indexOf('e');
+        if (edex == -1) {
+            edex = el.value.indexOf('E');
+        }
+
+        if (el.value == "") {
+            return true;
+        } else if (edex == (el.value.length - 1)) { // If just after e or E
+            return true;
+        } else {
+            return false;
+        }
+    } else if (charC == 101) { // "e"
+        if ((el.value.indexOf('e') === -1) && (el.value.indexOf('E') === -1) && (el.value.indexOf('/') == -1)) {
+            // Prev symbol must be digit or decimal point:
+            if (el.value.slice(-1).search(/\d/) >= 0) {
+                return true;
+            } else if (el.value.slice(-1).search(/\./) >= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else {
+        if (charC > 31 && (charC < 48 || charC > 57))
+            return false;
+    }
+    return true;
+}
+
+function numeric_keypress(evnt) {
+    var charC = (evnt.which) ? evnt.which : evnt.keyCode;
+
+    if (charC == 13) {
+        check_numeric(this, evnt);
+    } else {
+        return isValid(this, charC);
+    }
+}
+
+
+
+
+
+function make_numeric(qa, outerqDiv, qDiv, aDiv, id) {
+
+
+
+    //console.log(answer);
+
+
+    outerqDiv.className = "NumericQn";
+    aDiv.style.display = 'block';
+
+    var lab = document.createElement("label");
+    lab.className = "InpLabel";
+    lab.textContent = "Type numeric answer here:";
+    aDiv.append(lab);
+
+    var inp = document.createElement("input");
+    inp.type = "text";
+    //inp.id="input-"+id;
+    inp.id = id + "-0";
+    inp.className = "Input-text";
+    inp.setAttribute('data-answers', JSON.stringify(qa.answers));
+    if ("precision" in qa) {
+        inp.setAttribute('data-precision', qa.precision);
+    }
+    aDiv.append(inp);
+    //console.log(inp);
+
+    //inp.addEventListener("keypress", check_numeric);
+    //inp.addEventListener("keypress", numeric_keypress);
+    /*
+    inp.addEventListener("keypress", function(event) {
+        return numeric_keypress(this, event);
+    }
+                        );
+                        */
+    //inp.onkeypress="return numeric_keypress(this, event)";
+    inp.onkeypress = numeric_keypress;
+    inp.onpaste = event => false;
+
+    inp.addEventListener("focus", function (event) {
+        this.value = "";
+        return false;
+    }
+    );
+
+
+}
+function jaxify(string) {
+    var mystring = string;
+
+    var count = 0;
+    var loc = mystring.search(/([^\\]|^)(\$)/);
+
+    var count2 = 0;
+    var loc2 = mystring.search(/([^\\]|^)(\$\$)/);
+
+    //console.log(loc);
+
+    while ((loc >= 0) || (loc2 >= 0)) {
+
+        /* Have to replace all the double $$ first with current implementation */
+        if (loc2 >= 0) {
+            if (count2 % 2 == 0) {
+                mystring = mystring.replace(/([^\\]|^)(\$\$)/, "$1\\[");
+            } else {
+                mystring = mystring.replace(/([^\\]|^)(\$\$)/, "$1\\]");
+            }
+            count2++;
+        } else {
+            if (count % 2 == 0) {
+                mystring = mystring.replace(/([^\\]|^)(\$)/, "$1\\(");
+            } else {
+                mystring = mystring.replace(/([^\\]|^)(\$)/, "$1\\)");
+            }
+            count++;
+        }
+        loc = mystring.search(/([^\\]|^)(\$)/);
+        loc2 = mystring.search(/([^\\]|^)(\$\$)/);
+        //console.log(mystring,", loc:",loc,", loc2:",loc2);
+    }
+
+    //console.log(mystring);
+    return mystring;
+}
+
+
+function show_questions(json, mydiv) {
+    console.log('show_questions');
+    //var mydiv=document.getElementById(myid);
+    var shuffle_questions = mydiv.dataset.shufflequestions;
+    var num_questions = mydiv.dataset.numquestions;
+    var shuffle_answers = mydiv.dataset.shuffleanswers;
+
+    if (num_questions > json.length) {
+        num_questions = json.length;
+    }
+
+    var questions;
+    if ((num_questions < json.length) || (shuffle_questions == "True")) {
+        //console.log(num_questions+","+json.length);
+        questions = getRandomSubarray(json, num_questions);
+    } else {
+        questions = json;
+    }
+
+    //console.log("SQ: "+shuffle_questions+", NQ: " + num_questions + ", SA: ", shuffle_answers);
+
+    // Iterate over questions
+    questions.forEach((qa, index, array) => {
+        //console.log(qa.question); 
+
+        var id = makeid(8);
+        //console.log(id);
+
+
+        // Create Div to contain question and answers
+        var iDiv = document.createElement('div');
+        //iDiv.id = 'quizWrap' + id + index;
+        iDiv.id = 'quizWrap' + id;
+        iDiv.className = 'Quiz';
+        iDiv.setAttribute('data-qnum', index);
+        mydiv.appendChild(iDiv);
+        // iDiv.innerHTML=qa.question;
+
+        var outerqDiv = document.createElement('div');
+        outerqDiv.id = "OuterquizQn" + id + index;
+
+        iDiv.append(outerqDiv);
+
+        // Create div to contain question part
+        var qDiv = document.createElement('div');
+        qDiv.id = "quizQn" + id + index;
+        //qDiv.textContent=qa.question;
+        qDiv.innerHTML = jaxify(qa.question);
+
+        outerqDiv.append(qDiv);
+
+        // Create div for code inside question
+        var codeDiv;
+        if ("code" in qa) {
+            codeDiv = document.createElement('div');
+            codeDiv.id = "code" + id + index;
+            codeDiv.className = "QuizCode";
+            var codePre = document.createElement('pre');
+            codeDiv.append(codePre);
+            var codeCode = document.createElement('code');
+            codePre.append(codeCode);
+            codeCode.innerHTML = qa.code;
+            outerqDiv.append(codeDiv);
+            //console.log(codeDiv);
+        }
+
+
+        // Create div to contain answer part
+        var aDiv = document.createElement('div');
+        aDiv.id = "quizAns" + id + index;
+        aDiv.className = 'Answer';
+        iDiv.append(aDiv);
+
+        //console.log(qa.type);
+
+        var num_correct;
+        if (qa.type == "multiple_choice") {
+            num_correct = make_mc(qa, shuffle_answers, outerqDiv, qDiv, aDiv, id);
+        } else if (qa.type == "many_choice") {
+            num_correct = make_mc(qa, shuffle_answers, outerqDiv, qDiv, aDiv, id);
+        } else if (qa.type == "numeric") {
+            //console.log("numeric");
+            make_numeric(qa, outerqDiv, qDiv, aDiv, id);
+        }
+
+
+        //Make div for feedback
+        var fb = document.createElement("div");
+        fb.id = "fb" + id;
+        //fb.style="font-size: 20px;text-align:center;";
+        fb.className = "Feedback";
+        fb.setAttribute("data-answeredcorrect", 0);
+        fb.setAttribute("data-numcorrect", num_correct);
+        iDiv.append(fb);
+
+
+    });
+    var preserveResponses = mydiv.dataset.preserveresponses;
+    console.log(preserveResponses);
+    console.log(preserveResponses == "true");
+    if (preserveResponses == "true") {
+        console.log(preserveResponses);
+        // Create Div to contain record of answers
+        var iDiv = document.createElement('div');
+        iDiv.id = 'responses' + mydiv.id;
+        iDiv.className = 'JCResponses';
+        // Create a place to store responses as an empty array
+        iDiv.setAttribute('data-responses', '[]');
+
+        // Dummy Text
+        iDiv.innerHTML="<b>Select your answers and then follow the directions that will appear here.</b>"
+        //iDiv.className = 'Quiz';
+        mydiv.appendChild(iDiv);
+    }
+//console.log("At end of show_questions");
+    if (typeof MathJax != 'undefined') {
+        console.log("MathJax version", MathJax.version);
+        var version = MathJax.version;
+        setTimeout(function(){
+            var version = MathJax.version;
+            console.log('After sleep, MathJax version', version);
+            if (version[0] == "2") {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            } else if (version[0] == "3") {
+                MathJax.typeset([mydiv]);
+            }
+        }, 500);
+if (typeof version == 'undefined') {
+        } else
+        {
+            if (version[0] == "2") {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            } else if (version[0] == "3") {
+                MathJax.typeset([mydiv]);
+            } else {
+                console.log("MathJax not found");
+            }
+        }
+    }
+    return false;
+}
+
+        {
+        show_questions(questionsDbpsfmUByFsA,  DbpsfmUByFsA);
+        }
+        </script></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./regression/linear_regression"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../../intro/index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><i class="fas fa-hand-sparkles fa-fw"></i> Introduction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../../printing.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><i class="fas fa-book fa-fw"></i> Printing and Comments</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Hunter Schafer<br/>
+  
+      &copy; Copyright 2022.<br/>
+    <div class="extra_footer">
+      Have feedback or spotted a bug? Please make a <a href="https://github.com/hschafer/Intro-ML/issues">GitHub issue</a> or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
+    </div>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

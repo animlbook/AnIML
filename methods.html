@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
@@ -77,6 +78,7 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
+    <script src="_static/script.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -149,7 +151,26 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  1. Regression
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="regression/linear_regression/index.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Linear Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  6. Others
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="printing.html">
    <i class="fas fa-book fa-fw">
@@ -407,8 +428,8 @@ title="Print to PDF"
 <p>Methods allow you to define reusable bundles of code that can help reduce redundancy and organize your code for readability. The concept of methods, or also called functions in other languages, are the same in Java but the syntax looks a little bit different.</p>
 <p>Like before, we will start by showing the syntax and then will explain the components.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="bf76ed49-9836-41fa-a5bb-778957f7fa57" name="ff57a228-3f71-45bf-b027-36f0e7385c84" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="bf76ed49-9836-41fa-a5bb-778957f7fa57">
+<input checked="checked" id="349fcb4c-7185-4ed9-8442-1b5df91f16e5" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="349fcb4c-7185-4ed9-8442-1b5df91f16e5">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Example</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -430,8 +451,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="faec38cf-842f-41de-a56a-e9ee431d4a79" name="ff57a228-3f71-45bf-b027-36f0e7385c84" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="faec38cf-842f-41de-a56a-e9ee431d4a79">
+<input id="f44e2d84-577d-4fd7-8f02-541c1b61932c" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="f44e2d84-577d-4fd7-8f02-541c1b61932c">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The main method starts&quot;</span><span class="p">)</span>
@@ -453,8 +474,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="e7072bc9-bf92-462b-98c0-8072c268b473" name="ff57a228-3f71-45bf-b027-36f0e7385c84" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="e7072bc9-bf92-462b-98c0-8072c268b473">
+<input id="937ea6a7-0066-46b2-ab18-5836932e84d5" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="937ea6a7-0066-46b2-ab18-5836932e84d5">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The main method starts&quot;</span><span class="p">);</span><span class="w"></span>
@@ -476,8 +497,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="5033c58d-c15f-48bf-aff5-05a6aae8bd4a" name="ff57a228-3f71-45bf-b027-36f0e7385c84" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="5033c58d-c15f-48bf-aff5-05a6aae8bd4a">
+<input id="88c11a4e-f12d-4b72-9189-e27e065fb0a3" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="88c11a4e-f12d-4b72-9189-e27e065fb0a3">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
@@ -515,8 +536,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="55bbdffd-1d56-49dc-9fda-40ac01dda383" name="ff57a228-3f71-45bf-b027-36f0e7385c84" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="55bbdffd-1d56-49dc-9fda-40ac01dda383">
+<input id="b0adf1ad-e7c5-434e-932f-bc3981607bc8" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="b0adf1ad-e7c5-434e-932f-bc3981607bc8">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>

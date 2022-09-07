@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
@@ -77,6 +78,7 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
+    <script src="_static/script.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -149,7 +151,26 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  1. Regression
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="regression/linear_regression/index.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Linear Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  6. Others
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="printing.html">
    <i class="fas fa-book fa-fw">
@@ -479,8 +500,8 @@ title="Print to PDF"
 <h2>While Loops<a class="headerlink" href="#while-loops" title="Permalink to this headline">#</a></h2>
 <p>Just like most languages, Java has a notion of a <code class="docutils literal notranslate"><span class="pre">while</span></code> loop that runs multiple times while some condition is true. The syntax is similar to most other languages, with the normal Java requirements that we saw from if statements to have parentheses around the conditions and using curly brackets to indicate the start/stop of the loop body.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="b0e468d6-8f8b-4f49-86df-708ed9e78552" name="033ffe78-8ec9-47d4-9d6e-57d550c6e1c3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="b0e468d6-8f8b-4f49-86df-708ed9e78552">
+<input checked="checked" id="ab3de494-157b-49cf-a7a8-f19179d9f945" name="37a970de-c422-4d97-91f7-dc6d150fda4d" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="ab3de494-157b-49cf-a7a8-f19179d9f945">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -492,8 +513,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="1d89d256-b647-456a-930b-5fff1a90a4f6" name="033ffe78-8ec9-47d4-9d6e-57d550c6e1c3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="1d89d256-b647-456a-930b-5fff1a90a4f6">
+<input id="b627f53a-1561-4361-b4be-45d7c2159256" name="37a970de-c422-4d97-91f7-dc6d150fda4d" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="b627f53a-1561-4361-b4be-45d7c2159256">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
@@ -504,8 +525,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="6a308a74-36fc-440e-ae02-5e514a7547fa" name="033ffe78-8ec9-47d4-9d6e-57d550c6e1c3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="6a308a74-36fc-440e-ae02-5e514a7547fa">
+<input id="40139f08-978a-4432-8f30-fd063a39169e" name="37a970de-c422-4d97-91f7-dc6d150fda4d" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="40139f08-978a-4432-8f30-fd063a39169e">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span><span class="w"></span>
 <span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -517,8 +538,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="d4c09ee1-8a60-4372-b965-bfc0c7f87723" name="033ffe78-8ec9-47d4-9d6e-57d550c6e1c3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="d4c09ee1-8a60-4372-b965-bfc0c7f87723">
+<input id="cb9c4dba-ce25-47f0-a937-5a8026d42362" name="37a970de-c422-4d97-91f7-dc6d150fda4d" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="cb9c4dba-ce25-47f0-a937-5a8026d42362">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -530,8 +551,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="9b1ae2cf-072c-474a-b386-522bd64c9055" name="033ffe78-8ec9-47d4-9d6e-57d550c6e1c3" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="9b1ae2cf-072c-474a-b386-522bd64c9055">
+<input id="c4c13630-c27f-44c2-99ec-5c770d95bb05" name="37a970de-c422-4d97-91f7-dc6d150fda4d" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="c4c13630-c27f-44c2-99ec-5c770d95bb05">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -550,8 +571,8 @@ C++</label><div class="sd-tab-content docutils">
 <h2>For Loop<a class="headerlink" href="#for-loop" title="Permalink to this headline">#</a></h2>
 <p>While the syntax for while loops is fairly consistent across languages, <code class="docutils literal notranslate"><span class="pre">for</span></code> loops generally have quite different syntax across languages. We will first show the syntax to print the numbers between 0 and 10 in Java, and then will explain all of parts of the syntax.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="e005a6c9-560a-4c71-bc86-d4127bfd9cbd" name="7083263e-1920-4046-a702-bd9d1f2b2efb" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="e005a6c9-560a-4c71-bc86-d4127bfd9cbd">
+<input checked="checked" id="3f9ca0ba-bbd9-4e9d-a814-ad73178ba630" name="b31617ed-84cb-4175-8294-ed87f223f3e7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="3f9ca0ba-bbd9-4e9d-a814-ad73178ba630">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
@@ -559,16 +580,16 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="40de869e-7459-4d93-beab-226f8a5986ce" name="7083263e-1920-4046-a702-bd9d1f2b2efb" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="40de869e-7459-4d93-beab-226f8a5986ce">
+<input id="3cfd2d7e-e8f6-4078-a483-a660089678bb" name="b31617ed-84cb-4175-8294-ed87f223f3e7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="3cfd2d7e-e8f6-4078-a483-a660089678bb">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<input id="d6d5de91-f128-4686-b908-194acb8772c5" name="7083263e-1920-4046-a702-bd9d1f2b2efb" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="d6d5de91-f128-4686-b908-194acb8772c5">
+<input id="49775e8f-4e7c-4278-9c47-f9b75ef5778a" name="b31617ed-84cb-4175-8294-ed87f223f3e7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="49775e8f-4e7c-4278-9c47-f9b75ef5778a">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">11</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span><span class="w"></span>
@@ -576,8 +597,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="124a2706-fb02-41da-b7a9-b92952f2248c" name="7083263e-1920-4046-a702-bd9d1f2b2efb" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="124a2706-fb02-41da-b7a9-b92952f2248c">
+<input id="f431eb7a-b79d-4afd-8294-66ea145f489d" name="b31617ed-84cb-4175-8294-ed87f223f3e7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="f431eb7a-b79d-4afd-8294-66ea145f489d">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span><span class="w"></span>
@@ -585,8 +606,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="9e3d8ca3-3f6d-4f99-96ae-3196c1bb5f80" name="7083263e-1920-4046-a702-bd9d1f2b2efb" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="9e3d8ca3-3f6d-4f99-96ae-3196c1bb5f80">
+<input id="c03fe136-80cb-4982-b4f7-555da96ca5c5" name="b31617ed-84cb-4175-8294-ed87f223f3e7" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="c03fe136-80cb-4982-b4f7-555da96ca5c5">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
