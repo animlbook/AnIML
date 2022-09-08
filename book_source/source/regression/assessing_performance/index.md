@@ -260,7 +260,9 @@ The model with the lowest true error is the optimal model, which we notate as $p
 
 We generally have special terms to identify the performance of a model: **overfitting** and **underfitting**. We will give a more formal definition of overfitting below, but as a general intuition, models less complex than $p^*$ tend to underfit while models more complex than $p^*$ tend to overfit.
 
-TODO(manim) image of model complexity
+```{image} ../../_static/regression/assessing_performance/manim_animations/train_test_anim.png
+:width: 100%
+```
 
 **Overfitting** happens when your model matches too closely to the noise in the training data rather than learning the generalized patterns. The formal definition of overfitting says a predictor $\hat{f}$ is overfit if there exists another predictor $f'$ that has the following properties:
 
@@ -311,7 +313,9 @@ Mathematically we write this as the following. This definition is tries to captu
 
 $$\text{Bias:}\ \ \mathbb{E}\left[\left|f(x) - \overline{f_{\hat{w}}}(x)\right|\right]$$
 
-TODO(manim) Bias visualization
+```{image} ../../_static/regression/assessing_performance/manim_animations/bias_deg_1_anim.png
+:width: 100%
+```
 
 Low complexity (simple) models tend to have high bias which is why the tend to have higher true error if they are too simple.
 
