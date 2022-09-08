@@ -18,7 +18,3 @@ clean:
 
 html: animations images
 	jupyter-book build "$(SRC_DIR)"
-
-html-deploy: animations_hard images_hard
-	jupyter-book build "$(SRC_DIR)"
-
