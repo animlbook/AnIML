@@ -35,13 +35,13 @@ The way we represent our data is a $n$ input/output pairs where we use the varia
 
 It is sometimes helpful to visualize the relationship between input and output. Visually, we could plot these points on a graph to see if there is a relationship between the input and the target.
 
-```{video} ../../_static/manim_animations/linear_regression/data_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/data_anim.mp4
 :width: 100%
 ```
 
 When using machine learning, we generally make an assumption that there is a relationship between the input and the target (i.e., square footage of the house and its sale price). We are going to say that there exists some secret (unknown) function $f$ such that the price of a house is approximately equal to the function's output for the houses input data.
 
-```{video} ../../_static/manim_animations/linear_regression/true_function_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/true_function_anim.mp4
 :width: 100%
 ```
 
@@ -62,7 +62,7 @@ To be a bit more precise, we will specify how we believe "approximately equal" w
 The way to read this formula above is to say that the outcomes we saw, $y_i$, come from the true function $f$ being applied to the input data $x_i$, but that there was some noise $\varepsilon_i$ added to it from some source of error. We also will make an assumption about how the $\varepsilon_i$ as well: we assume that $\mathbb{E}\left[\varepsilon_i\right] = 0$, which means on average, we expect the noise to average out to 0 (i.e., it's not biased to be positive or negative). The animation below shows a visual representation of this model (2)
 
 
-```{video} ../../_static/manim_animations/linear_regression/model_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/model_anim.mp4
 :width: 100%
 ```
 
@@ -74,7 +74,7 @@ Earlier, we said a common goal for machine learning is to make predictions about
 
 To phrase this challenge mathematically, a common goal in machine learning is to learn a function (3) $\hat{f}$​ from the data that approximates $f$ as best as we can. We can then use this $\hat{f}$​ to make predictions about new data by evaluating $\hat{y} = \hat{f}(x)$. In English, for a given example ($x$), we are predicting what we think the label should be ($\hat{y}$) based on this function we *think* is a good estimate ($\hat{f}$) of the unknown true function ($f$). It's likely our estimate won't be exactly correct, but our hope is to get one that is as close to this unknown truth as possible. We will come back to *how* we estimate this function later, but it has something to do with finding a function that closely matches the data were given.
 
-```{video} ../../_static/manim_animations/linear_regression/predictor_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/predictor_anim.mp4
 :width: 100%
 ```
 
@@ -120,7 +120,7 @@ One benefit of linear regresssion is that we can interpret the value of each of 
 * $w_1$ is the slope of the line. In other words, this is the increase in price per additional sq.ft. in the house.
 
 
-```{video} ../../_static/manim_animations/linear_regression/interpret_coefficients_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/interpret_coefficients_anim.mp4
 :width: 100%
 ```
 
@@ -136,7 +136,7 @@ One note on notation: You might be wondering, "Why don't we add a term like $+ \
 
 In a few sections, we will define the specifics of how we estimate these unknown parameters using some ML algorithm. As a brief preview, many ML algorithms for linear regression essentially boil down to trying many possible lines and identify which one is "best" from that set. So before we describe an algorithm, we should describe what makes one predictor the "best" over some others.
 
-```{video} ../../_static/manim_animations/linear_regression/many_lines_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/many_lines_anim.mp4
 :width: 100%
 ```
 
@@ -202,7 +202,7 @@ The idea behind gradient descent is to start at one point (any point) and "roll 
 Let's consider an example with one parameter instead of two: suppose we know what the best $w_0$ is and our job is to just find $w_1$ that minimizes the MSE. In this context, we don't have to visualize this 3D bowl but rather just a 2D bowl since there is only one degree of freedom.
 
 
-```{video} ../../_static/manim_animations/linear_regression/convex_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/convex_anim.mp4
 :width: 100%
 ```
 
@@ -249,7 +249,7 @@ You might be wondering if this gradient-descent algorithm is always guaranteed t
 
 If you don't have a guarantee that the function you are trying to minimize is convex, then there is no guarantee your gradient descent algorithm will find the best solution. Since gradient descent is always looking at the "locally optimal" direction to go, a function that is not convex might result in our algorithm getting stuck in a *local optima*.
 
-```{video} ../../_static/manim_animations/linear_regression/non_convex_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/non_convex_anim.mp4
 :width: 100%
 ```
 

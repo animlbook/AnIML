@@ -30,7 +30,7 @@ data to learn more complex relationships (e.g. polynomial regression) (1).
 
 When we introduced this flexibility of learning more complex relationship in the specific context of polynomial regression, we introduced a subtle challenge that we needed to identify a solution to: If we are able to train a regression model with a polynomial of any degree ppp, how do we know which one to use? Remember, we only have access to the given data, not the true function.
 
-```{video} ../../_static/manim_animations/assessing_performance/simple_poly_regression_anim.mp4
+```{video} ../../_static/regression/assessing_performance/manim_animations/simple_poly_regression_anim.mp4
 :width: 100%
 ```
 
@@ -218,7 +218,7 @@ In this section, let's explore the relationship between a model's complexity (e.
 
 The animation below shows the calculation of the *training error* as we increase the degree of the polynomial $p$. We draw a small number of points in the animation and then extrapolate the learning curve for all complexities in between. As we increase the complexity, the model has more and more capacity to perfectly match the data, so as we might expect, the training error would decrease.
 
-```{video} ../../_static/manim_animations/assessing_performance/poly_regression_train_error_anim.mp4
+```{video} ../../_static/regression/assessing_performance/manim_animations/poly_regression_train_error_anim.mp4
 :width: 100%
 ```
 
@@ -230,7 +230,7 @@ $\ $
 
 Now consider what happens to the *true error* (11) as we change this complexity. Remember, we can't compute the true error in most contexts, but it's still useful to think about.
 
-```{video} ../../_static/manim_animations/assessing_performance/poly_regression_true_error_anim.mp4
+```{video} ../../_static/regression/assessing_performance/manim_animations/poly_regression_true_error_anim.mp4
 :width: 100%
 ```
 
@@ -296,7 +296,7 @@ Before defining these terms, we have to highlight a specific assumption we have 
 
 When thinking about machine learning, we are thinking that the data is generated from a process following the model we assume. So for the regression model, we assume that for each $x_i$ in our dataset, its corresponding $y_i = f(x_i) + \varepsilon_i$ for some unknown $f$. So since there is randomness not only in which inputs we receive, but in their associated output, we will expect to learn different predictors if we trained on different datasets drawn from the same distribution. We can think about what is the "average predictor" if we drew a bunch of different training sets, trained a predictor from each one, and averaged the results. The animation below shows this process and what this average predictor $\bar{f_{\hat{w}}}(x)$ looks like (17).
 
-```{video} ../../_static/manim_animations/assessing_performance/avg_deg_1_anim.mp4
+```{video} ../../_static/regression/assessing_performance/manim_animations/avg_deg_1_anim.mp4
 :width: 100%
 ```
 
@@ -325,7 +325,7 @@ Mathematically we write the variance as the following. It tries to capture how m
 
 $$\text{Variance:}\ \ \mathbb{E}\left[\left(\overline{f_{\hat{w}}}(x) - f_{\hat{w}}(x)\right)^2\right]$$
 
-```{video} ../../_static/manim_animations/assessing_performance/var_deg_8_anim.mp4
+```{video} ../../_static/regression/assessing_performance/manim_animations/var_deg_8_anim.mp4
 :width: 100%
 ```
 
@@ -350,7 +350,7 @@ $$Error = Bias^2 + Variance + Noise$$
 
 The following animation shows how the bias and variance change with model complexity, and how those two with noise (which is independent of model complexity) add up to the true error curve we saw earlier (20).
 
-```{video} ../../_static/manim_animations/assessing_performance/bias_var_tradeoff_anim.mp4
+```{video} ../../_static/regression/assessing_performance/manim_animations/bias_var_tradeoff_anim.mp4
 :width: 100%
 ```
 
