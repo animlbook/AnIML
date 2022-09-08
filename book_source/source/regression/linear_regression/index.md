@@ -378,7 +378,7 @@ questions = [
 
             $$y_i = w_0 + w_1x_i + \varepsilon_i$$
 
-            Suppose that after training a model, we find $\hat{w}_0 = 1$ $\hat{w}_1 = 2$. Which of the following interpretations of the learned predictor are true? 
+            Suppose that after training a model, we find $\hat{w}_0 = 1$ $\hat{w}_1 = 2$. Which of the following interpretations of the learned predictor are true?
             <br /><br />
 
             <i>Select all that apply</i>.
@@ -471,6 +471,54 @@ questions = [
             },
         ]
     },
+    {
+        "question": r"""
+            Suppose we trained a regression model with the following features:
+
+            <ul>
+                <li>$h_0(x_i) = 1$ (a constant feature for the intercept)</li>
+                <li>$h_1(x_i) = x_i[1]$</li>
+                <li>$h_2(x_i) = x_i[2]$</li>
+                <li>$h_3(x_i) = x_i[1]^2$</li>
+                <li>$h_4(x_i) = \log(x_i[2])$</li>
+                <li>$h_5(x_i) = e^{x_i[1]}$</li>
+            </ul>
+        """,
+        "type": "numeric",
+        "answers": [
+            {
+                "type": "value",
+                "value": 6,
+                "correct": True,
+                "feedback": r"""
+                    If we use these features, then our model will be
+
+                    $$y = \sum_{j=0}^5 w_j \cdot h_j(x_i) + \varepsilon_i$$
+
+                    That is 6 $w_j$'s in total that we have to learn.
+                """
+            },
+            {
+                "type": "default",
+                "correct": False,
+                "feedback": "Try to use our MSE formula to compute the average error on each data point!"
+            },
+        ]
+    },
+    {
+        "question": "Polynomial regression is equivalent to linear regression using polynomial features of the input $x_i$",
+        "type": "multiple_choice",
+        "answers": [
+            {
+                "answer": "True",
+                "correct": True
+            },
+            {
+                "answer": "False",
+                "correct": False
+            },
+        ]
+    }
 ]
 
 from jupyterquiz import display_quiz
