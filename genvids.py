@@ -2,6 +2,7 @@
 
 import argparse
 import os.path
+import pathlib
 import platform
 import shutil
 import subprocess
@@ -29,11 +30,9 @@ class AnimationFile:
         self.dirname = dirname
 
         # if there's only one directory in `dirname`, then we want the relative directory to be ""
-        parent, child = os.path.split(dirname)
-        if parent == "":
-            self.reldir = parent
-        else:
-            self.reldir = child
+
+        path = pathlib.Path(dirname)
+        self.reldir = pathlib.Path(*path.parts[1:])
 
         self.srcfile = os.path.join(dirname, filename)
         self.video_output_dir = os.path.join(outdir, self.reldir)
@@ -51,8 +50,8 @@ class AnimationFile:
             outdir, self.reldir, "videos", self.manim_file_name_vid, "1080p60", self.manim_file_name_vid + ".mp4"
         )
 
-        self.public_path_vid = os.path.join(self.dirname, self.file_name + ".mp4")
-        self.public_path_img = os.path.join(self.dirname, self.file_name + ".png")
+        self.public_path_vid = os.path.join("book_source", "source", "_static", self.reldir, "manim_animations", self.file_name + ".mp4")
+        self.public_path_img = os.path.join("book_source", "source", "_static", self.reldir, "manim_animations", self.file_name + ".png")
 
     @property
     def genimg(self):
@@ -159,7 +158,7 @@ def manim(af, hard, tc, manim_args, copy=False):
             # preview_file(filepath)
             pass
     if copy:
-        dstfile = os.path.join("book_source", "source", "_static", public_path)
+        dstfile = public_path
         dstdir, _ = os.path.split(dstfile)
         if not os.path.exists(dstdir):
             os.makedirs(dstdir)
