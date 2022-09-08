@@ -4,6 +4,7 @@ parts:
   - caption: 1. Regression
     chapters:
       - file: regression/linear_regression/index
+      - file: regression/assessing_performance/index
   - caption: 6. Others
     chapters:
       - file: printing
