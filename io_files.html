@@ -164,6 +164,13 @@ const thebe_selector_output = ".output, .cell_output"
    Linear Regression
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="regression/assessing_performance/index.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Assessing Performance
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -494,8 +501,8 @@ the sea shore
 <h2>Reading From a File<a class="headerlink" href="#reading-from-a-file" title="Permalink to this headline">#</a></h2>
 <p>To read from a file in Java, we use a <code class="docutils literal notranslate"><span class="pre">Scanner</span></code> object that controls how to read the file. A <code class="docutils literal notranslate"><span class="pre">Scanner</span></code> keeps track of where we are in the file and how to read the next parts bit by bit. The following code snippet shows how to to create a Scanner and read the file each “token” at a time. A <em>token</em> is a series of characters separated by whitespace. It is the same idea as the concept of a “word”, but more general since there are many non-words that are stored in computer files such as numbers.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="86aa6603-d8db-4ea1-8dfb-fdf164ea8622" name="d00ce13a-1ac4-4b62-b947-9128f61dadf6" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="86aa6603-d8db-4ea1-8dfb-fdf164ea8622">
+<input checked="checked" id="12676ae4-b410-4c80-9b3c-59a744eb9814" name="c56446b2-801c-4f1e-9af1-4f1e71dfd608" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="12676ae4-b410-4c80-9b3c-59a744eb9814">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FileReading</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">FileNotFoundException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -510,8 +517,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="2aff7f05-f56a-4345-a650-5773623df0cc" name="d00ce13a-1ac4-4b62-b947-9128f61dadf6" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="2aff7f05-f56a-4345-a650-5773623df0cc">
+<input id="9063dcdd-cf8c-44ee-94c1-666c9266bc4d" name="c56446b2-801c-4f1e-9af1-4f1e71dfd608" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="9063dcdd-cf8c-44ee-94c1-666c9266bc4d">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;poem.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -526,8 +533,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="f6b9b5f2-670f-4e7a-bb11-9ce7bee3b420" name="d00ce13a-1ac4-4b62-b947-9128f61dadf6" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="f6b9b5f2-670f-4e7a-bb11-9ce7bee3b420">
+<input id="08c43f46-e61a-4f1f-8683-ba073115115b" name="c56446b2-801c-4f1e-9af1-4f1e71dfd608" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="08c43f46-e61a-4f1f-8683-ba073115115b">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// File I/O is not allowed natively on Javascript</span><span class="w"></span>
 <span class="c1">// The following code is written for node.js</span><span class="w"></span>
@@ -548,8 +555,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="3abebf01-3545-48e6-a7f2-ae906e4d8787" name="d00ce13a-1ac4-4b62-b947-9128f61dadf6" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="3abebf01-3545-48e6-a7f2-ae906e4d8787">
+<input id="7f0c3521-8ff0-42fc-b533-332ed336b520" name="c56446b2-801c-4f1e-9af1-4f1e71dfd608" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="7f0c3521-8ff0-42fc-b533-332ed336b520">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
@@ -577,8 +584,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="8213751b-57c3-4242-9d29-e167c35d0086" name="d00ce13a-1ac4-4b62-b947-9128f61dadf6" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="8213751b-57c3-4242-9d29-e167c35d0086">
+<input id="e2970974-a436-4393-989a-37f57e3e7c0b" name="c56446b2-801c-4f1e-9af1-4f1e71dfd608" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="e2970974-a436-4393-989a-37f57e3e7c0b">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
@@ -633,8 +640,8 @@ shore
 </div>
 <p>The following code snippet shows how to do this in Java. Note that instead of calling the <code class="docutils literal notranslate"><span class="pre">next()</span></code> and <code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> method, we are calling the <code class="docutils literal notranslate"><span class="pre">nextLine()</span></code> and <code class="docutils literal notranslate"><span class="pre">hasNextLine()</span></code>. These methods behave similarly, but instead of returning a single token returns the whole line of text. We then can actually use another <code class="docutils literal notranslate"><span class="pre">Scanner</span></code> made from this line to read just that line token by token! This is a common pattern for mixing line-based processing and token-based processing.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="d8f284a1-4352-4317-ac20-3ae5c3617bf4" name="7373105f-34aa-4832-849a-86f161eb6658" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="d8f284a1-4352-4317-ac20-3ae5c3617bf4">
+<input checked="checked" id="71797cc7-f5f8-4d8e-aeed-6e80647edaa3" name="85eaedb3-5012-43e1-b256-91c3a2f1c024" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="71797cc7-f5f8-4d8e-aeed-6e80647edaa3">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FileReading</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">FileNotFoundException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -665,8 +672,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="c22b0b67-d938-40f8-ad47-15d1ee541dea" name="7373105f-34aa-4832-849a-86f161eb6658" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="c22b0b67-d938-40f8-ad47-15d1ee541dea">
+<input id="b140f0ed-be26-433f-bd41-f42e0391f157" name="85eaedb3-5012-43e1-b256-91c3a2f1c024" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="b140f0ed-be26-433f-bd41-f42e0391f157">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">line_num</span> <span class="o">=</span> <span class="mi">1</span>
@@ -688,8 +695,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="bba2449c-633c-48d2-a31a-1b4544b39486" name="7373105f-34aa-4832-849a-86f161eb6658" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="bba2449c-633c-48d2-a31a-1b4544b39486">
+<input id="9ccbbee4-c39d-42fa-af7c-9f2796233d7b" name="85eaedb3-5012-43e1-b256-91c3a2f1c024" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="9ccbbee4-c39d-42fa-af7c-9f2796233d7b">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// File I/O is not allowed natively on Javascript</span><span class="w"></span>
 <span class="c1">// The following code is written for node.js</span><span class="w"></span>
@@ -714,8 +721,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="fca79e2c-25b7-4b4e-9864-d7cfa7a16811" name="7373105f-34aa-4832-849a-86f161eb6658" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="fca79e2c-25b7-4b4e-9864-d7cfa7a16811">
+<input id="6333a776-bde9-4e93-8704-e38fe93cccfc" name="85eaedb3-5012-43e1-b256-91c3a2f1c024" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="6333a776-bde9-4e93-8704-e38fe93cccfc">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
@@ -749,8 +756,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="d71dc356-1959-48e5-a430-01fe86280433" name="7373105f-34aa-4832-849a-86f161eb6658" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="d71dc356-1959-48e5-a430-01fe86280433">
+<input id="6a9161da-8080-444b-9a74-fd5b897dab89" name="85eaedb3-5012-43e1-b256-91c3a2f1c024" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="6a9161da-8080-444b-9a74-fd5b897dab89">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
@@ -791,8 +798,8 @@ C++</label><div class="sd-tab-content docutils">
 <h2>User Input<a class="headerlink" href="#user-input" title="Permalink to this headline">#</a></h2>
 <p>Often, we also want to be able to interact with the user and ask them for input by having them type into the keyboard. It turns out that the <code class="docutils literal notranslate"><span class="pre">Scanner</span></code> was designed for this purpose to since user input is just another data source! We can make a new <code class="docutils literal notranslate"><span class="pre">Scanner</span></code> instance, but instead of attaching it to a file or a <code class="docutils literal notranslate"><span class="pre">String</span></code>, we can attach it to a special source for the user’s keyboard called <code class="docutils literal notranslate"><span class="pre">System.in</span></code>. The following program asks the user for their name and age and prints a greeting. When we run this program, every time we call one of the <code class="docutils literal notranslate"><span class="pre">next</span></code> methods it will pause, and wait for the user to type in the requested info.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="7a944909-2f08-4351-83fd-314d1c0b9c4a" name="3f64c343-06bb-449c-83f3-d830b93c2c89" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="7a944909-2f08-4351-83fd-314d1c0b9c4a">
+<input checked="checked" id="1542832d-9fba-42d3-8737-602c669820d2" name="187fb8bb-70a9-45cb-8ca8-61dd2527bcc1" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="1542832d-9fba-42d3-8737-602c669820d2">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserInput</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -810,8 +817,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="70341a0e-a38f-4ee4-89ec-f47a50f335b9" name="3f64c343-06bb-449c-83f3-d830b93c2c89" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="70341a0e-a38f-4ee4-89ec-f47a50f335b9">
+<input id="fbef0484-709b-4a6d-9616-cd1491fd0fc7" name="187fb8bb-70a9-45cb-8ca8-61dd2527bcc1" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="fbef0484-709b-4a6d-9616-cd1491fd0fc7">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What is your name? &quot;</span><span class="p">)</span>
@@ -825,8 +832,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="888a36b7-78f6-49d6-8245-4bf99b9049ab" name="3f64c343-06bb-449c-83f3-d830b93c2c89" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="888a36b7-78f6-49d6-8245-4bf99b9049ab">
+<input id="7de08868-cba1-488b-b243-2f86ffa71c26" name="187fb8bb-70a9-45cb-8ca8-61dd2527bcc1" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="7de08868-cba1-488b-b243-2f86ffa71c26">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">prompt</span><span class="p">(</span><span class="s2">&quot;What is your name? &quot;</span><span class="p">);</span><span class="w"></span>
@@ -839,8 +846,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="0f7bd1d4-2aed-425d-a05a-08328c8593ee" name="3f64c343-06bb-449c-83f3-d830b93c2c89" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="0f7bd1d4-2aed-425d-a05a-08328c8593ee">
+<input id="037b2563-1ce1-4bb9-bc85-f819685746a7" name="187fb8bb-70a9-45cb-8ca8-61dd2527bcc1" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="037b2563-1ce1-4bb9-bc85-f819685746a7">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
@@ -862,8 +869,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="5771c620-8641-4503-b2d6-1ceee7f09e92" name="3f64c343-06bb-449c-83f3-d830b93c2c89" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="5771c620-8641-4503-b2d6-1ceee7f09e92">
+<input id="4b5f99ce-6679-456d-9fe3-ef616f9d36fa" name="187fb8bb-70a9-45cb-8ca8-61dd2527bcc1" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="4b5f99ce-6679-456d-9fe3-ef616f9d36fa">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 

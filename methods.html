@@ -164,6 +164,13 @@ const thebe_selector_output = ".output, .cell_output"
    Linear Regression
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="regression/assessing_performance/index.html">
+   <i class="fas fa-book fa-fw">
+   </i>
+   Assessing Performance
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -428,8 +435,8 @@ title="Print to PDF"
 <p>Methods allow you to define reusable bundles of code that can help reduce redundancy and organize your code for readability. The concept of methods, or also called functions in other languages, are the same in Java but the syntax looks a little bit different.</p>
 <p>Like before, we will start by showing the syntax and then will explain the components.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="349fcb4c-7185-4ed9-8442-1b5df91f16e5" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="349fcb4c-7185-4ed9-8442-1b5df91f16e5">
+<input checked="checked" id="99a51f8e-51ec-4efa-b278-d827ac6bf8d8" name="e7353488-3b26-43c1-91c9-16fe42020d48" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-java" for="99a51f8e-51ec-4efa-b278-d827ac6bf8d8">
 JAVA</label><div class="sd-tab-content docutils">
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Example</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -451,8 +458,8 @@ JAVA</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="f44e2d84-577d-4fd7-8f02-541c1b61932c" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="f44e2d84-577d-4fd7-8f02-541c1b61932c">
+<input id="5dee1f64-d4cc-465f-b1d6-47a99a747a0a" name="e7353488-3b26-43c1-91c9-16fe42020d48" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-python" for="5dee1f64-d4cc-465f-b1d6-47a99a747a0a">
 PYTHON</label><div class="sd-tab-content docutils">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The main method starts&quot;</span><span class="p">)</span>
@@ -474,8 +481,8 @@ PYTHON</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="937ea6a7-0066-46b2-ab18-5836932e84d5" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="937ea6a7-0066-46b2-ab18-5836932e84d5">
+<input id="e6b776b9-be73-4584-a0f4-69d4b65c75a2" name="e7353488-3b26-43c1-91c9-16fe42020d48" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-javascript" for="e6b776b9-be73-4584-a0f4-69d4b65c75a2">
 JAVASCRIPT</label><div class="sd-tab-content docutils">
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The main method starts&quot;</span><span class="p">);</span><span class="w"></span>
@@ -497,8 +504,8 @@ JAVASCRIPT</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="88c11a4e-f12d-4b72-9189-e27e065fb0a3" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="88c11a4e-f12d-4b72-9189-e27e065fb0a3">
+<input id="6b1ccfed-3734-4fbb-a1a4-a161924a31e8" name="e7353488-3b26-43c1-91c9-16fe42020d48" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c" for="6b1ccfed-3734-4fbb-a1a4-a161924a31e8">
 C</label><div class="sd-tab-content docutils">
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
@@ -536,8 +543,8 @@ C</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="b0adf1ad-e7c5-434e-932f-bc3981607bc8" name="23ae2e4b-728b-4ea6-8aef-f0e6c2884731" type="radio">
-</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="b0adf1ad-e7c5-434e-932f-bc3981607bc8">
+<input id="6828ae39-5de9-4f13-bc09-fc8979e23557" name="e7353488-3b26-43c1-91c9-16fe42020d48" type="radio">
+</input><label class="sd-tab-label" data-sync-id="tabcode-c++" for="6828ae39-5de9-4f13-bc09-fc8979e23557">
 C++</label><div class="sd-tab-content docutils">
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
