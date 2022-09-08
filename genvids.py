@@ -45,7 +45,7 @@ class AnimationFile:
         self.manim_file_name_img = self.file_name
 
         self.imgloc = os.path.join(
-            outdir, self.reldir, "images", self.manim_file_name_img + ".png"
+            outdir, self.reldir, "images", self.manim_file_name_img, self.manim_file_name_img + ".png"
         )
         self.vidloc = os.path.join(
             outdir, self.reldir, "videos", self.manim_file_name_vid, "1080p60", self.manim_file_name_vid + ".mp4"
@@ -110,6 +110,7 @@ def manim(af, hard, tc, manim_args, copy=False):
         "manim",
         "--media_dir",
         af.video_output_dir,
+        "--write_to_movie",
         af.srcfile,
         ANIMATION_CLASS_NAME,
     ]
@@ -118,7 +119,7 @@ def manim(af, hard, tc, manim_args, copy=False):
     gen = True
     filepath = ""
     manim_file_name = ""
-    if "--save_last_frame" in args:
+    if "-s" in args:
         gen = af.genimg
         filepath = af.imgloc
         manim_file_name = af.manim_file_name_img
