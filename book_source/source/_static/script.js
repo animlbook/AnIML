@@ -17,11 +17,15 @@
 
     function playVideosInView(videos) {
         videos.forEach(function(video) {
-            if (isScrolledIntoView(video)) {
-                video.muted = true;
-                video.play();
-            } else {
-                video.pause();
+            // Only autoplay for videos that haven't been autoplayed originally
+            if (!video.hasAttribute("hasPlayed")) {
+                if (isScrolledIntoView(video)) {
+                    video.muted = true;
+                    video.play();
+                    video.setAttribute('hasPlayed', true);
+                } else {
+                    video.pause();
+                }
             }
         });
     }
