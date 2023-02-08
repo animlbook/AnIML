@@ -194,9 +194,16 @@ Our hope is that by using a large enough test set, we can reasonable approximate
 
 Well in some sense, you want as big of a test set as possible since the more examples in your test set, the better estimate of the true error you will get. You can think of the extreme case where your test set contains all possible input/outputs you could ever gather, in which case you will exactly be able to compute the true error.
 
-However, because you only have finite data available, by making your test set larger you will need to make your training set smaller. This can cause problems since we want as much training data possible to give us the best possible estimate of the true function. Consider the animation below that compares a small training dataset to a large one.
+However, because you only have finite data available, by making your test set larger you will need to make your training set smaller. This can cause problems since we want as much training data possible to give us the best possible estimate of the true function. Remember, with  more training data we can have more confidence in a trend rather than it just being noise from a few examples.
 
-TODO(manim): Train data size
+<!-- TODO Make professional diagram -->
+
+```{image} ../../_static/regression/assessing_performance/more_vs_less_training_data.png
+:alt: Comparing a graph with two data points vs multiple data points. We feel more confident in a trend with more data
+:class: bg-primary mb-1
+:align: center
+```
+
 
 In practice, people generally use a ratio of 80% train and 20% test or 90% train and 10% test, but this really depends on your context and how much data you have! Two very important points about this test set:
 
@@ -211,7 +218,7 @@ In practice, people generally use a ratio of 80% train and 20% test or 90% train
 ## Explaining Error
 
 ```{margin}
-9\. We will not touch on more rigorous definitions of what complexity mean here such as *VC Dimension*. See Understanding Machine Learning for an excellent introduction to learning theory. (TODO reference)
+9\. We will not touch on more rigorous definitions of what complexity mean here such as *VC Dimension*. See [Understanding Machine Learning](https://www.amazon.com/Understanding-Machine-Learning-Theory-Algorithms/dp/1107057132) for an excellent introduction to learning theory.
 ```
 
 In this section, let's explore the relationship between a model's complexity (e.g., its degree $p$) and its various types of error. By complexity of the model, we have a hand-wavy notion of the learned predictor's ability to learn more complicated relationships in the data (like a high degree polynomial); so in our regression example, a simple model is one like a line while a complex model is a high degree polynomial<sup>9</sup>.
@@ -585,10 +592,3 @@ questions = [
 from jupyterquiz import display_quiz
 display_quiz(questions, shuffle_answers=False)
 ```
-
-
-
-
-
-
-

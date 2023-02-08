@@ -1,5 +1,11 @@
 # <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
 
+```{note}
+This book is still under construction! There are many features, improvements we would like to make in the long term. Namely, some of the diagrams are currently hand-drawn and the hope is to improve these with animations and cleaner, code-generated figures in the future!
+
+We are also always looking for feedback and help on the book. Feel free to join our GitHub community to help us improve the book!
+```
+
 Welcome! 🎉 !!!
 
 If you're here, you've probably at least heard the term "machine learning" or "artificial intelligence" somewhere on the internet, the news, or somewhere in your day-to-day life. For better or for worse, machine learning has been an incredible force in shaping the modern world. You would be hard pressed to use any piece of modern technology (including any website) without the influence of machine learning powering some (most?) of your interactions.
