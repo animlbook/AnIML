@@ -25,9 +25,12 @@ class BTrainTestScene(BScene):
         # Keeps track of a random walk, centered at 0 plus the true error
         #self._test_noise += np.random.normal(loc=0, scale=0.01)
 
-
-        return BTrainTestScene.true_error(x) + np.random.normal(0, scale=0.5) * np.sin(2 * x)
-
+        # Try to add a noisy sine wave, but it gets weird at the edges so reduce the coefficients near
+        # the boundaries
+        y_mid = (X_RANGE[0] + X_RANGE[1]) / 2
+        sine_noise_scale = 0.5 * np.exp(-((x - y_mid) / 10) ** 2)
+        sine_noise = sine_noise_scale * np.random.normal(0, scale=sine_noise_scale) * np.sin(2 * x)
+        return BTrainTestScene.true_error(x) + sine_noise
 
     def set_axes_labels(self):
         y_label = BText("Error", color=GRAY)
