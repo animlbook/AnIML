@@ -1,11 +1,14 @@
-from manim_config import *
-
+import numpy as np
 from ap_utils import *
+
+from manim_config import *
 
 LABEL_BUFF = 0.1
 
 X_RANGE = (1, 12)
 Y_RANGE = (0, 6)
+
+np.random.seed(10)
 
 class BTrainTestScene(BScene):
     @staticmethod
@@ -17,6 +20,14 @@ class BTrainTestScene(BScene):
     @staticmethod
     def train_error(x):
         return 10 * np.exp(-x / 2.0 - 0.25) + 1
+
+    def test_error(self, x):
+        # Keeps track of a random walk, centered at 0 plus the true error
+        #self._test_noise += np.random.normal(loc=0, scale=0.01)
+
+
+        return BTrainTestScene.true_error(x) + np.random.normal(0, scale=0.5) * np.sin(2 * x)
+
 
     def set_axes_labels(self):
         y_label = BText("Error", color=GRAY)
@@ -56,6 +67,20 @@ class BTrainTestScene(BScene):
             y_range=Y_RANGE)
         self.true_flabel.move_to(pos + RIGHT * 0.75)
 
+        # Test error
+        self._test_noise  = 0  # Need to set up how much the test differs from true here
+        self.test_fn = self.axes.plot_bounded(lambda x: self.test_error(x),
+            x_range=X_RANGE,
+            y_range=Y_RANGE,
+            color=COL_RED)
+
+        self.test_flabel = BTex(r"Test \\ Error", color=COL_RED)
+        self.test_flabel.scale(0.75)
+
+        # TODO test_errors
+        self.test_flabel.move_to(pos + 0.75 * RIGHT + DOWN)
+
+        # Set up train error curve
         self.train_fn = self.axes.plot_bounded(self.train_error,
             x_range=X_RANGE,
             y_range=Y_RANGE,
@@ -73,6 +98,8 @@ class BTrainTestScene(BScene):
             self.axes,
             self.true_fn,
             self.true_flabel,
+            self.test_fn,
+            self.test_flabel,
             self.train_fn,
             self.train_flabel,
             *self.axes_labels
@@ -83,5 +110,7 @@ class BTrainTestScene(BScene):
         self.play(Create(self.axes), Write(VGroup(*self.axes_labels)))
         self.play(Create(self.true_fn.segments))
         self.play(Write(self.true_flabel))
+        self.play(Create(self.test_fn.segments))
+        self.play(Write(self.test_flabel))
         self.play(Create(self.train_fn.segments))
         self.play(Write(self.train_flabel))
