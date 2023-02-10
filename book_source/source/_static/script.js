@@ -45,5 +45,14 @@
         window.addEventListener("scroll", function() {
             playVideosInView(videos);
         });
+
+        // Remove controls from videos unless hoverd
+        $("video").hover(function(event) {
+            if(event.type === "mouseenter") {
+                $(this).attr("controls", "");
+            } else if(event.type === "mouseleave") {
+                $(this).removeAttr("controls");
+            }
+        });
     }
 })();
