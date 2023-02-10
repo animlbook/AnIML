@@ -1,8 +1,8 @@
 from ctypes import alignment
 
-from manim_config import *
-
 from ap_utils import *
+
+from manim_config import *
 
 
 class FunctionSet:
@@ -173,7 +173,8 @@ class BBiasVarianceScene(BScene):
     def fast_draw_functions(self):
         for i in range(self.nextra):
             function, dots = self.fns_and_dots(seed=1101001 + 147 * i)
-            function.segments.set_stroke(GRAY)
+            function.segments.set_stroke(GRAY, opacity=0.5)
+
             dots.set_color(GRAY)
             self.functions.append(function)
             self.play(Create(dots), run_time=0.1)
