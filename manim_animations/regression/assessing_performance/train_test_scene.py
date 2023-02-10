@@ -1,5 +1,6 @@
 import numpy as np
 from ap_utils import *
+from colour import Color
 
 from manim_config import *
 
@@ -22,9 +23,6 @@ class BTrainTestScene(BScene):
         return 10 * np.exp(-x / 2.0 - 0.25) + 1
 
     def test_error(self, x):
-        # Keeps track of a random walk, centered at 0 plus the true error
-        #self._test_noise += np.random.normal(loc=0, scale=0.01)
-
         # Try to add a noisy sine wave, but it gets weird at the edges so reduce the coefficients near
         # the boundaries
         y_mid = (X_RANGE[0] + X_RANGE[1]) / 2
@@ -65,23 +63,36 @@ class BTrainTestScene(BScene):
         self.true_flabel = BTex(r"True \\ Error", color=COL_GOLD)
         self.true_flabel.scale(0.75)
 
+        self.true_flabel_picture =  Line([0, 0, 0], [0.5, 0, 0], color=COL_GOLD)
+        self.true_flabel_picture.next_to(self.true_flabel, RIGHT, buff=0.25)
+
+        self.true_flabel = VGroup(self.true_flabel, self.true_flabel_picture)
+
         # move to the right of the axes
         pos = self.axes.function_label_pos(self.true_error, X_RANGE[1],
             y_range=Y_RANGE)
-        self.true_flabel.move_to(pos + RIGHT * 0.75)
+        self.true_flabel.move_to(pos + RIGHT)
 
         # Test error
         self._test_noise  = 0  # Need to set up how much the test differs from true here
         self.test_fn = self.axes.plot_bounded(lambda x: self.test_error(x),
             x_range=X_RANGE,
             y_range=Y_RANGE,
-            color=COL_RED)
+            color=COL_RED,
+            stroke_opacity=0.8)
 
         self.test_flabel = BTex(r"Test \\ Error", color=COL_RED)
         self.test_flabel.scale(0.75)
 
-        # TODO test_errors
-        self.test_flabel.move_to(pos + 0.75 * RIGHT + DOWN)
+        # Draw a little curve next to the label
+        p1 = np.array([-1, 0.5, 0])
+        p2 = np.array([1, -0.5, 0])
+        self.test_flabel_picture = CubicBezier(p1, p1 + 1 * RIGHT, p2 - 1 * RIGHT, p2, color=COL_RED)
+        self.test_flabel_picture.scale(0.33)
+        self.test_flabel_picture.next_to(self.test_flabel, RIGHT, buff=0.25)
+
+        self.test_flabel = VGroup(self.test_flabel, self.test_flabel_picture)
+        self.test_flabel.move_to(pos + RIGHT + DOWN)
 
         # Set up train error curve
         self.train_fn = self.axes.plot_bounded(self.train_error,
@@ -92,10 +103,14 @@ class BTrainTestScene(BScene):
         self.train_flabel = BTex(r"Train \\ Error", color=COL_BLUE)
         self.train_flabel.scale(0.75)
 
-        # move to the right of the axes
+        self.train_flabel_picture =  Line([0, 0, 0], [0.5, 0, 0], color=COL_BLUE)
+        self.train_flabel_picture.next_to(self.train_flabel, RIGHT, buff=0.25)
+
+        self.train_flabel = VGroup(self.train_flabel, self.train_flabel_picture)
+
         pos = self.axes.function_label_pos(self.train_error, X_RANGE[1],
             y_range=Y_RANGE)
-        self.train_flabel.move_to(pos + RIGHT * 0.75)
+        self.train_flabel.move_to(pos + RIGHT)
 
         self.axes_and_fn_label = VGroup(
             self.axes,
