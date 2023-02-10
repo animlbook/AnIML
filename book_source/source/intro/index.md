@@ -65,12 +65,12 @@ Since there are so many concepts in ML and places they can be applied, we can't 
 1\. See Carol Dweck's *growth mindsets*
 ```
 
-Second, **anyone can learn machine learning!** While this is true for any topic (1), it's important to highlight in the case of machine learning. ML is notoriously seen as a difficult topic to master due to a traditional focus on advanced mathematical details and proofs. While those ideas are important for an expert in machine learning to know, they aren't necessary for forming an intuition for the key ideas of ML. So this book is not going to go rigorously into the mathematics behind ML, but instead tries to make the ideas intuitive and show you how to apply them.
+Second, **anyone can learn machine learning!** While this is true for any topic<sup>1</sup>, it's important to highlight in the case of machine learning. ML is notoriously seen as a difficult topic to master due to a traditional focus on advanced mathematical details and proofs. While those ideas are important for an expert in machine learning to know, they aren't necessary for forming an intuition for the key ideas of ML. So this book is not going to go rigorously into the mathematics behind ML, but instead tries to make the ideas intuitive and show you how to apply them.
 
 ```{margin}
 2\. We do rely on a base-level understanding of probability and a willingness to learn new notation and concepts.
 ```
-This does not mean we won't use math at all! While we try to minimize pre-requisite knowledge, we still require some (2).  Mathematical notation can be very effective for communication and we use it frequently to communicate more precisely/effectively.
+This does not mean we won't use math at all! While we try to minimize pre-requisite knowledge, we still require some<sup>2</sup>.  Mathematical notation can be very effective for communication and we use it frequently to communicate more precisely/effectively.
 
 These two values hopefully give you a good idea of our approach for how we teach machine learning to a broad audience. If this does not sound like the book that meets what you are hoping to learn (e.g., you want a much more rigorous mathematical discussion of ML or proofs behind the techniques), we recommend some other books that are fantastic in those spaces.
 
@@ -84,7 +84,7 @@ These two values hopefully give you a good idea of our approach for how we teach
 3\. This book is fantastic! I wish I read it while I was in college!
 ```
 
-Learning is a complex process that whole fields of research focus on learning how learning works. The research of effective learning was summarized very well in [Make it Stick](https://www.retrievalpractice.org/make-it-stick) by Peter C. Brown, Henry L. Roediger III, and Mark A. McDaniel (3).
+Learning is a complex process that whole fields of research focus on learning how learning works. The research of effective learning was summarized very well in [Make it Stick](https://www.retrievalpractice.org/make-it-stick) by Peter C. Brown, Henry L. Roediger III, and Mark A. McDaniel<sup>3</sup>.
 
 The book outlines two very popular, but **ineffective**, learning strategies:
 
@@ -104,7 +104,7 @@ It turns out that learning effectively is hard work and will challenge you throu
   4\. See [this study](https://pubmed.ncbi.nlm.nih.gov/8084699/) about the effects of mixed-practice on professional baseball players.
   ```
 
-  **Interleaving your practice**. Instead of practicing all the concepts until mastery for Chapter 1 before moving to Chapter 2, you should mix it up and test them together. Retrieving knowledge in real life rarely has a context like "I'm studying for Chapter 1 right now, so I only need to think of Chapter 1 things". In reality, you will need to practice bringing up any subset of knowledge. Therefore, your practice should reflect that goal if you want to see improvements of retrieval in realistic contexts (4).
+  **Interleaving your practice**. Instead of practicing all the concepts until mastery for Chapter 1 before moving to Chapter 2, you should mix it up and test them together. Retrieving knowledge in real life rarely has a context like "I'm studying for Chapter 1 right now, so I only need to think of Chapter 1 things". In reality, you will need to practice bringing up any subset of knowledge. Therefore, your practice should reflect that goal if you want to see improvements of retrieval in realistic contexts<sup>4</sup>.
 
 When learning about ML in our book, we recommend that you employ these three study tips. You should be building up meaningful notes, reflecting what you've learned and relating it to past concepts, testing yourself regularly, and spacing-out and mixing-up your practice. We highly recommend (would require it if we could) using a tool like Anki to help you test yourself on concepts. It's rare that we care about a word-for-word definition of a term or formula, but instead care about the intuition and understanding that comes from being familiar with that concept. Don't penalize yourself when studying for messing up a single word as long as you can assess that you have understood that concept (don't worry, it will always come back later in Anki).
 
@@ -133,10 +133,10 @@ This is just trying to state in a very formal manner that machine learning is a 
 For example, consider the task of building a system that classifies an image as containing a dog or a cat. One approach would be to try to write a program (e.g., a Python program) that looks at the pixels of the picture in a big `if/else` statement to make the decision. You (nor I) would really have any idea where to start writing such a program.
 
 ```{margin}
-6\. We will call this the *training data* in future sections.
+5\. We will call this the *training data* in future sections.
 ```
 
-Instead, the machine learning approach is to feed a bunch of images that have already been labelled as cat images or dog images as input to some learning algorithm (6), and letting that algorithm learn the patterns from the data itself. The ultimate goal of such a system is to train the computer to not just be able to answer this dog-vs.-cat question for images it has seen, but also to generalize to any dog or cat picture it might encounter in the future.
+Instead, the machine learning approach is to feed a bunch of images that have already been labelled as cat images or dog images as input to some learning algorithm<sup>5</sup>, and letting that algorithm learn the patterns from the data itself. The ultimate goal of such a system is to train the computer to not just be able to answer this dog-vs.-cat question for images it has seen, but also to generalize to any dog or cat picture it might encounter in the future.
 
 We'll come back to a more detailed explanation of this pipeline in the next chapter.
 
