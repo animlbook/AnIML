@@ -13,7 +13,6 @@ class Animation(BTrainTestScene):
         )
         opt_label = BMathTex(r"p^{*}", color=COL_PURPLE)
         opt_label.next_to(opt_line, DOWN)
-        opt_grp = VGroup(opt_line, opt_label)
 
         self.play(Create(opt_line))
         self.play(Write(opt_label))

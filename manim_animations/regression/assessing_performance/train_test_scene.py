@@ -22,7 +22,8 @@ class BTrainTestScene(BScene):
     def train_error(x):
         return 10 * np.exp(-x / 2.0 - 0.25) + 1
 
-    def test_error(self, x):
+    @staticmethod
+    def test_error(x):
         # Try to add a noisy sine wave, but it gets weird at the edges so reduce the coefficients near
         # the boundaries
         y_mid = (X_RANGE[0] + X_RANGE[1]) / 2
@@ -31,7 +32,7 @@ class BTrainTestScene(BScene):
         return BTrainTestScene.true_error(x) + sine_noise
 
     def set_axes_labels(self):
-        y_label = BText("Error", color=GRAY)
+        y_label = BTex("Error", color=GRAY)
         y_label.scale(0.6)
         y_label.next_to(self.axes, LABEL_BUFF * (UP + LEFT), aligned_edge=UP, buff=1)
 
@@ -51,84 +52,81 @@ class BTrainTestScene(BScene):
         self.axes.scale(0.7)
         self.axes.center()
 
+
+    def _plot_curve(self, fn: Callable[[float], float], label_text: str, label_decorator: VMobject, color: Color,
+            stroke_opacity=1):
+        # Plot function
+        fn_plot = self.axes.plot_bounded(fn,
+            x_range=X_RANGE,
+            y_range=Y_RANGE,
+            color=color,
+            stroke_opacity=stroke_opacity)
+
+        # Make label
+        fn_label = BTex(label_text, color=color)
+        fn_label.scale(0.75)
+
+        # Position label decorator
+        label_decorator.set_color(color)
+        label_decorator.next_to(fn_label, RIGHT, buff=0.25)
+
+        # Position label and its decorator
+        label_group = VGroup(fn_label, label_decorator)
+
+        label_pos = self.axes.function_label_pos(fn, X_RANGE[1],
+            y_range=Y_RANGE)
+        label_group.move_to(label_pos + RIGHT)
+
+        return fn_plot, label_group
+
+
     def setup_scene(self):
         self.setup_axes()
         self.set_axes_labels()
 
-        self.true_fn = self.axes.plot_bounded(self.true_error,
-            x_range=X_RANGE,
-            y_range=Y_RANGE,
-            color=COL_GOLD)
+        # Training curve
+        self.true_fn, self.true_fn_label = self._plot_curve(self.true_error,
+                label_text=r"True \\ Error",
+                color=COL_GOLD,
+                label_decorator=Line([0, 0, 0], [0.5, 0, 0]))
 
-        self.true_flabel = BTex(r"True \\ Error", color=COL_GOLD)
-        self.true_flabel.scale(0.75)
 
-        self.true_flabel_picture =  Line([0, 0, 0], [0.5, 0, 0], color=COL_GOLD)
-        self.true_flabel_picture.next_to(self.true_flabel, RIGHT, buff=0.25)
-
-        self.true_flabel = VGroup(self.true_flabel, self.true_flabel_picture)
-
-        # move to the right of the axes
-        pos = self.axes.function_label_pos(self.true_error, X_RANGE[1],
-            y_range=Y_RANGE)
-        self.true_flabel.move_to(pos + RIGHT)
-
-        # Test error
-        self._test_noise  = 0  # Need to set up how much the test differs from true here
-        self.test_fn = self.axes.plot_bounded(lambda x: self.test_error(x),
-            x_range=X_RANGE,
-            y_range=Y_RANGE,
-            color=COL_RED,
-            stroke_opacity=0.8)
-
-        self.test_flabel = BTex(r"Test \\ Error", color=COL_RED)
-        self.test_flabel.scale(0.75)
-
-        # Draw a little curve next to the label
+        # Test Curve (has complex label decorator)
         p1 = np.array([-1, 0.5, 0])
         p2 = np.array([1, -0.5, 0])
-        self.test_flabel_picture = CubicBezier(p1, p1 + 1 * RIGHT, p2 - 1 * RIGHT, p2, color=COL_RED)
-        self.test_flabel_picture.scale(0.33)
-        self.test_flabel_picture.next_to(self.test_flabel, RIGHT, buff=0.25)
+        test_label_decorator = CubicBezier(p1, p1 + 1 * RIGHT, p2 - 1 * RIGHT, p2, color=COL_RED)
+        test_label_decorator.scale(0.33)
 
-        self.test_flabel = VGroup(self.test_flabel, self.test_flabel_picture)
-        self.test_flabel.move_to(pos + RIGHT + DOWN)
+        self.test_fn, self.test_fn_label = self._plot_curve(self.test_error,
+                label_text=r"Test \\ Error",
+                color=COL_RED,
+                label_decorator=test_label_decorator,
+                stroke_opacity=0.8)
+
+        # Need to move the test label down a bit since it overlaps with the true error label
+        self.test_fn_label.next_to(self.true_fn_label, DOWN)
 
         # Set up train error curve
-        self.train_fn = self.axes.plot_bounded(self.train_error,
-            x_range=X_RANGE,
-            y_range=Y_RANGE,
-            color=COL_BLUE)
-
-        self.train_flabel = BTex(r"Train \\ Error", color=COL_BLUE)
-        self.train_flabel.scale(0.75)
-
-        self.train_flabel_picture =  Line([0, 0, 0], [0.5, 0, 0], color=COL_BLUE)
-        self.train_flabel_picture.next_to(self.train_flabel, RIGHT, buff=0.25)
-
-        self.train_flabel = VGroup(self.train_flabel, self.train_flabel_picture)
-
-        pos = self.axes.function_label_pos(self.train_error, X_RANGE[1],
-            y_range=Y_RANGE)
-        self.train_flabel.move_to(pos + RIGHT)
+        self.train_fn, self.train_fn_label = self._plot_curve(self.train_error,
+                label_text=r"Train \\ Error",
+                color=COL_BLUE,
+                label_decorator=Line([0, 0, 0], [0.5, 0, 0]),)
 
         self.axes_and_fn_label = VGroup(
             self.axes,
             self.true_fn,
-            self.true_flabel,
+            self.true_fn_label,
             self.test_fn,
-            self.test_flabel,
+            self.test_fn_label,
             self.train_fn,
-            self.train_flabel,
+            self.train_fn_label,
             *self.axes_labels
         )
-        #self.centershift = -self.axes_and_fn_label.get_center()
-        #self.axes_and_fn_label.move_to((0, 0, 0))
 
         self.play(Create(self.axes), Write(VGroup(*self.axes_labels)))
         self.play(Create(self.true_fn.segments))
-        self.play(Write(self.true_flabel))
+        self.play(Write(self.true_fn_label))
         self.play(Create(self.test_fn.segments))
-        self.play(Write(self.test_flabel))
+        self.play(Write(self.test_fn_label))
         self.play(Create(self.train_fn.segments))
-        self.play(Write(self.train_flabel))
+        self.play(Write(self.train_fn_label))
