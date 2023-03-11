@@ -2,7 +2,7 @@ click>=8.0.0
 jupyter-book>=0.13
 jupyterquiz
 jupytercards
-pandas==1.3.2
+pandas>=1.3.2
 pytablewriter==0.62.0
 scikit-learn==1.1.2
 seaborn>=0.12.0

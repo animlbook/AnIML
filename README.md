@@ -18,6 +18,10 @@ This book is built with the [Sphinx Book Theme](https://sphinx-book-theme.readth
 
 ### Setup
 
+Confusingly, we have a separate set of dependenceis to build the animations. The reason these are not part of the main setup is that they currently don't work on our CI build. So we first have to develop the animations locally and then commit the video files before building a new version of the book.
+
+### Install Publishing Build Dependencies
+
 Create a virtual environment with Python 3.9 or higher. For example, if you use Anaconda you can write:
 
 ```bash
@@ -25,11 +29,18 @@ conda create --name 416-book python=3.9
 conda activate 416-book
 ```
 
-Install the book theme dependencies. All of these are libraries used for themes/templating in the book. `Sphinx` is the documentation templating tool, `sphinx-book-theme` is the specific book theme, `myst-nb` changes the Sphinx langauge from rST to MyST (more similar to Markdown), and `sphinx-thebe` allows interactive notebooks in the browser.
+Install the book theme dependencies. 
+
+All of these are libraries used for themes/templating in the book. `Sphinx` is the documentation templating tool, `sphinx-book-theme` is the specific book theme, `myst-nb` changes the Sphinx langauge from rST to MyST (more similar to Markdown), and `sphinx-thebe` allows interactive notebooks in the browser. 
 
 ```bash
 pip install -r requirements.txt
 ```
+
+### Install Develepor Dependencies
+
+1. To install the library for generating animations, follow the instructions [here](https://docs.manim.community/en/stable/installation.html).
+2. Also install LaTeX on your system with whatever method is best.
 
 ### Editing the book
 
