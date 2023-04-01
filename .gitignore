@@ -4,7 +4,7 @@ __pycache__
 
 # Ignore build output
 book_source/source/_build
-book_sources/source/**/manim_animations/**
+book_source/source/_static/**/manim_animations/
 # On the main branch, don't include the docs folder
 docs
 
