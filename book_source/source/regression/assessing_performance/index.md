@@ -31,7 +31,6 @@ data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup
 When we introduced this flexibility of learning more complex relationship in the specific context of polynomial regression, we introduced a subtle challenge that we needed to identify a solution to: If we are able to train a regression model with a polynomial of any degree ppp, how do we know which one to use? Remember, we only have access to the given data, not the true function.
 
 ```{video} ../../_static/regression/assessing_performance/manim_animations/simple_poly_regression_anim.mp4
-:width: 100%
 ```
 
 $\ $
@@ -115,7 +114,7 @@ We can visualize this joint distribution with a joint plot that shows the densit
 ---
 tags:
     - "remove-input"
-render:
+mystnb:
   image:
     width: 400px
     alt: Joint distribution of house square footage (x-axis) and house price (y-axis) with marginal distributions on the side
@@ -271,7 +270,6 @@ In this section, let's explore the relationship between a model's complexity (e.
 The animation below shows the calculation of the *training error* as we increase the degree of the polynomial $p$. We draw a small number of points in the animation and then extrapolate the learning curve for all complexities in between. As we increase the complexity, the model has more and more capacity to perfectly match the data, so as we might expect, the training error would decrease.
 
 ```{video} ../../_static/regression/assessing_performance/manim_animations/poly_regression_train_error_anim.mp4
-:width: 100%
 ```
 
 $\ $
@@ -283,7 +281,6 @@ $\ $
 Now consider what happens to the *true error*<sup>10</sup> as we change this complexity. Remember, we can't compute the true error in most contexts, but it's still useful to think about.
 
 ```{video} ../../_static/regression/assessing_performance/manim_animations/poly_regression_true_error_anim.mp4
-:width: 100%
 ```
 
 $\ $
@@ -313,7 +310,6 @@ The model with the lowest true error is the optimal model, which we notate<sup>1
 We generally have special terms to identify the performance of a model: **overfitting** and **underfitting**. We will give a more formal definition of overfitting below, but as a general intuition, models less complex than $p^*$ tend to underfit while models more complex than $p^*$ tend to overfit.
 
 ```{video} ../../_static/regression/assessing_performance/manim_animations/train_test_anim.mp4
-:width: 100%
 ```
 $\ $
 
@@ -351,7 +347,6 @@ Before defining these terms, we should highlight a specific assumption we have b
 When thinking about machine learning, we are thinking that the data is generated from a process following the model we assume. So for the regression model, we assume that for each $x_i$ in our dataset, its corresponding $y_i = f(x_i) + \varepsilon_i$ for some unknown $f$. So since there is randomness not only in which inputs we receive, but in their associated output, we will expect to learn different predictors if we trained on different datasets drawn from the same distribution. We can think about what is the "average predictor" if we drew a bunch of different training sets, trained a predictor from each one, and averaged the results. The animation below shows this process and what this average predictor $\bar{f_{\hat{w}}}(x)$ looks like<sup>16</sup>.
 
 ```{video} ../../_static/regression/assessing_performance/manim_animations/avg_deg_1_anim.mp4
-:width: 100%
 ```
 
 ### Bias
@@ -382,7 +377,6 @@ Mathematically we write the variance as the following. It tries to capture how m
 $$\text{Variance:}\ \ \mathbb{E}\left[\left(\overline{f_{\hat{w}}}(x) - f_{\hat{w}}(x)\right)^2\right]$$
 
 ```{video} ../../_static/regression/assessing_performance/manim_animations/var_deg_8_anim.mp4
-:width: 100%
 ```
 
 High complexity models tend to have high variance. Or in other words, we call models that have high variance "complex" to describe that behavior.
@@ -407,7 +401,6 @@ $$Error = Bias^2 + Variance + Noise$$
 The following animation shows how the bias and variance change with model complexity, and how those two with noise (which is independent of model complexity) add up to the true error curve we saw earlier<sup>19</sup>.
 
 ```{video} ../../_static/regression/assessing_performance/manim_animations/bias_var_tradeoff_anim.mp4
-:width: 100%
 ```
 
 One subtle point we have been leaving out is the discussion of the amount of data we have to train on in the first place. All of the earlier descriptions of "high complexity" or "low complexity" are in respect to how much data you have available to train on. In reality, the model's complexity is relative to how much data you have. For example, it's really easy for a 20 degree polynomial to overfit to 2 data points, but very difficult for it to overfit to 2 billion data points (it doesn't have the capacity to wiggle 2 billion times).
