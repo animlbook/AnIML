@@ -17,6 +17,7 @@ parse:
     - amsmath
     - dollarmath
     - html_image
+    - substitution
 
 #######################################################################################
 # HTML-specific settings
