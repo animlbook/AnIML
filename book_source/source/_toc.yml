@@ -1,7 +1,9 @@
 format: jb-book
 root: intro/index
 parts:
-  - caption: 1. Regression
+  - caption: Regression
+    numbered: True
     chapters:
       - file: regression/linear_regression/index
       - file: regression/assessing_performance/index
+      - file: regression/ridge/index
