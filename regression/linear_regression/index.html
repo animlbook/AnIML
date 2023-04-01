@@ -479,6 +479,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-pipeline">ML Pipeline</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-model">Linear Regression Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-statistical-model">Linear Regression Statistical Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-practice">Linear Regression In Practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-theory">Linear Regression Theory</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-metric">Quality Metric</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-algorithm">ML Algorithm</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">Feature Extraction</a></li>
@@ -574,12 +578,225 @@ document.write(`
 \[\hat{y} = \hat{w}_0 + \hat{w}_1 x\]</div>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>6. A more technical reason comes from the mathematical formulation of the linear regression problem. Under our model that includes this uncertainty, the formula above defines the most likely outcome given the dataset we were given to train on. This comes from the fact that the noise of the model is equally likely to be positive/negative. In other words, there is no benefit predicting something above/below this most likely value. The technical name for this procedure is <em>maximum likelihood estimation</em>.</p>
+<p>6. A more technical reason comes from the mathematical formulation of the linear regression problem. Under our model that includes this uncertainty, the formula above defines the most likely outcome given the dataset we were given to train on. This comes from the fact that the noise of the model is equally likely to be positive/negative. In other words, there is no benefit predicting something above/below this most likely value. While we assume noise in our data inputs, our <em>maximum likelihood estimator</em> for the outputs does not include adding additional noise.</p>
 </aside>
 <p>One note on notation: You might be wondering, “Why don’t we add a term like <span class="math notranslate nohighlight">\(+ \varepsilon\)</span> in that equation above?” This is because that <span class="math notranslate nohighlight">\(\varepsilon\)</span> term is to account in the uncertainty in the input data we received. It wouldn’t necessarily help us to add randomness to our predictions since the learned parameters are our “best guess” at what the true parameter values are<sup>6</sup>.</p>
+</section>
+</section>
+<section id="linear-regression-in-practice">
+<h2>Linear Regression In Practice<a class="headerlink" href="#linear-regression-in-practice" title="Permalink to this heading">#</a></h2>
+<p>Now that we have introduced a theoretical model for linear regression, let start by showing some code to train a linear regression model before explaining all of the parts required to train such a model. This might seem backwards, but it helps to see the code that you will normally write, and then see all of the foundational underpinnings that happen behind the scenes to make that learner happen.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>TODO. A library is code that some developer wrote for the use in some programming language. Libraries are a great way to share code to build more complex applications without having to re-invent the fundamentals.</p>
+</aside>
+<p>In Python, there are many libraries<sup>TODO</sup> to train machine learning models. One of the most popular libraries is <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>. The <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> library is great because it provides an easy-to-use interface for training machine learning models of various types, and it provides many helper functions for many of the common tasks needed to make machine learning models work.</p>
+<p>With what we have discussed so far for linear regression, we actually only need a few lines of Python code to train model (<code class="docutils literal notranslate"><span class="pre">fit</span></code>) and use it to make predictions (<code class="docutils literal notranslate"><span class="pre">predict</span></code>) about data for the future.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This code cell defines a helper function we use below.</span>
+<span class="c1"># Understanding the code in this hidden cell is not important</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="c1"># Special functions for Jupyter Notebook output</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
+
+<span class="n">LEGEND_PARAMS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;facecolor&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="s2">&quot;framealpha&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">animl_plot_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Relating Living Room Square Footage to House Price&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="o">**</span><span class="n">LEGEND_PARAMS</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">animl_plot_regression</span><span class="p">(</span><span class="n">features</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">targets</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+                          <span class="n">model</span><span class="p">:</span> <span class="n">LinearRegression</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Plot data</span>
+    <span class="n">features_1d</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">features_1d</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">targets</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Plot predictor</span>
+    <span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span> <span class="o">=</span> <span class="n">features_1d</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">features_1d</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">features_1d</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">xs</span><span class="p">})</span>
+
+    <span class="n">pred_ys</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">pred_ys</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#59C5E6&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predictor&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Predicting Price (dollars) with Living Room size (sq. ft.)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="o">**</span><span class="n">LEGEND_PARAMS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>We first start in by loading the data and looking at it using the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> library. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> is one of the most popular libraries for manipulating tabular data such as Excel spreadsheets or CSVs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># For this example, we are only going to look at sqft_living and price</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;home_data.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;sqft_living&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span><span class="p">]]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">animl_plot_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;sqft_living&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<figure class="align-center">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sqft_living</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1180</td>
+      <td>221900</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2570</td>
+      <td>538000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>770</td>
+      <td>180000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1960</td>
+      <td>604000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1680</td>
+      <td>510000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></figure>
+<figure class="align-center">
+<img alt="../../_images/d7f4527daee5101a7d9f747e02652aa06c509e6a825e8dd0205cd4bc6de8542a.png" src="../../_images/d7f4527daee5101a7d9f747e02652aa06c509e6a825e8dd0205cd4bc6de8542a.png" />
+</figure>
+</div>
+</div>
+<p>Once we have loaded in the data, we are almost ready to train the model. We have to separate the data into our features and our labels, and then use <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">LinearRegression</a> model. The <code class="docutils literal notranslate"><span class="pre">fit</span></code> function trains the model on the given features and labels, and then we can inspect the fields of the model to find its coefficients.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="c1"># Separate our features and our targets</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;sqft_living&quot;</span><span class="p">]]</span>
+<span class="n">targets</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;price&quot;</span><span class="p">]</span>
+
+<span class="c1"># Create and train (fit) the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+
+<span class="c1"># Inspect the learned parameters</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Learned w_0 = </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Learned w_1 = </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Learned w_0 = -43580.7403270849
+Learned w_1 = 280.62356663364517
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now with this learned model, we can make predictions on data with the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method. In this example, we predict on the same data we trained on but you could also pass in future data as well. We also include an additional custom function to plot the learned predictor against the data  to visually see the errors made.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make predictions of the labels</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predictions: </span><span class="si">{</span><span class="n">predictions</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Plot model and data</span>
+<span class="n">animl_plot_regression</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predictions: [287555.06830062 677621.82592138 172499.40598082 ... 242655.29763923
+ 405416.96628675 242655.29763923]
+</pre></div>
+</div>
+<figure class="align-center">
+<img alt="../../_images/f6e8e83e5161760af3dc281ad3075b11dd72856015b5c098eb9bb6fca58e4203.png" src="../../_images/f6e8e83e5161760af3dc281ad3075b11dd72856015b5c098eb9bb6fca58e4203.png" />
+</figure>
+</div>
+</div>
+<p>You can see from the data and our predictor, that the model is definitely making errors since there is more going on here than a linear relationship between square footage of the living room and the house price. We summarize the important parts of the code above for a machine learning pipeline in the cell below. In the remainder of this chapter, we will discuss the underlying theory to understand why these models work and how to actually learn the coefficients from the data.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="c1"># For this example, we are only going to look at sqft_living and price</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;home_data.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;sqft_living&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span><span class="p">]]</span>
+
+<span class="c1"># Separate our features and our targets</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;sqft_living&quot;</span><span class="p">]]</span>
+<span class="n">targets</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;price&quot;</span><span class="p">]</span>
+
+<span class="c1"># Create and train (fit) the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+
+<span class="c1"># Make predictions on the data</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-regression-theory">
+<h2>Linear Regression Theory<a class="headerlink" href="#linear-regression-theory" title="Permalink to this heading">#</a></h2>
 <p>In a few sections, we will define the specifics of how we estimate these unknown parameters using some ML algorithm. As a brief preview, many ML algorithms for linear regression essentially boil down to trying many possible lines and identify which one is “best” from that set. So before we describe an algorithm, we should describe what makes one predictor the “best” over some others.</p>
 <video controls="True" preload="auto"><source src="../../_static/regression/linear_regression/manim_animations/many_lines_anim.mp4" type="video/mp4"></video><p>What does “best” mean in this context? That is yet another judgement call we must make as modelers, and we call this the <strong>Quality Metric</strong>.</p>
-</section>
 <section id="quality-metric">
 <h3>Quality Metric<a class="headerlink" href="#quality-metric" title="Permalink to this heading">#</a></h3>
 <p>TODO highlight quality metric</p>
@@ -770,7 +987,7 @@ y_i &amp;= w_0h_0(x_i) + w_1h_1(x_i) + ... + h_Dh_D(x_i)\\
 <h3>Test your Understanding<a class="headerlink" href="#test-your-understanding" title="Permalink to this heading">#</a></h3>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="IZYviVAhgxcM" data-shufflequestions="False"
+<div class="output text_html"><div id="TPdSNaMnfUXx" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -932,7 +1149,7 @@ y_i &amp;= w_0h_0(x_i) + w_1h_1(x_i) + ... + h_Dh_D(x_i)\\
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsIZYviVAhgxcM=[{"question": "\n            Suppose we were testing a new drug treatment for a particular disease. We have gathered data from various trials that recorded the average response (a number, where 0 is low response and a higher number is a high response) in an experiment that used a particular dosage (measured in mg).\n            <br /><br />\n\n            We suspect there is a linear relationship between the response ($y$) and the dosage in mg ($x$), so we decide to model this data with a linear regression model.\n\n            $$y_i = w_0 + w_1x_i + \\varepsilon_i$$\n\n            Suppose that after training a model, we find $\\hat{w}_0 = 1$ $\\hat{w}_1 = 2$. Which of the following interpretations of the learned predictor are true?\n            <br /><br />\n\n            <i>Select all that apply</i>.\n            ", "type": "many_choice", "answers": [{"answer": "The predicted response for a 0mg dose is expected to be 0.", "correct": false}, {"answer": "The predicted response for a 0mg dose is expected to be 1.", "correct": true}, {"answer": "The predicted response for a 0mg dose is expected to be 2.", "correct": false}, {"answer": "If we were to increase the dosage by 2mg, we expect that the response would increase by 1.", "correct": false}, {"answer": "If were to increase the dosage by 1mg, we expect that the response would increase by 0.002.", "correct": false}, {"answer": "If we were to increase the dosage by 1mg, we expect that the response would increase by 2.", "correct": true}]}, {"question": "\n            Suppose in the setup for the last question, we had the following dataset.<br /><br />\n            <table class=\"tg\" style=\"undefined;table-layout: fixed; width: 284px\">\n                <colgroup>\n                    <col style=\"width: 117px\">\n                    <col style=\"width: 167px\">\n                </colgroup>\n                <thead>\n                  <tr>\n                    <th class=\"tg-0pky\">Drug Dosage</th>\n                    <th class=\"tg-0pky\">Response</th>\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td class=\"tg-2bhk\">10</td>\n                    <td class=\"tg-2bhk\">19</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">2</td>\n                    <td class=\"tg-0pky\">8</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-2bhk\">3</td>\n                    <td class=\"tg-2bhk\"><span style=\"font-weight:400;font-style:normal\">7</span></td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">9</td>\n                    <td class=\"tg-0pky\"><span style=\"font-weight:400;font-style:normal\">18</span></td>\n                  </tr>\n                </tbody>\n            </table>\n\n            <br />\n            Consider our learned predictor $\\hat{w}_0 = 1$ and $\\hat{w}_1 = 2$. What is the $MSE$ of this learned predictor on this training dataset?\n        ", "type": "numeric", "answers": [{"type": "value", "value": 3.5, "correct": true, "feedback": "\n                    Recall that the $MSE$ or residual sum of squares is defined as\n\n                    $$MSE(w_0, w_1) = \\frac{1}{n}\\sum_{i=1}^n \\left(y_i - (w_0 + w_1 x_i)\\right)^2$$\n\n                    This means our $MSE$ is (scroll for calculation)\n\n                    $$\\frac{1}{4}\\left(19 - (1 + 2 \\cdot 10)\\right)^2 + \\left(8 - (1 + 2 \\cdot 2)\\right)^2 + \\left(7 - (1 + 2 \\cdot 3)\\right)^2 + \\left(18 - (1 + 2 \\cdot 9)\\right)^2 = \\frac{14}{4} = 3.5$$\n                "}, {"type": "default", "correct": false, "feedback": "Try to use our MSE formula to compute the average error on each data point!"}]}, {"question": "\n            Suppose we trained a regression model with the following features:\n\n            <ul>\n                <li>$h_0(x_i) = 1$ (a constant feature for the intercept)</li>\n                <li>$h_1(x_i) = x_i[1]$</li>\n                <li>$h_2(x_i) = x_i[2]$</li>\n                <li>$h_3(x_i) = x_i[1]^2$</li>\n                <li>$h_4(x_i) = \\log(x_i[2])$</li>\n                <li>$h_5(x_i) = e^{x_i[1]}$</li>\n            </ul>\n        ", "type": "numeric", "answers": [{"type": "value", "value": 6, "correct": true, "feedback": "\n                    If we use these features, then our model will be\n\n                    $$y = \\sum_{j=0}^5 w_j \\cdot h_j(x_i) + \\varepsilon_i$$\n\n                    That is 6 $w_j$'s in total that we have to learn.\n                "}, {"type": "default", "correct": false, "feedback": "Try to use our MSE formula to compute the average error on each data point!"}]}, {"question": "Polynomial regression is equivalent to linear regression using polynomial features of the input $x_i$", "type": "multiple_choice", "answers": [{"answer": "True", "correct": true}, {"answer": "False", "correct": false}]}];
+}</style></div><script type="application/javascript">var questionsTPdSNaMnfUXx=[{"question": "\n            Suppose we were testing a new drug treatment for a particular disease. We have gathered data from various trials that recorded the average response (a number, where 0 is low response and a higher number is a high response) in an experiment that used a particular dosage (measured in mg).\n            <br /><br />\n\n            We suspect there is a linear relationship between the response ($y$) and the dosage in mg ($x$), so we decide to model this data with a linear regression model.\n\n            $$y_i = w_0 + w_1x_i + \\varepsilon_i$$\n\n            Suppose that after training a model, we find $\\hat{w}_0 = 1$ $\\hat{w}_1 = 2$. Which of the following interpretations of the learned predictor are true?\n            <br /><br />\n\n            <i>Select all that apply</i>.\n            ", "type": "many_choice", "answers": [{"answer": "The predicted response for a 0mg dose is expected to be 0.", "correct": false}, {"answer": "The predicted response for a 0mg dose is expected to be 1.", "correct": true}, {"answer": "The predicted response for a 0mg dose is expected to be 2.", "correct": false}, {"answer": "If we were to increase the dosage by 2mg, we expect that the response would increase by 1.", "correct": false}, {"answer": "If were to increase the dosage by 1mg, we expect that the response would increase by 0.002.", "correct": false}, {"answer": "If we were to increase the dosage by 1mg, we expect that the response would increase by 2.", "correct": true}]}, {"question": "\n            Suppose in the setup for the last question, we had the following dataset.<br /><br />\n            <table class=\"tg\" style=\"undefined;table-layout: fixed; width: 284px\">\n                <colgroup>\n                    <col style=\"width: 117px\">\n                    <col style=\"width: 167px\">\n                </colgroup>\n                <thead>\n                  <tr>\n                    <th class=\"tg-0pky\">Drug Dosage</th>\n                    <th class=\"tg-0pky\">Response</th>\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td class=\"tg-2bhk\">10</td>\n                    <td class=\"tg-2bhk\">19</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">2</td>\n                    <td class=\"tg-0pky\">8</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-2bhk\">3</td>\n                    <td class=\"tg-2bhk\"><span style=\"font-weight:400;font-style:normal\">7</span></td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">9</td>\n                    <td class=\"tg-0pky\"><span style=\"font-weight:400;font-style:normal\">18</span></td>\n                  </tr>\n                </tbody>\n            </table>\n\n            <br />\n            Consider our learned predictor $\\hat{w}_0 = 1$ and $\\hat{w}_1 = 2$. What is the $MSE$ of this learned predictor on this training dataset?\n        ", "type": "numeric", "answers": [{"type": "value", "value": 3.5, "correct": true, "feedback": "\n                    Recall that the $MSE$ or residual sum of squares is defined as\n\n                    $$MSE(w_0, w_1) = \\frac{1}{n}\\sum_{i=1}^n \\left(y_i - (w_0 + w_1 x_i)\\right)^2$$\n\n                    This means our $MSE$ is (scroll for calculation)\n\n                    $$\\frac{1}{4}\\left(19 - (1 + 2 \\cdot 10)\\right)^2 + \\left(8 - (1 + 2 \\cdot 2)\\right)^2 + \\left(7 - (1 + 2 \\cdot 3)\\right)^2 + \\left(18 - (1 + 2 \\cdot 9)\\right)^2 = \\frac{14}{4} = 3.5$$\n                "}, {"type": "default", "correct": false, "feedback": "Try to use our MSE formula to compute the average error on each data point!"}]}, {"question": "\n            Suppose we trained a regression model with the following features:\n\n            <ul>\n                <li>$h_0(x_i) = 1$ (a constant feature for the intercept)</li>\n                <li>$h_1(x_i) = x_i[1]$</li>\n                <li>$h_2(x_i) = x_i[2]$</li>\n                <li>$h_3(x_i) = x_i[1]^2$</li>\n                <li>$h_4(x_i) = \\log(x_i[2])$</li>\n                <li>$h_5(x_i) = e^{x_i[1]}$</li>\n            </ul>\n        ", "type": "numeric", "answers": [{"type": "value", "value": 6, "correct": true, "feedback": "\n                    If we use these features, then our model will be\n\n                    $$y = \\sum_{j=0}^5 w_j \\cdot h_j(x_i) + \\varepsilon_i$$\n\n                    That is 6 $w_j$'s in total that we have to learn.\n                "}, {"type": "default", "correct": false, "feedback": "Try to use our MSE formula to compute the average error on each data point!"}]}, {"question": "Polynomial regression is equivalent to linear regression using polynomial features of the input $x_i$", "type": "multiple_choice", "answers": [{"answer": "True", "correct": true}, {"answer": "False", "correct": false}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1666,7 +1883,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsIZYviVAhgxcM,  IZYviVAhgxcM);
+        show_questions(questionsTPdSNaMnfUXx,  TPdSNaMnfUXx);
         }
         </script></div>
 </div>
@@ -1744,6 +1961,10 @@ if (typeof version == 'undefined') {
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-pipeline">ML Pipeline</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-model">Linear Regression Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-statistical-model">Linear Regression Statistical Model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-practice">Linear Regression In Practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-theory">Linear Regression Theory</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-metric">Quality Metric</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-algorithm">ML Algorithm</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">Feature Extraction</a></li>
