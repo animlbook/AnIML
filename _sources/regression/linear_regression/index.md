@@ -36,13 +36,11 @@ The way we represent our data is a $n$ input/output pairs where we use the varia
 It is sometimes helpful to visualize the relationship between input and output. Visually, we could plot these points on a graph to see if there is a relationship between the input and the target.
 
 ```{video} ../../_static/regression/linear_regression/manim_animations/data_anim.mp4
-:width: 100%
 ```
 
 When using machine learning, we generally make an assumption that there is a relationship between the input and the target (i.e., square footage of the house and its sale price). We are going to say that there exists some secret (unknown) function $f$ such that the price of a house is approximately equal to the function's output for the houses input data.
 
 ```{video} ../../_static/regression/linear_regression/manim_animations/true_function_anim.mp4
-:width: 100%
 ```
 
 Note that we really do need the qualifier "approximately" above. We are not saying that the output has to be exactly equal, but rather that it is close. The reason we allow for this wiggle-room is that we are allowing for the fact that our model of the world might be slightly wrong. There are probably more factors outside the square footage that affect a house's price, so we are never hoping to find an exact relationship between this input and our output; just one that is "good enough". Alternatively, another reason to only need approximately equal for our model is to allow for the fact that there might be uncertainty in the process of measuring the input (square footage) or output (price).
@@ -63,7 +61,6 @@ The way to read this formula above is to say that the outcomes we saw, $y_i$, co
 
 
 ```{video} ../../_static/regression/linear_regression/manim_animations/model_anim.mp4
-:width: 100%
 ```
 
 Earlier, we said a common goal for machine learning is to make predictions about future data. Since we won't necessarily be given the correct output ahead of time, we often focus on trying to learn what the true function $f$ is. So commonly we try to estimate $f$ from the data we are provided, and then use this learned function to make predictions about the future. You might be able to tell what makes this challenging: we don't know what $f$ is! We only have access to this (noisy) data of inputs/outputs and will have to somehow try to approximate $f$ from just the given data.
@@ -75,7 +72,6 @@ Earlier, we said a common goal for machine learning is to make predictions about
 To phrase this challenge mathematically, a common goal in machine learning is to learn a function<sup>3</sup> $\hat{f}$​ from the data that approximates $f$ as best as we can. We can then use this $\hat{f}$​ to make predictions about new data by evaluating $\hat{y} = \hat{f}(x)$. In English, for a given example ($x$), we are predicting what we think the label should be ($\hat{y}$) based on this function we *think* is a good estimate ($\hat{f}$) of the unknown true function ($f$). It's likely our estimate won't be exactly correct, but our hope is to get one that is as close to this unknown truth as possible. We will come back to *how* we estimate this function later, but it has something to do with finding a function that closely matches the data were given.
 
 ```{video} ../../_static/regression/linear_regression/manim_animations/predictor_anim.mp4
-:width: 100%
 ```
 
 Since we can't actual observe the true function $f$, assessing how good a potential $\hat{f}$ is will be quite challenging. The animation above previews how we will do this by comparing how $\hat{f}$ does on the data we trained it from. More on this in the next section.
@@ -121,7 +117,6 @@ One benefit of linear regresssion is that we can interpret the value of each of 
 
 
 ```{video} ../../_static/regression/linear_regression/manim_animations/interpret_coefficients_anim.mp4
-:width: 100%
 ```
 
 Under this statistical model, our machine learning task is to find our best estimates $\hat{w}_0$ and $\hat{w}_1$ of these parameters so that we can use them to make predictions about future inputs. We will learn these parameters using a *learning algorithm* (currently unspecified). When making a prediction with our learned parameters, we will use the following formula.
@@ -137,7 +132,6 @@ One note on notation: You might be wondering, "Why don't we add a term like $+ \
 In a few sections, we will define the specifics of how we estimate these unknown parameters using some ML algorithm. As a brief preview, many ML algorithms for linear regression essentially boil down to trying many possible lines and identify which one is "best" from that set. So before we describe an algorithm, we should describe what makes one predictor the "best" over some others.
 
 ```{video} ../../_static/regression/linear_regression/manim_animations/many_lines_anim.mp4
-:width: 100%
 ```
 
 What does "best" mean in this context? That is yet another judgement call we must make as modelers, and we call this the **Quality Metric**.
@@ -203,7 +197,6 @@ Let's consider an example with one parameter instead of two: suppose we know wha
 
 
 ```{video} ../../_static/regression/linear_regression/manim_animations/convex_anim.mp4
-:width: 100%
 ```
 
 As described above, the idea of the gradient descent algorithm is to start at some point, and then repeatedly "roll down the hill" until we reach the bottom of the bowl. In this sense, it is an iterative algorithm that repeatedly performs some minor updates until it converges to what it thinks is the best solution.
@@ -214,7 +207,6 @@ In the context of our original problem where we are trying to optimize both $w_0
 
 
 ```{video} ../../_static/regression/linear_regression/gradient_descent.mp4
-:width: 100%
 :alt: Animation showing a 3D MSE function (bowl) and the accompanying line as the current estimate rolls down the hill
 ```
 
@@ -250,7 +242,6 @@ You might be wondering if this gradient-descent algorithm is always guaranteed t
 If you don't have a guarantee that the function you are trying to minimize is convex, then there is no guarantee your gradient descent algorithm will find the best solution. Since gradient descent is always looking at the "locally optimal" direction to go, a function that is not convex might result in our algorithm getting stuck in a *local optima*.
 
 ```{video} ../../_static/regression/linear_regression/manim_animations/non_convex_anim.mp4
-:width: 100%
 ```
 
 As mentioned above, we are lucky that in the case of linear regression our MSE quality metric will be convex! So that means running gradient descent will guarantee a global optimum.
