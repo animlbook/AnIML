@@ -124,10 +124,153 @@ Under this statistical model, our machine learning task is to find our best esti
 $$\hat{y} = \hat{w}_0 + \hat{w}_1 x$$
 
 ```{margin}
-6\. A more technical reason comes from the mathematical formulation of the linear regression problem. Under our model that includes this uncertainty, the formula above defines the most likely outcome given the dataset we were given to train on. This comes from the fact that the noise of the model is equally likely to be positive/negative. In other words, there is no benefit predicting something above/below this most likely value. The technical name for this procedure is *maximum likelihood estimation*.
+6\. A more technical reason comes from the mathematical formulation of the linear regression problem. Under our model that includes this uncertainty, the formula above defines the most likely outcome given the dataset we were given to train on. This comes from the fact that the noise of the model is equally likely to be positive/negative. In other words, there is no benefit predicting something above/below this most likely value. While we assume noise in our data inputs, our *maximum likelihood estimator* for the outputs does not include adding additional noise.
 ```
 
 One note on notation: You might be wondering, "Why don't we add a term like $+ \varepsilon$ in that equation above?" This is because that $\varepsilon$ term is to account in the uncertainty in the input data we received. It wouldn't necessarily help us to add randomness to our predictions since the learned parameters are our "best guess" at what the true parameter values are<sup>6</sup>.
+
+## Linear Regression In Practice
+
+Now that we have introduced a theoretical model for linear regression, let start by showing some code to train a linear regression model before explaining all of the parts required to train such a model. This might seem backwards, but it helps to see the code that you will normally write, and then see all of the foundational underpinnings that happen behind the scenes to make that learner happen.
+
+```{margin}
+TODO\. A library is code that some developer wrote for the use in some programming language. Libraries are a great way to share code to build more complex applications without having to re-invent the fundamentals.
+```
+
+In Python, there are many libraries<sup>TODO</sup> to train machine learning models. One of the most popular libraries is `scikit-learn`. The `scikit-learn` library is great because it provides an easy-to-use interface for training machine learning models of various types, and it provides many helper functions for many of the common tasks needed to make machine learning models work.
+
+With what we have discussed so far for linear regression, we actually only need a few lines of Python code to train model (`fit`) and use it to make predictions (`predict`) about data for the future.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
+# This code cell defines a helper function we use below.
+# Understanding the code in this hidden cell is not important
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.linear_model import LinearRegression
+
+# Special functions for Jupyter Notebook output
+from IPython.display import display, Markdown
+
+LEGEND_PARAMS = {"facecolor": "white", "framealpha": 1}
+
+sns.set()
+
+def animl_plot_data(data: pd.DataFrame, x: str, y: str):
+    fig, ax = plt.subplots(1)
+    sns.scatterplot(data=data, x=x, y=y, color="black", alpha=0.9, ax=ax, label="Data")
+
+    ax.set_title("Relating Living Room Square Footage to House Price")
+    ax.legend(**LEGEND_PARAMS)
+
+
+def animl_plot_regression(features: pd.DataFrame, targets: pd.Series,
+                          model: LinearRegression) -> None:
+    fig, ax = plt.subplots(1)
+
+    # Plot data
+    features_1d = features.iloc[:, 0]
+    sns.scatterplot(x=features_1d, y=targets, ax=ax, color="black", alpha=0.9, label="Data")
+
+    # Plot predictor
+    min_x, max_x = features_1d.min(), features_1d.max()
+    xs = np.linspace(min_x, max_x, num=100)
+    xs = pd.DataFrame({features_1d.name: xs})
+
+    pred_ys = model.predict(xs)
+
+    ax.plot(xs, pred_ys, color="#59C5E6", linewidth=4, label="Predictor")
+    ax.set_title("Predicting Price (dollars) with Living Room size (sq. ft.)")
+    ax.legend(**LEGEND_PARAMS)
+```
+We first start in by loading the data and looking at it using the `pandas` library. `pandas` is one of the most popular libraries for manipulating tabular data such as Excel spreadsheets or CSVs.
+
+```{code-cell} ipython3
+---
+mystnb:
+  figure:
+    align: center
+---
+import pandas as pd
+
+# For this example, we are only going to look at sqft_living and price
+data = pd.read_csv("home_data.csv")
+data = data[["sqft_living", "price"]]
+
+display(data.head())
+animl_plot_data(data, "sqft_living", "price")
+```
+
+
+
+Once we have loaded in the data, we are almost ready to train the model. We have to separate the data into our features and our labels, and then use `scikit-learn`'s [LinearRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) model. The `fit` function trains the model on the given features and labels, and then we can inspect the fields of the model to find its coefficients.
+
+```{code-cell} ipython3
+from sklearn.linear_model import LinearRegression
+
+# Separate our features and our targets
+features = data[["sqft_living"]]
+targets = data["price"]
+
+# Create and train (fit) the model
+model = LinearRegression()
+model.fit(features, targets)
+
+# Inspect the learned parameters
+print(f"Learned w_0 = {model.intercept_}")
+print(f"Learned w_1 = {model.coef_[0]}")
+```
+
+Now with this learned model, we can make predictions on data with the `predict` method. In this example, we predict on the same data we trained on but you could also pass in future data as well. We also include an additional custom function to plot the learned predictor against the data  to visually see the errors made.
+
+```{code-cell} ipython3
+---
+mystnb:
+  figure:
+    align: center
+---
+
+# Make predictions of the labels
+predictions = model.predict(features)
+print(f"Predictions: {predictions}")
+print()
+
+# Plot model and data
+animl_plot_regression(features, targets, model)
+```
+
+You can see from the data and our predictor, that the model is definitely making errors since there is more going on here than a linear relationship between square footage of the living room and the house price. We summarize the important parts of the code above for a machine learning pipeline in the cell below. In the remainder of this chapter, we will discuss the underlying theory to understand why these models work and how to actually learn the coefficients from the data.
+
+```{code-cell} ipython3
+:tags: [remove-output]
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+# For this example, we are only going to look at sqft_living and price
+data = pd.read_csv("home_data.csv")
+data = data[["sqft_living", "price"]]
+
+# Separate our features and our targets
+features = data[["sqft_living"]]
+targets = data["price"]
+
+# Create and train (fit) the model
+model = LinearRegression()
+model.fit(features, targets)
+
+# Make predictions on the data
+predictions = model.predict(features)
+
+```
+
+
+## Linear Regression Theory
 
 In a few sections, we will define the specifics of how we estimate these unknown parameters using some ML algorithm. As a brief preview, many ML algorithms for linear regression essentially boil down to trying many possible lines and identify which one is "best" from that set. So before we describe an algorithm, we should describe what makes one predictor the "best" over some others.
 
