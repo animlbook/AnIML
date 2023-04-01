@@ -206,8 +206,6 @@ display(data.head())
 animl_plot_data(data, "sqft_living", "price")
 ```
 
-
-
 Once we have loaded in the data, we are almost ready to train the model. We have to separate the data into our features and our labels, and then use `scikit-learn`'s [LinearRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) model. The `fit` function trains the model on the given features and labels, and then we can inspect the fields of the model to find its coefficients.
 
 ```{code-cell} ipython3
@@ -370,7 +368,7 @@ While the exact notation isn't incredibly important for our course, we still thi
 1. Start at some (random) point $w^{(0)}$ at $t = 0$
 2. While we haven't converged:
 
-    1. Compute gradient at current point (direction of ascent) $d \gets \nabla RSS(w^{(t)})$
+    1. Compute gradient at current point (direction of ascent) $d \gets \nabla MSE(w^{(t)})$
     2. Update point $w^{(t + 1)} \gets w^{(t)} - \eta d$
     3. Update time $t \gets t + 1$
 3. Output current $w^{(t)}$
