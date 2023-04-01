@@ -1,45 +1,56 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Assessing Performance &#8212; &lt;b&gt;&lt;i&gt;AnIML&lt;/i&gt;&lt;/b&gt;&lt;br/&gt; Another Introduction to Machine Learning</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -79,7 +90,7 @@ var addUtterances = () => {
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
     <script src="../../_static/script.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
@@ -89,62 +100,93 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'regression/assessing_performance/index';</script>
     <link rel="shortcut icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Printing and Comments" href="../../printing.html" />
     <link rel="prev" title="Linear Regression" href="../linear_regression/index.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
-
-    
-
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro/index.html">
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../../_static/logo.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title"><b><i>AnIML</i></b><br/> Another Introduction to Machine Learning</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -153,504 +195,320 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  1. Regression
- </span>
-</p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Regression</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../linear_regression/index.html">
-   <i class="fas fa-book fa-fw">
-   </i>
-   Linear Regression
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   <i class="fas fa-book fa-fw">
-   </i>
-   Assessing Performance
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  6. Others
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../printing.html">
-   <i class="fas fa-book fa-fw">
-   </i>
-   Printing and Comments
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../variables_expressions.html">
-   <i class="fas fa-book fa-fw">
-   </i>
-   Variables, Types, Expressions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../if_statements.html">
-   <i class="fas fa-book fa-fw">
-   </i>
-   If/Else Statements
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../loops.html">
-   <i class="fas fa-book fa-fw">
-   </i>
-   Loops
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../strings.html">
-   <i class="fas fa-book fa-fw">
-   </i>
-   Strings
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../methods.html">
-   <i class="fas fa-book fa-fw">
-   </i>
-   Methods
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../io_files.html">
-   <i class="fas fa-book fa-fw">
-   </i>
-   Files and I/O
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../arrays.html">
-   <i class="fas fa-book fa-fw">
-   </i>
-   Arrays
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_regression/index.html"><i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            <a href="https://hschafer.github.io/Intro-ML/acknowledgements.html">Acknowledgements</a><br/>Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/hschafer/Intro-ML/main?urlpath=lab/tree/book_source/source/regression/assessing_performance/index.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/hschafer/Intro-ML/main?urlpath=lab/tree/book_source/source/regression/assessing_performance/index.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/hschafer/Intro-ML/blob/main/book_source/source/regression/assessing_performance/index.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/hschafer/Intro-ML/blob/main/book_source/source/regression/assessing_performance/index.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/hschafer/Intro-ML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/hschafer/Intro-ML/edit/main/book_source/source/regression/assessing_performance/index.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/hschafer/Intro-ML/issues/new?title=Issue%20on%20page%20%2Fregression/assessing_performance/index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/regression/assessing_performance/index.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/regression/assessing_performance/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/hschafer/Intro-ML"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/hschafer/Intro-ML/issues/new?title=Issue%20on%20page%20%2Fregression/assessing_performance/index.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/hschafer/Intro-ML/edit/main/book_source/source/regression/assessing_performance/index.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../../_sources/regression/assessing_performance/index.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download notebook file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-code"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="../../_sources/regression/assessing_performance/index.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.md</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-brief-seque-into-theory-land">
-   A brief seque into theory-land
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#back-to-practice">
-   Back to practice
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#explaining-error">
-   Explaining Error
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bias-variance-tradeoff">
-   Bias-Variance Tradeoff
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bias">
-     Bias
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#variance">
-     Variance
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-to-choose-model-complexity">
-   How to Choose Model Complexity?
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#validation-set">
-     Validation Set
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cross-validation">
-     Cross Validation
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#recap">
-   Recap
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-your-understanding">
-     Test your Understanding
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1><i class="fas fa-book fa-fw"></i> Assessing Performance</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-brief-seque-into-theory-land">
-   A brief seque into theory-land
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#back-to-practice">
-   Back to practice
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#explaining-error">
-   Explaining Error
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bias-variance-tradeoff">
-   Bias-Variance Tradeoff
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bias">
-     Bias
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#variance">
-     Variance
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-to-choose-model-complexity">
-   How to Choose Model Complexity?
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#validation-set">
-     Validation Set
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cross-validation">
-     Cross Validation
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#recap">
-   Recap
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-your-understanding">
-     Test your Understanding
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><i class="fas fa-book fa-fw"></i> Assessing Performance</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brief-seque-into-theory-land">A brief seque into theory-land</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-practice">Back to practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explaining-error">Explaining Error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">Bias-Variance Tradeoff</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-choose-model-complexity">How to Choose Model Complexity?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-set">Validation Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross Validation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">Recap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">Test your Understanding</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-book-fa-fw-i-assessing-performance">
-<h1><i class="fas fa-book fa-fw"></i> Assessing Performance<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-assessing-performance" title="Permalink to this headline">#</a></h1>
+<h1><i class="fas fa-book fa-fw"></i> Assessing Performance<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-assessing-performance" title="Permalink to this heading">#</a></h1>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>1. A quick review of these statistical models:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Linear Regression Model <span class="math notranslate nohighlight">\(y_i = w_0 + w_1x_i + \varepsilon_i\)</span></p></li>
 <li><p>Polynomial Regression Model <span class="math notranslate nohighlight">\(y_i = w_0 + w_1x_i + w_2x_i^2\)</span>
 <span class="math notranslate nohighlight">\(\ \ \ \ + ... + w_px_i^p + \varepsilon_i\)</span></p></li>
@@ -662,24 +520,19 @@ pipeline in the context of linear regression. We learned about the
 regression model, using gradient descent to learn a predictor that
 minimizes our quality metric. We also introduced the important concept
 of the features used by the model, where you can transform your input
-data to learn more complex relationships (e.g. polynomial regression) (1).</p>
+data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup>.</p>
 <p>When we introduced this flexibility of learning more complex relationship in the specific context of polynomial regression, we introduced a subtle challenge that we needed to identify a solution to: If we are able to train a regression model with a polynomial of any degree ppp, how do we know which one to use? Remember, we only have access to the given data, not the true function.</p>
-
-    <video width="100%"  controls >
-    <source src="../../_static/manim_animations/assessing_performance/simple_poly_regression_anim.mp4" type="video/mp4">
-    Video
-    </video>
-    <p><span class="math notranslate nohighlight">\(\ \)</span></p>
+<video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/simple_poly_regression_anim.mp4" type="video/mp4"></video><p><span class="math notranslate nohighlight">\(\ \)</span></p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>2. Example: There is strong empirical evidence that shows there is a linear relationship between femur length and your height.</p>
 </aside>
-<p>If you have prior information, or a domain expert you’re working with gives you information about the model you should use, you should start with that. For example, if you have evidence to support that the underlying function is, say linear (2), then you should start by using <span class="math notranslate nohighlight">\(p = 1\)</span>. Remember models are always assumptions about how the world works, so in some contexts, you might want to be skeptical and try other options.</p>
+<p>If you have prior information, or a domain expert you’re working with gives you information about the model you should use, you should start with that. For example, if you have evidence to support that the underlying function is, say linear<sup>2</sup>, then you should start by using <span class="math notranslate nohighlight">\(p = 1\)</span>. Remember models are always assumptions about how the world works, so in some contexts, you might want to be skeptical and try other options.</p>
 <p>If you don’t have as much expertise in the context your working in, you might need to identify what the degree should be. A fundamental question to choosing the right <span class="math notranslate nohighlight">\(p\)</span> is discussing how to <strong>assess the performance</strong> of a predictor so that you can compare these various models.</p>
-<p>Given what we’ve discussed so far, our first instinct might be to us the quality metric (e.g., MSE) on the data the predictor was trained from. Given the predictors (colored curves) in the animation above, which one will have the lowest MSE on the training dataset (the black dots)? (3)</p>
+<p>Given what we’ve discussed so far, our first instinct might be to us the quality metric (e.g., MSE) on the data the predictor was trained from. Given the predictors (colored curves) in the animation above, which one will have the lowest MSE on the training dataset (the black dots)?<sup>3</sup></p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="cooTCfsTegQH" data-shufflequestions="False"
+<div class="output text_html"><div id="ixkaCwTbgALe" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -841,7 +694,7 @@ data to learn more complex relationships (e.g. polynomial regression) (1).</p>
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionscooTCfsTegQH=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
+}</style></div><script type="application/javascript">var questionsixkaCwTbgALe=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1575,7 +1428,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionscooTCfsTegQH,  cooTCfsTegQH);
+        show_questions(questionsixkaCwTbgALe,  ixkaCwTbgALe);
         }
         </script></div>
 </div>
@@ -1583,51 +1436,51 @@ if (typeof version == 'undefined') {
 <p class="sidebar-title"></p>
 <p>3. Like Redfin/Zillow trying to predict the price of a house on a new listing.</p>
 </aside>
-<p>So using the logic from this explanation, if we chose the right polynomial degree based on lowest MSE on the data we trained on, we would always choose the highest degree polynomial possible. This happens because there is a mismatch in how we are assessing our predictor and the goal we set out to accomplish originally. Remember, in many contexts the goal of training a predictor is to use it out in the wild on new data as it comes in (3). If we choose the model that minimizes MSE of the data it learned from, we are just rewarding models that have sufficient complexity to <em>memorize</em> the dataset, and have no guarantee on how well it will generalize.</p>
+<p>So using the logic from this explanation, if we chose the right polynomial degree based on lowest MSE on the data we trained on, we would always choose the highest degree polynomial possible. This happens because there is a mismatch in how we are assessing our predictor and the goal we set out to accomplish originally. Remember, in many contexts the goal of training a predictor is to use it out in the wild on new data as it comes in<sup>3</sup>. If we choose the model that minimizes MSE of the data it learned from, we are just rewarding models that have sufficient complexity to <em>memorize</em> the dataset, and have no guarantee on how well it will generalize.</p>
 <p>An analogy: Suppose you studied a specific practice exam for a few hours and afterwards, you were able to answer 100% of the questions correctly after taking it multiple times. Would you expect to get 100% on the real exam based on that practice exam alone? Not necessarily! It’s entirely possible that you could have just memorized the specific answers on that one practice exam, rather than learning general concepts that enable you to answer related questions that you haven’t seen before.</p>
 <p>The key idea here is that assessing your predictor on data it encountered while training will likely <em>overestimate its true performance on future, unseen data</em>. The predictor is able to shape its knowledge around these specific examplea you showed it while training, so it’s more likely to get those ones correct. This is exactly the same as it being easier for you to answer a question on the test that also showed up on the practice test.</p>
 <p>So if we care about future performance, how might we go about assessing the predictor? Instead of only considering the error metric like the RSS on the training dataset, we will also consider the <strong>true error</strong> of our predictor. The true error tries to quantify how severe the errors are that we might expect to see in the future.</p>
 <section id="a-brief-seque-into-theory-land">
-<h2>A brief seque into theory-land<a class="headerlink" href="#a-brief-seque-into-theory-land" title="Permalink to this headline">#</a></h2>
+<h2>A brief seque into theory-land<a class="headerlink" href="#a-brief-seque-into-theory-land" title="Permalink to this heading">#</a></h2>
 <p>In order to understand what we intend to capture in a notion of “true error”, we have to highlight some additional statistical assumptions we are making. For this discussion, we will stick with the housing example, but these ideas apply more broadly to other contexts.</p>
 <p>Not all house square footages are equally likely to show up in the wild. There are probably no homes that have fewer than 10 square feet (although some New York City apartments might feel like an exception). We might expect that there is a distribution over the possible square footages, indicating that some square footages are more likely than others.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>4. This is why our model always includes a <span class="math notranslate nohighlight">\(+ \varepsilon_i\)</span> in the relationship between features/output. We are allowing some variance in how we expect the price to behave at a particualr square footage.</p>
 </aside>
-<p>On top of that, for any particular square footage, we might expect to see a range of possible prices for the house of that size (4). It’s entirely expected that each square footage has its own distribution of prices; if this were not the case, we would predict the same price for every house, regardless of their size. For example, we would expect the prices for larger homes to trend to be more expensive. This forms what statisticians call a “join distribution”, where there is a distribution over the combinations of square footage and price.</p>
-<p>We can visualize this joint distribution with a joint plot that shows the density around certain pairings of square footages and prices. This is kind of looking at a topographical map showing some regions of equal density (very likely to have a price at that square footage and that price) and showing where the “peak” of the mountain is. Also it is helpful to look at the distributions on the side called the <em>marginal distributions</em>. The top graph looks at the distribution of all square footages, ignoring price, and the graph on the right shows the distribution of all prices, ignoring square footage. Note that the data below is purely synthetic and has no tie to real-world house prices.</p>
+<p>On top of that, for any particular square footage, we might expect to see a range of possible prices for the house of that size<sup>4</sup>. It’s entirely expected that each square footage has its own distribution of prices; if this were not the case, we would predict the same price for every house of the same size, regardless of other features such as their location. For example, we would expect the prices for larger homes to trend to be more expensive. This forms what statisticians call a “join distribution”, where there is a distribution over the combinations of square footage and price.</p>
+<p>We can visualize this joint distribution with a joint plot that shows the density around certain pairings of square footages and prices. This is kind of looking at a topographical map showing some regions of equal density (very likely to have a price at that square footage and that price) and showing where the “peak” of the mountain is. Also it is helpful to look at the distributions on the side called the <em>marginal distributions</em>. The graph at the top looks at the distribution of all square footages, ignoring price, and the graph on the right shows the distribution of all prices, ignoring square footage; alternatively phrased as “projecting” the data onto a single axis. Note that the data below is purely synthetic and has no tie to real-world house prices.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../../_images/index_3_0.png" src="../../_images/index_3_0.png" />
+<figure class="align-default" id="joint-distq">
+<a class="reference internal image-reference" href="../../_images/37571c19ab7313f6b223a6ab2bbd16186269faa133c0d0e700ef9358087c484c.png"><img alt="Joint distribution of house square footage (x-axis) and house price (y-axis) with marginal distributions on the side" class="align-center" src="../../_images/37571c19ab7313f6b223a6ab2bbd16186269faa133c0d0e700ef9358087c484c.png" style="width: 400px;" /></a>
+</figure>
 </div>
 </div>
 <p>So in a notion of true error, we are looking to capture making sure our model is right as much as possible on example it is likely to see. We might say that it is less important to be accurate on very large, but very cheap houses since the underlying distribution of data we will see in the future doesn’t make that combination likely. Instead, we are looking to measure how wrong our model is “in expectation” across all possible size/price points we could see.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<ol class="simple">
-<li><p>Our MSE from earlier is like a loss function, but for many points instead of just one. The analogue here would be squared error for a singleinput/output $L(y, \hat{f}(x)) = \left(y - \hat{f}(x)\right)^2</p></li>
-</ol>
+<p>5. Our MSE from earlier is like a loss function, but for many points instead of just one. The analogue here would be squared error for a singleinput/output <span class="math notranslate nohighlight">\(L(y, \hat{f}(x)) = \left(y - \hat{f}(x)\right)^2\)</span></p>
 </aside>
-<p>This results in a notion we will call a <strong>loss function <span class="math notranslate nohighlight">\(L\left(y, \hat{f}(x)\right)\)</span></strong>. A loss function is a generalization of our concept of MSE we discussed before. The loss function is a function that takes the true outcome and the prediction made by our predictor, and outputs a value to quantify the error made (5). This generalization allows us to consider a broader class of loss function other than just MSE.</p>
-<p>With these ideas, we can now define the true error as the expected loss we would see over all possible <span class="math notranslate nohighlight">\((x, y)\)</span> pairs from the possible inputs <span class="math notranslate nohighlight">\(X\)</span> and possible outputs (<span class="math notranslate nohighlight">\(Y\)</span>). This tries to capture how wrong our model will be “on average” over all possible inputs/outputs we can see in the future. The true error is defined as:</p>
+<p>This results in a notion we will call a <strong>loss function <span class="math notranslate nohighlight">\(L\left(y, \hat{f}(x)\right)\)</span></strong>. A loss function is a generalization of our concept of MSE we discussed before. The loss function is a function that takes the true outcome and the prediction made by our predictor, and outputs a value to quantify the error made<sup>5</sup>. This generalization allows us to consider a broader class of loss function other than just MSE.</p>
+<p>With these ideas, we can now define the true error as the expected loss we would see over all possible <span class="math notranslate nohighlight">\((x, y)\)</span> pairs from the possible inputs (<span class="math notranslate nohighlight">\(X\)</span>) and possible outputs (<span class="math notranslate nohighlight">\(Y\)</span>). This tries to capture how wrong our model will be “on average” over all possible inputs/outputs we can see in the future. The true error is defined as:</p>
 <div class="math notranslate nohighlight">
 \[error_{true}(\hat{f}) = \mathbb{E}_{XY}\left[L\left(y, \hat{f}(x)\right)\right]\]</div>
-<p>This notation should be read exactly as our last paragraph states. It’s an expected value of the loss incurred over all <span class="math notranslate nohighlight">\((x, y)\)</span> pairs.</p>
+<p>This notation should be read exactly as our last paragraph states. It’s an expected value of the loss incurred over all <span class="math notranslate nohighlight">\((x, y)\)</span> pairs, weighted by how likely that <span class="math notranslate nohighlight">\((x, y)\)</span> pair is likely to appear.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>6. 📝 Notation: We use <span class="math notranslate nohighlight">\(x \in X\)</span> to say some element <span class="math notranslate nohighlight">\(x\)</span> in a set of possible elements <span class="math notranslate nohighlight">\(X\)</span>. Then, the sum <span class="math notranslate nohighlight">\(\sum_{x \in X}g(x)\)</span> is the sum of values “looping” over every possible element in <span class="math notranslate nohighlight">\(X\)</span>.</p>
 </aside>
-<p>If the inputs and outputs take on discrete values, we can write the <span class="math notranslate nohighlight">\(p(x,y)\)</span> to mean the probability of seeing the pair <span class="math notranslate nohighlight">\((x, y)\)</span>. We can write the idea of the average loss incurred weighted by the probability with the formula (6):</p>
+<p>If the inputs and outputs take on discrete values, we can write the <span class="math notranslate nohighlight">\(p(x,y)\)</span> to mean the probability of seeing the pair <span class="math notranslate nohighlight">\((x, y)\)</span>. We can write the idea of the average loss incurred weighted by the probability with the formula<sup>6</sup>:</p>
 <div class="math notranslate nohighlight">
-\[\mathbb{E}_{XY}\left[L\left(y, \hat{f}(x)\right)\right] = \sum_{x \in X}\sum_{y \in Y} L(y, \hat{f}(x))p(x, y)\]</div>
+\[\mathbb{E}_{XY}\left[L\left(y, \hat{f}(x)\right)\right] = \sum_{x \in X}\sum_{y \in Y} L(y, \hat{f}(x))\cdot p(x, y)\]</div>
 <p>This definition should be reminiscent of a formula for an expectation (since that is what it is computing), with a few modifications. Now, there is the added complexity of dealing with the <span class="math notranslate nohighlight">\((x, y)\)</span> pairs which requires the nested sum. If this sum is large, that means “on average”, the model incurs high loss (i.e. has lots of error).</p>
 <p>The details of the specific notation is not the main point here. It’s important to get the intuition behind what this value is trying to compute. So with that in mind, our task of selecting the model that generalizes best, is exactly the task of finding the model with the lowest true error.</p>
-<p>Unfortunately in most real-life circumstances, it’s not even possible to compute this true error! You might not know the exact distributions of the houses or the distribution of prices conditioned on a particular house size. Since we don’t know the distribution, there is no way we can exactly compute this expectation. So without access to all future data, how can we actually compute the true error?</p>
+<p>Unfortunately in most real-life circumstances, it’s not even possible to compute this true error! You might not know the  exact distributions of the houses or the distribution of prices conditioned on a particular house size. Since we don’t know these distributions for a fact, there is no way we can exactly compute this expectation. Without access to all future data, it’s essentially impossible to compute this true error exactly. However, we have hope to approximate it using well-defined practices.</p>
 </section>
 <section id="back-to-practice">
-<h2>Back to practice<a class="headerlink" href="#back-to-practice" title="Permalink to this headline">#</a></h2>
-<p>A very common technique in machine learning suggests that if you aren’t able to exactly compute something, you can try to estimate it using data you have. That’s what we will do here. But note that we can’t use the data we trained on, since as we discussed, it would lead to us favoring more complex models. The idea then is to hide part of our dataset from our ML algorithm and use that hidden data as a <em>proxy</em> for “all future data” after the predictor is trained.</p>
+<h2>Back to practice<a class="headerlink" href="#back-to-practice" title="Permalink to this heading">#</a></h2>
+<p>A very common technique in machine learning suggests that if you aren’t able to exactly compute something, you can try to estimate it using data you have. That’s what we will do here. But note that we can’t use the data we trained on, since as we discussed, it would lead to us favoring more complex models since they can minimize training error with sufficient complexity. The idea then is to hide part of our dataset from our ML algorithm and use that hidden data as a <em>proxy</em> for “all future data” after the predictor is trained.</p>
 <p>The most common way to accomplish this is to split your dataset into a <strong>training set</strong> and a <strong>test set</strong>.</p>
 <ul class="simple">
 <li><p>The training set is used by the ML algorithm to train the predictor.</p></li>
@@ -1635,11 +1488,11 @@ if (typeof version == 'undefined') {
 </ul>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>8. 📝 <em>Notation</em>: <span class="math notranslate nohighlight">\(Test\)</span> is our test dataset.</p>
+<p>7. 📝 <em>Notation</em>: <span class="math notranslate nohighlight">\(Test\)</span> is our test dataset.</p>
 <p>The notation <span class="math notranslate nohighlight">\(|S|\)</span> denotes the number of elements in a set <span class="math notranslate nohighlight">\(S\)</span>. So <span class="math notranslate nohighlight">\(|Test|\)</span> is the number of test datapoints.</p>
 <p>We use a new notation for <span class="math notranslate nohighlight">\(\hat{f}\)</span> to signify that it is the predictor defined by our estimates for the coefficients <span class="math notranslate nohighlight">\(\hat{w}\)</span> by saying that <span class="math notranslate nohighlight">\(\hat{f}(x) = f_{\hat{w}}(x)\)</span>. Just two notations for the same thing, but the second is more explicit in what is estimated!</p>
 </aside>
-<p>So even though the value we really care about is the true error, we will use this error computed from the test set as a stand-in for that value. We call the error made by the model on the test set the <strong>test error</strong>, which we can compute. In the case of regression using RSS as the loss function (7), the test error is defined as (8):</p>
+<p>So even though the value we really care about is the true error, we will use this error computed from the test set as a stand-in for that value. We call the error made by the model on the test set the <strong>test error</strong>, which we can compute. In the case of regression using RSS as the loss function, the test error is defined as<sup>7</sup>:</p>
 <div class="math notranslate nohighlight">
 \[MSE_{test}(\hat{w}) = \frac{1}{|Test|}\sum_{x_i \in Test} \left(y_i - f_{\hat{w}}(x_i)\right)^2\]</div>
 <p>More generally, a common definition of the test error is the average loss for whichever loss function <span class="math notranslate nohighlight">\(L\)</span> you are using:</p>
@@ -1647,121 +1500,146 @@ if (typeof version == 'undefined') {
 \[error_{test}(\hat{f}) = \frac{1}{|Test|}\sum_{x_i \in Test} L(y, \hat{f}(x))\]</div>
 <p>Our hope is that by using a large enough test set, we can reasonable approximate the true error. So how big of a test set is big enough?</p>
 <p>Well in some sense, you want as big of a test set as possible since the more examples in your test set, the better estimate of the true error you will get. You can think of the extreme case where your test set contains all possible input/outputs you could ever gather, in which case you will exactly be able to compute the true error.</p>
-<p>However, because you only have finite data available, by making your test set larger you will need to make your training set smaller. This can cause problems since we want as much training data possible to give us the best possible estimate of the true function. Consider the animation below that compares a small training dataset to a large one.</p>
-<p>TODO(manim): Train data size</p>
+<p>However, because you only have finite data available, by making your test set larger you will need to make your training set smaller. This can cause problems since we want as much training data possible to give us the best possible estimate of the true function. Remember, with  more training data we can have more confidence in a trend rather than it just being noise from a few examples.</p>
+<!-- TODO Make professional diagram -->
+<img alt="Comparing a graph with two data points vs multiple data points. We feel more confident in a trend with more data" class="bg-primary mb-1 align-center" src="../../_images/more_vs_less_training_data.png" />
 <p>In practice, people generally use a ratio of 80% train and 20% test or 90% train and 10% test, but this really depends on your context and how much data you have! Two very important points about this test set:</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>9. The one notable exception is when working with time-series data (e.g., stock market data). Since you are trying to predict the future, it makes sense for your test set to always be data in the future with respect to your training data. So with ML on time-series is the exception where you normally sort all of your data by time, and then make the test set the most-recent set of data so you can train on the past to predict the future. Almost every other context splitting randomly is correct.</p>
+<p>8. The one notable exception is when working with time-series data (e.g., stock market data). Since you are trying to predict the future, it makes sense for your test set to always be data in the future with respect to your training data. So with ML on time-series is the exception where you normally sort all of your data by time, and then make the test set the most-recent set of data so you can train on the past to predict the future. Almost every other context splitting randomly is correct.</p>
 </aside>
-<ol class="simple">
-<li><p>When splitting a train/test set, you should usually do so randomly. If you selected the last 20% of the data as a test set you could potentially introduce biases in the test set. Imagine your data was sorted by square footage from smallest to largest. If you selected the last 20% of the rows as a test set, your test set would be entirely larger houses than the ones you trained on. This is not ideal since we wanted the test set to be a stand in for “all future data”, which is not entirely large houses (9).</p></li>
+<ol class="arabic simple">
+<li><p>When splitting a train/test set, you should usually do so randomly. If you selected the last 20% of the data as a test set you could potentially introduce biases in the test set. Imagine your data was sorted by square footage from smallest to largest. If you selected the last 20% of the rows as a test set, your test set would be entirely larger houses than the ones you trained on. This is not ideal since we wanted the test set to be a stand in for “all future data”, which is not entirely large houses<sup>8</sup>.</p></li>
 <li><p>Once you have put data in your test set, you must <strong>never</strong> train your predictor using those examples. You have to guard those test examples away from the ML algorithm with your life! If you fail to keep them separate and you accidentally train your predictor on the test set, you will no longer have a good estimate of the true error!</p></li>
 </ol>
+<p>To make this more concrete, we include a very common sequence of steps used with <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> to split our data into a training and test set, train on the training set, and evaluate on the test set. We start by splitting</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_diabetes</span>   <span class="c1"># For loading an example dataset</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="c1"># Load in dataset</span>
+<span class="n">features</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">load_diabetes</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Breaks the data into 80% train and 20% test</span>
+<span class="n">features_train</span><span class="p">,</span> <span class="n">features_test</span><span class="p">,</span> <span class="n">labels_train</span><span class="p">,</span> <span class="n">labels_test</span> <span class="o">=</span> \
+    <span class="n">train_test_split</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># Print the number of training examples and the number of testing examples</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Num Train: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features_train</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Num Test:  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features_test</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Train our model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features_train</span><span class="p">,</span> <span class="n">labels_train</span><span class="p">)</span>
+
+<span class="c1"># Evaluate the model to see its train and test performance.</span>
+<span class="c1"># We care about test performance to estimate future performance</span>
+<span class="n">predictions_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features_train</span><span class="p">)</span>
+<span class="n">error_train</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">labels_train</span><span class="p">,</span> <span class="n">predictions_train</span><span class="p">)</span>
+<span class="n">predictions_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features_test</span><span class="p">)</span>
+<span class="n">error_test</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">labels_test</span><span class="p">,</span> <span class="n">predictions_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training Error: </span><span class="si">{</span><span class="n">error_train</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test Error:     </span><span class="si">{</span><span class="n">error_test</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Num Train: 353
+Num Test:  89
+Training Error: 2882.245688259254
+Test Error:     2861.4857604408753
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note from this example output, we see the testing error is <em>lower</em> than the training error. This is possible, but unexpected in practice. As we will talk about in detail later in the following sections, this is a sign that our model might be  <em>underfit</em> (i.e., not complex enough to learn any reasonable relationship between the features and labels). More on this as you read on!</p>
 </section>
 <section id="explaining-error">
-<h2>Explaining Error<a class="headerlink" href="#explaining-error" title="Permalink to this headline">#</a></h2>
+<h2>Explaining Error<a class="headerlink" href="#explaining-error" title="Permalink to this heading">#</a></h2>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>10. We will not touch on more rigorous definitions of what complexity mean here such as <em>VC Dimension</em>. See Understanding Machine Learning for an excellent introduction to learning theory. (TODO reference)</p>
+<p>9. We will not touch on more rigorous definitions of what complexity mean here such as <em>VC Dimension</em>. See <a class="reference external" href="https://www.amazon.com/Understanding-Machine-Learning-Theory-Algorithms/dp/1107057132">Understanding Machine Learning</a> for an excellent introduction to learning theory.</p>
 </aside>
-<p>In this section, let’s explore the relationship between a model’s complexity (e.g., its degree <span class="math notranslate nohighlight">\(p\)</span>) and its various types of error. By complexity of the model, we have a hand-wavy notion of the learned predictor’s ability to learn more complicated relationships in the data (like a high degree polynomial); so in our regression example, a simple model is one like a line while a complex model is a high degree polynomial (10).</p>
+<p>In this section, let’s explore the relationship between a model’s complexity (e.g., its degree <span class="math notranslate nohighlight">\(p\)</span>) and its various types of error. By complexity of the model, we have a hand-wavy notion of the learned predictor’s ability to learn more complicated relationships in the data (like a high degree polynomial); so in our regression example, a simple model is one like a line while a complex model is a high degree polynomial<sup>9</sup>.</p>
 <p>The animation below shows the calculation of the <em>training error</em> as we increase the degree of the polynomial <span class="math notranslate nohighlight">\(p\)</span>. We draw a small number of points in the animation and then extrapolate the learning curve for all complexities in between. As we increase the complexity, the model has more and more capacity to perfectly match the data, so as we might expect, the training error would decrease.</p>
-
-    <video width="100%"  controls >
-    <source src="../../_static/manim_animations/assessing_performance/poly_regression_train_error_anim.mp4" type="video/mp4">
-    Video
-    </video>
-    <p><span class="math notranslate nohighlight">\(\ \)</span></p>
+<video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/poly_regression_train_error_anim.mp4" type="video/mp4"></video><p><span class="math notranslate nohighlight">\(\ \)</span></p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>11. We will mention what happens to test error in a bit</p>
+<p>10. We will mention what happens to test error in a bit</p>
 </aside>
-<p>Now consider what happens to the <em>true error</em> (11) as we change this complexity. Remember, we can’t compute the true error in most contexts, but it’s still useful to think about.</p>
-
-    <video width="100%"  controls >
-    <source src="../../_static/manim_animations/assessing_performance/poly_regression_true_error_anim.mp4" type="video/mp4">
-    Video
-    </video>
-    <p><span class="math notranslate nohighlight">\(\ \)</span></p>
+<p>Now consider what happens to the <em>true error</em><sup>10</sup> as we change this complexity. Remember, we can’t compute the true error in most contexts, but it’s still useful to think about.</p>
+<video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/poly_regression_true_error_anim.mp4" type="video/mp4"></video><p><span class="math notranslate nohighlight">\(\ \)</span></p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>12. This is assuming our training set is representative of the population. Usually, an assumption we have to make for the idea of using ML in the first place.</p>
+<p>11. This is assuming our training set is representative of the population. Usually, an assumption we have to make for the idea of using ML in the first place.</p>
 </aside>
-<p>At first, when the model is too simple, the true error is higher. Suppose the simple model you tried at first, was a linear function but the true function was a quadratic. This linear predictor will accrue true error since it is incapable of learning the curve-like pattern, no matter how much training data it had. As the complexity of the model approaches the complexity of the true function, we expect the true error to go down (12).</p>
+<p>At first, when the model is too simple, the true error is higher. Suppose the simple model you tried at first, was a linear function but the true function was a quadratic. This linear predictor will accrue true error since it is incapable of learning the curve-like pattern, no matter how much training data it had. As the complexity of the model approaches the complexity of the true function, we expect the true error to go down<sup>11</sup>.</p>
 <p>As the complexity continues to increase, we see the true error go up again. Think to the curve learned from the high-degree polynomial. Because it is capable of hitting the training points perfectly, the areas in-between get these wild wiggles in the learned predictor. These in-between areas are a source of error since the learned predictor doesn’t match the true function. In the next section, we explain a more formal way of articulating these sources of error.</p>
 <p>The animation below shows the same learning curves but on the same axes. The same patterns we saw before are present. One addition is the test error being drawn over the true error. We assume, with a large enough test set, that the test error is a good estimate of the true error so they should be close, but not necessarily the same.</p>
-<p>TODO(manim): Combined animation of train/true/test</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>13. 📝 Notation: A <span class="math notranslate nohighlight">\(*\)</span> denoting a variable usually means “optimal”.</p>
+<p>12. 📝 Notation: A <span class="math notranslate nohighlight">\(*\)</span> denoting a variable usually means “optimal”.</p>
 </aside>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>14. Spoiler: <strong>Never use the test error to select which complexity model you should use.</strong></p>
+<p>13. Spoiler: <strong>Never use the test error to select which complexity model you should use.</strong></p>
 </aside>
-<p>The model with the lowest true error is the optimal model, which we notate as <span class="math notranslate nohighlight">\(p^*\)</span> (13).  Unfortunately, we normally don’t have access to the true error, which poses a challenge for selecting the optimal model. You might think that we can use the test error to choose the best model since it’s estimating the true error. While that does seem reasonable, we will show later in this chapter why that won’t work out (14).</p>
+<p>The model with the lowest true error is the optimal model, which we notate<sup>12</sup> as <span class="math notranslate nohighlight">\(p^*\)</span>.  Unfortunately, we normally don’t have access to the true error, which poses a challenge for selecting the optimal model. You might think that we can use the test error to choose the best model since it’s estimating the true error. While that does seem reasonable, we will show later in this chapter why that won’t work out<sup>13</sup>.</p>
 <p>We generally have special terms to identify the performance of a model: <strong>overfitting</strong> and <strong>underfitting</strong>. We will give a more formal definition of overfitting below, but as a general intuition, models less complex than <span class="math notranslate nohighlight">\(p^*\)</span> tend to underfit while models more complex than <span class="math notranslate nohighlight">\(p^*\)</span> tend to overfit.</p>
-<p>TODO(manim) image of model complexity</p>
-<p><strong>Overfitting</strong> happens when your model matches too closely to the noise in the training data rather than learning the generalized patterns. The formal definition of overfitting says a predictor <span class="math notranslate nohighlight">\(\hat{f}\)</span> is overfit if there exists another predictor <span class="math notranslate nohighlight">\(f'\)</span> that has the following properties:</p>
+<video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/train_test_anim.mp4" type="video/mp4"></video><p><span class="math notranslate nohighlight">\(\ \)</span></p>
+<p><strong>Overfitting</strong> happens when your model matches too closely to the noise in the training data rather than learning the generalized patterns. This happens, in our regression example, when a polynomial has a degree too high that allows it to memorize the data.</p>
+<p>The formal definition of overfitting says a predictor <span class="math notranslate nohighlight">\(\hat{f}\)</span> is overfit if there exists another predictor <span class="math notranslate nohighlight">\(f'\)</span> that has the following properties:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(error_{true}(f') &lt; error_{true}(\hat{f})\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(error_{train}(f') &gt; error_{train}(\hat{f})\)</span></p></li>
 </ul>
-<p>TODO(manim) overfitting</p>
 <p>In English, this says a model is overfit if there is another model that has higher training error, but lower true error. This means that the model you are using is too specific the training data you have: hence the term “over fit”.</p>
-<p>You can imagine the definition of underfit is similar, and we leave it out as an exercise for you to generate.</p>
-<p>​</p>
+<p>You can imagine the definition of underfit is similar, but the reverse. In English, an underfit model is one that is not complex enough to fit the the trend in the data (e.g., a linear model trying to fit data that comes from a quadratic function).
+​</p>
 </section>
 <section id="bias-variance-tradeoff">
-<h2>Bias-Variance Tradeoff<a class="headerlink" href="#bias-variance-tradeoff" title="Permalink to this headline">#</a></h2>
+<h2>Bias-Variance Tradeoff<a class="headerlink" href="#bias-variance-tradeoff" title="Permalink to this heading">#</a></h2>
 <p>So for many models, there is essentially a knob we can tune to balance the complexity between underfitting and overfitting. For our polynomial regression, it is the degree of the polynomial <span class="math notranslate nohighlight">\(p\)</span>. As you make the model more complex, it is easier to overfit. As you make the model less complex, it is harder to overfit and more likely to underfit. In the next section, we will talk about how to tune this knob so it is “just right”, but first we will introduce some terms to describe why overfitting and underfitting happen.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>15. <em>The Signal and the Noise: Why So Many Predictions Fail, but Some Don’t</em> - Nate Silver, 2012</p>
+<p>14. <em>The Signal and the Noise: Why So Many Predictions Fail, but Some Don’t</em> - Nate Silver, 2012</p>
 </aside>
-<p>Whenever we are using machine learning to model the world, we need to balance the signal and the noise that are present in our data (15). It’s impossible to tell from a single example what parts of it result from the underlying model and what are contributed by noise. Whenever are a learning, we need to balance trying to fit to the data we are training on with the idea that we don’t want to overfit to the specific noise patterns in this one dataset. In the regression model, we can decompose our true error into three components: <strong>bias</strong>, <strong>variance</strong>, and <strong>irreducible noise</strong>.</p>
+<p>Whenever we are using machine learning to model the world, we need to balance the signal and the noise that are present in our data<sup>14</sup>. It’s impossible to tell from a single data point what parts of it result from the underlying model and what are contributed by noise. Whenever we are learning, we need to balance trying to fit to the data we are training on with the idea that we don’t want to overfit to the specific noise patterns in this one dataset. In the regression model, we can decompose our true error into three components: <strong>bias</strong>, <strong>variance</strong>, and <strong>irreducible noise</strong>.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>16. For example, if I gave you a dataset of 100 coin flips from a fair coin, it’s just as likely to see a dataset of 52 heads and 48 tails as it is to see a dataset with 48 heads and 52 tails; both are drawn from the same underlying distribution, but slight differences are expected to happen from chance.</p>
+<p>15. For example, if I gave you a dataset of 100 coin flips from a fair coin, it’s just as likely to see a dataset of 52 heads and 48 tails as it is to see a dataset with 48 heads and 52 tails; both are drawn from the same underlying distribution, but slight differences are expected to happen from chance.</p>
 </aside>
-<p>Before defining these terms, we have to highlight a specific assumption we have been making. We have been assuming the training dataset is a random sample from some underlying population distribution. Since it is a random sample, you could imagine it is just as likely that we would receive another dataset drawn from the same distribution that will look slightly different (16).</p>
+<p>Before defining these terms, we should highlight a specific assumption we have been making. We have been assuming the training dataset is a random sample from some underlying population distribution. Since it is a random sample, you could imagine it is just as likely that we would receive another dataset drawn from the same distribution that will look slightly different<sup>15</sup>.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>📝 Notation: We use the <span class="math notranslate nohighlight">\(\bar{x}\)</span> notation to mean average.</p>
+<p>16. 📝 Notation: We use the <span class="math notranslate nohighlight">\(\bar{x}\)</span> notation to mean average.</p>
 </aside>
-<p>When thinking about machine learning, we are thinking that the data is generated from a process following the model we assume. So for the regression model, we assume that for each <span class="math notranslate nohighlight">\(x_i\)</span> in our dataset, its corresponding <span class="math notranslate nohighlight">\(y_i = f(x_i) + \varepsilon_i\)</span> for some unknown <span class="math notranslate nohighlight">\(f\)</span>. So since there is randomness not only in which inputs we receive, but in their associated output, we will expect to learn different predictors if we trained on different datasets drawn from the same distribution. We can think about what is the “average predictor” if we drew a bunch of different training sets, trained a predictor from each one, and averaged the results. The animation below shows this process and what this average predictor <span class="math notranslate nohighlight">\(\bar{f_{\hat{w}}}(x)\)</span> looks like (17).</p>
-
-    <video width="100%"  controls >
-    <source src="../../_static/manim_animations/assessing_performance/avg_deg_1_anim.mp4" type="video/mp4">
-    Video
-    </video>
-    <section id="bias">
-<h3>Bias<a class="headerlink" href="#bias" title="Permalink to this headline">#</a></h3>
+<p>When thinking about machine learning, we are thinking that the data is generated from a process following the model we assume. So for the regression model, we assume that for each <span class="math notranslate nohighlight">\(x_i\)</span> in our dataset, its corresponding <span class="math notranslate nohighlight">\(y_i = f(x_i) + \varepsilon_i\)</span> for some unknown <span class="math notranslate nohighlight">\(f\)</span>. So since there is randomness not only in which inputs we receive, but in their associated output, we will expect to learn different predictors if we trained on different datasets drawn from the same distribution. We can think about what is the “average predictor” if we drew a bunch of different training sets, trained a predictor from each one, and averaged the results. The animation below shows this process and what this average predictor <span class="math notranslate nohighlight">\(\bar{f_{\hat{w}}}(x)\)</span> looks like<sup>16</sup>.</p>
+<video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/avg_deg_1_anim.mp4" type="video/mp4"></video><section id="bias">
+<h3>Bias<a class="headerlink" href="#bias" title="Permalink to this heading">#</a></h3>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>18. This does not necessarily line up with our every-day use of the word bias (e.g., discriminatory actions/views against certain groups). While it is crucial to avoid that type of bias in our models, this is not what the statistical notion of the term “bias” necessarily means. We will talk about our every-day notion of bias in the Fairness in ML chapter.</p>
+<p>17. This does not necessarily line up with our every-day use of the word bias (e.g., discriminatory actions/views against certain groups). While it is crucial to avoid that type of bias in our models, this is not what the statistical notion of the term “bias” necessarily means. We will talk about our every-day notion of bias in the Fairness in ML chapter.</p>
 </aside>
-<p>The <strong>bias</strong> of a model comes from it being too simple (or a mismatch with reality) that it fails to fit the signal in the data (18).  In some sense, this signifies a fundamental limitation of the model we are using to fail to fit the underlying phenomena. The bias tries to measure how much the average predictor we will expect <span class="math notranslate nohighlight">\(\overline{f_{\hat{w}}}(x)\)</span> differs from the true function <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>The <strong>bias</strong> of a model comes from it being too simple (or a mismatch with reality) that it fails to fit the signal in the data<sup>17</sup>.  In some sense, this signifies a fundamental limitation of the model we are using to fail to fit the underlying phenomena. The bias tries to measure how much the average predictor we will expect <span class="math notranslate nohighlight">\(\overline{f_{\hat{w}}}(x)\)</span> differs from the true function <span class="math notranslate nohighlight">\(f\)</span>.</p>
 <p>Mathematically we write this as the following. This definition is tries to capture how much this average predictor differs over the true function. The expectation is taken over the possible inputs you could receive (i.e. weighted to care more about inputs that you are more likely to see).</p>
 <div class="math notranslate nohighlight">
 \[\text{Bias:}\ \ \mathbb{E}\left[\left|f(x) - \overline{f_{\hat{w}}}(x)\right|\right]\]</div>
-<p>TODO(manim) Bias visualization</p>
+<a class="reference internal image-reference" href="../../_images/bias_deg_1_anim.png"><img alt="../../_images/bias_deg_1_anim.png" src="../../_images/bias_deg_1_anim.png" style="width: 100%;" /></a>
 <p>Low complexity (simple) models tend to have high bias which is why the tend to have higher true error if they are too simple.</p>
 </section>
 <section id="variance">
-<h3>Variance<a class="headerlink" href="#variance" title="Permalink to this headline">#</a></h3>
+<h3>Variance<a class="headerlink" href="#variance" title="Permalink to this heading">#</a></h3>
 <p>A model that is too complex for the task at hand has the potential to overfit to the noise in the data. The flexibility the complex model allows the model to potentially memorize rather than generalize. This error that comes from fitting to noise is attributed as <strong>variance</strong> of the model.</p>
 <p>For our very complex model, a slightly different dataset will lead to a wildly different predictor since the function wiggles a lot between the points. The differences we see in the predictors learned on slightly different datasets is another sign of error. These differences account for fitting to specific artifacts in the one training set we learned on.</p>
 <p>Mathematically we write the variance as the following. It tries to capture how much we expect any particular fit on a dataset to differ from the average. If this value is high, it means that we will expect to learn wildly different functions from dataset to dataset (even if they are relatively similar). If this value is low, it means that on each dataset, we learned about the same function (close to the average <span class="math notranslate nohighlight">\(\overline{f_{\hat{w}}}(x)\)</span>. The expectation here is over all possible datasets you could receive as training data.</p>
 <div class="math notranslate nohighlight">
 \[\text{Variance:}\ \ \mathbb{E}\left[\left(\overline{f_{\hat{w}}}(x) - f_{\hat{w}}(x)\right)^2\right]\]</div>
-
-    <video width="100%"  controls >
-    <source src="../../_static/manim_animations/assessing_performance/var_deg_8_anim.mp4" type="video/mp4">
-    Video
-    </video>
-    <p>High complexity models tend to have high variance. Or in other words, we call models that have high variance “complex” to describe that behavior.</p>
+<video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/var_deg_8_anim.mp4" type="video/mp4"></video><p>High complexity models tend to have high variance. Or in other words, we call models that have high variance “complex” to describe that behavior.</p>
 <p>It turns out that bias and variance live on this complexity spectrum: decreasing one of bias/variance tends to increase the other.</p>
 <ul class="simple">
 <li><p>Simple models tend to have <strong>high bias and low variance</strong></p></li>
@@ -1769,57 +1647,53 @@ if (typeof version == 'undefined') {
 </ul>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>19. Don’t worry about the squared business in the equation, just the idea that we can decompose the error.</p>
+<p>18. Don’t worry about the squared business in the equation, just the idea that we can decompose the error.</p>
 </aside>
-<p>In fact, in the case of measuring squared error with regression, you can exactly decompose the true error into contributions from bias and variance (19). The noise in this equation corresponds to the distribution of the <span class="math notranslate nohighlight">\(\varepsilon\)</span>: if there is lots of underlying noise, there isn’t much we can do about making a good predictor.</p>
+<p>In fact, in the case of measuring squared error with regression, you can exactly decompose the true error into contributions from bias and variance<sup>18</sup>. The noise in this equation corresponds to the distribution of the <span class="math notranslate nohighlight">\(\varepsilon\)</span>: if there is lots of underlying noise, there isn’t much we can do about making a good predictor.</p>
 <div class="math notranslate nohighlight">
 \[Error = Bias^2 + Variance + Noise\]</div>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>20. Notice this graph has some of the common things we mentioned earlier about the tendency of low vs high complexity models and their bias/variance.</p>
+<p>19. Notice this graph has some of the common things we mentioned earlier about the tendency of low vs high complexity models and their bias/variance.</p>
 </aside>
-<p>The following animation shows how the bias and variance change with model complexity, and how those two with noise (which is independent of model complexity) add up to the true error curve we saw earlier (20).</p>
-
-    <video width="100%"  controls >
-    <source src="../../_static/manim_animations/assessing_performance/bias_var_tradeoff_anim.mp4" type="video/mp4">
-    Video
-    </video>
-    <p>One subtle point we have been leaving out is the discussion of the amount of data we have to train on in the first place. All of this earlier discussion assumes some fixed, finite dataset size. In reality, the model’s complexity is relative to how much data you have. For example, it’s really easy for a 20 degree polynomial to overfit to 2 data points, but very difficult for it to overfit to 2 billion data points (it doesn’t have the capacity to wiggle 2 billion times).</p>
-<p>You can imagine thinking about what happens to our training and true error as we increase the amount of data we have in our training set. For this animation, we are considering some fixed model complexity (e.g., a 20 degree polynomial) and showing train/true error as function of the size of the training set.</p>
-<p>TODO(manim) animating fitting 2 points vs 100</p>
+<p>The following animation shows how the bias and variance change with model complexity, and how those two with noise (which is independent of model complexity) add up to the true error curve we saw earlier<sup>19</sup>.</p>
+<video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/bias_var_tradeoff_anim.mp4" type="video/mp4"></video><p>One subtle point we have been leaving out is the discussion of the amount of data we have to train on in the first place. All of the earlier descriptions of “high complexity” or “low complexity” are in respect to how much data you have available to train on. In reality, the model’s complexity is relative to how much data you have. For example, it’s really easy for a 20 degree polynomial to overfit to 2 data points, but very difficult for it to overfit to 2 billion data points (it doesn’t have the capacity to wiggle 2 billion times).</p>
+<p>You can imagine thinking about what happens to our training and true error as we increase the amount of data we have in our training set. If we consider some fixed model complexity (e.g., a 20 degree polynomial), we can consider how the training/true error change as a function of the training set size. With a very small training set, a sufficiently complex model has the ability to overfit; thus leading to low training error and high true error. As we increase the training set size, a model of the same complexity is less able to overfit with more and more training points.</p>
+<a class="reference internal image-reference" href="../../_images/error_by_training_size.png"><img alt="../../_images/error_by_training_size.png" src="../../_images/error_by_training_size.png" style="width: 100%;" /></a>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>21. Remember our example of 20-degree polynomial’s complexity is relative to how much data you have.</p>
+<p>20. Remember our example of 20-degree polynomial’s complexity is relative to how much data you have.</p>
 </aside>
-<p>The training error starts out small when it is easy for the model to overfit to a small training set. When the training set is small and the model can overfit, we expect to have a higher true error (because it is overfitting). As you increase the training set size, it becomes harder and harder for a fixed-complexity model to overfit once the amount of data exceeds its flexibility (21). This why we see the training error <em>increase</em> as you tend to have more training data. Conversely, since the model struggles to overfit with a large dataset, you see the true error decrease because the variance is actually going down: with a very large dataset, you learn approximately the same function each time.</p>
+<p>The training error starts out small when it is easy for the model to overfit to a small training set. When the training set is small and the model can overfit, we expect to have a higher true error (because it is overfitting). As you increase the training set size, it becomes harder and harder for a fixed-complexity model to overfit once the amount of data exceeds its flexibility<sup>20</sup>. This why we see the training error <em>increase</em> as you tend to have more training data. Conversely, since the model struggles to overfit with a large dataset, you see the true error decrease because the variance is actually going down: with a very large dataset, you learn approximately the same function each time.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>22. Using a linear model when the true function is, say, a cubic function</p>
+<p>21. Using a linear model when the true function is, say, a cubic function</p>
 </aside>
-<p>In the limit, when you have infinite training data, you would expect these curves to meet. This is because having every possible input/output means your training error is just computing the true error! Notice, they don’t converge to 0. There is a floor they converge to based on the bias and noise of the model. Irreducible noise will never go away. If you are using a model with high bias (22) then, no matter how much training data you have, you will not be able to learn a sufficiently complex function so you will always have some non-zero error.</p>
+<p>In the limit, when you have infinite training data, you would expect these curves to meet. This is because having every possible input/output means your training error is just computing the true error! Notice, they don’t converge to 0. There is a floor they converge to based on the bias and noise of the model. Irreducible noise will never go away. If you are using a model with high bias<sup>21</sup> then, no matter how much training data you have, you will not be able to learn a sufficiently complex function so you will always have some non-zero error.</p>
 </section>
 </section>
 <section id="how-to-choose-model-complexity">
-<h2>How to Choose Model Complexity?<a class="headerlink" href="#how-to-choose-model-complexity" title="Permalink to this headline">#</a></h2>
+<h2>How to Choose Model Complexity?<a class="headerlink" href="#how-to-choose-model-complexity" title="Permalink to this heading">#</a></h2>
 <p>So we introduced this idea of training error and true error (and how we approximate it with test error), and where that error can manifest as overfitting or underfitting from the contributions of the model’s bias and variance. Now that we understand that model complexity can impact the performance of the model, how do we actually go about picking the right complexity if we don’t have access to this true error?</p>
-<p>What about choosing the model with the lowest training error? Hopefully from our discussion in the last sections, you can see why this won’t find the model that will perform the best in the future.</p>
-<p>So maybe we could just choose the model that has the lowest test error. This seems more intuitive since the test error is our approximation of the true error and our goal is to find a model that will do best in the future (i.e., lowest true error). This approach is right in some sense, since we are unlikely to choose a model that is overfit. However, this approach <strong>completely ruins the point of the test set</strong>.</p>
+<p><strong>Suggestion 1:</strong> What about choosing the model with the lowest training error? Hopefully from our discussion in the last sections, you can see why this won’t find the model that will perform the best in the future.</p>
+<p><strong>Suggestion 2:</strong> So maybe we could just choose the model that has the lowest test error. This seems more intuitive since the test error is our approximation of the true error and our goal is to find a model that will do best in the future (i.e., lowest true error). This approach is right in some sense, since we are unlikely to choose a model that is overfit. However, this approach <strong>completely ruins the point of the test set</strong>.</p>
 <p>Remember, we introduced the idea of a test set to approximate how our model would do in the future. If you found that your predictor got 90% of the examples in the test set wrong, you would be pretty confident that the future performance will be close to 90% error too, <em>assuming the test error is a good approximation of true error</em>.</p>
 <p>However, if we use the test set to choose the model complexity, the test error is no longer a good estimate of the true error. If we used the test set to select the model complexity, the test set is no longer a good stand-in for “the unknown”, since we chose the model that does best on that <em>one particular test set</em>. In a sense, we are implicitly training on the test set by training many models and then choosing the one based on test performance.</p>
 <p>This is a fairly subtle point that we should restate for emphasis. Many people intuitively understand why we have to separate the test set out from the training set: in order to keep it as good estimate of future performance. They tend to get a little confused by the introduction of this second restriction that <strong>you can’t use the test set to select the model complexity</strong>. Remember the dataset that we receive (and the test set we select from it) are just one possible dataset from a large number of possible datasets that could be drawn from the population distribution. We are just using the test set as a stand-in for “the future”, but this only works if we never look at it or train the model on it. But by using the test set to select model complexity, you are implicitly choosing which model is best based on the data in that specific test set we used. Even though you never explicitly gave it to the model to train, you might be choosing a model that happens to do well on that specific test set.</p>
+<p>In other words, a good approximation for how you should use the test set is the following: You should <em>never</em> look at the test set until you are done (the paper is about ready to publish, you are just about to deploy your model, or similar). Once you are ready to go, <em>then</em> you can test your model on the test set so you can get an accurate estimate for how the model will do in the future so you can include that estimate in your published model. But if you test yourself on the test set multiple times, you are tempting yourself to choose a model that works better on that one test set.</p>
 <p>Fear not though! There are many principled ways for helping you choose this model complexity. The two popular techniques we discuss are using a <strong>validation set</strong> and <strong>cross validation</strong>.</p>
 <section id="validation-set">
-<h3>Validation Set<a class="headerlink" href="#validation-set" title="Permalink to this headline">#</a></h3>
+<h3>Validation Set<a class="headerlink" href="#validation-set" title="Permalink to this heading">#</a></h3>
 <p>It turns out that your intuition for using a dataset separate from the training set is a very good intuition! The only shortcoming we had earlier was to use the test set as that separate dataset. So instead, let’s break off yet another part of our data into a <strong>validation set</strong>. This validation set is also withheld from training, and we use it to select which model we think will perform best in the future. By using this validation set to select the best model complexity, we can still then use the test set afterwards to get an unbiased estimate of the true error.</p>
 <a class="reference internal image-reference" href="../../_images/validation_set.png"><img alt="../../_images/validation_set.png" src="../../_images/validation_set.png" style="width: 100%;" /></a>
 <p>The process for selecting the best model using a validation set almost always follows the following pseudocode.</p>
 <div class="proof algorithm admonition" id="validation-set">
 <p class="admonition-title"><span class="caption-number">Algorithm 2 </span> (Choose Complexity with Validation Set)</p>
 <section class="algorithm-content" id="proof-content">
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><strong>train, test, validation</strong> = split_data(<strong>dataset</strong>)</p></li>
 <li><p>for each model complexity <strong>p</strong>:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><strong>predictor_p</strong> = ml_algorithm(<strong>train</strong>, <strong>p</strong>)</p></li>
 <li><p><strong>val_error</strong> = error(<strong>predictor_p</strong>, <strong>validation</strong>)</p></li>
 <li><p>keep track of <strong>predictor_p</strong> with lowest <strong>val_error</strong></p></li>
@@ -1835,7 +1709,7 @@ if (typeof version == 'undefined') {
 </ul>
 </section>
 <section id="cross-validation">
-<h3>Cross Validation<a class="headerlink" href="#cross-validation" title="Permalink to this headline">#</a></h3>
+<h3>Cross Validation<a class="headerlink" href="#cross-validation" title="Permalink to this heading">#</a></h3>
 <p>To avoid having to cut up our dataset even further, another common technique is to do <strong>cross validation</strong>. Cross validation is a clever idea to split up the training set (after we have split off the test set) into many small datasets that we use for training and validation.</p>
 <a class="reference internal image-reference" href="../../_images/cross_validation.png"><img alt="../../_images/cross_validation.png" src="../../_images/cross_validation.png" style="width: 100%;" /></a>
 <p>We use each chunk of the training data in a process to validate the model. We repeatedly train a model using all but one chunk of the available chunks, and then validate the learned predictor on the left-out chunk. This process is repeated, leaving each chunk out once while training on the others.</p>
@@ -1849,22 +1723,22 @@ if (typeof version == 'undefined') {
 <p>We can then average the validation error over those 4 chunks to estimate which model will perform best. This is just to assess a single model complexity, so this process needs to be repeated for each model complexity. In general, we don’t necessarily use 4 chunks but decide a setting of <span class="math notranslate nohighlight">\(k\)</span> chunks to use. More on how we go about picking <span class="math notranslate nohighlight">\(k\)</span> later.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>23. We use the notation <code class="docutils literal notranslate"><span class="pre">chunks</span> <span class="pre">\</span> <span class="pre">chunk_i</span></code> to signify all chunks that aren’t <code class="docutils literal notranslate"><span class="pre">chunk_i</span></code></p>
+<p>22. We use the notation <code class="docutils literal notranslate"><span class="pre">chunks</span> <span class="pre">\</span> <span class="pre">chunk_i</span></code> to signify all chunks that aren’t <code class="docutils literal notranslate"><span class="pre">chunk_i</span></code></p>
 </aside>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>24.  At the end, it’s okay to train on the whole training set now that we have selected a model. Don’t train on test though!</p>
+<p>23.  At the end of the procedure, it’s okay to train on the whole training set now that we have selected a model. Don’t train on test though!</p>
 </aside>
-<p>We specify this process a little more formally with pseudo-code(23)(24):</p>
+<p>We specify this process a little more formally with pseudo-code<sup>22, 23</sup>:</p>
 <div class="proof algorithm admonition" id="cross_validation">
 <p class="admonition-title"><span class="caption-number">Algorithm 3 </span> (Choose Complexity with Cross Validation)</p>
 <section class="algorithm-content" id="proof-content">
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><strong>chunk_1</strong>, …, <strong>chunk_k</strong>, <strong>test</strong> = split_data_cv(<strong>dataset</strong>)</p></li>
 <li><p>for each model complexity <strong>p</strong>:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>for <strong>i</strong> in [1, <strong>k</strong>]:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><strong>predictor_p</strong> =  ml_algorithm(<strong>chunks \ chunk_i</strong>, <strong>p</strong>)</p></li>
 <li><p><strong>val_error</strong> = error(<strong>predictor_p</strong>, <strong>chunk_i</strong>)</p></li>
 </ol>
@@ -1885,7 +1759,7 @@ if (typeof version == 'undefined') {
 </section>
 </section>
 <section id="recap">
-<h2>Recap<a class="headerlink" href="#recap" title="Permalink to this headline">#</a></h2>
+<h2>Recap<a class="headerlink" href="#recap" title="Permalink to this heading">#</a></h2>
 <p>In this chapter, we introduced the ideas behind assessing the performance of our models. Specifically, in the context of comparing models of different complexities.</p>
 <p>We looked at understanding how the complexity of our model (in our case the degree <span class="math notranslate nohighlight">\(p\)</span> of the polynomial) impacts the error. We saw how a model can underfit or overfit and how that interacts with how much data we have. We finally saw how this true error can decomposed into these sources of underfitting and overfitting in the form of a model’s bias and variance (and irreducible noise).</p>
 <p>We then discussed techniques for choosing the right model complexity. Namely, we discussed using a validation set and cross validation as possible approaches to choosing the right model complexity. We compared the two approaches for their pros and cons. Regardless of which technique you use, it is extremely important to understand why we need other approaches like this instead of relying on the test set.</p>
@@ -1897,14 +1771,14 @@ if (typeof version == 'undefined') {
 <p class="sidebar-title"></p>
 <p>26. We will briefly talk about some more advanced approaches near the end of the course.</p>
 </aside>
-<p>While we focused on the context of polynomial regression and choosing a degree polynomial <span class="math notranslate nohighlight">\(p\)</span> in this chapter, you will see in this course almost every machine learning problem we will encounter requires these ideas from model selection (25). In fact, many current threads of research in the space of machine learning (deep learning in particular) are all focused on how to tune the model’s complexity in more efficient ways and how to prevent overfitting (26).</p>
+<p>While we focused on the context of polynomial regression and choosing a degree polynomial <span class="math notranslate nohighlight">\(p\)</span> in this chapter, you will see in this course almost every machine learning problem we will encounter requires these ideas from model selection<sup>25</sup>. In fact, many current threads of research in the space of machine learning (deep learning in particular) are all focused on how to tune the model’s complexity in more efficient ways and how to prevent overfitting<sup>26</sup>.</p>
 <section id="test-your-understanding">
-<h3>Test your Understanding<a class="headerlink" href="#test-your-understanding" title="Permalink to this headline">#</a></h3>
+<h3>Test your Understanding<a class="headerlink" href="#test-your-understanding" title="Permalink to this heading">#</a></h3>
 <p>Consider the following image of a trained predictor on a given dataset. We represent the training set as blue dots and the test set as gray dots and the trained predictor as the green line.</p>
 <a class="reference internal image-reference" href="../../_images/quiz_graph.png"><img alt="../../_images/quiz_graph.png" src="../../_images/quiz_graph.png" style="width: 100%;" /></a>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="bAUhcUhbFNel" data-shufflequestions="False"
+<div class="output text_html"><div id="WkTwYpfzlyDo" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -2066,7 +1940,7 @@ if (typeof version == 'undefined') {
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsbAUhcUhbFNel=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
+}</style></div><script type="application/javascript">var questionsWkTwYpfzlyDo=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -2800,7 +2674,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsbAUhcUhbFNel,  bAUhcUhbFNel);
+        show_questions(questionsWkTwYpfzlyDo,  WkTwYpfzlyDo);
         }
         </script></div>
 </div>
@@ -2820,7 +2694,7 @@ if (typeof version == 'undefined') {
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./regression/assessing_performance"
         },
         predefinedOutput: true
@@ -2828,53 +2702,115 @@ if (typeof version == 'undefined') {
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../linear_regression/index.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><i class="fas fa-book fa-fw"></i> Linear Regression</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="../../printing.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><i class="fas fa-book fa-fw"></i> Printing and Comments</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
-</div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
-  
-    By Hunter Schafer<br/>
-  
-      &copy; Copyright 2022.<br/>
-    <div class="extra_footer">
-      Have feedback or spotted a bug? Please make a <a href="https://github.com/hschafer/Intro-ML/issues">GitHub issue</a> or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
-    </div>
-</p>
-        </footer>
-    </div>
-    
-</div>
 
-
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../linear_regression/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><i class="fas fa-book fa-fw"></i> Linear Regression</p>
       </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brief-seque-into-theory-land">A brief seque into theory-land</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-practice">Back to practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explaining-error">Explaining Error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">Bias-Variance Tradeoff</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-choose-model-complexity">How to Choose Model Complexity?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-set">Validation Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross Validation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">Recap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">Test your Understanding</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hunter Schafer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Have feedback or spotted a bug? Please make a <a href="https://github.com/hschafer/Intro-ML/issues">GitHub issue</a> or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

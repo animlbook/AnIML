@@ -35,13 +35,13 @@ The way we represent our data is a $n$ input/output pairs where we use the varia
 
 It is sometimes helpful to visualize the relationship between input and output. Visually, we could plot these points on a graph to see if there is a relationship between the input and the target.
 
-```{video} ../../_static/manim_animations/linear_regression/data_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/data_anim.mp4
 :width: 100%
 ```
 
 When using machine learning, we generally make an assumption that there is a relationship between the input and the target (i.e., square footage of the house and its sale price). We are going to say that there exists some secret (unknown) function $f$ such that the price of a house is approximately equal to the function's output for the houses input data.
 
-```{video} ../../_static/manim_animations/linear_regression/true_function_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/true_function_anim.mp4
 :width: 100%
 ```
 
@@ -53,16 +53,16 @@ Note that we really do need the qualifier "approximately" above. We are not sayi
 When we use $x$ without subscripts, we are talking about any input from our domain. In our example, when we say $x$, I mean some arbitrary house.
 ```
 
-To be a bit more precise, we will specify how we believe "approximately equal" works for this scenario. Another term for "the assumptions we make" is the **model** we are using. In this example, we will use a very common model about how the input and target relate. We first show the formula, and then explain the parts (1).
+To be a bit more precise, we will specify how we believe "approximately equal" works for this scenario. Another term for "the assumptions we make" is the **model** we are using. In this example, we will use a very common model about how the input and target relate. We first show the formula, and then explain the parts<sup>1</sup>.
 
 ```{margin}
 2\. 📝 *Notation*: $\mathbb{E}\left[X\right]$ is the expected value of a random variable (the "average" outcome). See more [here](https://www.investopedia.com/terms/e/expected-value.asp).
 ```
 
-The way to read this formula above is to say that the outcomes we saw, $y_i$, come from the true function $f$ being applied to the input data $x_i$, but that there was some noise $\varepsilon_i$ added to it from some source of error. We also will make an assumption about how the $\varepsilon_i$ as well: we assume that $\mathbb{E}\left[\varepsilon_i\right] = 0$, which means on average, we expect the noise to average out to 0 (i.e., it's not biased to be positive or negative). The animation below shows a visual representation of this model (2)
+The way to read this formula above is to say that the outcomes we saw, $y_i$, come from the true function $f$ being applied to the input data $x_i$, but that there was some noise $\varepsilon_i$ added to it from some source of error. We also will make an assumption about how the $\varepsilon_i$ as well: we assume that $\mathbb{E}\left[\varepsilon_i\right] = 0$, which means on average, we expect the noise to average out to 0 (i.e., it's not biased to be positive or negative). The animation below shows a visual representation of this model<sup>2</sup>
 
 
-```{video} ../../_static/manim_animations/linear_regression/model_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/model_anim.mp4
 :width: 100%
 ```
 
@@ -72,9 +72,9 @@ Earlier, we said a common goal for machine learning is to make predictions about
 3\. 📝 Notation: A  $\hat{\ }$ in math notation almost always means "estimate". In other words, $\hat{f}$​ is our best estimate of this unknown function $f$. What do you think $\hat{y}$​ is supposed to represent?
 ```
 
-To phrase this challenge mathematically, a common goal in machine learning is to learn a function (3) $\hat{f}$​ from the data that approximates $f$ as best as we can. We can then use this $\hat{f}$​ to make predictions about new data by evaluating $\hat{y} = \hat{f}(x)$. In English, for a given example ($x$), we are predicting what we think the label should be ($\hat{y}$) based on this function we *think* is a good estimate ($\hat{f}$) of the unknown true function ($f$). It's likely our estimate won't be exactly correct, but our hope is to get one that is as close to this unknown truth as possible. We will come back to *how* we estimate this function later, but it has something to do with finding a function that closely matches the data were given.
+To phrase this challenge mathematically, a common goal in machine learning is to learn a function<sup>3</sup> $\hat{f}$​ from the data that approximates $f$ as best as we can. We can then use this $\hat{f}$​ to make predictions about new data by evaluating $\hat{y} = \hat{f}(x)$. In English, for a given example ($x$), we are predicting what we think the label should be ($\hat{y}$) based on this function we *think* is a good estimate ($\hat{f}$) of the unknown true function ($f$). It's likely our estimate won't be exactly correct, but our hope is to get one that is as close to this unknown truth as possible. We will come back to *how* we estimate this function later, but it has something to do with finding a function that closely matches the data were given.
 
-```{video} ../../_static/manim_animations/linear_regression/predictor_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/predictor_anim.mp4
 :width: 100%
 ```
 
@@ -97,20 +97,20 @@ In each of the following section, we will show a picture of the ML Pipeline in t
 ### Linear Regression Statistical Model
 
 ```{margin}
-5\. TODO highlight in ML pipeline what we are talking about
+4\. TODO highlight in ML pipeline what we are talking about
 ```
 
-A **statistical model** is an assumption about how the world works (5). In the **linear regression model**, we assume the the input variable and target variable are related by a linear function (i.e., a line)
+A **statistical model** is an assumption about how the world works<sup>4</sup>. In the **linear regression model**, we assume the the input variable and target variable are related by a linear function (i.e., a line)
 
 $$y_i = w_0 + w_1x_1 + \epsilon_i$$
 
 This is a more specific case of the general model we were discussing earlier. We are assuming a linear structure between the input and target, and allowing for some fluctuation ($\varepsilon_i$) since we don't expect our model to be perfect. In other words, we are stating that our unknown true function $f(x)$ is of the form $w_0 + w_1 x$ where $w_0$ and $w_1$ are unknown to us.
 
 ```{margin}
-6\. This step of making an assumption on how we believe the world works is often called an *"inductive bias"*.
+5\. This step of making an assumption on how we believe the world works is often called an *"inductive bias"*.
 ```
 
-Assuming a statistical model is a simplification of the learning task. Our journey started with a very broad task of relating input and output variables, where there are an infinite number of possibilities for plausible relationships. We reduce the possibilities here by *making the assumption* (6) that there is a linear relationship between input and output.
+Assuming a statistical model is a simplification of the learning task. Our journey started with a very broad task of relating input and output variables, where there are an infinite number of possibilities for plausible relationships. We reduce the possibilities here by *making the assumption*<sup>5</sup> that there is a linear relationship between input and output.
 
 These (unknown) constants $w_0$ and $w_1$ are known as the **parameters** of the model. These parameters are values that need to be learned by our ML system. While we are making the assumption the function is linear, we need to learn exactly which values dictate this $w_0$ and $w_1$.
 
@@ -120,7 +120,7 @@ One benefit of linear regresssion is that we can interpret the value of each of 
 * $w_1$ is the slope of the line. In other words, this is the increase in price per additional sq.ft. in the house.
 
 
-```{video} ../../_static/manim_animations/linear_regression/interpret_coefficients_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/interpret_coefficients_anim.mp4
 :width: 100%
 ```
 
@@ -129,14 +129,14 @@ Under this statistical model, our machine learning task is to find our best esti
 $$\hat{y} = \hat{w}_0 + \hat{w}_1 x$$
 
 ```{margin}
-7\. A more technical reason comes from the mathematical formulation of the linear regression problem. Under our model that includes this uncertainty, the formula above defines the most likely outcome given the dataset we were given to train on. This comes from the fact that the noise of the model is equally likely to be positive/negative. In other words, there is no benefit predicting something above/below this most likely value. The technical name for this procedure is *maximum likelihood estimation*.
+6\. A more technical reason comes from the mathematical formulation of the linear regression problem. Under our model that includes this uncertainty, the formula above defines the most likely outcome given the dataset we were given to train on. This comes from the fact that the noise of the model is equally likely to be positive/negative. In other words, there is no benefit predicting something above/below this most likely value. The technical name for this procedure is *maximum likelihood estimation*.
 ```
 
-One note on notation: You might be wondering, "Why don't we add a term like $+ \varepsilon$ in that equation above?" This is because that $\varepsilon$ term is to account in the uncertainty in the input data we received. It wouldn't necessarily help us to add randomness to our predictions since the learned parameters are our "best guess" at what the true parameter values are (7).
+One note on notation: You might be wondering, "Why don't we add a term like $+ \varepsilon$ in that equation above?" This is because that $\varepsilon$ term is to account in the uncertainty in the input data we received. It wouldn't necessarily help us to add randomness to our predictions since the learned parameters are our "best guess" at what the true parameter values are<sup>6</sup>.
 
 In a few sections, we will define the specifics of how we estimate these unknown parameters using some ML algorithm. As a brief preview, many ML algorithms for linear regression essentially boil down to trying many possible lines and identify which one is "best" from that set. So before we describe an algorithm, we should describe what makes one predictor the "best" over some others.
 
-```{video} ../../_static/manim_animations/linear_regression/many_lines_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/many_lines_anim.mp4
 :width: 100%
 ```
 
@@ -147,16 +147,16 @@ What does "best" mean in this context? That is yet another judgement call we mus
 TODO highlight quality metric
 
 ```{margin}
-8\. Different choices of quality metrics lead to different results of the "best" model. For example, the majority of the quality metrics we introduce at the start of this book don't include any notion of fairness or anti-discrimination in them. If this notion is not included, the "best" model could permit one that discriminates since that might not violate your definition of "best". We will talk about this important field of fairness in ML later in this book.
+7\. Different choices of quality metrics lead to different results of the "best" model. For example, the majority of the quality metrics we introduce at the start of this book don't include any notion of fairness or anti-discrimination in them. If this notion is not included, the "best" model could permit one that discriminates since that might not violate your definition of "best". We will talk about this important field of fairness in ML later in this book.
 ```
 
-The way we define how well a particular predictor fits the data is the **quality metric** (8). A common way to define the quality metric is to define the "cost" of using this model by trying to quantify the errors it makes. Defining the quality metric this way situates the ML algorithm as a process of trying to find the predictor that minimizes this cost.
+The way we define how well a particular predictor fits the data is the **quality metric**<sup>7</sup>. A common way to define the quality metric is to define the "cost" of using this model by trying to quantify the errors it makes. Defining the quality metric this way situates the ML algorithm as a process of trying to find the predictor that minimizes this cost.
 
 ```{margin}
-9\. 📝 *Notation*: The $\Sigma$ notation below means "sum". It is a concise of writing the sum of multiple items. If you are familiar with programming, think of it as summing up some values inside a loop. The number at the bottom of the notation is the starting value and the number at the top is the stopping value.
+8\. 📝 *Notation*: The $\Sigma$ notation below means "sum". It is a concise of writing the sum of multiple items. If you are familiar with programming, think of it as summing up some values inside a loop. The number at the bottom of the notation is the starting value and the number at the top is the stopping value.
 ```
 
-For the linear regression setting, a common definition of the quality metric is the **mean squared error** (or **MSE**) (9).
+For the linear regression setting, a common definition of the quality metric is the **mean squared error** (or **MSE**)<sup>8</sup>.
 
 $$
 \begin{align}
@@ -202,7 +202,7 @@ The idea behind gradient descent is to start at one point (any point) and "roll 
 Let's consider an example with one parameter instead of two: suppose we know what the best $w_0$ is and our job is to just find $w_1$ that minimizes the MSE. In this context, we don't have to visualize this 3D bowl but rather just a 2D bowl since there is only one degree of freedom.
 
 
-```{video} ../../_static/manim_animations/linear_regression/convex_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/convex_anim.mp4
 :width: 100%
 ```
 
@@ -221,12 +221,12 @@ In the context of our original problem where we are trying to optimize both $w_0
 Visually, this gradient descent algorithm looks like rolling down the MSE hill until it converges at the bottom. It's important to highlight that the MSE function's input are the $w_0, w_1$ parameters  that we trying to use for our predictor. The right-hand side of the animation above is showing the predictor that would result by using the particular setting of $w_0, w_1$​ at each step of the algorithm. Notice that as the algorithm runs, the line seems to fit the data better and better! This is precisely because the algorithm is updating the coefficients bit-by-bit to reduce the error according to MSE.
 
 ```{margin}
-11\. 📝 *Notation*: We use $w$ to mean the vector $w = [w_0, w_1]$ and $w(t)$ to mean our predictor coefficients at step $t$ of the algorithm.
+9\. 📝 *Notation*: We use $w$ to mean the vector $w = [w_0, w_1]$ and $w(t)$ to mean our predictor coefficients at step $t$ of the algorithm.
 
 The $\nabla$ is the notation mathematicians use for the gradient (multi-dimensional slope) of a function.
 ```
 
-While the exact notation isn't incredibly important for our course, we still think it is useful to at least see the algorithm of gradient descent written out with a mathematical notation (11).
+While the exact notation isn't incredibly important for our course, we still think it is useful to at least see the algorithm of gradient descent written out with a mathematical notation<sup>9</sup>.
 
 
 ```{prf:algorithm} Gradient Descent
@@ -249,7 +249,7 @@ You might be wondering if this gradient-descent algorithm is always guaranteed t
 
 If you don't have a guarantee that the function you are trying to minimize is convex, then there is no guarantee your gradient descent algorithm will find the best solution. Since gradient descent is always looking at the "locally optimal" direction to go, a function that is not convex might result in our algorithm getting stuck in a *local optima*.
 
-```{video} ../../_static/manim_animations/linear_regression/non_convex_anim.mp4
+```{video} ../../_static/regression/linear_regression/manim_animations/non_convex_anim.mp4
 :width: 100%
 ```
 
@@ -261,7 +261,7 @@ TODO highlight ML pipeline
 
 TODO image of data and model
 
-If you think back to our original dataset when introducing the chapter (12), you might notice that our linear regression model is doomed to fail if we believe the true (unknown) function is not actually linear. In the original animation, we drew this data from something that had a curve to it (i.e., not linear).
+If you think back to our original dataset when introducing the chapter<sup>12</sup>, you might notice that our linear regression model is doomed to fail if we believe the true (unknown) function is not actually linear. In the original animation, we drew this data from something that had a curve to it (i.e., not linear).
 
 Any time you are deciding to use some type of model, you are making an **assumption** about how the world works. When you want to use linear regression, you are assuming the world operates linearly. Unfortunately there is no way to actually verify if that assumption is correct. Even with the data that we showed above that looks sufficiently curvey, it's entirely possible (albeit unlikely) that it is actually coming from a linear function and the noise just so happened to make the data look like it came from a curve!  We will revisit later this idea of using a model that does not match reality.
 
@@ -280,12 +280,12 @@ You might be wondering if we can easily learn parameters for polynomial regressi
 Importantly, there is a more important lesson here for this section than just polynomials. In general, we call a **feature** some value that we derive from our data that we want to use in our model. **Feature extraction** is the process of generate some set of features from our raw input data.
 
 ```{margin}
-12\. 📝 *Notation*: We use $h_j(x_i)$ to represent the jth feature we extract from the data input $x_i$. We choose a number $D$ for how many features we want to use in total.
+10\. 📝 *Notation*: We use $h_j(x_i)$ to represent the jth feature we extract from the data input $x_i$. We choose a number $D$ for how many features we want to use in total.
 
 It's common to also use the notation $h(x_i)$ (no subscript) to denote all $D$ features as one array of numbers (also called a feature vector) $h(x) = [h_0(x), ..., h_D(x)$$].
 ```
 
-In general, we can generalize our model to the most general **regression** model with any set of features for our input data (12).
+In general, we can generalize our model to the most general **regression** model with any set of features for our input data<sup>10</sup>.
 
 $$
 \begin{align}
@@ -323,7 +323,7 @@ $$y_i = w_0 + w_1 (sq. ft.) + w_2 + (\# bathrooms) + \varepsilon_i$$
 Which we visualize as a plane instead of a line.
 
 ```{margin}
-13\. 📝 *Notation*:
+11\. 📝 *Notation*:
 
 * Data Input: $x_i = \left(x_i[1], x_i[2], ..., x_i[d]\right)$ where there are $d$ input columns and we use array notation to access them (e.g., $x[2]$).
 * Output: $y_i$.
@@ -332,16 +332,16 @@ Which we visualize as a plane instead of a line.
 * $h_j(x_i)$ is the $j^{th}$ feature extracted from the $i^{th}$ row (e.g., $h_2(x) = x[1] + x[3]^2$).
 ```
 
-It's important that we highlight the difference between a **data input** and a **feature** and some notation used for them (13):
+It's important that we highlight the difference between a **data input** and a **feature** and some notation used for them<sup>11</sup>:
 
 * Data input: Are columns of the raw data table provided/collected.
 * Features are values (possible transformed) that the model will use. This is performed by the feature extraction $h(x)$ and are explicitly modelling choice by you, the machine learning practitioner, decides are relevant for the learning task.
 
 ```{margin}
-14\. More on this in the next chapter on Assessing Performance
+12\. More on this in the next chapter on Assessing Performance
 ```
 
-You have the freedom to choose which data inputs you select to use as features and how you transform them. Conventionally, you use $h_0(x) = 1$ so that $w_0$ is the intercept. But then for example, you could make $h_1(x) = x[1]$ (the sq. ft.) and make $h_{12}(x) = \log(x[7]) * x[2]$. Generally adding more features means your model will be more complex which is not necessarily a good thing (14). Choosing how many features and what (if any) transformations to use a bit of an art and a science, so understanding in the next chapter how we evaluate our model is extremely important.
+You have the freedom to choose which data inputs you select to use as features and how you transform them. Conventionally, you use $h_0(x) = 1$ so that $w_0$ is the intercept. But then for example, you could make $h_1(x) = x[1]$ (the sq. ft.) and make $h_{12}(x) = \log(x[7]) * x[2]$. Generally adding more features means your model will be more complex which is not necessarily a good thing<sup>12</sup>. Choosing how many features and what (if any) transformations to use a bit of an art and a science, so understanding in the next chapter how we evaluate our model is extremely important.
 
 📝 As a notational remark, we should highlight that it's very common for people to assume that the data table you are working with has already been preprocessed to contain the features you want. They do this to avoid having to write $h_0(x) = 1$, $h_1(x) = ...$, everywhere in their work. It's important to remember that there is an explicit modeling step of transforming raw data to features (even if its implicit and not shown in the notation) and should double check what type of data you are working with.
 

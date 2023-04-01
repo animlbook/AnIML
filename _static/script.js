@@ -17,11 +17,15 @@
 
     function playVideosInView(videos) {
         videos.forEach(function(video) {
-            if (isScrolledIntoView(video)) {
-                video.muted = true;
-                video.play();
-            } else {
-                video.pause();
+            // Only autoplay for videos that haven't been autoplayed originally
+            if (!video.hasAttribute("hasPlayed")) {
+                if (isScrolledIntoView(video)) {
+                    video.muted = true;
+                    video.play();
+                    video.setAttribute('hasPlayed', true);
+                } else {
+                    video.pause();
+                }
             }
         });
     }
@@ -40,6 +44,15 @@
         // Every time we scroll, play/pause videos in/out of view
         window.addEventListener("scroll", function() {
             playVideosInView(videos);
+        });
+
+        // Remove controls from videos unless hoverd
+        $("video").hover(function(event) {
+            if(event.type === "mouseenter") {
+                $(this).attr("controls", "");
+            } else if(event.type === "mouseleave") {
+                $(this).removeAttr("controls");
+            }
         });
     }
 })();
