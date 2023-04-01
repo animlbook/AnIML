@@ -532,7 +532,7 @@ data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup
 <p>Given what we’ve discussed so far, our first instinct might be to us the quality metric (e.g., MSE) on the data the predictor was trained from. Given the predictors (colored curves) in the animation above, which one will have the lowest MSE on the training dataset (the black dots)?<sup>3</sup></p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="YOBCFXEcffQA" data-shufflequestions="False"
+<div class="output text_html"><div id="cdhjzRJETtaI" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -694,7 +694,7 @@ data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsYOBCFXEcffQA=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
+}</style></div><script type="application/javascript">var questionscdhjzRJETtaI=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1428,7 +1428,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsYOBCFXEcffQA,  YOBCFXEcffQA);
+        show_questions(questionscdhjzRJETtaI,  cdhjzRJETtaI);
         }
         </script></div>
 </div>
@@ -1446,9 +1446,9 @@ if (typeof version == 'undefined') {
 <p>Not all house square footages are equally likely to show up in the wild. There are probably no homes that have fewer than 10 square feet (although some New York City apartments might feel like an exception). We might expect that there is a distribution over the possible square footages, indicating that some square footages are more likely than others.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>4. This is why our model always includes a <span class="math notranslate nohighlight">\(+ \varepsilon_i\)</span> in the relationship between features/output. We are allowing some variance in how we expect the price to behave at a particualr square footage.</p>
+<p>4. This is why our model always includes a <span class="math notranslate nohighlight">\(+ \varepsilon_i\)</span> in the relationship between features/output. We are allowing some variance in how we expect the price to behave at a particular square footage.</p>
 </aside>
-<p>On top of that, for any particular square footage, we might expect to see a range of possible prices for the house of that size<sup>4</sup>. It’s entirely expected that each square footage has its own distribution of prices; if this were not the case, we would predict the same price for every house of the same size, regardless of other features such as their location. For example, we would expect the prices for larger homes to trend to be more expensive. This forms what statisticians call a “join distribution”, where there is a distribution over the combinations of square footage and price.</p>
+<p>On top of that, for any particular square footage, we might expect to see a range of possible prices for the house of that size<sup>ref_epsilon</sup>. It’s entirely expected that each square footage has its own distribution of prices; if this were not the case, we would predict the same price for every house of the same size, regardless of other features such as their location. For example, we would expect the prices for larger homes to trend to be more expensive. This forms what statisticians call a “join distribution”, where there is a distribution over the combinations of square footage and price.</p>
 <p>We can visualize this joint distribution with a joint plot that shows the density around certain pairings of square footages and prices. This is kind of looking at a topographical map showing some regions of equal density (very likely to have a price at that square footage and that price) and showing where the “peak” of the mountain is. Also it is helpful to look at the distributions on the side called the <em>marginal distributions</em>. The graph at the top looks at the distribution of all square footages, ignoring price, and the graph on the right shows the distribution of all prices, ignoring square footage; alternatively phrased as “projecting” the data onto a single axis. Note that the data below is purely synthetic and has no tie to real-world house prices.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -1460,7 +1460,7 @@ if (typeof version == 'undefined') {
 <p>So in a notion of true error, we are looking to capture making sure our model is right as much as possible on example it is likely to see. We might say that it is less important to be accurate on very large, but very cheap houses since the underlying distribution of data we will see in the future doesn’t make that combination likely. Instead, we are looking to measure how wrong our model is “in expectation” across all possible size/price points we could see.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>5. Our MSE from earlier is like a loss function, but for many points instead of just one. The analogue here would be squared error for a singleinput/output <span class="math notranslate nohighlight">\(L(y, \hat{f}(x)) = \left(y - \hat{f}(x)\right)^2\)</span></p>
+<p>5. Our MSE from earlier is like a loss function, but for many points instead of just one. The analogue here would be squared error for a single input/output <span class="math notranslate nohighlight">\(L(y, \hat{f}(x)) = \left(y - \hat{f}(x)\right)^2\)</span></p>
 </aside>
 <p>This results in a notion we will call a <strong>loss function <span class="math notranslate nohighlight">\(L\left(y, \hat{f}(x)\right)\)</span></strong>. A loss function is a generalization of our concept of MSE we discussed before. The loss function is a function that takes the true outcome and the prediction made by our predictor, and outputs a value to quantify the error made<sup>5</sup>. This generalization allows us to consider a broader class of loss function other than just MSE.</p>
 <p>With these ideas, we can now define the true error as the expected loss we would see over all possible <span class="math notranslate nohighlight">\((x, y)\)</span> pairs from the possible inputs (<span class="math notranslate nohighlight">\(X\)</span>) and possible outputs (<span class="math notranslate nohighlight">\(Y\)</span>). This tries to capture how wrong our model will be “on average” over all possible inputs/outputs we can see in the future. The true error is defined as:</p>
@@ -1512,7 +1512,7 @@ if (typeof version == 'undefined') {
 <li><p>When splitting a train/test set, you should usually do so randomly. If you selected the last 20% of the data as a test set you could potentially introduce biases in the test set. Imagine your data was sorted by square footage from smallest to largest. If you selected the last 20% of the rows as a test set, your test set would be entirely larger houses than the ones you trained on. This is not ideal since we wanted the test set to be a stand in for “all future data”, which is not entirely large houses<sup>8</sup>.</p></li>
 <li><p>Once you have put data in your test set, you must <strong>never</strong> train your predictor using those examples. You have to guard those test examples away from the ML algorithm with your life! If you fail to keep them separate and you accidentally train your predictor on the test set, you will no longer have a good estimate of the true error!</p></li>
 </ol>
-<p>To make this more concrete, we include a very common sequence of steps used with <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> to split our data into a training and test set, train on the training set, and evaluate on the test set. We start by splitting</p>
+<p>To make this more concrete, we include a very common sequence of steps used with <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> to split our data into a training and test set, train on the training set, and evaluate on the test set. Note that a lot of this code example is similar to the one we saw in the last chapter, but with <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> to split the data into train and test.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_diabetes</span>   <span class="c1"># For loading an example dataset</span>
@@ -1588,7 +1588,7 @@ Test Error:     2861.4857604408753
 <p class="sidebar-title"></p>
 <p>13. Spoiler: <strong>Never use the test error to select which complexity model you should use.</strong></p>
 </aside>
-<p>The model with the lowest true error is the optimal model, which we notate<sup>12</sup> as <span class="math notranslate nohighlight">\(p^*\)</span>.  Unfortunately, we normally don’t have access to the true error, which poses a challenge for selecting the optimal model. You might think that we can use the test error to choose the best model since it’s estimating the true error. While that does seem reasonable, we will show later in this chapter why that won’t work out<sup>13</sup>.</p>
+<p>The model with the lowest true error is the optimal model, which we notate<sup>12</sup> as <span class="math notranslate nohighlight">\(p^*\)</span>.  Unfortunately, we normally don’t have access to the true error, which poses a challenge for selecting the optimal model. You might think that we can use the test error to choose the best model since it’s estimating the true error. While that does seem reasonable, we will show later in this chapter why that won’t work out<sup>{{ref_test_warning}</sup>.</p>
 <p>We generally have special terms to identify the performance of a model: <strong>overfitting</strong> and <strong>underfitting</strong>. We will give a more formal definition of overfitting below, but as a general intuition, models less complex than <span class="math notranslate nohighlight">\(p^*\)</span> tend to underfit while models more complex than <span class="math notranslate nohighlight">\(p^*\)</span> tend to overfit.</p>
 <video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/train_test_anim.mp4" type="video/mp4"></video><p><span class="math notranslate nohighlight">\(\ \)</span></p>
 <p><strong>Overfitting</strong> happens when your model matches too closely to the noise in the training data rather than learning the generalized patterns. This happens, in our regression example, when a polynomial has a degree too high that allows it to memorize the data.</p>
@@ -1625,7 +1625,7 @@ Test Error:     2861.4857604408753
 <p class="sidebar-title"></p>
 <p>17. This does not necessarily line up with our every-day use of the word bias (e.g., discriminatory actions/views against certain groups). While it is crucial to avoid that type of bias in our models, this is not what the statistical notion of the term “bias” necessarily means. We will talk about our every-day notion of bias in the Fairness in ML chapter.</p>
 </aside>
-<p>The <strong>bias</strong> of a model comes from it being too simple (or a mismatch with reality) that it fails to fit the signal in the data<sup>17</sup>.  In some sense, this signifies a fundamental limitation of the model we are using to fail to fit the underlying phenomena. The bias tries to measure how much the average predictor we will expect <span class="math notranslate nohighlight">\(\overline{f_{\hat{w}}}(x)\)</span> differs from the true function <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>The <strong>bias</strong> of a model comes from it being too simple (or a mismatch with reality) that it fails to fit the signal in the data<sup>ref_bias</sup>.  In some sense, this signifies a fundamental limitation of the model we are using to fail to fit the underlying phenomena. The bias tries to measure how much the average predictor we will expect <span class="math notranslate nohighlight">\(\overline{f_{\hat{w}}}(x)\)</span> differs from the true function <span class="math notranslate nohighlight">\(f\)</span>.</p>
 <p>Mathematically we write this as the following. This definition is tries to capture how much this average predictor differs over the true function. The expectation is taken over the possible inputs you could receive (i.e. weighted to care more about inputs that you are more likely to see).</p>
 <div class="math notranslate nohighlight">
 \[\text{Bias:}\ \ \mathbb{E}\left[\left|f(x) - \overline{f_{\hat{w}}}(x)\right|\right]\]</div>
@@ -1657,19 +1657,15 @@ Test Error:     2861.4857604408753
 <p>19. Notice this graph has some of the common things we mentioned earlier about the tendency of low vs high complexity models and their bias/variance.</p>
 </aside>
 <p>The following animation shows how the bias and variance change with model complexity, and how those two with noise (which is independent of model complexity) add up to the true error curve we saw earlier<sup>19</sup>.</p>
-<video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/bias_var_tradeoff_anim.mp4" type="video/mp4"></video><p>One subtle point we have been leaving out is the discussion of the amount of data we have to train on in the first place. All of the earlier descriptions of “high complexity” or “low complexity” are in respect to how much data you have available to train on. In reality, the model’s complexity is relative to how much data you have. For example, it’s really easy for a 20 degree polynomial to overfit to 2 data points, but very difficult for it to overfit to 2 billion data points (it doesn’t have the capacity to wiggle 2 billion times).</p>
+<video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/bias_var_tradeoff_anim.mp4" type="video/mp4"></video><p>One subtle point we have been leaving out is the discussion of the amount of data we have to train on in the first place. All of the earlier descriptions of the effects of “high complexity” or “low complexity” are in respect to how much data you have available to train on. In reality, the model’s ability to overfit is relative to how much data you have. For example, it’s really easy for a 20 degree polynomial to overfit to 2 data points, but very difficult for it to overfit to 2 billion data points (it doesn’t have the capacity to wiggle 2 billion times).</p>
 <p>You can imagine thinking about what happens to our training and true error as we increase the amount of data we have in our training set. If we consider some fixed model complexity (e.g., a 20 degree polynomial), we can consider how the training/true error change as a function of the training set size. With a very small training set, a sufficiently complex model has the ability to overfit; thus leading to low training error and high true error. As we increase the training set size, a model of the same complexity is less able to overfit with more and more training points.</p>
 <a class="reference internal image-reference" href="../../_images/error_by_training_size.png"><img alt="../../_images/error_by_training_size.png" src="../../_images/error_by_training_size.png" style="width: 100%;" /></a>
+<p>The training error starts out small when it is easy for the model to overfit to a small training set. When the training set is small and the model can overfit, we expect to have a higher true error (because it is overfitting). As you increase the training set size, it becomes harder and harder for a fixed-complexity model to overfit once the amount of data exceeds its flexibility. This why we see the training error <em>increase</em> as you tend to have more training data. Conversely, since the model struggles to overfit with a large dataset, you see the true error decrease because the variance is actually going down: with a very large dataset, you learn approximately the same function each time.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>20. Remember our example of 20-degree polynomial’s complexity is relative to how much data you have.</p>
+<p>20. Using a linear model when the true function is, say, a cubic function</p>
 </aside>
-<p>The training error starts out small when it is easy for the model to overfit to a small training set. When the training set is small and the model can overfit, we expect to have a higher true error (because it is overfitting). As you increase the training set size, it becomes harder and harder for a fixed-complexity model to overfit once the amount of data exceeds its flexibility<sup>20</sup>. This why we see the training error <em>increase</em> as you tend to have more training data. Conversely, since the model struggles to overfit with a large dataset, you see the true error decrease because the variance is actually going down: with a very large dataset, you learn approximately the same function each time.</p>
-<aside class="margin sidebar">
-<p class="sidebar-title"></p>
-<p>21. Using a linear model when the true function is, say, a cubic function</p>
-</aside>
-<p>In the limit, when you have infinite training data, you would expect these curves to meet. This is because having every possible input/output means your training error is just computing the true error! Notice, they don’t converge to 0. There is a floor they converge to based on the bias and noise of the model. Irreducible noise will never go away. If you are using a model with high bias<sup>21</sup> then, no matter how much training data you have, you will not be able to learn a sufficiently complex function so you will always have some non-zero error.</p>
+<p>In the limit, when you have infinite training data, you would expect these curves to meet. This is because having every possible input/output means your training error is just computing the true error! Notice, they don’t converge to 0. There is a floor they converge to based on the bias and noise of the model. Irreducible noise will never go away. If you are using a model with high bias<sup>20</sup> then, no matter how much training data you have, you will not be able to learn a sufficiently complex function so you will always have some non-zero error.</p>
 </section>
 </section>
 <section id="how-to-choose-model-complexity">
@@ -1723,13 +1719,13 @@ Test Error:     2861.4857604408753
 <p>We can then average the validation error over those 4 chunks to estimate which model will perform best. This is just to assess a single model complexity, so this process needs to be repeated for each model complexity. In general, we don’t necessarily use 4 chunks but decide a setting of <span class="math notranslate nohighlight">\(k\)</span> chunks to use. More on how we go about picking <span class="math notranslate nohighlight">\(k\)</span> later.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>22. We use the notation <code class="docutils literal notranslate"><span class="pre">chunks</span> <span class="pre">\</span> <span class="pre">chunk_i</span></code> to signify all chunks that aren’t <code class="docutils literal notranslate"><span class="pre">chunk_i</span></code></p>
+<p>21. We use the notation <code class="docutils literal notranslate"><span class="pre">chunks</span> <span class="pre">\</span> <span class="pre">chunk_i</span></code> to signify all chunks that aren’t <code class="docutils literal notranslate"><span class="pre">chunk_i</span></code></p>
 </aside>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>23.  At the end of the procedure, it’s okay to train on the whole training set now that we have selected a model. Don’t train on test though!</p>
+<p>22.  At the end of the procedure, it’s okay to train on the whole training set now that we have selected a model. Don’t train on test though!</p>
 </aside>
-<p>We specify this process a little more formally with pseudo-code<sup>22, 23</sup>:</p>
+<p>We specify this process a little more formally with pseudo-code<sup>21, 22</sup>:</p>
 <div class="proof algorithm admonition" id="cross_validation">
 <p class="admonition-title"><span class="caption-number">Algorithm 3 </span> (Choose Complexity with Cross Validation)</p>
 <section class="algorithm-content" id="proof-content">
@@ -1765,20 +1761,20 @@ Test Error:     2861.4857604408753
 <p>We then discussed techniques for choosing the right model complexity. Namely, we discussed using a validation set and cross validation as possible approaches to choosing the right model complexity. We compared the two approaches for their pros and cons. Regardless of which technique you use, it is extremely important to understand why we need other approaches like this instead of relying on the test set.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>25. Another term for “model selection” or “model complexity selection” is <strong>hyperparameter tuning</strong>. We will introduce this terminology later.</p>
+<p>23. Another term for “model selection” or “model complexity selection” is <strong>hyperparameter tuning</strong>. We will introduce this terminology later.</p>
 </aside>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>26. We will briefly talk about some more advanced approaches near the end of the course.</p>
+<p>24. We will briefly talk about some more advanced approaches near the end of the course.</p>
 </aside>
-<p>While we focused on the context of polynomial regression and choosing a degree polynomial <span class="math notranslate nohighlight">\(p\)</span> in this chapter, you will see in this course almost every machine learning problem we will encounter requires these ideas from model selection<sup>25</sup>. In fact, many current threads of research in the space of machine learning (deep learning in particular) are all focused on how to tune the model’s complexity in more efficient ways and how to prevent overfitting<sup>26</sup>.</p>
+<p>While we focused on the context of polynomial regression and choosing a degree polynomial <span class="math notranslate nohighlight">\(p\)</span> in this chapter, you will see in this course almost every machine learning problem we will encounter requires these ideas from model selection<sup>23</sup>. In fact, many current threads of research in the space of machine learning (deep learning in particular) are all focused on how to tune the model’s complexity in more efficient ways and how to prevent overfitting<sup>24</sup>.</p>
 <section id="test-your-understanding">
 <h3>Test your Understanding<a class="headerlink" href="#test-your-understanding" title="Permalink to this heading">#</a></h3>
 <p>Consider the following image of a trained predictor on a given dataset. We represent the training set as blue dots and the test set as gray dots and the trained predictor as the green line.</p>
 <a class="reference internal image-reference" href="../../_images/quiz_graph.png"><img alt="../../_images/quiz_graph.png" src="../../_images/quiz_graph.png" style="width: 100%;" /></a>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="LAansxGFoClW" data-shufflequestions="False"
+<div class="output text_html"><div id="ApvexEAwjbua" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -1940,7 +1936,7 @@ Test Error:     2861.4857604408753
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsLAansxGFoClW=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
+}</style></div><script type="application/javascript">var questionsApvexEAwjbua=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -2674,7 +2670,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsLAansxGFoClW,  LAansxGFoClW);
+        show_questions(questionsApvexEAwjbua,  ApvexEAwjbua);
         }
         </script></div>
 </div>
