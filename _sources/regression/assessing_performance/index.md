@@ -94,7 +94,7 @@ An analogy: Suppose you studied a specific practice exam for a few hours and aft
 
 The key idea here is that assessing your predictor on data it encountered while training will likely *overestimate its true performance on future, unseen data*. The predictor is able to shape its knowledge around these specific examplea you showed it while training, so it's more likely to get those ones correct. This is exactly the same as it being easier for you to answer a question on the test that also showed up on the practice test.
 
-So if we care about future performance, how might we go about assessing the predictor? Instead of only considering the error metric like the RSS on the training dataset, we will also consider the **true error** of our predictor. The true error tries to quantify how severe the errors are that we might expect to see in the future.
+So if we care about future performance, how might we go about assessing the predictor? Instead of only considering the error metric like the MSE on the training dataset, we will also consider the **true error** of our predictor. The true error tries to quantify how severe the errors are that we might expect to see in the future.
 
 ### A brief seque into theory-land
 
@@ -191,7 +191,7 @@ The notation $|S|$ denotes the number of elements in a set $S$. So $|Test|$ is t
 We use a new notation for $\hat{f}$ to signify that it is the predictor defined by our estimates for the coefficients $\hat{w}$ by saying that $\hat{f}(x) = f_{\hat{w}}(x)$. Just two notations for the same thing, but the second is more explicit in what is estimated!
 ```
 
-So even though the value we really care about is the true error, we will use this error computed from the test set as a stand-in for that value. We call the error made by the model on the test set the **test error**, which we can compute. In the case of regression using RSS as the loss function, the test error is defined as<sup>7</sup>:
+So even though the value we really care about is the true error, we will use this error computed from the test set as a stand-in for that value. We call the error made by the model on the test set the **test error**, which we can compute. In the case of regression using MSE as the loss function, the test error is defined as<sup>7</sup>:
 
 $$MSE_{test}(\hat{w}) = \frac{1}{|Test|}\sum_{x_i \in Test} \left(y_i - f_{\hat{w}}(x_i)\right)^2$$
 

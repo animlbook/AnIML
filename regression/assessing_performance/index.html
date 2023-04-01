@@ -532,7 +532,7 @@ data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup
 <p>Given what we’ve discussed so far, our first instinct might be to us the quality metric (e.g., MSE) on the data the predictor was trained from. Given the predictors (colored curves) in the animation above, which one will have the lowest MSE on the training dataset (the black dots)?<sup>3</sup></p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="mHRKFeGyISXi" data-shufflequestions="False"
+<div class="output text_html"><div id="YOBCFXEcffQA" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -694,7 +694,7 @@ data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsmHRKFeGyISXi=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
+}</style></div><script type="application/javascript">var questionsYOBCFXEcffQA=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1428,7 +1428,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsmHRKFeGyISXi,  mHRKFeGyISXi);
+        show_questions(questionsYOBCFXEcffQA,  YOBCFXEcffQA);
         }
         </script></div>
 </div>
@@ -1439,7 +1439,7 @@ if (typeof version == 'undefined') {
 <p>So using the logic from this explanation, if we chose the right polynomial degree based on lowest MSE on the data we trained on, we would always choose the highest degree polynomial possible. This happens because there is a mismatch in how we are assessing our predictor and the goal we set out to accomplish originally. Remember, in many contexts the goal of training a predictor is to use it out in the wild on new data as it comes in<sup>3</sup>. If we choose the model that minimizes MSE of the data it learned from, we are just rewarding models that have sufficient complexity to <em>memorize</em> the dataset, and have no guarantee on how well it will generalize.</p>
 <p>An analogy: Suppose you studied a specific practice exam for a few hours and afterwards, you were able to answer 100% of the questions correctly after taking it multiple times. Would you expect to get 100% on the real exam based on that practice exam alone? Not necessarily! It’s entirely possible that you could have just memorized the specific answers on that one practice exam, rather than learning general concepts that enable you to answer related questions that you haven’t seen before.</p>
 <p>The key idea here is that assessing your predictor on data it encountered while training will likely <em>overestimate its true performance on future, unseen data</em>. The predictor is able to shape its knowledge around these specific examplea you showed it while training, so it’s more likely to get those ones correct. This is exactly the same as it being easier for you to answer a question on the test that also showed up on the practice test.</p>
-<p>So if we care about future performance, how might we go about assessing the predictor? Instead of only considering the error metric like the RSS on the training dataset, we will also consider the <strong>true error</strong> of our predictor. The true error tries to quantify how severe the errors are that we might expect to see in the future.</p>
+<p>So if we care about future performance, how might we go about assessing the predictor? Instead of only considering the error metric like the MSE on the training dataset, we will also consider the <strong>true error</strong> of our predictor. The true error tries to quantify how severe the errors are that we might expect to see in the future.</p>
 <section id="a-brief-seque-into-theory-land">
 <h2>A brief seque into theory-land<a class="headerlink" href="#a-brief-seque-into-theory-land" title="Permalink to this heading">#</a></h2>
 <p>In order to understand what we intend to capture in a notion of “true error”, we have to highlight some additional statistical assumptions we are making. For this discussion, we will stick with the housing example, but these ideas apply more broadly to other contexts.</p>
@@ -1492,7 +1492,7 @@ if (typeof version == 'undefined') {
 <p>The notation <span class="math notranslate nohighlight">\(|S|\)</span> denotes the number of elements in a set <span class="math notranslate nohighlight">\(S\)</span>. So <span class="math notranslate nohighlight">\(|Test|\)</span> is the number of test datapoints.</p>
 <p>We use a new notation for <span class="math notranslate nohighlight">\(\hat{f}\)</span> to signify that it is the predictor defined by our estimates for the coefficients <span class="math notranslate nohighlight">\(\hat{w}\)</span> by saying that <span class="math notranslate nohighlight">\(\hat{f}(x) = f_{\hat{w}}(x)\)</span>. Just two notations for the same thing, but the second is more explicit in what is estimated!</p>
 </aside>
-<p>So even though the value we really care about is the true error, we will use this error computed from the test set as a stand-in for that value. We call the error made by the model on the test set the <strong>test error</strong>, which we can compute. In the case of regression using RSS as the loss function, the test error is defined as<sup>7</sup>:</p>
+<p>So even though the value we really care about is the true error, we will use this error computed from the test set as a stand-in for that value. We call the error made by the model on the test set the <strong>test error</strong>, which we can compute. In the case of regression using MSE as the loss function, the test error is defined as<sup>7</sup>:</p>
 <div class="math notranslate nohighlight">
 \[MSE_{test}(\hat{w}) = \frac{1}{|Test|}\sum_{x_i \in Test} \left(y_i - f_{\hat{w}}(x_i)\right)^2\]</div>
 <p>More generally, a common definition of the test error is the average loss for whichever loss function <span class="math notranslate nohighlight">\(L\)</span> you are using:</p>
@@ -1551,7 +1551,7 @@ if (typeof version == 'undefined') {
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Num Train: 353
 Num Test:  89
 Training Error: 2882.245688259254
-Test Error:     2861.4857604408744
+Test Error:     2861.4857604408753
 </pre></div>
 </div>
 </div>
@@ -1778,7 +1778,7 @@ Test Error:     2861.4857604408744
 <a class="reference internal image-reference" href="../../_images/quiz_graph.png"><img alt="../../_images/quiz_graph.png" src="../../_images/quiz_graph.png" style="width: 100%;" /></a>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="lfjNVLFMRDZh" data-shufflequestions="False"
+<div class="output text_html"><div id="LAansxGFoClW" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -1940,7 +1940,7 @@ Test Error:     2861.4857604408744
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionslfjNVLFMRDZh=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
+}</style></div><script type="application/javascript">var questionsLAansxGFoClW=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -2674,7 +2674,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionslfjNVLFMRDZh,  lfjNVLFMRDZh);
+        show_questions(questionsLAansxGFoClW,  LAansxGFoClW);
         }
         </script></div>
 </div>
