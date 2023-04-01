@@ -1,4 +1,5 @@
 import numpy as np
+
 from manim_config import *
 
 # Config
@@ -166,7 +167,7 @@ class GradientDescentScene(BScene):
         x_label = axes.get_x_axis_label(r"w_1", edge=DOWN, direction=DOWN)\
             .set_color(GREY_D)\
             .scale(0.5)
-        y_label = axes.get_y_axis_label(r"RSS(w_1)", edge=LEFT, direction=LEFT)\
+        y_label = axes.get_y_axis_label(r"MSE(w_1)", edge=LEFT, direction=LEFT)\
             .set_color(GREY_D)\
             .scale(0.5)\
             .shift(0.5 * RIGHT)
