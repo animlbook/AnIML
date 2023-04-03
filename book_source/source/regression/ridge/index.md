@@ -14,6 +14,7 @@ myst:
     ref_coefficients: 2
     ref_quality_metric: 3
     ref_norm_soon: 4
+    ref_infinity: 5
 ---
 
 # <i class="fas fa-book fa-fw"></i> Regularization: Ridge
@@ -24,7 +25,11 @@ The major pattern we saw was that using a model that was too complex, like an ex
 
 ## Background: Coefficients
 
-rrom the last chapter, we have a good understanding that learned predictors that bounce around wildly like a high-degree polynomial on a small amount of data seem to be overfit. For example, if we train a 30 degree polynomial on 10 examples, we could visually see this level of overfitting in the predictions made by the model.
+```{margin}
+{{ref_pipelin}}\. Note that in this code example, we use some new scikit-learn features like the [Pipeline](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html)  to more easily make a sequence of processing steps from feature extraction (polynomial features) to a regression model. This is a useful feature of scikit-learn that you can check out in more detail in the documentation.
+```
+
+From the last chapter, we have a good understanding that learned predictors that bounce around wildly like a high-degree polynomial on a small amount of data seem to be overfit. For example, if we train a 30 degree polynomial on 10 examples, we could visually see this level of overfitting in the predictions made by the model<sup>{{ref_pipeline}}.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -181,7 +186,7 @@ for p in degrees:
     model.fit(X_poly, ys)
 
     # Find largest coefficient
-    coeff = np.abs(model.coef_).max()
+    coeff = (np.abs(model.coef_) ** 2).sum()
     largest_coeffs.append(coeff)
 
 # Plot the coefficients
@@ -263,17 +268,104 @@ $$\lVert w \rVert_p^p = \sum_{j=1}^D \lvert w_j \rvert^p$$
 
 or written in the equivalent form
 
-$$\lVert w \rVert_p = \sqrt[p]{\sum_{j=1}^D \lvert w_j \rvert^p$$
+$$\lVert w \rVert_p = \sqrt[p]{\sum_{j=1}^D \lvert w_j \rvert^p}$$
 
 The intuition is to measure the "length" (magnitude) of a vector of numbers. Two of the most common p-norms are the L1 norm ($p=1$) and L2 norm ($p=2$). You can define p-norms for many different values of $p$, but these are by far the most common instances.
 ```
 
 ## Ridge Regression
 
-TODO
+**Ridge Regression** is the name of a regularized regression model that penalizes the learned parameters from being to large by including the L2 norm in the quality metric. Our goal in Ridge Regression is to optimize the following function.
 
-## Old Stuff
+$$\hat{w}_{ridge} = \argmin{w} MSE(w) + \lambda \lVert w \rVert_2^2$$
 
+All of the other steps of our modeling task (how we do feature extraction, how we optimize this function with a method such as gradient descent, etc.) can stay the same. If we just change this quality metric, a new set of coefficients will be considered "best" and our hope is that learned predictor avoids overfitting. This all depends on this choice of $\lambda$ though.
 
-```{video} ../../_static/regression/linear_regression/manim_animations/true_function_anim.mp4
+$\lambda$ is a tuning **hyperparameter**. A hyperparameter is a value you, the ML practitioner, decides as part of your modelling step. A hyperparameter is different than the parameters learned by the learning algorithm. You the human chooses the setting of this hyperparameter, and then the corresponding model uses that settings to find the optimal parameters (i.e., coefficients). Depending on how you set the hyperparameter $\lambda$, which set of parameters (i.e., coefficients) that are "best" will be different. Let's consider two extreme cases.
+
+* Suppose we set $\lambda = 0$. In this case, with $\lambda = 0$ our quality metric reduces to our earlier metric based purely on error. This original setting without regularization is also called **Ordinary Least Squares** (OLS). So with $\lambda = 0$ we are back to our original setting and if we are using a sufficiently complex set of features, we are likely to overfit.
+
+$$\hat{w}_{OLS} = \argmin{w} MSE(w)$$
+
+```{margin}
+{{ref_infinity}}\. Math people: Don't chirp at us for treating $\infty$ as a number. You can make this more precise by talking about limits, but that's not the point here 💁‍♀️
 ```
+* In the other extreme, imagine we make $\lambda$ very very large, in the extreme setting it to some number that is infinitely large<sup>{{ref_infinity}}</sup> $\lambda = \infty$. In this extreme, because we are multiplying the regularizer magnitude by such a large number, it will dominate the error term. No matter how much error your model makes, if you are multiplying the regularizer term by a SUPER large number, that error won't make a huge difference in the objective function. Concretely, with this large lambda term, we will effectively be only optimizing the following function. Again, we are imagining that $\lambda$ is so large that it drowns out the MSE term.
+
+  $$\hat{w} = \argmin{w} \lambda \lVert w \rVert_2^2$$
+
+  With this objective function, the *only* acceptable solution is $\hat{w} = [0, ..., 0]$ (all coefficients 0). If any of the coefficients are non-zero, then $R(w) > 0$ and then we incur $\infty \cdot R(w)$ cost; this cost would then be $\infty$. But if all the coefficients are 0, then the cost of $\infty \cdot 0 = 0$ so this is our "optimal" setting of parameters.
+
+These are two extremes though, you wouldn't actually set $\lambda$ to be that large. In practice, you will choose some finite $\lambda$, with larger choices of $\lambda$ penalizing the coefficients for being large more, causing the coefficients to shrink. So in practice, your coefficients will have the following property
+
+$$0 \leq \lVert w_{ridge} \rVert_2^2 \leq \lVert w_{OLS} \rVert_2^2$$
+
+We can also visually observe how the coefficients change with respect to $\lambda$. The following graph shows the *coefficient path* for a Ridge regression model. The x-axis shows various settings of $\lambda$ from low to high and the y-axis shows the coefficient value. Each of the curves is the coefficient for a feature in our housing price model. As you increase $\lambda$ the magnitude of the coefficients goes down towards 0, empirically showing the trend we discussed above.
+
+![Coefficient path for a ridge regression model. Explained in last paragraph.](./ridge_path.png)
+
+So now we have a better understanding of how the choice of $\lambda$ affects the learned parameters, our next step is discussing how to choose the right value of $\lambda$. Before starting that discussion, let's test our understanding of how $\lambda$ affects the model's complexity. In the following questions, assume we are using a sufficiently complex model that is prone to overfitting before adding regularization.
+
+```{code-cell} ipython3
+:tags: ["remove-input"]
+
+questions = [
+    {
+        "question": r"""Consider setting $\lambda = 0$. Select the properties that our learned predictor is likely to exhibit.""",
+        "type": "many_choice",
+        "answers": [
+            {
+                "answer": "Low Bias",
+                "correct": True,
+                "feedback": "Correct! When $\lambda = 0$, we are not penalizing the model coefficients at all permits the model to overfit (large coefficients). When the model is very complex, we saw that it ends to have low bias"
+            },
+            {
+                "answer": "High Bias",
+                "correct": False,
+                "feedback": "Not quite."
+            },
+            {
+                "answer": "Low Variance",
+                "correct": False,
+                "feedback": "Not quite."
+            },
+            {
+                "answer": "High Variance",
+                "correct": True,
+                "feedback": "Correct! When $\lambda = 0$, we are not penalizing the model coefficients at all permits the model to overfit (large coefficients). When the model is very complex, we saw that it ends to have high variance"
+            }
+        ]
+    },
+    {
+        "question": r"""Consider setting $\lambda = \infty$. Select the properties that our learned predictor is likely to exhibit.""",
+        "type": "many_choice",
+        "answers": [
+            {
+                "answer": "Low Bias",
+                "correct": False,
+                "feedback": "Not quite."
+            },
+            {
+                "answer": "High Bias",
+                "correct": True,
+                "feedback": "Correct! When $\lambda = \infty$, we are penalizing the model a ton for having any non-zero coefficients. That means the learned predictor will have all 0 coefficients; this is an extremely simple model. When the model is very simple, we saw that it ends to have high bias"
+            },
+            {
+                "answer": "Low Variance",
+                "correct": True,
+                "feedback": "Correct! When $\lambda = \infty$, we are penalizing the model a ton for having any non-zero coefficients. That means the learned predictor will have all 0 coefficients; this is an extremely simple model. When the model is very simple, we saw that it ends to have low variance"
+            },
+            {
+                "answer": "High Variance",
+                "correct": False,
+                "feedback": "Not quite."
+            }
+        ]
+    },
+]
+
+from jupyterquiz import display_quiz
+display_quiz(questions, shuffle_answers=False)
+```
+
+## Choosing $\lambda$
