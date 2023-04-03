@@ -9,7 +9,7 @@ This repository defines the source code for the [AnIML book](https://hschafer.gi
 ## Feedback or Spot a Bug?
 
 If you have any feedback about the book text or structure, or you spot a bug somewhere in the book, please let us know! The best way to contact us
-is to make an [GitHub Issue](https://github.com/hschafer/Intro-ML/issues) or to contact [Hunter Schafer](https://homes.cs.washington.edu/~hschafer/) directly.
+is to make an [GitHub Issue](https://github.com/hschafer/AnIML/issues) or to contact [Hunter Schafer](https://homes.cs.washington.edu/~hschafer/) directly.
 
 ## Contributing
 
@@ -28,9 +28,9 @@ conda create --name animl-book python=3.9
 conda activate animl-book
 ```
 
-Install the book theme dependencies. 
+Install the book theme dependencies.
 
-All of these are libraries used for themes/templating in the book. `Sphinx` is the documentation templating tool, `sphinx-book-theme` is the specific book theme, `myst-nb` changes the Sphinx langauge from rST to MyST (more similar to Markdown), and `sphinx-thebe` allows interactive notebooks in the browser. 
+All of these are libraries used for themes/templating in the book. `Sphinx` is the documentation templating tool, `sphinx-book-theme` is the specific book theme, `myst-nb` changes the Sphinx langauge from rST to MyST (more similar to Markdown), and `sphinx-thebe` allows interactive notebooks in the browser.
 
 ```bash
 pip install -r requirements.txt
