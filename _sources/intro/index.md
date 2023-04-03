@@ -25,7 +25,7 @@ Consider Netflix, the popular streaming platform for movies and TV shows. Just l
 
 Here are just a few of the ones we can think of at the top of our head, and almost all of these have to do with **recommendation**. Netflix uses computers to decide, based on your past viewing history, which shows it should recommend to make you more likely to watch the shows they recommend. Here are just a few places they shape their recommendations to you:
 
-* Which show to show in the banner position (in the screenshot about it is "Never Have I Ever")
+* Which show to show in the banner position (in the screenshot above, it is "Never Have I Ever")
 * Which shows to list in the categories (e.g., "TV Shows") below the banner
 * Which categories to show you in the first place. If you like action movies, it will likely show you an action category.
 * Even once they decide to recommend a show (e.g., "Stranger Things"), they also use machine learning to decide which cover art they should use that would make you more likely to watch that show.
@@ -44,7 +44,7 @@ Machine Learning has amazing power to make applications from ones that are fun (
 
 But as the maxim of every superhero movie says, "with great power comes great responsibility." These machine learning tools are also used in incredibly high-stakes applications such as the criminal justice system, [where they have been found to produce biased outcomes](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing). And what's more, they are being used increasingly in more and more domains such as our elections, national defense, health, and transportation.
 
-Without being informed about what these models are doing and how they work, we have no hope of being able to assess and critique where we should and *should not* be using them. Our hope in this book is that we can show you the awesome potential of these systems and how you to build them well. At the same time, we want you to be considering the serious ramifications of automation that these models afford and how to avoid some dangerous pitfalls that can end up harming people.
+Without being informed about what these models are doing and how they work, we have no hope of being able to assess and critique where we should and *should not* be using them. Our hope in this book is that we can show you the awesome potential of these systems and how you build them well. At the same time, we want you to be considering the serious ramifications of automation that these models afford and how to avoid some dangerous pitfalls that can end up harming people.
 
 The remaining part of this chapter is broken into 3 parts. Before we give a broad overview of what ML is and the things you will see in this book at the end of this chapter, we we want to establish some of the values we are bringing in as authors of this book and how to effectively learn from this book.
 
@@ -53,7 +53,7 @@ The remaining part of this chapter is broken into 3 parts. Before we give a broa
 
 ### Our Values
 
-Our values determine what we prioritize in structure and content. This is not to say these are the only things that should be valued, but these our the ones we use as a guiding principle for this book.
+Our values determine what we prioritize in structure and content. This is not to say these are the only things that should be valued, but these are the ones we use as a guiding principle for this book.
 
 First, **it is critical that everyone understands how machine learning is used in our society**. We've already highlighted why we think everyone learning this is important, but wanted to write it down as a core value.
 
