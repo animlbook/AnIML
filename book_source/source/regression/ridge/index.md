@@ -17,6 +17,13 @@ myst:
     ref_infinity: 5
 ---
 
+```{code-cell} ipython3
+:tags: [remove-input]
+
+# If you are reading this notebook on a Binder, make sure to right-click the file name in
+# the left-side file viewer and select `Open With > Notebook` to view this as a notebook
+```
+
 # <i class="fas fa-book fa-fw"></i> Regularization: Ridge
 
 In the last chapter on {doc}`../assessing_performance/index` we introduced the concept of *overfitting* and the importance of selecting a model of the right complexity. Our goal shifted from our first attempt at simply minimizing training error, to trying to find a model that would perform best in the future, approximated by our test error. Since we want the test error to be an unbiased estimate of the future, we had to use techniques like a validation set or cross validation to choose the best model complexity, and then test on our test set to estimate our chosen model's performance.
