@@ -1,11 +1,10 @@
-# CSE/STAT 416: Introduction to Machine Learning
+# AnIML: Another Introduction to Machine Learning
 
-[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://hschafer.github.io/Intro-ML/)
+[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://hschafer.github.io/AnIML/)
 
 Author: [Hunter Schafer](https://homes.cs.washington.edu/~hschafer/)
 
-This repository maintains the source code for our Java Tutorial. This tutorial is designed for students who already have programming experience
-in some text-based language (e.g., Python) but have not yet experienced Java.
+This repository defines the source code for the [AnIML book](https://hschafer.github.io/AnIML/). This book corresponds with the course content of University of Washington's CSE/STAT 416.
 
 ## Feedback or Spot a Bug?
 
@@ -25,8 +24,8 @@ Confusingly, we have a separate set of dependenceis to build the animations. The
 Create a virtual environment with Python 3.9 or higher. For example, if you use Anaconda you can write:
 
 ```bash
-conda create --name 416-book python=3.9
-conda activate 416-book
+conda create --name animl-book python=3.9
+conda activate animl-book
 ```
 
 Install the book theme dependencies. 
