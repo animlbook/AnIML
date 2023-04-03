@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Linear Regression &#8212; &lt;b&gt;&lt;i&gt;AnIML&lt;/i&gt;&lt;/b&gt;&lt;br/&gt; Another Introduction to Machine Learning</title>
+    <title>1. Linear Regression &#8212; &lt;b&gt;&lt;i&gt;AnIML&lt;/i&gt;&lt;/b&gt;&lt;br/&gt; Another Introduction to Machine Learning</title>
   
   
   
@@ -104,7 +104,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Assessing Performance" href="../assessing_performance/index.html" />
+    <link rel="next" title="2. Assessing Performance" href="../assessing_performance/index.html" />
     <link rel="prev" title="Introduction" href="../../intro/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -196,10 +196,11 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Regression</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regression</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../assessing_performance/index.html"><i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. <i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assessing_performance/index.html">2. <i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ridge/index.html">3. <i class="fas fa-book fa-fw"></i> Regularization: Ridge</a></li>
 </ul>
 
     </div>
@@ -476,21 +477,21 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-pipeline">ML Pipeline</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-model">Linear Regression Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-statistical-model">Linear Regression Statistical Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-pipeline">1.1. ML Pipeline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-model">1.2. Linear Regression Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-statistical-model">1.2.1. Linear Regression Statistical Model</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-practice">Linear Regression In Practice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-theory">Linear Regression Theory</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-metric">Quality Metric</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-algorithm">ML Algorithm</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">Feature Extraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-practice">1.3. Linear Regression In Practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-theory">1.4. Linear Regression Theory</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-metric">1.4.1. Quality Metric</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-algorithm">1.4.2. ML Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">1.4.3. Feature Extraction</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-data-inputs">Multiple Data Inputs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-reflection">Recap / Reflection</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">Test your Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-data-inputs">1.5. Multiple Data Inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-reflection">1.6. Recap / Reflection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">1.6.1. Test your Understanding</a></li>
 </ul>
 </li>
 </ul>
@@ -505,7 +506,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-book-fa-fw-i-linear-regression">
-<h1><i class="fas fa-book fa-fw"></i> Linear Regression<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-linear-regression" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">1. </span><i class="fas fa-book fa-fw"></i> Linear Regression<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-linear-regression" title="Permalink to this heading">#</a></h1>
 <p>One of the central goals of machine learning is to make predictions about the future using data you have collected from the past. Machine learning is particularly effective when you have large amounts of data that allow the machine to automatically learn the patterns of interest from the data itself.</p>
 <p>For example, say we are thinking about selling our house and we want to predict how much it will sell for based on the information about the house (e.g., how big it is, how many bathrooms, if there is a garage, etc.). Instead of trying to write out a program to determine the price by hand, we will give historical data to the computer and let it learn the pattern.</p>
 <p>The most crucial thing in machine learning is the data you give it to learn from. A popular saying amongst machine learning practitioners goes <strong>“Garbage in, Garbage out”</strong>. So before we actually talk about how to make a machine learn, we need to talk about data and the assumptions we will make about the world.</p>
@@ -543,17 +544,17 @@ document.write(`
 <p>To phrase this challenge mathematically, a common goal in machine learning is to learn a function<sup>3</sup> <span class="math notranslate nohighlight">\(\hat{f}\)</span>​ from the data that approximates <span class="math notranslate nohighlight">\(f\)</span> as best as we can. We can then use this <span class="math notranslate nohighlight">\(\hat{f}\)</span>​ to make predictions about new data by evaluating <span class="math notranslate nohighlight">\(\hat{y} = \hat{f}(x)\)</span>. In English, for a given example (<span class="math notranslate nohighlight">\(x\)</span>), we are predicting what we think the label should be (<span class="math notranslate nohighlight">\(\hat{y}\)</span>) based on this function we <em>think</em> is a good estimate (<span class="math notranslate nohighlight">\(\hat{f}\)</span>) of the unknown true function (<span class="math notranslate nohighlight">\(f\)</span>). It’s likely our estimate won’t be exactly correct, but our hope is to get one that is as close to this unknown truth as possible. We will come back to <em>how</em> we estimate this function later, but it has something to do with finding a function that closely matches the data were given.</p>
 <video controls="True" preload="auto"><source src="../../_static/regression/linear_regression/manim_animations/predictor_anim.mp4" type="video/mp4"></video><p>Since we can’t actual observe the true function <span class="math notranslate nohighlight">\(f\)</span>, assessing how good a potential <span class="math notranslate nohighlight">\(\hat{f}\)</span> is will be quite challenging. The animation above previews how we will do this by comparing how <span class="math notranslate nohighlight">\(\hat{f}\)</span> does on the data we trained it from. More on this in the next section.</p>
 <section id="ml-pipeline">
-<h2>ML Pipeline<a class="headerlink" href="#ml-pipeline" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.1. </span>ML Pipeline<a class="headerlink" href="#ml-pipeline" title="Permalink to this heading">#</a></h2>
 <p>Machine learning is a broad field with many algorithms and techniques that solve different parts of a learning task. We provide a generic framework of most machine learning systems that we call the <strong>ML Pipeline</strong>, which is shown in the image below. Whenever we are learning a new topic, try to identify which part of the pipeline it works in.</p>
 <p>TODO ML Pipeline imageo</p>
 <p>TODO rest of section</p>
 </section>
 <section id="linear-regression-model">
-<h2>Linear Regression Model<a class="headerlink" href="#linear-regression-model" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.2. </span>Linear Regression Model<a class="headerlink" href="#linear-regression-model" title="Permalink to this heading">#</a></h2>
 <p>A great place to start talking about machine learning and its components is <strong>linear regression</strong>w. This is a popular starting point because it is simpler than many other types of models (e.g., that “deep learning” thing you might have heard of in the news). In fact, its simplicity is generally one of its biggest strengths! Linear regression is commonly used as a good place to start on a new project since it can form a good baseline.</p>
 <p>In each of the following section, we will show a picture of the ML Pipeline in the margin to highlight how the piece we are introducing fits in the overall picture.</p>
 <section id="linear-regression-statistical-model">
-<h3>Linear Regression Statistical Model<a class="headerlink" href="#linear-regression-statistical-model" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">1.2.1. </span>Linear Regression Statistical Model<a class="headerlink" href="#linear-regression-statistical-model" title="Permalink to this heading">#</a></h3>
 <p>A <strong>statistical model</strong> is an assumption about how the world works. In the <strong>linear regression model</strong>, we assume the the input variable and target variable are related by a linear function (i.e., a line)</p>
 <div class="math notranslate nohighlight">
 \[y_i = w_0 + w_1x_1 + \epsilon_i\]</div>
@@ -576,7 +577,7 @@ document.write(`
 </section>
 </section>
 <section id="linear-regression-in-practice">
-<h2>Linear Regression In Practice<a class="headerlink" href="#linear-regression-in-practice" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.3. </span>Linear Regression In Practice<a class="headerlink" href="#linear-regression-in-practice" title="Permalink to this heading">#</a></h2>
 <p>Now that we have introduced a theoretical model for linear regression, let start by showing some code to train a linear regression model before explaining all of the parts required to train such a model. This might seem backwards, but it helps to see the code that you will normally write, and then see all of the foundational underpinnings that happen behind the scenes to make that learner happen.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
@@ -786,11 +787,11 @@ Learned w_1 = 280.62356663364517
 </div>
 </section>
 <section id="linear-regression-theory">
-<h2>Linear Regression Theory<a class="headerlink" href="#linear-regression-theory" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.4. </span>Linear Regression Theory<a class="headerlink" href="#linear-regression-theory" title="Permalink to this heading">#</a></h2>
 <p>In a few sections, we will define the specifics of how we estimate these unknown parameters using some ML algorithm. As a brief preview, many ML algorithms for linear regression essentially boil down to trying many possible lines and identify which one is “best” from that set. So before we describe an algorithm, we should describe what makes one predictor the “best” over some others.</p>
 <video controls="True" preload="auto"><source src="../../_static/regression/linear_regression/manim_animations/many_lines_anim.mp4" type="video/mp4"></video><p>What does “best” mean in this context? That is yet another judgement call we must make as modelers, and we call this the <strong>Quality Metric</strong>.</p>
 <section id="quality-metric">
-<h3>Quality Metric<a class="headerlink" href="#quality-metric" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">1.4.1. </span>Quality Metric<a class="headerlink" href="#quality-metric" title="Permalink to this heading">#</a></h3>
 <p>TODO highlight quality metric</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
@@ -814,7 +815,7 @@ MSE(w_0, w_1) &amp;= \frac{1}{n} \left( (y_1 - \hat{y}_1)^2 + (y_2 - \hat{y}_2)^
 <p>As mentioned before, there are many different functions you could use to determine the quality of a particular model. For example, the Residual Sum of Square (RSS) or the Mean Absolute Error (MAE) are also used in some contexts. RSS is simply MSE but not divided by <span class="math notranslate nohighlight">\(n\)</span>, or, <span class="math notranslate nohighlight">\(MSE(w_0, w_1) = \frac{1}{n}RSS(w_0, w_1)\)</span>. Mean Absolute Error (MAE) is the sum of the errors but using the absolute value instead of squaring <span class="math notranslate nohighlight">\(MAE(w_0, w_1) = \sum_{i=1}^n \left| \hat{y}_i - y_i \right|\)</span>. In most of our regression settings, we will focus on MSE.</p>
 </section>
 <section id="ml-algorithm">
-<h3>ML Algorithm<a class="headerlink" href="#ml-algorithm" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">1.4.2. </span>ML Algorithm<a class="headerlink" href="#ml-algorithm" title="Permalink to this heading">#</a></h3>
 <p>TODO highlight ml pipeline</p>
 <p>As a quick recap, we have defined the following steps:</p>
 <ul class="simple">
@@ -844,7 +845,7 @@ MSE(w_0, w_1) &amp;= \frac{1}{n} \left( (y_1 - \hat{y}_1)^2 + (y_2 - \hat{y}_2)^
 </aside>
 <p>While the exact notation isn’t incredibly important for our course, we still think it is useful to at least see the algorithm of gradient descent written out with a mathematical notation<sup>8</sup>.</p>
 <div class="proof algorithm admonition" id="grad-descent">
-<p class="admonition-title"><span class="caption-number">Algorithm 1 </span> (Gradient Descent)</p>
+<p class="admonition-title"><span class="caption-number">Algorithm 1.1 </span> (Gradient Descent)</p>
 <section class="algorithm-content" id="proof-content">
 <ol class="arabic simple">
 <li><p>Start at some (random) point <span class="math notranslate nohighlight">\(w^{(0)}\)</span> at <span class="math notranslate nohighlight">\(t = 0\)</span></p></li>
@@ -865,7 +866,7 @@ MSE(w_0, w_1) &amp;= \frac{1}{n} \left( (y_1 - \hat{y}_1)^2 + (y_2 - \hat{y}_2)^
 <video controls="True" preload="auto"><source src="../../_static/regression/linear_regression/manim_animations/non_convex_anim.mp4" type="video/mp4"></video><p>As mentioned above, we are lucky that in the case of linear regression our MSE quality metric will be convex! So that means running gradient descent will guarantee a global optimum.</p>
 </section>
 <section id="feature-extraction">
-<h3>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">1.4.3. </span>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this heading">#</a></h3>
 <p>TODO highlight ML pipeline</p>
 <p>TODO image of data and model</p>
 <p>If you think back to our original dataset when introducing the chapter, you might notice that our linear regression model is doomed to fail if we believe the true (unknown) function is not actually linear. In the original animation, we drew this data from something that had a curve to it (i.e., not linear).</p>
@@ -897,7 +898,7 @@ y_i &amp;= w_0h_0(x_i) + w_1h_1(x_i) + ... + h_Dh_D(x_i)\\
 </section>
 </section>
 <section id="multiple-data-inputs">
-<h2>Multiple Data Inputs<a class="headerlink" href="#multiple-data-inputs" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.5. </span>Multiple Data Inputs<a class="headerlink" href="#multiple-data-inputs" title="Permalink to this heading">#</a></h2>
 <p>So far, we have considered the case where our learning task only has a single data input <span class="math notranslate nohighlight">\(x\)</span> such as square footage in our housing price example. What if we wanted to include more than just square footage in our model for house prices? You might imagine we know the number of bathrooms in the house as well as whether or not it is a new construction. Generally, we are given a data table of values that we might be interested in looking at in our model. In a data table, it’s common to have a format like the following:</p>
 <ul class="simple">
 <li><p>Each row is a single example (e.g,, one house)</p></li>
@@ -971,15 +972,15 @@ y_i &amp;= w_0h_0(x_i) + w_1h_1(x_i) + ... + h_Dh_D(x_i)\\
 </div>
 </section>
 <section id="recap-reflection">
-<h2>Recap / Reflection<a class="headerlink" href="#recap-reflection" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.6. </span>Recap / Reflection<a class="headerlink" href="#recap-reflection" title="Permalink to this heading">#</a></h2>
 <p>In this chapter we introduced the machine learning pipeline as it is applied to regression models, namely linear regression.</p>
 <p>We introduced some terminology that we will use throughout the book like the difference between a model and a predictor, the format of the data we learn from, how we can determine features of the model, and how to learn and assess a predictor. We will see these general ideas in the ML pipeline surface frequently in this book. It is always good to start using that as a reference point for the new concepts you are learning.</p>
 <p>We specifically discussed the context of regression and linear regression. Understanding how to formulate a problem as a regression problem and use linear regression to help you learn a predictor is a very important skill as part of your journey to mastering machine learning! Additionally, understanding how linear regression and polynomial regression are really the same model with different sets of features is a very powerful building-block on that journey.</p>
 <section id="test-your-understanding">
-<h3>Test your Understanding<a class="headerlink" href="#test-your-understanding" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">1.6.1. </span>Test your Understanding<a class="headerlink" href="#test-your-understanding" title="Permalink to this heading">#</a></h3>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="WYSdRGsYuxoz" data-shufflequestions="False"
+<div class="output text_html"><div id="hOpOIGwncsne" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -1141,7 +1142,7 @@ y_i &amp;= w_0h_0(x_i) + w_1h_1(x_i) + ... + h_Dh_D(x_i)\\
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsWYSdRGsYuxoz=[{"question": "\n            Suppose we were testing a new drug treatment for a particular disease. We have gathered data from various trials that recorded the average response (a number, where 0 is low response and a higher number is a high response) in an experiment that used a particular dosage (measured in mg).\n            <br /><br />\n\n            We suspect there is a linear relationship between the response ($y$) and the dosage in mg ($x$), so we decide to model this data with a linear regression model.\n\n            $$y_i = w_0 + w_1x_i + \\varepsilon_i$$\n\n            Suppose that after training a model, we find $\\hat{w}_0 = 1$ $\\hat{w}_1 = 2$. Which of the following interpretations of the learned predictor are true?\n            <br /><br />\n\n            <i>Select all that apply</i>.\n            ", "type": "many_choice", "answers": [{"answer": "The predicted response for a 0mg dose is expected to be 0.", "correct": false}, {"answer": "The predicted response for a 0mg dose is expected to be 1.", "correct": true}, {"answer": "The predicted response for a 0mg dose is expected to be 2.", "correct": false}, {"answer": "If we were to increase the dosage by 2mg, we expect that the response would increase by 1.", "correct": false}, {"answer": "If were to increase the dosage by 1mg, we expect that the response would increase by 0.002.", "correct": false}, {"answer": "If we were to increase the dosage by 1mg, we expect that the response would increase by 2.", "correct": true}]}, {"question": "\n            Suppose in the setup for the last question, we had the following dataset.<br /><br />\n            <table class=\"tg\" style=\"undefined;table-layout: fixed; width: 284px\">\n                <colgroup>\n                    <col style=\"width: 117px\">\n                    <col style=\"width: 167px\">\n                </colgroup>\n                <thead>\n                  <tr>\n                    <th class=\"tg-0pky\">Drug Dosage</th>\n                    <th class=\"tg-0pky\">Response</th>\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td class=\"tg-2bhk\">10</td>\n                    <td class=\"tg-2bhk\">19</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">2</td>\n                    <td class=\"tg-0pky\">8</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-2bhk\">3</td>\n                    <td class=\"tg-2bhk\"><span style=\"font-weight:400;font-style:normal\">7</span></td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">9</td>\n                    <td class=\"tg-0pky\"><span style=\"font-weight:400;font-style:normal\">18</span></td>\n                  </tr>\n                </tbody>\n            </table>\n\n            <br />\n            Consider our learned predictor $\\hat{w}_0 = 1$ and $\\hat{w}_1 = 2$. What is the $MSE$ of this learned predictor on this training dataset?\n        ", "type": "numeric", "answers": [{"type": "value", "value": 3.5, "correct": true, "feedback": "\n                    Recall that the $MSE$ or residual sum of squares is defined as\n\n                    $$MSE(w_0, w_1) = \\frac{1}{n}\\sum_{i=1}^n \\left(y_i - (w_0 + w_1 x_i)\\right)^2$$\n\n                    This means our $MSE$ is (scroll for calculation)\n\n                    $$\\frac{1}{4}\\left(19 - (1 + 2 \\cdot 10)\\right)^2 + \\left(8 - (1 + 2 \\cdot 2)\\right)^2 + \\left(7 - (1 + 2 \\cdot 3)\\right)^2 + \\left(18 - (1 + 2 \\cdot 9)\\right)^2 = \\frac{14}{4} = 3.5$$\n                "}, {"type": "default", "correct": false, "feedback": "Try to use our MSE formula to compute the average error on each data point!"}]}, {"question": "\n            Suppose we trained a regression model with the following features:\n\n            <ul>\n                <li>$h_0(x_i) = 1$ (a constant feature for the intercept)</li>\n                <li>$h_1(x_i) = x_i[1]$</li>\n                <li>$h_2(x_i) = x_i[2]$</li>\n                <li>$h_3(x_i) = x_i[1]^2$</li>\n                <li>$h_4(x_i) = \\log(x_i[2])$</li>\n                <li>$h_5(x_i) = e^{x_i[1]}$</li>\n            </ul>\n        ", "type": "numeric", "answers": [{"type": "value", "value": 6, "correct": true, "feedback": "\n                    If we use these features, then our model will be\n\n                    $$y = \\sum_{j=0}^5 w_j \\cdot h_j(x_i) + \\varepsilon_i$$\n\n                    That is 6 $w_j$'s in total that we have to learn.\n                "}, {"type": "default", "correct": false, "feedback": "Try to use our MSE formula to compute the average error on each data point!"}]}, {"question": "Polynomial regression is equivalent to linear regression using polynomial features of the input $x_i$", "type": "multiple_choice", "answers": [{"answer": "True", "correct": true}, {"answer": "False", "correct": false}]}];
+}</style></div><script type="application/javascript">var questionshOpOIGwncsne=[{"question": "\n            Suppose we were testing a new drug treatment for a particular disease. We have gathered data from various trials that recorded the average response (a number, where 0 is low response and a higher number is a high response) in an experiment that used a particular dosage (measured in mg).\n            <br /><br />\n\n            We suspect there is a linear relationship between the response ($y$) and the dosage in mg ($x$), so we decide to model this data with a linear regression model.\n\n            $$y_i = w_0 + w_1x_i + \\varepsilon_i$$\n\n            Suppose that after training a model, we find $\\hat{w}_0 = 1$ $\\hat{w}_1 = 2$. Which of the following interpretations of the learned predictor are true?\n            <br /><br />\n\n            <i>Select all that apply</i>.\n            ", "type": "many_choice", "answers": [{"answer": "The predicted response for a 0mg dose is expected to be 0.", "correct": false}, {"answer": "The predicted response for a 0mg dose is expected to be 1.", "correct": true}, {"answer": "The predicted response for a 0mg dose is expected to be 2.", "correct": false}, {"answer": "If we were to increase the dosage by 2mg, we expect that the response would increase by 1.", "correct": false}, {"answer": "If were to increase the dosage by 1mg, we expect that the response would increase by 0.002.", "correct": false}, {"answer": "If we were to increase the dosage by 1mg, we expect that the response would increase by 2.", "correct": true}]}, {"question": "\n            Suppose in the setup for the last question, we had the following dataset.<br /><br />\n            <table class=\"tg\" style=\"undefined;table-layout: fixed; width: 284px\">\n                <colgroup>\n                    <col style=\"width: 117px\">\n                    <col style=\"width: 167px\">\n                </colgroup>\n                <thead>\n                  <tr>\n                    <th class=\"tg-0pky\">Drug Dosage</th>\n                    <th class=\"tg-0pky\">Response</th>\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td class=\"tg-2bhk\">10</td>\n                    <td class=\"tg-2bhk\">19</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">2</td>\n                    <td class=\"tg-0pky\">8</td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-2bhk\">3</td>\n                    <td class=\"tg-2bhk\"><span style=\"font-weight:400;font-style:normal\">7</span></td>\n                  </tr>\n                  <tr>\n                    <td class=\"tg-0pky\">9</td>\n                    <td class=\"tg-0pky\"><span style=\"font-weight:400;font-style:normal\">18</span></td>\n                  </tr>\n                </tbody>\n            </table>\n\n            <br />\n            Consider our learned predictor $\\hat{w}_0 = 1$ and $\\hat{w}_1 = 2$. What is the $MSE$ of this learned predictor on this training dataset?\n        ", "type": "numeric", "answers": [{"type": "value", "value": 3.5, "correct": true, "feedback": "\n                    Recall that the $MSE$ or residual sum of squares is defined as\n\n                    $$MSE(w_0, w_1) = \\frac{1}{n}\\sum_{i=1}^n \\left(y_i - (w_0 + w_1 x_i)\\right)^2$$\n\n                    This means our $MSE$ is (scroll for calculation)\n\n                    $$\\frac{1}{4}\\left(19 - (1 + 2 \\cdot 10)\\right)^2 + \\left(8 - (1 + 2 \\cdot 2)\\right)^2 + \\left(7 - (1 + 2 \\cdot 3)\\right)^2 + \\left(18 - (1 + 2 \\cdot 9)\\right)^2 = \\frac{14}{4} = 3.5$$\n                "}, {"type": "default", "correct": false, "feedback": "Try to use our MSE formula to compute the average error on each data point!"}]}, {"question": "\n            Suppose we trained a regression model with the following features:\n\n            <ul>\n                <li>$h_0(x_i) = 1$ (a constant feature for the intercept)</li>\n                <li>$h_1(x_i) = x_i[1]$</li>\n                <li>$h_2(x_i) = x_i[2]$</li>\n                <li>$h_3(x_i) = x_i[1]^2$</li>\n                <li>$h_4(x_i) = \\log(x_i[2])$</li>\n                <li>$h_5(x_i) = e^{x_i[1]}$</li>\n            </ul>\n        ", "type": "numeric", "answers": [{"type": "value", "value": 6, "correct": true, "feedback": "\n                    If we use these features, then our model will be\n\n                    $$y = \\sum_{j=0}^5 w_j \\cdot h_j(x_i) + \\varepsilon_i$$\n\n                    That is 6 $w_j$'s in total that we have to learn.\n                "}, {"type": "default", "correct": false, "feedback": "Try to use our MSE formula to compute the average error on each data point!"}]}, {"question": "Polynomial regression is equivalent to linear regression using polynomial features of the input $x_i$", "type": "multiple_choice", "answers": [{"answer": "True", "correct": true}, {"answer": "False", "correct": false}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1875,7 +1876,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsWYSdRGsYuxoz,  WYSdRGsYuxoz);
+        show_questions(questionshOpOIGwncsne,  hOpOIGwncsne);
         }
         </script></div>
 </div>
@@ -1928,7 +1929,7 @@ if (typeof version == 'undefined') {
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><i class="fas fa-book fa-fw"></i> Assessing Performance</p>
+        <p class="prev-next-title"><span class="section-number">2. </span><i class="fas fa-book fa-fw"></i> Assessing Performance</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1950,21 +1951,21 @@ if (typeof version == 'undefined') {
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-pipeline">ML Pipeline</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-model">Linear Regression Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-statistical-model">Linear Regression Statistical Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-pipeline">1.1. ML Pipeline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-model">1.2. Linear Regression Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-statistical-model">1.2.1. Linear Regression Statistical Model</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-practice">Linear Regression In Practice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-theory">Linear Regression Theory</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-metric">Quality Metric</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-algorithm">ML Algorithm</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">Feature Extraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-practice">1.3. Linear Regression In Practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-theory">1.4. Linear Regression Theory</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-metric">1.4.1. Quality Metric</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-algorithm">1.4.2. ML Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">1.4.3. Feature Extraction</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-data-inputs">Multiple Data Inputs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-reflection">Recap / Reflection</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">Test your Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-data-inputs">1.5. Multiple Data Inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-reflection">1.6. Recap / Reflection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">1.6.1. Test your Understanding</a></li>
 </ul>
 </li>
 </ul>

@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Assessing Performance &#8212; &lt;b&gt;&lt;i&gt;AnIML&lt;/i&gt;&lt;/b&gt;&lt;br/&gt; Another Introduction to Machine Learning</title>
+    <title>2. Assessing Performance &#8212; &lt;b&gt;&lt;i&gt;AnIML&lt;/i&gt;&lt;/b&gt;&lt;br/&gt; Another Introduction to Machine Learning</title>
   
   
   
@@ -104,7 +104,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="Linear Regression" href="../linear_regression/index.html" />
+    <link rel="next" title="3. Regularization: Ridge" href="../ridge/index.html" />
+    <link rel="prev" title="1. Linear Regression" href="../linear_regression/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -195,10 +196,11 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Regression</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regression</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../linear_regression/index.html"><i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_regression/index.html">1. <i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. <i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ridge/index.html">3. <i class="fas fa-book fa-fw"></i> Regularization: Ridge</a></li>
 </ul>
 
     </div>
@@ -475,21 +477,21 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brief-seque-into-theory-land">A brief seque into theory-land</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-practice">Back to practice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explaining-error">Explaining Error</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">Bias-Variance Tradeoff</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">Bias</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brief-seque-into-theory-land">2.1. A brief seque into theory-land</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-practice">2.2. Back to practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explaining-error">2.3. Explaining Error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">2.4. Bias-Variance Tradeoff</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">2.4.1. Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">2.4.2. Variance</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-choose-model-complexity">How to Choose Model Complexity?</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-set">Validation Set</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross Validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-choose-model-complexity">2.5. How to Choose Model Complexity?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-set">2.5.1. Validation Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">2.5.2. Cross Validation</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">Recap</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">Test your Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">2.6. Recap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">2.6.1. Test your Understanding</a></li>
 </ul>
 </li>
 </ul>
@@ -504,7 +506,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-book-fa-fw-i-assessing-performance">
-<h1><i class="fas fa-book fa-fw"></i> Assessing Performance<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-assessing-performance" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">2. </span><i class="fas fa-book fa-fw"></i> Assessing Performance<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-assessing-performance" title="Permalink to this heading">#</a></h1>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>1. A quick review of these statistical models:</p>
@@ -532,7 +534,7 @@ data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup
 <p>Given what we’ve discussed so far, our first instinct might be to us the quality metric (e.g., MSE) on the data the predictor was trained from. Given the predictors (colored curves) in the animation above, which one will have the lowest MSE on the training dataset (the black dots)?<sup>3</sup></p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="ycMtCFuROYDH" data-shufflequestions="False"
+<div class="output text_html"><div id="uTJKZTYKRImk" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -694,7 +696,7 @@ data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsycMtCFuROYDH=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
+}</style></div><script type="application/javascript">var questionsuTJKZTYKRImk=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1428,7 +1430,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsycMtCFuROYDH,  ycMtCFuROYDH);
+        show_questions(questionsuTJKZTYKRImk,  uTJKZTYKRImk);
         }
         </script></div>
 </div>
@@ -1441,7 +1443,7 @@ if (typeof version == 'undefined') {
 <p>The key idea here is that assessing your predictor on data it encountered while training will likely <em>overestimate its true performance on future, unseen data</em>. The predictor is able to shape its knowledge around these specific examplea you showed it while training, so it’s more likely to get those ones correct. This is exactly the same as it being easier for you to answer a question on the test that also showed up on the practice test.</p>
 <p>So if we care about future performance, how might we go about assessing the predictor? Instead of only considering the error metric like the MSE on the training dataset, we will also consider the <strong>true error</strong> of our predictor. The true error tries to quantify how severe the errors are that we might expect to see in the future.</p>
 <section id="a-brief-seque-into-theory-land">
-<h2>A brief seque into theory-land<a class="headerlink" href="#a-brief-seque-into-theory-land" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.1. </span>A brief seque into theory-land<a class="headerlink" href="#a-brief-seque-into-theory-land" title="Permalink to this heading">#</a></h2>
 <p>In order to understand what we intend to capture in a notion of “true error”, we have to highlight some additional statistical assumptions we are making. For this discussion, we will stick with the housing example, but these ideas apply more broadly to other contexts.</p>
 <p>Not all house square footages are equally likely to show up in the wild. There are probably no homes that have fewer than 10 square feet (although some New York City apartments might feel like an exception). We might expect that there is a distribution over the possible square footages, indicating that some square footages are more likely than others.</p>
 <aside class="margin sidebar">
@@ -1479,7 +1481,7 @@ if (typeof version == 'undefined') {
 <p>Unfortunately in most real-life circumstances, it’s not even possible to compute this true error! You might not know the  exact distributions of the houses or the distribution of prices conditioned on a particular house size. Since we don’t know these distributions for a fact, there is no way we can exactly compute this expectation. Without access to all future data, it’s essentially impossible to compute this true error exactly. However, we have hope to approximate it using well-defined practices.</p>
 </section>
 <section id="back-to-practice">
-<h2>Back to practice<a class="headerlink" href="#back-to-practice" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2. </span>Back to practice<a class="headerlink" href="#back-to-practice" title="Permalink to this heading">#</a></h2>
 <p>A very common technique in machine learning suggests that if you aren’t able to exactly compute something, you can try to estimate it using data you have. That’s what we will do here. But note that we can’t use the data we trained on, since as we discussed, it would lead to us favoring more complex models since they can minimize training error with sufficient complexity. The idea then is to hide part of our dataset from our ML algorithm and use that hidden data as a <em>proxy</em> for “all future data” after the predictor is trained.</p>
 <p>The most common way to accomplish this is to split your dataset into a <strong>training set</strong> and a <strong>test set</strong>.</p>
 <ul class="simple">
@@ -1559,7 +1561,7 @@ Test Error:     2861.4857604408753
 <p>Note from this example output, we see the testing error is <em>lower</em> than the training error. This is possible, but unexpected in practice. As we will talk about in detail later in the following sections, this is a sign that our model might be  <em>underfit</em> (i.e., not complex enough to learn any reasonable relationship between the features and labels). More on this as you read on!</p>
 </section>
 <section id="explaining-error">
-<h2>Explaining Error<a class="headerlink" href="#explaining-error" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.3. </span>Explaining Error<a class="headerlink" href="#explaining-error" title="Permalink to this heading">#</a></h2>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>9. We will not touch on more rigorous definitions of what complexity mean here such as <em>VC Dimension</em>. See <a class="reference external" href="https://www.amazon.com/Understanding-Machine-Learning-Theory-Algorithms/dp/1107057132">Understanding Machine Learning</a> for an excellent introduction to learning theory.</p>
@@ -1602,7 +1604,7 @@ Test Error:     2861.4857604408753
 ​</p>
 </section>
 <section id="bias-variance-tradeoff">
-<h2>Bias-Variance Tradeoff<a class="headerlink" href="#bias-variance-tradeoff" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.4. </span>Bias-Variance Tradeoff<a class="headerlink" href="#bias-variance-tradeoff" title="Permalink to this heading">#</a></h2>
 <p>So for many models, there is essentially a knob we can tune to balance the complexity between underfitting and overfitting. For our polynomial regression, it is the degree of the polynomial <span class="math notranslate nohighlight">\(p\)</span>. As you make the model more complex, it is easier to overfit. As you make the model less complex, it is harder to overfit and more likely to underfit. In the next section, we will talk about how to tune this knob so it is “just right”, but first we will introduce some terms to describe why overfitting and underfitting happen.</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
@@ -1620,7 +1622,7 @@ Test Error:     2861.4857604408753
 </aside>
 <p>When thinking about machine learning, we are thinking that the data is generated from a process following the model we assume. So for the regression model, we assume that for each <span class="math notranslate nohighlight">\(x_i\)</span> in our dataset, its corresponding <span class="math notranslate nohighlight">\(y_i = f(x_i) + \varepsilon_i\)</span> for some unknown <span class="math notranslate nohighlight">\(f\)</span>. So since there is randomness not only in which inputs we receive, but in their associated output, we will expect to learn different predictors if we trained on different datasets drawn from the same distribution. We can think about what is the “average predictor” if we drew a bunch of different training sets, trained a predictor from each one, and averaged the results. The animation below shows this process and what this average predictor <span class="math notranslate nohighlight">\(\bar{f_{\hat{w}}}(x)\)</span> looks like<sup>16</sup>.</p>
 <video controls="True" preload="auto"><source src="../../_static/regression/assessing_performance/manim_animations/avg_deg_1_anim.mp4" type="video/mp4"></video><section id="bias">
-<h3>Bias<a class="headerlink" href="#bias" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">2.4.1. </span>Bias<a class="headerlink" href="#bias" title="Permalink to this heading">#</a></h3>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>17. This does not necessarily line up with our every-day use of the word bias (e.g., discriminatory actions/views against certain groups). While it is crucial to avoid that type of bias in our models, this is not what the statistical notion of the term “bias” necessarily means. We will talk about our every-day notion of bias in the Fairness in ML chapter.</p>
@@ -1633,7 +1635,7 @@ Test Error:     2861.4857604408753
 <p>Low complexity (simple) models tend to have high bias which is why the tend to have higher true error if they are too simple.</p>
 </section>
 <section id="variance">
-<h3>Variance<a class="headerlink" href="#variance" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">2.4.2. </span>Variance<a class="headerlink" href="#variance" title="Permalink to this heading">#</a></h3>
 <p>A model that is too complex for the task at hand has the potential to overfit to the noise in the data. The flexibility the complex model allows the model to potentially memorize rather than generalize. This error that comes from fitting to noise is attributed as <strong>variance</strong> of the model.</p>
 <p>For our very complex model, a slightly different dataset will lead to a wildly different predictor since the function wiggles a lot between the points. The differences we see in the predictors learned on slightly different datasets is another sign of error. These differences account for fitting to specific artifacts in the one training set we learned on.</p>
 <p>Mathematically we write the variance as the following. It tries to capture how much we expect any particular fit on a dataset to differ from the average. If this value is high, it means that we will expect to learn wildly different functions from dataset to dataset (even if they are relatively similar). If this value is low, it means that on each dataset, we learned about the same function (close to the average <span class="math notranslate nohighlight">\(\overline{f_{\hat{w}}}(x)\)</span>. The expectation here is over all possible datasets you could receive as training data.</p>
@@ -1669,7 +1671,7 @@ Test Error:     2861.4857604408753
 </section>
 </section>
 <section id="how-to-choose-model-complexity">
-<h2>How to Choose Model Complexity?<a class="headerlink" href="#how-to-choose-model-complexity" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.5. </span>How to Choose Model Complexity?<a class="headerlink" href="#how-to-choose-model-complexity" title="Permalink to this heading">#</a></h2>
 <p>So we introduced this idea of training error and true error (and how we approximate it with test error), and where that error can manifest as overfitting or underfitting from the contributions of the model’s bias and variance. Now that we understand that model complexity can impact the performance of the model, how do we actually go about picking the right complexity if we don’t have access to this true error?</p>
 <p><strong>Suggestion 1:</strong> What about choosing the model with the lowest training error? Hopefully from our discussion in the last sections, you can see why this won’t find the model that will perform the best in the future.</p>
 <p><strong>Suggestion 2:</strong> So maybe we could just choose the model that has the lowest test error. This seems more intuitive since the test error is our approximation of the true error and our goal is to find a model that will do best in the future (i.e., lowest true error). This approach is right in some sense, since we are unlikely to choose a model that is overfit. However, this approach <strong>completely ruins the point of the test set</strong>.</p>
@@ -1679,12 +1681,12 @@ Test Error:     2861.4857604408753
 <p>In other words, a good approximation for how you should use the test set is the following: You should <em>never</em> look at the test set until you are done (the paper is about ready to publish, you are just about to deploy your model, or similar). Once you are ready to go, <em>then</em> you can test your model on the test set so you can get an accurate estimate for how the model will do in the future so you can include that estimate in your published model. But if you test yourself on the test set multiple times, you are tempting yourself to choose a model that works better on that one test set.</p>
 <p>Fear not though! There are many principled ways for helping you choose this model complexity. The two popular techniques we discuss are using a <strong>validation set</strong> and <strong>cross validation</strong>.</p>
 <section id="validation-set">
-<h3>Validation Set<a class="headerlink" href="#validation-set" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">2.5.1. </span>Validation Set<a class="headerlink" href="#validation-set" title="Permalink to this heading">#</a></h3>
 <p>It turns out that your intuition for using a dataset separate from the training set is a very good intuition! The only shortcoming we had earlier was to use the test set as that separate dataset. So instead, let’s break off yet another part of our data into a <strong>validation set</strong>. This validation set is also withheld from training, and we use it to select which model we think will perform best in the future. By using this validation set to select the best model complexity, we can still then use the test set afterwards to get an unbiased estimate of the true error.</p>
 <a class="reference internal image-reference" href="../../_images/validation_set.png"><img alt="../../_images/validation_set.png" src="../../_images/validation_set.png" style="width: 100%;" /></a>
 <p>The process for selecting the best model using a validation set almost always follows the following pseudocode.</p>
 <div class="proof algorithm admonition" id="validation-set">
-<p class="admonition-title"><span class="caption-number">Algorithm 2 </span> (Choose Complexity with Validation Set)</p>
+<p class="admonition-title"><span class="caption-number">Algorithm 2.1 </span> (Choose Complexity with Validation Set)</p>
 <section class="algorithm-content" id="proof-content">
 <ol class="arabic simple">
 <li><p><strong>train, test, validation</strong> = split_data(<strong>dataset</strong>)</p></li>
@@ -1705,7 +1707,7 @@ Test Error:     2861.4857604408753
 </ul>
 </section>
 <section id="cross-validation">
-<h3>Cross Validation<a class="headerlink" href="#cross-validation" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">2.5.2. </span>Cross Validation<a class="headerlink" href="#cross-validation" title="Permalink to this heading">#</a></h3>
 <p>To avoid having to cut up our dataset even further, another common technique is to do <strong>cross validation</strong>. Cross validation is a clever idea to split up the training set (after we have split off the test set) into many small datasets that we use for training and validation.</p>
 <a class="reference internal image-reference" href="../../_images/cross_validation.png"><img alt="../../_images/cross_validation.png" src="../../_images/cross_validation.png" style="width: 100%;" /></a>
 <p>We use each chunk of the training data in a process to validate the model. We repeatedly train a model using all but one chunk of the available chunks, and then validate the learned predictor on the left-out chunk. This process is repeated, leaving each chunk out once while training on the others.</p>
@@ -1727,7 +1729,7 @@ Test Error:     2861.4857604408753
 </aside>
 <p>We specify this process a little more formally with pseudo-code<sup>21, 22</sup>:</p>
 <div class="proof algorithm admonition" id="cross_validation">
-<p class="admonition-title"><span class="caption-number">Algorithm 3 </span> (Choose Complexity with Cross Validation)</p>
+<p class="admonition-title"><span class="caption-number">Algorithm 2.2 </span> (Choose Complexity with Cross Validation)</p>
 <section class="algorithm-content" id="proof-content">
 <ol class="arabic simple">
 <li><p><strong>chunk_1</strong>, …, <strong>chunk_k</strong>, <strong>test</strong> = split_data_cv(<strong>dataset</strong>)</p></li>
@@ -1755,7 +1757,7 @@ Test Error:     2861.4857604408753
 </section>
 </section>
 <section id="recap">
-<h2>Recap<a class="headerlink" href="#recap" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.6. </span>Recap<a class="headerlink" href="#recap" title="Permalink to this heading">#</a></h2>
 <p>In this chapter, we introduced the ideas behind assessing the performance of our models. Specifically, in the context of comparing models of different complexities.</p>
 <p>We looked at understanding how the complexity of our model (in our case the degree <span class="math notranslate nohighlight">\(p\)</span> of the polynomial) impacts the error. We saw how a model can underfit or overfit and how that interacts with how much data we have. We finally saw how this true error can decomposed into these sources of underfitting and overfitting in the form of a model’s bias and variance (and irreducible noise).</p>
 <p>We then discussed techniques for choosing the right model complexity. Namely, we discussed using a validation set and cross validation as possible approaches to choosing the right model complexity. We compared the two approaches for their pros and cons. Regardless of which technique you use, it is extremely important to understand why we need other approaches like this instead of relying on the test set.</p>
@@ -1769,12 +1771,12 @@ Test Error:     2861.4857604408753
 </aside>
 <p>While we focused on the context of polynomial regression and choosing a degree polynomial <span class="math notranslate nohighlight">\(p\)</span> in this chapter, you will see in this course almost every machine learning problem we will encounter requires these ideas from model selection<sup>23</sup>. In fact, many current threads of research in the space of machine learning (deep learning in particular) are all focused on how to tune the model’s complexity in more efficient ways and how to prevent overfitting<sup>24</sup>.</p>
 <section id="test-your-understanding">
-<h3>Test your Understanding<a class="headerlink" href="#test-your-understanding" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">2.6.1. </span>Test your Understanding<a class="headerlink" href="#test-your-understanding" title="Permalink to this heading">#</a></h3>
 <p>Consider the following image of a trained predictor on a given dataset. We represent the training set as blue dots and the test set as gray dots and the trained predictor as the green line.</p>
 <a class="reference internal image-reference" href="../../_images/quiz_graph.png"><img alt="../../_images/quiz_graph.png" src="../../_images/quiz_graph.png" style="width: 100%;" /></a>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="AdQmfYJsemQf" data-shufflequestions="False"
+<div class="output text_html"><div id="JIgToectXWxH" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -1936,7 +1938,7 @@ Test Error:     2861.4857604408753
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsAdQmfYJsemQf=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
+}</style></div><script type="application/javascript">var questionsJIgToectXWxH=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -2670,7 +2672,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsAdQmfYJsemQf,  AdQmfYJsemQf);
+        show_questions(questionsJIgToectXWxH,  JIgToectXWxH);
         }
         </script></div>
 </div>
@@ -2715,8 +2717,17 @@ if (typeof version == 'undefined') {
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><i class="fas fa-book fa-fw"></i> Linear Regression</p>
+        <p class="prev-next-title"><span class="section-number">1. </span><i class="fas fa-book fa-fw"></i> Linear Regression</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../ridge/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span><i class="fas fa-book fa-fw"></i> Regularization: Ridge</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
@@ -2736,21 +2747,21 @@ if (typeof version == 'undefined') {
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brief-seque-into-theory-land">A brief seque into theory-land</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-practice">Back to practice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explaining-error">Explaining Error</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">Bias-Variance Tradeoff</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">Bias</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brief-seque-into-theory-land">2.1. A brief seque into theory-land</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-practice">2.2. Back to practice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explaining-error">2.3. Explaining Error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">2.4. Bias-Variance Tradeoff</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">2.4.1. Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">2.4.2. Variance</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-choose-model-complexity">How to Choose Model Complexity?</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-set">Validation Set</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross Validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-choose-model-complexity">2.5. How to Choose Model Complexity?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-set">2.5.1. Validation Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">2.5.2. Cross Validation</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">Recap</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">Test your Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">2.6. Recap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding">2.6.1. Test your Understanding</a></li>
 </ul>
 </li>
 </ul>
