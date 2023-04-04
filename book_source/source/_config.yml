@@ -22,6 +22,7 @@ parse:
 #######################################################################################
 # HTML-specific settings
 html:
+  announcement: "This book is still under construction. We appreciate your patience as we get it completed. Feedback is welcome!"
   favicon: "_static/favicon.png"
   use_edit_page_button: true
   use_repository_button: true
