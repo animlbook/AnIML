@@ -1,8 +1,8 @@
 #######################################################################################
 # Book settings
-title: "<b><i>AnIML</i></b><br/> Another Introduction to Machine Learning"
+title: "AnIML: Another Introduction to Machine Learning"
 author: "Hunter Schafer"
-copyright: "2022"
+copyright: "2023"
 logo: _static/logo.png
 
 #######################################################################################
@@ -29,14 +29,20 @@ html:
   # Kind of a hack, but I have to hardcode the GitHub URL to get this to work :(
   extra_navbar: '<a href="https://hschafer.github.io/AnIML/acknowledgements.html">Acknowledgements</a><br/>Powered by <a href="https://jupyterbook.org">Jupyter Book</a>'
   extra_footer: |
-    Have feedback or spotted a bug? Please make a <a href="https://github.com/hschafer/AnIML/issues">GitHub issue</a>
-    or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
-
-    <div>
+    <div style="float: right">
       <!-- 100% privacy friendly analytics -->
       <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
       <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+      <a href="https://simpleanalytics.com/?utm_source=&utm_content=badge" referrerpolicy="origin" target="_blank"><picture><source srcset="https://simpleanalyticsbadges.com/?mode=dark" media="(prefers-color-scheme: dark)" /><img src="https://simpleanalyticsbadges.com/?mode=light" loading="lazy" referrerpolicy="no-referrer" crossorigin="anonymous" /></picture></a>
     </div>
+
+    <div>
+      <p>
+        Have feedback or spotted a bug? Please make a <a href="https://github.com/hschafer/AnIML/issues">GitHub issue</a>
+        or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
+      </p>
+    </div>
+
 
   comments:
     utterances:
