@@ -28,7 +28,7 @@ html:
   use_repository_button: true
   use_issues_button: true
   # Kind of a hack, but I have to hardcode the GitHub URL to get this to work :(
-  extra_navbar: '<a href="https://hschafer.github.io/AnIML/acknowledgements.html">Acknowledgements</a><br/>Powered by <a href="https://jupyterbook.org">Jupyter Book</a>'
+  extra_navbar: '<a href=" https://animlbook.github.io/AnIML/acknowledgements.html">Acknowledgements</a><br/>Powered by <a href="https://jupyterbook.org">Jupyter Book</a>'
   extra_footer: |
     <div style="float: right">
       <!-- 100% privacy friendly analytics -->
@@ -39,7 +39,7 @@ html:
 
     <div>
       <p>
-        Have feedback or spotted a bug? Please make a <a href="https://github.com/hschafer/AnIML/issues">GitHub issue</a>
+        Have feedback or spotted a bug? Please make a <a href="https://github.com/animlbook/AnIML/issues">GitHub issue</a>
         or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
       </p>
     </div>
@@ -47,7 +47,7 @@ html:
 
   comments:
     utterances:
-      repo: "hschafer/AnIML"
+      repo: "animlbook/AnIML"
       issue-term: "pathname"
       label: "💬 Comments"
       theme: "preferred-color-scheme"
@@ -59,7 +59,7 @@ launch_buttons:
   binderhub_url: https://mybinder.org
 
 repository:
-  url: https://github.com/hschafer/AnIML
+  url: https://github.com/animlbook/AnIML
   path_to_book: book_source/source/
   branch: main
 

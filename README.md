@@ -1,10 +1,10 @@
 # AnIML: Another Introduction to Machine Learning
 
-[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://hschafer.github.io/AnIML/)
+[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)]( https://animlbook.github.io/AnIML/)
 
 Author: [Hunter Schafer](https://homes.cs.washington.edu/~hschafer/)
 
-This repository defines the source code for the [AnIML book](https://hschafer.github.io/AnIML/). This book corresponds with the course content of University of Washington's CSE/STAT 416.
+This repository defines the source code for the [AnIML book]( https://animlbook.github.io/AnIML/). This book corresponds with the course content of University of Washington's CSE/STAT 416.
 
 ## Feedback or Spot a Bug?
 
