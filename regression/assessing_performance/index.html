@@ -75,7 +75,7 @@ var addUtterances = () => {
     script.src = "https://utteranc.es/client.js";
     script.async = "async";
 
-    script.setAttribute("repo", "hschafer/AnIML");
+    script.setAttribute("repo", "animlbook/AnIML");
     script.setAttribute("issue-term", "pathname");
     script.setAttribute("theme", "preferred-color-scheme");
     script.setAttribute("label", "💬 Comments");
@@ -261,7 +261,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://mybinder.org/v2/gh/hschafer/AnIML/main?urlpath=lab/tree/book_source/source/regression/assessing_performance/index.md" target="_blank"
+      <li><a href="https://mybinder.org/v2/gh/animlbook/AnIML/main?urlpath=lab/tree/book_source/source/regression/assessing_performance/index.md" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onBinder"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -292,7 +292,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/hschafer/AnIML" target="_blank"
+      <li><a href="https://github.com/animlbook/AnIML" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -309,7 +309,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/hschafer/AnIML/edit/main/book_source/source/regression/assessing_performance/index.md" target="_blank"
+      <li><a href="https://github.com/animlbook/AnIML/edit/main/book_source/source/regression/assessing_performance/index.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -326,7 +326,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/hschafer/AnIML/issues/new?title=Issue%20on%20page%20%2Fregression/assessing_performance/index.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/animlbook/AnIML/issues/new?title=Issue%20on%20page%20%2Fregression/assessing_performance/index.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -522,7 +522,7 @@ data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup
 <p>Given what we’ve discussed so far, our first instinct might be to us the quality metric (e.g., MSE) on the data the predictor was trained from. Given the predictors (colored curves) in the animation above, which one will have the lowest MSE on the training dataset (the black dots)?<sup>3</sup></p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="xaSFfYftGwiU" data-shufflequestions="False"
+<div class="output text_html"><div id="idstfYaFdJZU" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -684,7 +684,7 @@ data to learn more complex relationships (e.g. polynomial regression)<sup>1</sup
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsxaSFfYftGwiU=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
+}</style></div><script type="application/javascript">var questionsidstfYaFdJZU=[{"question": "Which predictor in the animation above has the lowest MSE on the dataset shown?", "type": "multiple_choice", "answers": [{"answer": "$p = 1$", "correct": false}, {"answer": "$p = 3$", "correct": false}, {"answer": "$p = 5$", "correct": false}, {"answer": "$p = 7$", "correct": false}, {"answer": "$p = 9$", "correct": true, "feedback": "\n                    With a higher degree polynomial, it is allowed to \"wiggle\" up and down more. If you keep letting the degree grow, it will eventually be able to be complex enough so that the curve passes perfectly through every point. In other words, a sufficiently high degree polynomial might be able to get an MSE of 0. So following that approach would lead to use selecting the model with the highest degree $p$ every time!\n                "}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1418,7 +1418,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsxaSFfYftGwiU,  xaSFfYftGwiU);
+        show_questions(questionsidstfYaFdJZU,  idstfYaFdJZU);
         }
         </script></div>
 </div>
@@ -1541,7 +1541,7 @@ if (typeof version == 'undefined') {
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Num Train: 353
 Num Test:  89
 Training Error: 2882.245688259254
-Test Error:     2861.4857604408753
+Test Error:     2861.4857604408744
 </pre></div>
 </div>
 </div>
@@ -1764,7 +1764,7 @@ Test Error:     2861.4857604408753
 <a class="reference internal image-reference" href="../../_images/quiz_graph.png"><img alt="../../_images/quiz_graph.png" src="../../_images/quiz_graph.png" style="width: 100%;" /></a>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="TMiJSRRLhnFF" data-shufflequestions="False"
+<div class="output text_html"><div id="BQwCoEofYCPZ" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -1926,7 +1926,7 @@ Test Error:     2861.4857604408753
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsTMiJSRRLhnFF=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
+}</style></div><script type="application/javascript">var questionsBQwCoEofYCPZ=[{"question": "We would expect that the training error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": true}, {"answer": "High", "correct": false}]}, {"question": "We would expect that the true error using this predictor to be ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Low", "correct": false}, {"answer": "High", "correct": true}]}, {"question": "To determine how our model will perform on future data, we should ________\n        ", "type": "multiple_choice", "answers": [{"answer": "Compute training error", "correct": false}, {"answer": "Compute test error", "correct": true}]}, {"question": "If you find that your learned predictor has high test error, that is sufficient evidence to determine it is overfitting.", "type": "multiple_choice", "answers": [{"answer": "True", "correct": false}, {"answer": "False", "correct": true, "feedback": "It could also be underfitting!"}]}, {"question": "Which of the following are reasons to use a validation set to select the best model complexity instead of using the test set. <i>Select all that apply</i>", "type": "many_choice", "answers": [{"answer": "It is more efficient to evaluate performance on the validation set.", "correct": false}, {"answer": "The validation set is a better estimate of future performance than the test set.", "correct": false}, {"answer": "We want to make sure the test set is a good estimate of future performance, so we also can't use it to select the right model complexity.", "correct": true}, {"answer": "We prefer the situation when we have smaller training and test sets.", "correct": false}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -2660,7 +2660,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsTMiJSRRLhnFF,  TMiJSRRLhnFF);
+        show_questions(questionsBQwCoEofYCPZ,  BQwCoEofYCPZ);
         }
         </script></div>
 </div>
@@ -2798,7 +2798,7 @@ By Hunter Schafer
 
 <div>
   <p>
-    Have feedback or spotted a bug? Please make a <a href="https://github.com/hschafer/AnIML/issues">GitHub issue</a>
+    Have feedback or spotted a bug? Please make a <a href="https://github.com/animlbook/AnIML/issues">GitHub issue</a>
     or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
   </p>
 </div>
