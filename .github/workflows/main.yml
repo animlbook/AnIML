@@ -25,8 +25,8 @@ jobs:
       - name: 🔧 Build and run dev container task
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/animlbook/animlbook-devcontainer
-          cacheFrom: ghcr.io/animlbook/animlbook-devcontainer
+          imageName: ghcr.io/hschafer/animlbook-devcontainer
+          cacheFrom: ghcr.io/hschafer/animlbook-devcontainer
           push: always
           runCmd: make all
 
