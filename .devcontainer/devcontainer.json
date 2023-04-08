@@ -1,8 +1,8 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/anaconda
 {
-	"name": "Anaconda (Python 3)",
-	"build": { 
+	"name": "AnIML Book (Python 3.9 + Manim)",
+	"build": {
 		"context": "..",
 		"dockerfile": "Dockerfile"
 	}
