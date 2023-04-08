@@ -58,7 +58,7 @@ Build the new book HTML by running:
 jupyter-book build book_source/source
 
 # Or with the make command
-make html
+make all
 ```
 
 This will rebuild the whole book into the `book_source/source/_build` directory, which might take some time depending on the change.

@@ -29,7 +29,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           pip install -r requirements.txt
-          make html  # TODO set up manim to build on Github Actions
+          make all
 
       - name: Deploy 🚀
         if: github.event_name == 'push'
