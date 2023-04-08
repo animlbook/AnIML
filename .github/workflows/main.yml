@@ -15,9 +15,19 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: 🔧 Build and run dev container task
         uses: devcontainers/ci@v0.3
         with:
+          imageName: ghcr.io/animlbook/animlbook-devcontainer
+          cacheFrom: ghcr.io/animlbook/animlbook-devcontainer
+          push: always
           runCmd: make all
 
       - name: Deploy 🚀
