@@ -15,21 +15,10 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
 
-      - name: Set up Python 🐍
-        uses: actions/setup-python@v4
+      - name: 🔧 Build and run dev container task
+        uses: devcontainers/ci@v0.3
         with:
-          python-version: 3.9
-
-      - name: Install Manim 🎥
-        run: |
-          sudo apt-get update
-          sudo apt install build-essential python3-dev libcairo2-dev libpango1.0-dev ffmpeg texlive-latex-extra
-          pip install manim
-
-      - name: Install and Build 🔧
-        run: |
-          pip install -r requirements.txt
-          make all
+          runCmd: make all
 
       - name: Deploy 🚀
         if: github.event_name == 'push'
