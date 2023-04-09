@@ -1,4 +1,4 @@
-name: Build and Deploy - Updated
+name: Build and Deploy
 on:
   pull_request:
     branches:
@@ -7,9 +7,7 @@ on:
     branches:
       - main
 jobs:
-  build_and_deploy:
-    permissions:
-      contents: write
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -21,21 +19,33 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.IMAGE_REGISTRY_TOKEN }}
-
-      - name: Pre-build dev container image
+  build_and_deploy:
+    needs: setup
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      # Assumes the Deploy action below leaves existing videos there :)
+      - name: "Check if animations changed"
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            manim:
+              - "manim_animations/**"
+      - name: Build Videos 🎥
+        if: steps.filter.outputs.manim == 'true'
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/animlbook/animl-devcontainer
           cacheFrom: ghcr.io/animlbook/animl-devcontainer
-          push: always
-
-      - name: 🔧 Build Book
+          push: never
+          runCmd: make manim
+      - name: Build Book (HTML) 📖
         uses: devcontainers/ci@v0.3
         with:
           cacheFrom: ghcr.io/animlbook/animl-devcontainer
           push: never
           runCmd: make html
-
       - name: Deploy 🚀
         if: github.event_name == 'push'
         uses: JamesIves/github-pages-deploy-action@4.1.4
