@@ -34,7 +34,7 @@ jobs:
         with:
           cacheFrom: ghcr.io/hschafer/animlbook-devcontainer
           push: never
-          runCmd: make all
+          runCmd: make html
 
       - name: Deploy 🚀
         if: github.event_name == 'push'
