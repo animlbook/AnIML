@@ -20,4 +20,3 @@ html:
 	jupyter-book build "$(SRC_DIR)"
 
 all: animations images html
-	;
