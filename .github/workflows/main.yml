@@ -7,7 +7,9 @@ on:
     branches:
       - main
 jobs:
-  setup:
+  build_and_deploy:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -19,12 +21,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.IMAGE_REGISTRY_TOKEN }}
-  build_and_deploy:
-    needs: setup
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
+
       # Assumes the Deploy action below leaves existing videos there :)
       - name: "Check if animations changed"
         uses: dorny/paths-filter@v2
