@@ -25,14 +25,14 @@ jobs:
       - name: Pre-build dev container image
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/hschafer/animlbook-devcontainer
-          cacheFrom: ghcr.io/hschafer/animlbook-devcontainer
+          imageName: ghcr.io/animlbook/AnIML-devcontainer
+          cacheFrom: ghcr.io/animlbook/AnIML-devcontainer
           push: always
 
       - name: 🔧 Build Book
         uses: devcontainers/ci@v0.3
         with:
-          cacheFrom: ghcr.io/hschafer/animlbook-devcontainer
+          cacheFrom: ghcr.io/animlbook/AnIML-devcontainer
           push: never
           runCmd: make html
 
