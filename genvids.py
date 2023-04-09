@@ -97,6 +97,8 @@ def preview_file(path):
 
 
 def manim(af, hard, tc, manim_args, copy=False):
+    # Ensure out directory exists
+    os.makedirs(af.video_output_dir, exist_ok=True)
 
     # extend python path to inclde this directory
     env = os.environ.copy()
@@ -160,8 +162,7 @@ def manim(af, hard, tc, manim_args, copy=False):
     if copy:
         dstfile = public_path
         dstdir, _ = os.path.split(dstfile)
-        if not os.path.exists(dstdir):
-            os.makedirs(dstdir)
+        os.makedirs(dstdir, exist_ok=True)
         shutil.copy(filepath, dstfile)
         print(f"{tc.PURPLE}[COPY]{tc.ENDC}        ~> {dstfile}")
 
