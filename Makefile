@@ -16,7 +16,9 @@ images_hard:
 clean:
 	jupyter-book clean "$(SRC_DIR)"
 
+manim: animations images
+
 html:
 	jupyter-book build "$(SRC_DIR)"
 
-all: animations images html
+all: manim html
