@@ -22,12 +22,18 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🔧 Build and run dev container task
+      - name: Pre-build dev container image
         uses: devcontainers/ci@v0.3
         with:
           imageName: ghcr.io/hschafer/animlbook-devcontainer
           cacheFrom: ghcr.io/hschafer/animlbook-devcontainer
           push: always
+
+      - name: 🔧 Build Book
+        uses: devcontainers/ci@v0.3
+        with:
+          cacheFrom: ghcr.io/hschafer/animlbook-devcontainer
+          push: never
           runCmd: make all
 
       - name: Deploy 🚀
