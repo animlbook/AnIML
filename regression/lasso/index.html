@@ -1,0 +1,1978 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>4. Feature Selection and LASSO Regularization &#8212; AnIML: Another Introduction to Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "animlbook/AnIML");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "preferred-color-scheme");
+    script.setAttribute("label", "💬 Comments");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="../../_static/script.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1], "abs": ["\\lvert #1 \\rvert", 1], "norm": ["\\lVert #1 \\rVert", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'regression/lasso/index';</script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="3. Ridge Regularization" href="../ridge/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">This book is still under construction. We appreciate your patience as we get it completed. Feedback is welcome!</div>
+  </div>
+
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro/index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro/index.html">
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regression</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../linear_regression/index.html">1. <i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assessing_performance/index.html">2. <i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ridge/index.html">3. <i class="fas fa-book fa-fw"></i> Ridge Regularization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. <i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/animlbook/AnIML/main?urlpath=lab/tree/book_source/source/regression/lasso/index.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/edit/main/book_source/source/regression/lasso/index.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/issues/new?title=Issue%20on%20page%20%2Fregression/lasso/index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/regression/lasso/index.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/regression/lasso/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">4.1. Feature Selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-subsets">4.2. All Subsets</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#efficiency-of-all-subsets">4.2.1. Efficiency of All Subsets</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#greedy-algorithms-for-feature-selection">4.3. Greedy Algorithms for Feature Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-forward-stepwise-algorithm">4.3.1. Example: Forward Stepwise Algorithm</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization">4.4. Regularization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso-regularization-for-feature-selection">4.5. LASSO Regularization for Feature Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-sparsity-analytical-view">4.5.1. Why Sparsity? Analytical View</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-sparsity-geometric-view">4.5.2. Why Sparsity? Geometric View</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practicalities-with-lasso">4.6. Practicalities with LASSO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-lambda">4.6.1. Choosing <span class="math notranslate nohighlight">\(\lambda\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso-only-for-feature-selection">4.6.2. LASSO Only for Feature Selection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issues-with-lasso">4.6.3. Issues with LASSO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grain-of-salt-feature-selection">4.7. Grain of Salt: Feature Selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-compare-ridge-and-lasso">4.8. Recap: Compare Ridge and LASSO</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell tag_remove-input docutils container">
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-book-fa-fw-i-feature-selection-and-lasso-regularization">
+<h1><span class="section-number">4. </span><i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-feature-selection-and-lasso-regularization" title="Permalink to this heading">#</a></h1>
+<p>In the last chapter on <a class="reference internal" href="../ridge/index.html"><span class="doc"> Ridge Regularization</span></a> we discussed one technique to prevent our models from overfitting by using the concept of <em>regularization</em> to modify the quality metric used when learning our model parameters to penalize predictors with large coefficients. We augmented our original training quality metric that only cared about the training error <span class="math notranslate nohighlight">\(L(w)\)</span> (in our case <span class="math notranslate nohighlight">\(MSE(w)\)</span>) by adding in a regularizer <span class="math notranslate nohighlight">\(R(w)\)</span> to measure the magnitude of our models coefficients. The <span class="math notranslate nohighlight">\(\lambda\)</span> term was a hyperparameter to control for how much we want to penalize high coefficients.</p>
+<div class="math notranslate nohighlight">
+\[\hat{w} = \argmin{w}L(w) + \lambda R(w)\]</div>
+<p>We also briefly discussed how there are many ways to define this regularizer <span class="math notranslate nohighlight">\(R(w)\)</span>. In the last chapter on <a class="reference internal" href="../ridge/index.html"><span class="doc"> Ridge Regularization</span></a> we defined <span class="math notranslate nohighlight">\(R(w) = \lVert w \rVert_2^2 = \sum_{j=1}^D w_j^2\)</span> which yields the Ridge Regression model. We also described using the regularizer <span class="math notranslate nohighlight">\(R(w) = \lVert w \rVert_1 = \sum_{j=1}^D \lvert w \rvert\)</span>. In this chapter we will discuss the importance of <strong>feature selection</strong> and how we can use the LASSO to help us accomplish that goal.</p>
+<section id="feature-selection">
+<h2><span class="section-number">4.1. </span>Feature Selection<a class="headerlink" href="#feature-selection" title="Permalink to this heading">#</a></h2>
+<p>The process of <strong>feature selection</strong> is to narrow down from our list of possible features some subset of them that are the most “meaningful” or the most “effective” at predicting our labels. There are a few reasons why we might care to select just a few features to work with:</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>1. Consider a simple approach to try learning on DNA sequences (strings of nucleotides A, C, T, G). You could imagine if you use one feature per section of DNA, we would have something like a <span class="math notranslate nohighlight">\(\hat{w}\)</span> with approximately 3.2 billion coefficients that need to be learned (<a class="reference external" href="https://nigms.nih.gov/education/Inside-Life-Science/Pages/Genetics-by-the-Numbers.aspx#:~:text=6&amp;text=That's%20how%20many%20feet%20long,round%20trips%20to%20the%20Moon.">source</a>)!</p>
+</aside>
+<ul class="simple">
+<li><p><em>Model Complexity</em>: Models with more features tend to be more complex and are more likely to overfit. By reducing the numbers of features to a smaller subset that are the most meaningful, we hopefully can avoid overfitting.</p></li>
+<li><p><em>Interpretability</em>: while a bit more nebulous in nature, we have a strong intuition that simpler models are easier for ML practitioners and users to understand. The idea is that if a model is simpler, it requires less cognitive load for a human to understand what the model is doing or why it makes the decisions it does.</p></li>
+<li><p><em>Computational Efficiency</em>: In many settings, we can have feature spaces that are extremely large<sup>1</sup>. If there are many features, there will be many coefficients we have to learn. This will both cause a slow down in training time since we have to update and compute information for more parameters, but also when it comes to making predictions for new values. If we have to evaluate <span class="math notranslate nohighlight">\(\hat{y} = \hat{w}^Th(x)\)</span>, this requires doing an element-wise product and then summing up terms for every feature!</p></li>
+</ul>
+<p>However, many of these problems are solved if we demand that the learned coefficients <span class="math notranslate nohighlight">\(\hat{w}\)</span> are <strong>sparse</strong>, or many of the coefficients are 0. That means we only have to consider the relatively few coefficients that are non-zero. How many is enough is yet another modeling decision we will set as a hyperparameter.</p>
+<div class="math notranslate nohighlight">
+\[\hat{y} = \sum_{\hat{w}_j \neq 0}\hat{w}_j h_j(x)\]</div>
+<p>This notion is also helpful if you consider a real-world setting such as our task of predicting the price of houses. There are potentially many features that we could use, but maybe only a few of them are the “most important bits” of information that have the highest impact on house price. Additionally, many of the features might be strongly correlated so including them all might be redundant.</p>
+<p>Sparsity in our models is also a useful tool for scientific discovery. Imagine a neurologist investigating how brain activity relates to happiness. The inputs <span class="math notranslate nohighlight">\(x\)</span> are descriptions of an image scan of the brain (many features for all pixels in the image) and the output is some number from 0 to 10 describing how happy the person was at the time of that brain scan. If we train a model to predict happiness from brain state, and additionally require that model is <em>sparse</em>, it might help us find the most important areas of the brain for influencing happiness. This can then inspire future research into brain activity.</p>
+<img alt="An image of a brain activity lighting up (inputs x) and mapping on a scale from 0 to 10" class="align-center" src="../../_images/brain.png" />
+</section>
+<section id="all-subsets">
+<h2><span class="section-number">4.2. </span>All Subsets<a class="headerlink" href="#all-subsets" title="Permalink to this heading">#</a></h2>
+<p>Our initial approach to selecting the subset of features will, in some sense, be the theoretically “best” way to find the best subset of features, but we will see might not actually work in practice.</p>
+<p>If we are interested in trying to find the subset of features that are the most important, the simplest approach we could consider is just try out <em>every</em> subset of features to find which one is optimal. As a small example, if you have features A and B, you could try out models that use</p>
+<ul class="simple">
+<li><p>None of the features (i.e., the empty set of features)</p></li>
+<li><p>Just feature A</p></li>
+<li><p>Just feature B</p></li>
+<li><p>Both feature A and B</p></li>
+</ul>
+<p>With more features to choose from, you can do a similar enumeration of all possible subsets. From our discussion of model complexity in <a class="reference internal" href="../assessing_performance/index.html"><span class="doc"> Assessing Performance</span></a>, we can already start to make some assessments of how using more or fewer features in our subset of selected feature affects our model performance:</p>
+<ul class="simple">
+<li><p>If we select fewer features, our model will tend to be simpler (higher bias, lower variance). If it is too simple, we will expect both high training error and high true error.</p></li>
+<li><p>If we select more features, our model will tend to be more complex (lower bias, higher variance). If the model is too complex, we will expect low training error and high true error.</p></li>
+</ul>
+<p>So, if we want to choose the right subset of feature of the right size, we will have to use a procedure like we have discussed multiple times previously: Try all of the options and compare them by some sort of validation error (either using a validation set or cross validation).</p>
+<p>Consider our housing dataset, and only considering the features:</p>
+<ul class="simple">
+<li><p># bathrooms</p></li>
+<li><p># bedrooms</p></li>
+<li><p>sq.ft. living room</p></li>
+<li><p>sq.ft. lot</p></li>
+<li><p># floors</p></li>
+<li><p>year built</p></li>
+<li><p>year renovated</p></li>
+<li><p>waterfront</p></li>
+</ul>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>TODO add animation</p>
+</aside>
+<p>The following graph shows running this experiment on all subsets of these features. The x-axis shows the number of features considered at a time and the y-axis shows the validation <span class="math notranslate nohighlight">\(MSE\)</span> on some held out dataset. Each dot corresponds to one model trained by some subset of these features. For example one subset of these features of size 3 is <code class="docutils literal notranslate"><span class="pre">[\#</span> <span class="pre">bathrooms,</span> <span class="pre">sq.</span> <span class="pre">ft.</span> <span class="pre">living,</span> <span class="pre">year</span> <span class="pre">built]</span></code>. Even for a fixed size for the subset of features (e.g., 3), you will see performance all over the place from different subsets of that size simply because some subsets of feature are more informative than others. For each size, the optimal subset (based on minimum validation error) is highlighted in pink. So using our selection process, we would probably choose the features associated to the pink dot with 6 features chosen.</p>
+<img alt="A graph showing the errors of models trained on various subsets of the features. Described in last paragraph." class="align-center" src="../../_images/all_subsets.png" />
+<p>One important note is that the optimal set of <span class="math notranslate nohighlight">\(k\)</span> features may or may not have overlap with the optimal set of <span class="math notranslate nohighlight">\(k+1\)</span> or <span class="math notranslate nohighlight">\(k-1\)</span> features. In other words, the sets of optimal features are not “nested”. For example, it’s possible for the optimal subset of features, when limited to one feature, is just <code class="docutils literal notranslate"><span class="pre">[sq.ft.</span> <span class="pre">lot]</span></code>. But when we allow it to include 2 features, maybe it’s the case that <code class="docutils literal notranslate"><span class="pre">[\#</span> <span class="pre">bathrooms,</span> <span class="pre">\#</span> <span class="pre">bedrooms]</span></code> are more information <em>jointly</em> but not separately. Because of this, we are really limited to trying all possible subsets if we want to find the globally optimal subset of features.</p>
+<section id="efficiency-of-all-subsets">
+<h3><span class="section-number">4.2.1. </span>Efficiency of All Subsets<a class="headerlink" href="#efficiency-of-all-subsets" title="Permalink to this heading">#</a></h3>
+<p>One question we might ask is: How efficient is this algorithm? If I have <span class="math notranslate nohighlight">\(D\)</span> features to choose from, how much time might it take to try out all of these possibilities? We’ll see that this algorithm is actually not that practical because its runtime is primarily based on the number of subsets there are of <span class="math notranslate nohighlight">\(D\)</span> features, and it turns out that number can be high for even a moderate number of features.</p>
+<p>To count the number of possible subsets, we could try writing out all of the possible models (for consistency, we will use the notation <span class="math notranslate nohighlight">\(w_i\)</span> to match the index <span class="math notranslate nohighlight">\(i\)</span> for our feature vector <span class="math notranslate nohighlight">\(h_i(x)\)</span>.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Model</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0 + w_1h_1(x)\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0 + w_2h_2(x)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>…</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0 + w_1h_1(x) + w_2h_2(x)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>…</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0 + w_1h_1(x) + w_2h_2(x) + ... + w_Dh_D(x)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>2. We are assuming here that you always include the intercept <span class="math notranslate nohighlight">\(w_0\)</span>. You could extend all of this discussion to include/exclude the intercept as well if you choose.</p>
+</aside>
+<p>Even with just our <span class="math notranslate nohighlight">\(D = 8\)</span> features, there are quite a lot of them to list out. But we can actually come up with a trick to count them without listing them out! We make the observation that every one of these models either contain some feature <span class="math notranslate nohighlight">\(h_i(x)\)</span> or they do not. In other words, we can write out a string of 0s and 1s to name each of these models, where a 1 at index <span class="math notranslate nohighlight">\(i\)</span> indicates feature <span class="math notranslate nohighlight">\(i\)</span> is in the model, and a 0 indicates it’s not<sup>2</sup>. So we could write these model strings down as following</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Model</p></th>
+<th class="head text-left"><p>String</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0\)</span></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[0</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">...</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0 + w_1h_1(x)\)</span></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[1</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">...</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0]</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0 + w_2h_2(x)\)</span></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[0</span> <span class="pre">1</span> <span class="pre">0</span> <span class="pre">...</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0 + w_1h_1(x) + w_2h_2(x)\)</span></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[1</span> <span class="pre">1</span> <span class="pre">0</span> <span class="pre">...</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>…</p></td>
+<td class="text-left"><p>…</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\hat{y}_i = w_0 + w_1h_1(x) + w_2h_2(x) + ... + w_Dh_D(x)\)</span></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[1</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">...</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">1]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>You may or may not have seen how to count all binary strings (strings of 1s and 0s) of length <span class="math notranslate nohighlight">\(D\)</span> before. The trick is to notice that at each index, there are two choices (0 or 1). So the number of strings possible is <span class="math notranslate nohighlight">\(2 \cdot 2 \cdot 2 \cdot ... \cdot 2\)</span> (<span class="math notranslate nohighlight">\(D\)</span> times), also written as <span class="math notranslate nohighlight">\(2^D\)</span>. Computer scientists use the notation <span class="math notranslate nohighlight">\(\mathcal{O}(2^D)\)</span> to describe the runtime of this algorithm primarily depends on the number of subsets here <span class="math notranslate nohighlight">\(2^D\)</span>.</p>
+<p>If you haven’t seen algorithms that scale like this before, you might be thinking that it can’t be <em>that</em> bad. Let’s work through a concrete example to see how this model scales. Suppose it takes our computer 8 minutes to calculate all of the validation errors for all subsets of 8 features (that works out to about 20 milliseconds per subset of features). Take a guess how long you think it would take to train the following all subset models before expanding to see their answers. Really, make a guess before clicking the drop down to see how close you were!</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+What if we tried all subsets of 16 features?<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">This would take about <span class="math notranslate nohighlight">\(21\)</span> <strong><em>minutes</em></strong> (about 256 times as long as 8 features)</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+What if we tried all subsets of 32 features?<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">This would take about <span class="math notranslate nohighlight">\(3\)</span> <strong><em>years</em></strong> (about 17 million times as long as 8 features)</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+What if we tried all subsets of 100 features?<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">This would take about <span class="math notranslate nohighlight">\(7.5 \cdot 10^{20}\)</span> <strong><em>years</em></strong> (a lot longer than our 8 features model). For reference, this is approximately 50,000,000,000 times the age of our universe 😱</p>
+</div>
+</details><p>To be very clear, 100 features is not what companies are all excited about when they are talking about “Big Data”. The datasets used in many real-world applications are orders of magnitudes larger than these relatively small examples. So clearly, this algorithm while it will find the best subset, it won’t find it in a practical timeline!</p>
+<p>So if this algorithm is not practical, what can we do? At a high level, we will have to settle for an approximation. We will come up with some algorithm that will run in our lifetimes, but it won’t guarantee to find the best possible subset.</p>
+<p>At a high level, the two approximations we will explore for the rest of this chapter are:</p>
+<ol class="arabic simple">
+<li><p>Greedy algorithms</p></li>
+<li><p>Regularization</p></li>
+</ol>
+</section>
+</section>
+<section id="greedy-algorithms-for-feature-selection">
+<h2><span class="section-number">4.3. </span>Greedy Algorithms for Feature Selection<a class="headerlink" href="#greedy-algorithms-for-feature-selection" title="Permalink to this heading">#</a></h2>
+<p>A <strong>greedy algorithm</strong> is a flavor of algorithms for approximating intractable solutions like the best subset of features. So instead of finding the best option by trying every possible option, we will build up a solution by <em>greedily</em> choosing the best option at the time. Many of us are familiar with greedy algorithms. Every time to you go to a new grocery store, you often just start shopping down the aisles right in front of you rather than getting a floor plan of the whole store to plan some globally optimal route. It’s possible your greedy route might not be optimal, but it’s hopefully not that much worse and maybe saves you time that it would have taken you to find the map and compute the “optimal” path.</p>
+<p>There are lots of examples of algorithms that try to approximate solutions using a greedy approach. For feature selection, they generally fall into one of three possible types, although others exist as well!</p>
+<ul class="simple">
+<li><p><strong>Forward Stepwise</strong> algorithms generally start with an empty set of important features, and iteratively add features to this set as performance improves.</p></li>
+<li><p><strong>Backward Stepwise</strong> algorithms generally start with the full set of features as important features, and iteratively remove features that are the least important.</p></li>
+<li><p><strong>Combining these two options</strong> algorithms generally have some heuristic of combining these two approaches of adding/removing features from this selected set.</p></li>
+</ul>
+<p>Importantly, regardless of which type of algorithm you use, the answer it will find is still an <em>approximation</em>. There are no guarantees that it is going to find the optimal subset of features; as we discussed doing so will take to long.</p>
+<p>We will focus on the Forward Stepwise algorithm as a concrete example, and leave it as an exercise to explore how it would be adapted for a backwards or combination version.</p>
+<section id="example-forward-stepwise-algorithm">
+<h3><span class="section-number">4.3.1. </span>Example: Forward Stepwise Algorithm<a class="headerlink" href="#example-forward-stepwise-algorithm" title="Permalink to this heading">#</a></h3>
+<p>The high level idea of the Forward Stepwise algorithm is to iteratively add features to our selected set as they improve performance. We assume you pre-select some desired number of features <span class="math notranslate nohighlight">\(k\)</span> as the maximally allowed size of the set of important features; although we have in this algorithm to select a smaller subset if validation performance starts to decrease.</p>
+<div class="proof algorithm admonition" id="forward-stepwise">
+<p class="admonition-title"><span class="caption-number">Algorithm 4.1 </span> (Forward Stepwise Algorithm)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong></p>
+<ul class="simple">
+<li><p>A training dataset <span class="math notranslate nohighlight">\(X_{train} \in \mathbb{R}^{n\times D}\)</span> with features <span class="math notranslate nohighlight">\(h_1(x), h_2(x), ..., h_D(x)\)</span></p></li>
+<li><p>A validation error function <span class="math notranslate nohighlight">\(MSE_{val}(\hat{f})\)</span></p></li>
+<li><p>A maximum number of selected features <span class="math notranslate nohighlight">\(k\)</span></p></li>
+</ul>
+<p><strong>Output</strong> A set of selected features <span class="math notranslate nohighlight">\(S \subseteq \{h_1(x), h_2(x), ..., h_D(x)\}\)</span> with <span class="math notranslate nohighlight">\(\lvert S \rvert \leq k\)</span></p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\texttt{min_val} \gets \infty\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(S_0\ \gets \emptyset\)</span></p></li>
+<li><p>for <span class="math notranslate nohighlight">\(i \gets [1, k]\)</span>:</p>
+<ol class="arabic simple">
+<li><p>Find feature <span class="math notranslate nohighlight">\(h_j(x)\)</span> not in <span class="math notranslate nohighlight">\(S_{i-1}\)</span>, that when combined with the features in <span class="math notranslate nohighlight">\(S_{i-1}\)</span> minimize the validation loss <span class="math notranslate nohighlight">\(MSE_{val}(\hat{f})\)</span> the most. Call this model <span class="math notranslate nohighlight">\(\hat{f}_i\)</span> (trained on <span class="math notranslate nohighlight">\(h_j(x)\)</span> and <span class="math notranslate nohighlight">\(S_{i-1}\)</span>)</p></li>
+<li><p>if <span class="math notranslate nohighlight">\(MSE_{val}(\hat{f}_i) &gt; \texttt{min_val}\)</span></p>
+<ol class="arabic simple">
+<li><p>Break and return <span class="math notranslate nohighlight">\(S_{i-1}\)</span></p></li>
+</ol>
+</li>
+<li><p><span class="math notranslate nohighlight">\(S_i \gets S_{i-1} \cup \{h_j(x)\}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\texttt{min_val} \gets MSE_{val}(\hat{f}_i)\)</span></p></li>
+</ol>
+</li>
+<li><p>Return <span class="math notranslate nohighlight">\(S_i\)</span></p></li>
+</ol>
+</section>
+</div><p>While the details are a bit complicated, this is really just saying “keep adding features to our set of important features until we reach <span class="math notranslate nohighlight">\(k\)</span> features or the validation error increases”.</p>
+<div class="important admonition">
+<p class="admonition-title">Practice</p>
+<p>Suppose we were working with a small set of 4 features on our house price prediction task. Below we show two tables, the first shows the validation errors when considering just a single feature and the second shows the validation errors considering two features. <strong>Following this Forward Stepwise Algorithm, which subset of two features would be selected by this algorithm?</strong></p>
+<p>Table 1: Validation Errors for Subsets of Size 1</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Feature</p></th>
+<th class="head text-right"><p>Validation Loss</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p># bath</p></td>
+<td class="text-right"><p>201</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p># bed</p></td>
+<td class="text-right"><p>300</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>sq ft</p></td>
+<td class="text-right"><p>157</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>year built</p></td>
+<td class="text-right"><p>224</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table 2: Validation Errors for Subsets of Size 2</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Features (unordered)</p></th>
+<th class="head text-right"><p>Validation Loss</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p># bath, # bed</p></td>
+<td class="text-right"><p>120</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p># bath, sq ft</p></td>
+<td class="text-right"><p>130</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p># bath, year built</p></td>
+<td class="text-right"><p>190</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p># bed, sq ft</p></td>
+<td class="text-right"><p>137</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p># bed, year built</p></td>
+<td class="text-right"><p>209</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>sq ft, year built</p></td>
+<td class="text-right"><p>145</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div id="MQPWiVCAwwFc" data-shufflequestions="False"
+               data-shuffleanswers="False"
+               data-preserveresponses="false"
+               data-numquestions="1000000"> <style>:root {
+    --medium-slate-blue: #6f78ffff;
+    --orange-pantone: #f75c03ff;
+    --russian-violet: #392061ff;
+    --maximum-yellow-red: #ffc857ff;
+    --viridian-green: #119da4ff;
+    --incorrect-red: #c80202;
+    --correct-green: #009113;
+}
+
+.Quiz {
+    max-width: 600px;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    line-height: 1.1;
+    font-size: 16pt;
+}
+
+.QuizCode {
+    font-size: 14pt;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.QuizCode>pre {
+    padding: 4px;
+}
+
+.Answer {
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+}
+
+.Feedback {
+    font-size: 16pt;
+    text-align: center;
+    min-height: 2em;
+}
+
+.Input {
+    align: left;
+    font-size: 20pt;
+}
+
+.Input-text {
+    display: block;
+    margin: 10px;
+    color: inherit;
+    width: 140px;
+    background-color: #c0c0c0;
+    color: #fff;
+    padding: 5px;
+    padding-left: 10px;
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: inherit;
+    line-height: 20pt;
+    border: none;
+    border-radius: 0.2rem;
+    transition: box-shadow 0.1s);
+}
+
+.Input-text:focus {
+    outline: none;
+    background-color: #c0c0c0;
+    box-shadow: 0.6rem 0.8rem 1.4rem -0.5rem #999999;
+}
+
+.MCButton {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.MCButton p {
+    color: inherit;
+}
+
+.MultipleChoiceQn {
+    padding: 10px;
+    background: var(--medium-slate-blue);
+    color: #fafafa;
+    border-radius: 10px;
+}
+
+.ManyChoiceQn {
+    padding: 10px;
+    background: var(--orange-pantone);
+    color: #fafafa;
+    border-radius: 10px;
+}
+
+.NumericQn {
+    padding: 10px;
+    background: var(--russian-violet);
+    color: #fafafa;
+    border-radius: 10px;
+}
+
+.NumericQn p {
+    color: inherit;
+}
+
+.InpLabel {
+    line-height: 34px;
+    float: left;
+    margin-right: 10px;
+    color: #101010;
+    font-size: 15pt;
+}
+
+.incorrect {
+    color: var(--incorrect-red);
+}
+
+.correct {
+    color: var(--correct-green);
+}
+
+.correctButton {
+    /*
+    background: var(--correct-green);
+   */
+    animation: correct-anim 0.6s ease;
+    animation-fill-mode: forwards;
+    color: #fafafa;
+    box-shadow: inset 0px 0px 5px #555555;
+    outline: none;
+}
+
+.incorrectButton {
+    animation: incorrect-anim 0.8s ease;
+    animation-fill-mode: forwards;
+    color: #fafafa;
+    box-shadow: inset 0px 0px 5px #555555;
+    outline: none;
+}
+
+@keyframes incorrect-anim {
+    100% {
+        background-color: var(--incorrect-red);
+    }
+}
+
+@keyframes correct-anim {
+    100% {
+        background-color: var(--correct-green);
+    }
+}</style></div><script type="application/javascript">var questionsMQPWiVCAwwFc=[{"question": "Which set of features would be chosen following this Forward Stepwise model?", "type": "multiple_choice", "answers": [{"answer": "# bath, # bed", "correct": false, "feedback": "Not quite! While this is the best subset with two features, is this the one that our forward algorithm would end up picking?"}, {"answer": "# bath, sq ft", "correct": true, "feedback": "Correct! The first iteration would choose sq ft because it was the single feature with lowest validation error. Then on our second iteration, we will only consider adding one of the other unchosen features to be included with sq ft. The set of features that includes sq ft that minimizes validation error is # bath and sq ft. Note that this algorithm did not find the globally optimal subset of features of # bed and # bath"}, {"answer": "# bath, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, sq ft", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "sq ft, year built", "correct": false, "feedback": "Not quite!"}]}];
+    // Make a random ID
+function makeid(length) {
+    var result = [];
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+    }
+    return result.join('');
+}
+
+// Choose a random subset of an array. Can also be used to shuffle the array
+function getRandomSubarray(arr, size) {
+    var shuffled = arr.slice(0), i = arr.length, temp, index;
+    while (i--) {
+        index = Math.floor((i + 1) * Math.random());
+        temp = shuffled[index];
+        shuffled[index] = shuffled[i];
+        shuffled[i] = temp;
+    }
+    return shuffled.slice(0, size);
+}
+
+function printResponses(responsesContainer) {
+    var responses=JSON.parse(responsesContainer.dataset.responses);
+    var stringResponses='<B>IMPORTANT!</B>To preserve this answer sequence for submission, when you have finalized your answers: <ol> <li> Copy the text in this cell below "Answer String"</li> <li> Double click on the cell directly below the Answer String, labeled "Replace Me"</li> <li> Select the whole "Replace Me" text</li> <li> Paste in your answer string and press shift-Enter.</li><li>Save the notebook using the save icon or File->Save Notebook menu item</li></ul><br><br><br><b>Answer String:</b><br> ';
+    console.log(responses);
+    responses.forEach((response, index) => {
+        if (response) {
+            console.log(index + ': ' + response);
+            stringResponses+= index + ': ' + response +"<BR>";
+        }
+    });
+    responsesContainer.innerHTML=stringResponses;
+}
+function check_mc() {
+    var id = this.id.split('-')[0];
+    //var response = this.id.split('-')[1];
+    //console.log(response);
+    //console.log("In check_mc(), id="+id);
+    //console.log(event.srcElement.id)           
+    //console.log(event.srcElement.dataset.correct)   
+    //console.log(event.srcElement.dataset.feedback)
+
+    var label = event.srcElement;
+    //console.log(label, label.nodeName);
+    var depth = 0;
+    while ((label.nodeName != "LABEL") && (depth < 20)) {
+        label = label.parentElement;
+        console.log(depth, label);
+        depth++;
+    }
+
+
+
+    var answers = label.parentElement.children;
+
+    //console.log(answers);
+
+
+    // Split behavior based on multiple choice vs many choice:
+    var fb = document.getElementById("fb" + id);
+
+
+
+
+    if (fb.dataset.numcorrect == 1) {
+        // What follows is for the saved responses stuff
+        var outerContainer = fb.parentElement.parentElement;
+        var responsesContainer = document.getElementById("responses" + outerContainer.id);
+        if (responsesContainer) {
+            //console.log(responsesContainer);
+            var response = label.firstChild.innerText;
+            if (label.querySelector(".QuizCode")){
+                response+= label.querySelector(".QuizCode").firstChild.innerText;
+            }
+            console.log(response);
+            //console.log(document.getElementById("quizWrap"+id));
+            var qnum = document.getElementById("quizWrap"+id).dataset.qnum;
+            console.log("Question " + qnum);
+            //console.log(id, ", got numcorrect=",fb.dataset.numcorrect);
+            var responses=JSON.parse(responsesContainer.dataset.responses);
+            console.log(responses);
+            responses[qnum]= response;
+            responsesContainer.setAttribute('data-responses', JSON.stringify(responses));
+            printResponses(responsesContainer);
+        }
+        // End code to preserve responses
+        
+        for (var i = 0; i < answers.length; i++) {
+            var child = answers[i];
+            //console.log(child);
+            child.className = "MCButton";
+        }
+
+
+
+        if (label.dataset.correct == "true") {
+            // console.log("Correct action");
+            if ("feedback" in label.dataset) {
+                fb.textContent = jaxify(label.dataset.feedback);
+            } else {
+                fb.textContent = "Correct!";
+            }
+            label.classList.add("correctButton");
+
+            fb.className = "Feedback";
+            fb.classList.add("correct");
+
+        } else {
+            if ("feedback" in label.dataset) {
+                fb.textContent = jaxify(label.dataset.feedback);
+            } else {
+                fb.textContent = "Incorrect -- try again.";
+            }
+            //console.log("Error action");
+            label.classList.add("incorrectButton");
+            fb.className = "Feedback";
+            fb.classList.add("incorrect");
+        }
+    }
+    else {
+        var reset = false;
+        var feedback;
+         if (label.dataset.correct == "true") {
+            if ("feedback" in label.dataset) {
+                feedback = jaxify(label.dataset.feedback);
+            } else {
+                feedback = "Correct!";
+            }
+            if (label.dataset.answered <= 0) {
+                if (fb.dataset.answeredcorrect < 0) {
+                    fb.dataset.answeredcorrect = 1;
+                    reset = true;
+                } else {
+                    fb.dataset.answeredcorrect++;
+                }
+                if (reset) {
+                    for (var i = 0; i < answers.length; i++) {
+                        var child = answers[i];
+                        child.className = "MCButton";
+                        child.dataset.answered = 0;
+                    }
+                }
+                label.classList.add("correctButton");
+                label.dataset.answered = 1;
+                fb.className = "Feedback";
+                fb.classList.add("correct");
+
+            }
+        } else {
+            if ("feedback" in label.dataset) {
+                feedback = jaxify(label.dataset.feedback);
+            } else {
+                feedback = "Incorrect -- try again.";
+            }
+            if (fb.dataset.answeredcorrect > 0) {
+                fb.dataset.answeredcorrect = -1;
+                reset = true;
+            } else {
+                fb.dataset.answeredcorrect--;
+            }
+
+            if (reset) {
+                for (var i = 0; i < answers.length; i++) {
+                    var child = answers[i];
+                    child.className = "MCButton";
+                    child.dataset.answered = 0;
+                }
+            }
+            label.classList.add("incorrectButton");
+            fb.className = "Feedback";
+            fb.classList.add("incorrect");
+        }
+        // What follows is for the saved responses stuff
+        var outerContainer = fb.parentElement.parentElement;
+        var responsesContainer = document.getElementById("responses" + outerContainer.id);
+        if (responsesContainer) {
+            //console.log(responsesContainer);
+            var response = label.firstChild.innerText;
+            if (label.querySelector(".QuizCode")){
+                response+= label.querySelector(".QuizCode").firstChild.innerText;
+            }
+            console.log(response);
+            //console.log(document.getElementById("quizWrap"+id));
+            var qnum = document.getElementById("quizWrap"+id).dataset.qnum;
+            console.log("Question " + qnum);
+            //console.log(id, ", got numcorrect=",fb.dataset.numcorrect);
+            var responses=JSON.parse(responsesContainer.dataset.responses);
+            if (label.dataset.correct == "true") {
+                if (typeof(responses[qnum]) == "object"){
+                    if (!responses[qnum].includes(response))
+                        responses[qnum].push(response);
+                } else{
+                    responses[qnum]= [ response ];
+                }
+            } else {
+                responses[qnum]= response;
+            }
+            console.log(responses);
+            responsesContainer.setAttribute('data-responses', JSON.stringify(responses));
+            printResponses(responsesContainer);
+        }
+        // End save responses stuff
+
+
+
+        var numcorrect = fb.dataset.numcorrect;
+        var answeredcorrect = fb.dataset.answeredcorrect;
+        if (answeredcorrect >= 0) {
+            fb.textContent = feedback + " [" + answeredcorrect + "/" + numcorrect + "]";
+        } else {
+            fb.textContent = feedback + " [" + 0 + "/" + numcorrect + "]";
+        }
+
+
+    }
+
+    if (typeof MathJax != 'undefined') {
+        var version = MathJax.version;
+        console.log('MathJax version', version);
+        if (version[0] == "2") {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        } else if (version[0] == "3") {
+            MathJax.typeset([fb]);
+        }
+    } else {
+        console.log('MathJax not detected');
+    }
+
+}
+
+function make_mc(qa, shuffle_answers, outerqDiv, qDiv, aDiv, id) {
+    var shuffled;
+    if (shuffle_answers == "True") {
+        //console.log(shuffle_answers+" read as true");
+        shuffled = getRandomSubarray(qa.answers, qa.answers.length);
+    } else {
+        //console.log(shuffle_answers+" read as false");
+        shuffled = qa.answers;
+    }
+
+
+    var num_correct = 0;
+
+
+
+    shuffled.forEach((item, index, ans_array) => {
+        //console.log(answer);
+
+        // Make input element
+        var inp = document.createElement("input");
+        inp.type = "radio";
+        inp.id = "quizo" + id + index;
+        inp.style = "display:none;";
+        aDiv.append(inp);
+
+        //Make label for input element
+        var lab = document.createElement("label");
+        lab.className = "MCButton";
+        lab.id = id + '-' + index;
+        lab.onclick = check_mc;
+        var aSpan = document.createElement('span');
+        aSpan.classsName = "";
+        //qDiv.id="quizQn"+id+index;
+        if ("answer" in item) {
+            aSpan.innerHTML = jaxify(item.answer);
+            //aSpan.innerHTML=item.answer;
+        }
+        lab.append(aSpan);
+
+        // Create div for code inside question
+        var codeSpan;
+        if ("code" in item) {
+            codeSpan = document.createElement('span');
+            codeSpan.id = "code" + id + index;
+            codeSpan.className = "QuizCode";
+            var codePre = document.createElement('pre');
+            codeSpan.append(codePre);
+            var codeCode = document.createElement('code');
+            codePre.append(codeCode);
+            codeCode.innerHTML = item.code;
+            lab.append(codeSpan);
+            //console.log(codeSpan);
+        }
+
+        //lab.textContent=item.answer;
+
+        // Set the data attributes for the answer
+        lab.setAttribute('data-correct', item.correct);
+        if (item.correct) {
+            num_correct++;
+        }
+        if ("feedback" in item) {
+            lab.setAttribute('data-feedback', item.feedback);
+        }
+        lab.setAttribute('data-answered', 0);
+
+        aDiv.append(lab);
+
+    });
+
+    if (num_correct > 1) {
+        outerqDiv.className = "ManyChoiceQn";
+    } else {
+        outerqDiv.className = "MultipleChoiceQn";
+    }
+
+    return num_correct;
+
+}
+function check_numeric(ths, event) {
+
+    if (event.keyCode === 13) {
+        ths.blur();
+
+        var id = ths.id.split('-')[0];
+
+        var submission = ths.value;
+        if (submission.indexOf('/') != -1) {
+            var sub_parts = submission.split('/');
+            //console.log(sub_parts);
+            submission = sub_parts[0] / sub_parts[1];
+        }
+        //console.log("Reader entered", submission);
+
+        if ("precision" in ths.dataset) {
+            var precision = ths.dataset.precision;
+            // console.log("1:", submission)
+            submission = Math.round((1 * submission + Number.EPSILON) * 10 ** precision) / 10 ** precision;
+            // console.log("Rounded to ", submission, " precision=", precision  );
+        }
+
+
+        //console.log("In check_numeric(), id="+id);
+        //console.log(event.srcElement.id)           
+        //console.log(event.srcElement.dataset.feedback)
+
+        var fb = document.getElementById("fb" + id);
+        fb.style.display = "none";
+        fb.textContent = "Incorrect -- try again.";
+
+        var answers = JSON.parse(ths.dataset.answers);
+        //console.log(answers);
+
+        var defaultFB = "";
+        var correct;
+        var done = false;
+        answers.every(answer => {
+            //console.log(answer.type);
+
+            correct = false;
+            // if (answer.type=="value"){
+            if ('value' in answer) {
+                if (submission == answer.value) {
+                    fb.textContent = jaxify(answer.feedback);
+                    correct = answer.correct;
+                    //console.log(answer.correct);
+                    done = true;
+                }
+                // } else if (answer.type=="range") {
+            } else if ('range' in answer) {
+                //console.log(answer.range);
+                if ((submission >= answer.range[0]) && (submission < answer.range[1])) {
+                    fb.textContent = jaxify(answer.feedback);
+                    correct = answer.correct;
+                    //console.log(answer.correct);
+                    done = true;
+                }
+            } else if (answer.type == "default") {
+                defaultFB = answer.feedback;
+            }
+            if (done) {
+                return false; // Break out of loop if this has been marked correct
+            } else {
+                return true; // Keep looking for case that includes this as a correct answer
+            }
+        });
+
+        if ((!done) && (defaultFB != "")) {
+            fb.innerHTML = jaxify(defaultFB);
+            //console.log("Default feedback", defaultFB);
+        }
+
+        fb.style.display = "block";
+        if (correct) {
+            ths.className = "Input-text";
+            ths.classList.add("correctButton");
+            fb.className = "Feedback";
+            fb.classList.add("correct");
+        } else {
+            ths.className = "Input-text";
+            ths.classList.add("incorrectButton");
+            fb.className = "Feedback";
+            fb.classList.add("incorrect");
+        }
+
+        // What follows is for the saved responses stuff
+        var outerContainer = fb.parentElement.parentElement;
+        var responsesContainer = document.getElementById("responses" + outerContainer.id);
+        if (responsesContainer) {
+            console.log(submission);
+            var qnum = document.getElementById("quizWrap"+id).dataset.qnum;
+            //console.log("Question " + qnum);
+            //console.log(id, ", got numcorrect=",fb.dataset.numcorrect);
+            var responses=JSON.parse(responsesContainer.dataset.responses);
+            console.log(responses);
+            if (submission == ths.value){
+                responses[qnum]= submission;
+            } else {
+                responses[qnum]= ths.value + "(" + submission +")";
+            }
+            responsesContainer.setAttribute('data-responses', JSON.stringify(responses));
+            printResponses(responsesContainer);
+        }
+        // End code to preserve responses
+
+        if (typeof MathJax != 'undefined') {
+            var version = MathJax.version;
+            console.log('MathJax version', version);
+            if (version[0] == "2") {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            } else if (version[0] == "3") {
+                MathJax.typeset([fb]);
+            }
+        } else {
+            console.log('MathJax not detected');
+        }
+        return false;
+    }
+
+}
+
+function isValid(el, charC) {
+    //console.log("Input char: ", charC);
+    if (charC == 46) {
+        if (el.value.indexOf('.') === -1) {
+            return true;
+        } else if (el.value.indexOf('/') != -1) {
+            var parts = el.value.split('/');
+            if (parts[1].indexOf('.') === -1) {
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    } else if (charC == 47) {
+        if (el.value.indexOf('/') === -1) {
+            if ((el.value != "") && (el.value != ".")) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else if (charC == 45) {
+        var edex = el.value.indexOf('e');
+        if (edex == -1) {
+            edex = el.value.indexOf('E');
+        }
+
+        if (el.value == "") {
+            return true;
+        } else if (edex == (el.value.length - 1)) { // If just after e or E
+            return true;
+        } else {
+            return false;
+        }
+    } else if (charC == 101) { // "e"
+        if ((el.value.indexOf('e') === -1) && (el.value.indexOf('E') === -1) && (el.value.indexOf('/') == -1)) {
+            // Prev symbol must be digit or decimal point:
+            if (el.value.slice(-1).search(/\d/) >= 0) {
+                return true;
+            } else if (el.value.slice(-1).search(/\./) >= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else {
+        if (charC > 31 && (charC < 48 || charC > 57))
+            return false;
+    }
+    return true;
+}
+
+function numeric_keypress(evnt) {
+    var charC = (evnt.which) ? evnt.which : evnt.keyCode;
+
+    if (charC == 13) {
+        check_numeric(this, evnt);
+    } else {
+        return isValid(this, charC);
+    }
+}
+
+
+
+
+
+function make_numeric(qa, outerqDiv, qDiv, aDiv, id) {
+
+
+
+    //console.log(answer);
+
+
+    outerqDiv.className = "NumericQn";
+    aDiv.style.display = 'block';
+
+    var lab = document.createElement("label");
+    lab.className = "InpLabel";
+    lab.textContent = "Type numeric answer here:";
+    aDiv.append(lab);
+
+    var inp = document.createElement("input");
+    inp.type = "text";
+    //inp.id="input-"+id;
+    inp.id = id + "-0";
+    inp.className = "Input-text";
+    inp.setAttribute('data-answers', JSON.stringify(qa.answers));
+    if ("precision" in qa) {
+        inp.setAttribute('data-precision', qa.precision);
+    }
+    aDiv.append(inp);
+    //console.log(inp);
+
+    //inp.addEventListener("keypress", check_numeric);
+    //inp.addEventListener("keypress", numeric_keypress);
+    /*
+    inp.addEventListener("keypress", function(event) {
+        return numeric_keypress(this, event);
+    }
+                        );
+                        */
+    //inp.onkeypress="return numeric_keypress(this, event)";
+    inp.onkeypress = numeric_keypress;
+    inp.onpaste = event => false;
+
+    inp.addEventListener("focus", function (event) {
+        this.value = "";
+        return false;
+    }
+    );
+
+
+}
+function jaxify(string) {
+    var mystring = string;
+
+    var count = 0;
+    var loc = mystring.search(/([^\\]|^)(\$)/);
+
+    var count2 = 0;
+    var loc2 = mystring.search(/([^\\]|^)(\$\$)/);
+
+    //console.log(loc);
+
+    while ((loc >= 0) || (loc2 >= 0)) {
+
+        /* Have to replace all the double $$ first with current implementation */
+        if (loc2 >= 0) {
+            if (count2 % 2 == 0) {
+                mystring = mystring.replace(/([^\\]|^)(\$\$)/, "$1\\[");
+            } else {
+                mystring = mystring.replace(/([^\\]|^)(\$\$)/, "$1\\]");
+            }
+            count2++;
+        } else {
+            if (count % 2 == 0) {
+                mystring = mystring.replace(/([^\\]|^)(\$)/, "$1\\(");
+            } else {
+                mystring = mystring.replace(/([^\\]|^)(\$)/, "$1\\)");
+            }
+            count++;
+        }
+        loc = mystring.search(/([^\\]|^)(\$)/);
+        loc2 = mystring.search(/([^\\]|^)(\$\$)/);
+        //console.log(mystring,", loc:",loc,", loc2:",loc2);
+    }
+
+    //console.log(mystring);
+    return mystring;
+}
+
+
+function show_questions(json, mydiv) {
+    console.log('show_questions');
+    //var mydiv=document.getElementById(myid);
+    var shuffle_questions = mydiv.dataset.shufflequestions;
+    var num_questions = mydiv.dataset.numquestions;
+    var shuffle_answers = mydiv.dataset.shuffleanswers;
+
+    if (num_questions > json.length) {
+        num_questions = json.length;
+    }
+
+    var questions;
+    if ((num_questions < json.length) || (shuffle_questions == "True")) {
+        //console.log(num_questions+","+json.length);
+        questions = getRandomSubarray(json, num_questions);
+    } else {
+        questions = json;
+    }
+
+    //console.log("SQ: "+shuffle_questions+", NQ: " + num_questions + ", SA: ", shuffle_answers);
+
+    // Iterate over questions
+    questions.forEach((qa, index, array) => {
+        //console.log(qa.question); 
+
+        var id = makeid(8);
+        //console.log(id);
+
+
+        // Create Div to contain question and answers
+        var iDiv = document.createElement('div');
+        //iDiv.id = 'quizWrap' + id + index;
+        iDiv.id = 'quizWrap' + id;
+        iDiv.className = 'Quiz';
+        iDiv.setAttribute('data-qnum', index);
+        mydiv.appendChild(iDiv);
+        // iDiv.innerHTML=qa.question;
+
+        var outerqDiv = document.createElement('div');
+        outerqDiv.id = "OuterquizQn" + id + index;
+
+        iDiv.append(outerqDiv);
+
+        // Create div to contain question part
+        var qDiv = document.createElement('div');
+        qDiv.id = "quizQn" + id + index;
+        //qDiv.textContent=qa.question;
+        qDiv.innerHTML = jaxify(qa.question);
+
+        outerqDiv.append(qDiv);
+
+        // Create div for code inside question
+        var codeDiv;
+        if ("code" in qa) {
+            codeDiv = document.createElement('div');
+            codeDiv.id = "code" + id + index;
+            codeDiv.className = "QuizCode";
+            var codePre = document.createElement('pre');
+            codeDiv.append(codePre);
+            var codeCode = document.createElement('code');
+            codePre.append(codeCode);
+            codeCode.innerHTML = qa.code;
+            outerqDiv.append(codeDiv);
+            //console.log(codeDiv);
+        }
+
+
+        // Create div to contain answer part
+        var aDiv = document.createElement('div');
+        aDiv.id = "quizAns" + id + index;
+        aDiv.className = 'Answer';
+        iDiv.append(aDiv);
+
+        //console.log(qa.type);
+
+        var num_correct;
+        if (qa.type == "multiple_choice") {
+            num_correct = make_mc(qa, shuffle_answers, outerqDiv, qDiv, aDiv, id);
+        } else if (qa.type == "many_choice") {
+            num_correct = make_mc(qa, shuffle_answers, outerqDiv, qDiv, aDiv, id);
+        } else if (qa.type == "numeric") {
+            //console.log("numeric");
+            make_numeric(qa, outerqDiv, qDiv, aDiv, id);
+        }
+
+
+        //Make div for feedback
+        var fb = document.createElement("div");
+        fb.id = "fb" + id;
+        //fb.style="font-size: 20px;text-align:center;";
+        fb.className = "Feedback";
+        fb.setAttribute("data-answeredcorrect", 0);
+        fb.setAttribute("data-numcorrect", num_correct);
+        iDiv.append(fb);
+
+
+    });
+    var preserveResponses = mydiv.dataset.preserveresponses;
+    console.log(preserveResponses);
+    console.log(preserveResponses == "true");
+    if (preserveResponses == "true") {
+        console.log(preserveResponses);
+        // Create Div to contain record of answers
+        var iDiv = document.createElement('div');
+        iDiv.id = 'responses' + mydiv.id;
+        iDiv.className = 'JCResponses';
+        // Create a place to store responses as an empty array
+        iDiv.setAttribute('data-responses', '[]');
+
+        // Dummy Text
+        iDiv.innerHTML="<b>Select your answers and then follow the directions that will appear here.</b>"
+        //iDiv.className = 'Quiz';
+        mydiv.appendChild(iDiv);
+    }
+//console.log("At end of show_questions");
+    if (typeof MathJax != 'undefined') {
+        console.log("MathJax version", MathJax.version);
+        var version = MathJax.version;
+        setTimeout(function(){
+            var version = MathJax.version;
+            console.log('After sleep, MathJax version', version);
+            if (version[0] == "2") {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            } else if (version[0] == "3") {
+                MathJax.typeset([mydiv]);
+            }
+        }, 500);
+if (typeof version == 'undefined') {
+        } else
+        {
+            if (version[0] == "2") {
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            } else if (version[0] == "3") {
+                MathJax.typeset([mydiv]);
+            } else {
+                console.log("MathJax not found");
+            }
+        }
+    }
+    return false;
+}
+
+        {
+        show_questions(questionsMQPWiVCAwwFc,  MQPWiVCAwwFc);
+        }
+        </script></div>
+</div>
+</section>
+</section>
+<section id="regularization">
+<h2><span class="section-number">4.4. </span>Regularization<a class="headerlink" href="#regularization" title="Permalink to this heading">#</a></h2>
+<p>Another approach to achieve feature selection is to apply a regularization approach to hopefully shrink the coefficients for features that are somehow less meaningful or less important. Recall from our last chapter on <a class="reference internal" href="../ridge/index.html"><span class="doc"> Ridge Regularization</span></a>, we added a regularizer term <span class="math notranslate nohighlight">\(R(w)\)</span> to our quality metric to penalize predictors with large coefficient magnitude.</p>
+<div class="math notranslate nohighlight">
+\[\hat{w} = \argmin{w}L(w) + \lambda R(w)\]</div>
+<p>Let’s discuss how we can try to achieve feature selection using our idea of regularization to achieve feature selection. We briefly discussed how there may be different choices for <span class="math notranslate nohighlight">\(R(w)\)</span> to measure the magnitude of coefficients differently, but in the last chapter we focused in detail on the regularizer <span class="math notranslate nohighlight">\(R(w) = \norm{w}_2^2\)</span>. Importantly, we explored that as we increase the regularizer penalty <span class="math notranslate nohighlight">\(\lambda\)</span>, the coefficients shrink more and more.</p>
+<p><img alt="Coefficient path for a ridge regression model. Explained in last paragraph." src="../../_images/ridge_path.png" /></p>
+<p>The main idea of our approach is to train some Ridge model (with some choice of <span class="math notranslate nohighlight">\(\lambda\)</span>) on our data, and then investigate the learned coefficients. Our intuition is that larger coefficients indicate something like the feature is more impactful on the output, and in turn, small coefficients mean that feature isn’t as important.</p>
+<p>We can visualize these coefficient magnitudes as a bar chart showing coefficients (signed) with higher magnitudes as longer bars. So if we would like to do feature selection with this approach, we could simply choose some number <span class="math notranslate nohighlight">\(\delta\)</span> and say that any coefficients <span class="math notranslate nohighlight">\(\hat{w}_j \lt \delta\)</span> are considered “unimportant”. This is shown in the image below where the value of <span class="math notranslate nohighlight">\(\delta\)</span> is shown as the horizontal dotted line, and important features are ones whose magnitude is greater than <span class="math notranslate nohighlight">\(\delta\)</span> highlighted (shown in gold). Any of the features with coefficients smaller than <span class="math notranslate nohighlight">\(\delta\)</span> will be considered unimportant and not selected in our feature selection process.</p>
+<p><img alt="Feature selection with Ridge (explained in last paragraph)" src="../../_images/ridge_coefficient_cutoff.png" /></p>
+<p>One discussion we would need to have if we were going to pursue this approach is to decide how to choose <span class="math notranslate nohighlight">\(\lambda\)</span> (the penalty term) and how to choose <span class="math notranslate nohighlight">\(\delta\)</span> (the cutoff to exclude a feature). However, it turns out that while this idea of Ridge regularization for feature selection seems like a good idea by intuition, it turns out to not work well in practice. This happens for two main reasons:</p>
+<p>First, choosing this cutoff <span class="math notranslate nohighlight">\(\delta\)</span> isn’t the most intuitive. As a hyperparameter we choose <em>after</em> training the model, it’s hard to come up with approaches to tune this hyperparameter in our training procedure. Also the scale of this hyperparameter <span class="math notranslate nohighlight">\(\delta\)</span> depends a lot on the scales of the inputs/outputs of the data.</p>
+<p>Secondly, and more importantly, the results of this approach are can become questionable when you have features in your dataset that are correlated. Consider the example we showed above for selecting the features with larger coefficients. If you look at the features we selected, <em>none of them</em> correspond to a notion of bathrooms in a house. IF you were writing a research paper, you might then come to the conclusion that bathrooms have no (or little) affect on house price since you didn’t find them to be important via your feature selection algorithm.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>3. Would you be equally happy in / willing to pay the same amount for a house with 0 bathrooms vs a house with 2 bathrooms?</p>
+</aside>
+<p>However, the problem here is not that bathrooms are unimportant<sup>3</sup>, but the fact that they are represented by multiple features in the dataset. In this example, we had a feature <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">bathrooms</span></code> and <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">showers</span></code> represented in this dataset. For simplicity, let’s assume there is a 1:1 relationship from bathrooms and showers (i.e., every bathroom has exactly 1 shower). If this is the case, the model has to “split up” the coefficients between the two features as every time one feature increases in value, the other increases in value as well. Because the model divides the coefficient magnitude between the two features, the seem unimportant when in reality, it would have been important if we just removed one of those features.</p>
+<p><img alt="Same image of feature selection with ridge coefficients, but with # showers removed, thus increasing the coefficient for # bathrooms" src="../../_images/ridge_coefficient_cutoff_no_showers.png" /></p>
+<p>This is cause to bring up a very important point.</p>
+<div class="important admonition">
+<p class="admonition-title">Feature Selection: Context Matters</p>
+<p>Whenever you do an analysis to make a claim about which features are or are not important to some system, it’s essential that you remember your results are based on the context of the data you chose to include in your analysis. By that, we mean exactly the phenomenon we saw in this flaw of Ridge Regularization for feature selection. By including <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">bathrooms</span></code> and <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">showers</span></code>, we made the discovery that bathrooms are unimportant. By doing the same analysis with <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">showers</span></code> removed, we have no identified <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">bathrooms</span></code> are important. The results we found depend on the data we put it.</p>
+<p>While this sounds somewhat trivial, it’s often forgotten by ML practitioners and scientists. You always need to be aware of the context you are creating by the data you include and the models you choose to use. The results you find may be useful, but they are not <em>objective</em>; your results are entirely dependent on your <em>subjective</em> (but hopefully well-reasoned) choices for which data to include and which models to use.</p>
+</div>
+<p>So with these flaws, Ridge regularization is rarely used for feature selection. But fear not! It is still a useful idea if we change the details of how we regularize.</p>
+</section>
+<section id="lasso-regularization-for-feature-selection">
+<h2><span class="section-number">4.5. </span>LASSO Regularization for Feature Selection<a class="headerlink" href="#lasso-regularization-for-feature-selection" title="Permalink to this heading">#</a></h2>
+<p>When we first introduced the concept of regularization in <a class="reference internal" href="../ridge/index.html"><span class="doc"> Ridge Regularization</span></a>, we discussed a few options we could use for the regularizer <span class="math notranslate nohighlight">\(R(w)\)</span>. While we discussed the use of the L2 Norm <span class="math notranslate nohighlight">\(\norm{w}_2^2\)</span> as a regularizer in detail, that is by no means the only choice. In fact, we discussed another reasonable regularizer would be the sum of absolute values of coefficients, also called the L1 Norm <span class="math notranslate nohighlight">\(R(w) = \norm{w}_1\)</span>.</p>
+<p>By using the same regularization setup, but with the L1 norm as the regularizer, we get a model called <strong>LASSO Regression</strong> or <strong>Regression with LASSO Regularization</strong>.</p>
+<div class="math notranslate nohighlight">
+\[\hat{w}_{LASSO} = \argmin{w} L(w) + \lambda\norm{w}_1\]</div>
+<p>The good news, is that while this is technically a new model we a lot of our intuition from Ridge Regression! In particular,</p>
+<ul class="simple">
+<li><p>LASSO tends to shrink the coefficients to prevent overfitting, just like Ridge.</p></li>
+<li><p>As you increase the penalty term <span class="math notranslate nohighlight">\(\lambda\)</span>, the coefficients shrink more. If you make <span class="math notranslate nohighlight">\(\lambda\)</span> very small, then there is not much penalty and the model is more likely to be like our OLS solution.</p>
+<ul>
+<li><p>In the terminology of bias and variance: A small <span class="math notranslate nohighlight">\(\lambda\)</span> corresponds to a model with lower bias and higher variance while a large <span class="math notranslate nohighlight">\(\lambda\)</span> corresponds to a model with higher bias and lower variance.</p></li>
+</ul>
+</li>
+</ul>
+<p>Despite having a lot of similarities, the primary difference between Ridge and LASSO is the exact behavior of the coefficients as they shrink.</p>
+<p>If we look back to the coefficient path for Ridge Regression, we see that the coefficients shrink, but generally don’t become 0 until the limit of <span class="math notranslate nohighlight">\(\lambda = \infty\)</span>. With Ridge, the coefficients just get smaller and smaller in magnitude.</p>
+<p><img alt="Coefficient path for a ridge regression model. Explained in last paragraph." src="../../_images/ridge_path.png" /></p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>4. See <a class="reference external" href="https://developers.google.com/machine-learning/crash-course/regularization-for-sparsity/l1-regularization">Google’s Demo</a> for another visualization of the difference between Ridge and LASSO solutions.</p>
+</aside>
+<p>But if we look at the coefficient path with LASSO, we see a much different story. Importantly, everything else to make this graph is the same as the Ridge coefficient path, except we are using the L1 norm as the regularizer in this LASSO model. Notice how the coefficients tend to go down <em>exactly</em> to 0 instead of just getting infinitesimally small. Again, we see the trend of coefficients shrinking with larger <span class="math notranslate nohighlight">\(\lambda\)</span>, but importantly the coefficients become 0 more quickly than in Ridge<sup>4</sup>.</p>
+<p><img alt="Coefficient path for a LASSO regression model. Explained in last paragraph." src="../../_images/ridge_path.png" /></p>
+<p>In other words, in LASSO Regression, it favors <strong>sparse coefficients</strong> (coefficients with more zeros)! This now makes it a great tool for feature selection since it gives us sparsity out of the box!</p>
+<p>Even in the case with correlated features (such as <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">bathrooms</span></code> and <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">showers</span></code>), LASSO tends to handle this situation without a problem. Because it favors sparse solutions, it has no problem making one of those coefficients 0!</p>
+<p>In some sense, that’s all we technically have to say about LASSO if you take our claim at face-value. It serves to highlight this claim in an special box to highlight that this is the important property we care for your to know well.</p>
+<div class="tip admonition">
+<p class="admonition-title">LASSO Regression</p>
+<p>LASSO is a regularization technique to shrink coefficients, much like Ridge Regression. While they are similar at a high-level, LASSO has the special property that it tends to find <em>sparse coefficients</em> solutions while Ridge does not. The higher <span class="math notranslate nohighlight">\(\lambda\)</span> is, the more zero coefficients will be found.</p>
+<p>This doesn’t mean it will always find 0 coefficients. But it is likely in practice to make more coefficients exactly 0 as you increase <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+</div>
+<p>In the following sub-sections, we will try to argue the reason why simply changing the regularizer changes the result so much, and why LASSO tends to lead to sparsity. These will not be formal proofs, but instead will be heuristic arguments to try to convey the important ideas. Understanding the intuition for <em>why</em> LASSO has this property is less important than knowing this property exists, so it is okay to skip the next two subsections.</p>
+<section id="why-sparsity-analytical-view">
+<h3><span class="section-number">4.5.1. </span>Why Sparsity? Analytical View<a class="headerlink" href="#why-sparsity-analytical-view" title="Permalink to this heading">#</a></h3>
+<p>One way to see why LASSO favors sparse solutions is to compare the measurements of magnitude <span class="math notranslate nohighlight">\(R(w)\)</span> analytically. In the plot below, we plot the cost functions <span class="math notranslate nohighlight">\(R(w)\)</span> for a single-coefficient <span class="math notranslate nohighlight">\(w_1\)</span>. Note that in the case of a single coefficient <span class="math notranslate nohighlight">\(w_1\)</span>, the L1 Norm <span class="math notranslate nohighlight">\(\norm{w}_1 = \abs{w}\)</span> and the L2 norm <span class="math notranslate nohighlight">\(\norm{w}_2^2 = w_i^2\)</span>.</p>
+<!-- TODO Make this image nicer -->
+<a class="reference internal image-reference" href="../../_images/compare_costs.png"><img alt="A graph showing the cost between the L1 norm (absolute value) and L2 norm (parabola)" class="align-center" src="../../_images/compare_costs.png" style="width: 100%;" /></a>
+<p>Now, consider what happens as <span class="math notranslate nohighlight">\(w_1\)</span> gets smaller in magnitude. In particular, consider the case when <span class="math notranslate nohighlight">\(-1 \leq w_1 \leq 1\)</span>. At this point the value of the L2 norm falls below the L1 norm. Importantly, because the L2 norm is a parabola, the slope gets smaller and smaller as you get towards <span class="math notranslate nohighlight">\(w_1 = 0\)</span>. The result of this is there are <em>diminishing returns</em> in the L2 norm from decreasing the <span class="math notranslate nohighlight">\(w_1\)</span> as its magnitude drops below 1. For a concrete example, compare the change in cost <span class="math notranslate nohighlight">\(R(w)\)</span> between the points <span class="math notranslate nohighlight">\(w_1 = 0.25\)</span> and <span class="math notranslate nohighlight">\(w_1 = 0.1\)</span>.</p>
+<ul class="simple">
+<li><p>With the L1 norm <span class="math notranslate nohighlight">\(\abs{0.25} - \abs{0.1} = 0.15\)</span>. So by decreasing our coefficient <span class="math notranslate nohighlight">\(w_1\)</span> by <span class="math notranslate nohighlight">\(0.15\)</span>, we reduced the cost of <span class="math notranslate nohighlight">\(R(w)\)</span> by <span class="math notranslate nohighlight">\(0.15\)</span>.</p></li>
+<li><p>With the L2 norm <span class="math notranslate nohighlight">\(0.25^2 - 0.1^2 = 0.0525\)</span>. So by decreasing our coefficient <span class="math notranslate nohighlight">\(w_1\)</span> by <span class="math notranslate nohighlight">\(0.15\)</span>, we only reduced the cost of <span class="math notranslate nohighlight">\(R(w)\)</span> by <span class="math notranslate nohighlight">\(0.0525\)</span>.</p></li>
+</ul>
+<p>So in practice, regularizing with the L2 norm has <em>no incentive</em> to make coefficients actually zero; there are fewer and fewer reductions in the cost <span class="math notranslate nohighlight">\(R(w)\)</span> as the coefficients approach zero. On the other hand, the L1 norm has no such diminishing returns so it is entirely feasible for it to set a coefficient to exactly 0.</p>
+</section>
+<section id="why-sparsity-geometric-view">
+<h3><span class="section-number">4.5.2. </span>Why Sparsity? Geometric View<a class="headerlink" href="#why-sparsity-geometric-view" title="Permalink to this heading">#</a></h3>
+<p>Another way to view the sparsity of LASSO is thinking of the geometry of the functions we are minimizing. The way we have been phrasing regularization is finding the coefficients <span class="math notranslate nohighlight">\(w\)</span> that minimize</p>
+<div class="math notranslate nohighlight">
+\[\hat{w} = \argmin{w} L(w) + \lambda R(w)\]</div>
+<p>This is called an <em>unconstrained</em> optimization problem as there are no constraints on what <span class="math notranslate nohighlight">\(w\)</span>’s values need to be, just that it should minimize the combined costs. A <em>constrained</em> optimization problem is one with explicit requirements on which <span class="math notranslate nohighlight">\(w\)</span>s are acceptable. It turns out there is a nice bit of theory showing you can convert from constrained/unconstrained optimization problems. So another way we could have formulated our regularization problem is as follows.</p>
+<div class="math notranslate nohighlight">
+\[\hat{w} = \argmin{w; R(w) \leq \beta} L(w)\]</div>
+<p>This is a similar problem, but says to minimize <span class="math notranslate nohighlight">\(L(w)\)</span> such that <span class="math notranslate nohighlight">\(R(w)\)</span> doesn’t exceed some budget <span class="math notranslate nohighlight">\(\beta\)</span>. We won’t go into the details of how <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> relate, but there is theory that shows you can convert between the two problem types. Another way this is phrased is our original approach was a “soft” constraint since it just made the objective function worse for some inputs, while this new version is a “hard” constraint that the coefficients can’t exceed some value.</p>
+<p>Geometrically we can see this as a constraint on which <span class="math notranslate nohighlight">\(w\)</span>’s are acceptable solutions. So instead of considering all possible <span class="math notranslate nohighlight">\(w\)</span>’s, we only consider the subset of them that satisfy our budget. Visually you can compare these feasible regions of the L1 and L2 norms for some budget <span class="math notranslate nohighlight">\(\beta\)</span> in the image below. These feasible regions are known as the L1-ball and L2-ball respectively. A ball is the set of points with distance <span class="math notranslate nohighlight">\(R(w) \leq \beta\)</span>. You can see the L1 ball looks like a diamond while the L2 ball looks like a circle.</p>
+<a class="reference internal image-reference" href="../../_images/norms.png"><img alt="A graphical representation of the L1 ball (diamond) and L2 ball (circle) on a graph of MSE(w)" class="align-center" src="../../_images/norms.png" style="width: 100%;" /></a>
+<p>Now from our discussion of optimization from <a class="reference internal" href="../linear_regression/index.html"><span class="doc"> Linear Regression</span></a> talked about minimizing our loss function <span class="math notranslate nohighlight">\(MSE(w)\)</span> over all possible <span class="math notranslate nohighlight">\(w\)</span>’s, but now we are just considering ones in these feasible regions <span class="math notranslate nohighlight">\(\{w : R(w) \leq \beta\}\)</span>. In English, we are finding the point in these regions that minimize the loss <span class="math notranslate nohighlight">\(MSE(w)\)</span>. Now it tends to be the case that with the L1 norm, it looks like this diamond and is “pointier”; the corners of this diamond correspond to sparse solutions! And it turns out that these corners tend to reach points of the objective <span class="math notranslate nohighlight">\(MSE(w)\)</span> that are nearer to it’s optimal point. Note, that is just a statement of a heuristic. It is not saying that it will always be in a corner, it’s just often the case it is in a corner. That’s why we say LASSO <em>tends to</em> find sparse solutions, not that it always finds them.</p>
+<!-- TODO cite chapter -->
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>This is referred to as the <strong>curse of dimensionality</strong> which we will discuss later.</p>
+</aside>
+<p>This also becomes more likely as we increase the dimensionality of our feature space. It turns out that in higher dimensions, our intuitions of geometry don’t really quite apply<sup>5</sup>. But in these higher dimensions, this pointy behavior of the L1 ball is even more extreme, and it is even more likely for one of these corners to be nearest the minimum of the objective function.</p>
+<p>Again, all of this is a bit hand-wavy, but we are just trying to impart some intuition on the reasons we see this in practice. So we hope these somewhat convince you, but understanding them in detail are not the most important for our use case.</p>
+</section>
+</section>
+<section id="practicalities-with-lasso">
+<h2><span class="section-number">4.6. </span>Practicalities with LASSO<a class="headerlink" href="#practicalities-with-lasso" title="Permalink to this heading">#</a></h2>
+<p>In this last section, let’s discuss some important practicalities with using LASSO.</p>
+<section id="choosing-lambda">
+<h3><span class="section-number">4.6.1. </span>Choosing <span class="math notranslate nohighlight">\(\lambda\)</span><a class="headerlink" href="#choosing-lambda" title="Permalink to this heading">#</a></h3>
+<p>We have ignored so far how to exactly choose the tuning parameter <span class="math notranslate nohighlight">\(\lambda\)</span>. As we increase <span class="math notranslate nohighlight">\(\lambda\)</span>, we decrease the magnitude of the coefficients, which will increase the sparsity of the solution (more zero coefficients founds). How do we know what the right <span class="math notranslate nohighlight">\(\lambda\)</span> is? Well it depends on what you want to use the model for!</p>
+<p>If, say, you are interested in finding the 10 most important features for some prediction task, then you’ll likely want to choose a <span class="math notranslate nohighlight">\(\lambda\)</span> large enough to make all but 10 coefficients 0.</p>
+<p>Most often though, people care about finding a model that tends to do well predictively on future data. In that case, you would use the exact same hyperparameter turning algorithms we’ve discussed before such as evaluating different choices of <span class="math notranslate nohighlight">\(\lambda\)</span> on a validation set or using cross-validation.</p>
+</section>
+<section id="lasso-only-for-feature-selection">
+<h3><span class="section-number">4.6.2. </span>LASSO Only for Feature Selection<a class="headerlink" href="#lasso-only-for-feature-selection" title="Permalink to this heading">#</a></h3>
+<p>One of the benefits of LASSO is this notion of feature selection we get from the sparsity of its solutions. Empirically, we often find that the <em>predictive performance</em> (e.g., validation MSE) of LASSO is worse than other models such as Ridge Regression. That doesn’t mean people don’t use it in practice, they do! It’s just often times other models will outperform it.</p>
+<p>Because of that, one major use case of LASSO is just for feature selection, and then training some other model on the features LASSO chose as most important. You often will need to use your domain-specific expertise to ensure the selected features actually make sense to use as inputs for another model. But after selecting the most important features, many times ML practitioners will now start over with a new model only trained on those features.</p>
+<p>A common setup for this is called the <strong>De-biased LASSO</strong> which at a high-level is a two-step process.</p>
+<ol class="arabic simple">
+<li><p>Take the original dataset and run it through LASSO (with some <span class="math notranslate nohighlight">\(\lambda\)</span> chosen to balance the number of selected features). Mark which features have non-zero coefficients.</p></li>
+<li><p>Remove all non-selected features from the original dataset and then re-run an Ordinary Least Squares (i.e., plain regression without regularization) with only those features.</p></li>
+</ol>
+<p>Since we are now using fewer features, we are a little less concerned about an un-regularized model overfitting. This has a sort of “best of both worlds” benefit, where we get feature selection from LASSO and predictive performance from OLS! We outline a more detailed procedure for this De-biased LASSO below.</p>
+<div class="proof algorithm admonition" id="de-biased-lasso">
+<p class="admonition-title"><span class="caption-number">Algorithm 4.2 </span> (De-Biased LASSO Training Procedure)</p>
+<section class="algorithm-content" id="proof-content">
+<ol class="arabic simple">
+<li><p>Split the dataset into a training, validation, and test sets</p></li>
+<li><p>Normalize the features. Normalize <strong>using the statistics from the training set</strong> to scale the values from the training set, validation set, and test set</p></li>
+<li><p>Use the validation set to find the value of <span class="math notranslate nohighlight">\(\lambda\)</span> that results in a LASSO model with the lowest validation error</p></li>
+<li><p>Select the features of that model that have non-zero parameters</p></li>
+<li><p>Train a Linear Regression model with those features</p></li>
+<li><p>Evaluate that model on the test set to get an estimate of future performance</p></li>
+</ol>
+</section>
+</div></section>
+<section id="issues-with-lasso">
+<h3><span class="section-number">4.6.3. </span>Issues with LASSO<a class="headerlink" href="#issues-with-lasso" title="Permalink to this heading">#</a></h3>
+<p>Like any model, LASSO makes its own assumptions about how the world works, and that comes with its own set of limitations.</p>
+<ol class="arabic simple">
+<li><p>As we discussed, LASSO tends to have lower predictive performance compared to other models such as Ridge Regression.</p></li>
+<li><p>Even though LASSO can handle correlated features (# bathrooms, # showers), it tends to pick between those features arbitrarily. That means you have to be careful with how you interpret your results. If LASSO says <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">showers</span></code> is important it could really just mean some abstract measure of how many bathrooms you have is useful, and you might not improve the value of your house by building 100 more showers.</p></li>
+</ol>
+<p>In practice, these issues can be solved with a little bit of extra work that usually depends on the domain you are working in. One common approach to at least the first issue is to use a combined model type called <strong>Elastic Net</strong> which tries to combine the benefits of Ridge and LASSO in one model. The idea is to use a combination of both measures of coefficient magnitude as penalities in the objective function.</p>
+<div class="math notranslate nohighlight">
+\[\hat{w}_{ElasticNet} = \argmin{w} MSE(w) + \lambda_1 \norm{w}_1 + \lambda_2 \norm{w}_2^2\]</div>
+</section>
+</section>
+<section id="grain-of-salt-feature-selection">
+<h2><span class="section-number">4.7. </span>Grain of Salt: Feature Selection<a class="headerlink" href="#grain-of-salt-feature-selection" title="Permalink to this heading">#</a></h2>
+<p>As we highlighted before, be very careful with how you interpret the results of an algorithm used for feature selection/importance. Importantly, any feature selection procedure:</p>
+<ul class="simple">
+<li><p>Only considers the features included in the analysis</p></li>
+<li><p>Is sensitive to correlations between the features</p></li>
+<li><p>The results that you would publish of “this is the most important feature” depend on which algorithm you use!</p></li>
+</ul>
+<p>At the end of the day, feature selection is just another modelling choice. You should always combine the results from the statistical insights these models give you with the domain-specific expertise for how to interpret the phenomena in the data we see.</p>
+</section>
+<section id="recap-compare-ridge-and-lasso">
+<h2><span class="section-number">4.8. </span>Recap: Compare Ridge and LASSO<a class="headerlink" href="#recap-compare-ridge-and-lasso" title="Permalink to this heading">#</a></h2>
+<p>As a short recap of everything we have discussed so far, we highlight some important bullet points for Ridge and LASSO specifically</p>
+<p><strong>LASSO (L1 Regularization)</strong></p>
+<ul class="simple">
+<li><p>Tends to introduce sparsity in the learned coefficients.</p></li>
+<li><p>Helpful for feature selection, making the model hopefully more interpretable</p></li>
+<li><p>Tends to be more computationally efficient when predicting (due to sparsity)</p></li>
+</ul>
+<p><strong>Ridge (L2 Regularization)</strong></p>
+<ul class="simple">
+<li><p>Makes weights smaller (but not 0)</p></li>
+<li><p>More sensitive to outliers (due to the squaring term)</p></li>
+<li><p>Usually has better predictive performance in practice</p></li>
+</ul>
+<!-- TODO Add questions --></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./regression/lasso"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../ridge/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">3. </span><i class="fas fa-book fa-fw"></i> Ridge Regularization</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">4.1. Feature Selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-subsets">4.2. All Subsets</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#efficiency-of-all-subsets">4.2.1. Efficiency of All Subsets</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#greedy-algorithms-for-feature-selection">4.3. Greedy Algorithms for Feature Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-forward-stepwise-algorithm">4.3.1. Example: Forward Stepwise Algorithm</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization">4.4. Regularization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso-regularization-for-feature-selection">4.5. LASSO Regularization for Feature Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-sparsity-analytical-view">4.5.1. Why Sparsity? Analytical View</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-sparsity-geometric-view">4.5.2. Why Sparsity? Geometric View</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practicalities-with-lasso">4.6. Practicalities with LASSO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-lambda">4.6.1. Choosing <span class="math notranslate nohighlight">\(\lambda\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso-only-for-feature-selection">4.6.2. LASSO Only for Feature Selection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issues-with-lasso">4.6.3. Issues with LASSO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grain-of-salt-feature-selection">4.7. Grain of Salt: Feature Selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-compare-ridge-and-lasso">4.8. Recap: Compare Ridge and LASSO</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hunter Schafer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="float: right">
+  <!-- 100% privacy friendly analytics -->
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+  <a href="https://simpleanalytics.com/?utm_source=&utm_content=badge" referrerpolicy="origin" target="_blank"><picture><source srcset="https://simpleanalyticsbadges.com/?mode=dark" media="(prefers-color-scheme: dark)" /><img src="https://simpleanalyticsbadges.com/?mode=light" loading="lazy" referrerpolicy="no-referrer" crossorigin="anonymous" /></picture></a>
+</div>
+
+<div>
+  <p>
+    Have feedback or spotted a bug? Please make a <a href="https://github.com/animlbook/AnIML/issues">GitHub issue</a>
+    or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
+  </p>
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
