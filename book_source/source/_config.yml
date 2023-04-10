@@ -8,7 +8,7 @@ logo: _static/logo.png
 #######################################################################################
 # Execution settings
 execute:
-  execute_notebooks: "auto"
+  execute_notebooks: cache
 
 #######################################################################################
 # Parse and render settings
@@ -79,5 +79,7 @@ sphinx:
         macros:
           "argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1]
           "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1]
+          "abs": ["\\lvert #1 \\rvert", 1]
+          "norm": ["\\lVert #1 \\rVert", 1]
     suppress_warnings:
       - "myst.header"
