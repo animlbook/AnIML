@@ -98,12 +98,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1], "abs": ["\\lvert #1 \\rvert", 1], "norm": ["\\lVert #1 \\rVert", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1], "abs": ["\\lvert #1 \\rvert", 1], "indicator": ["\\mathbb{\\unicode{x1D7D9}}\\left\\{ #1 \\right\\}", 1], "norm": ["\\lVert #1 \\rVert", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'regression/lasso/index';</script>
     <link rel="shortcut icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5. Classification Overview" href="../../classification/intro/index.html" />
     <link rel="prev" title="3. Ridge Regularization" href="../ridge/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -207,6 +208,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../assessing_performance/index.html">2. <i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ridge/index.html">3. <i class="fas fa-book fa-fw"></i> Ridge Regularization</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">4. <i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../classification/intro/index.html">5. <i class="fas fa-book fa-fw"></i> Classification Overview</a></li>
 </ul>
 
     </div>
@@ -758,7 +763,7 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
 </div>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="MQPWiVCAwwFc" data-shufflequestions="False"
+<div class="output text_html"><div id="HOtMeAersKKg" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -920,7 +925,7 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsMQPWiVCAwwFc=[{"question": "Which set of features would be chosen following this Forward Stepwise model?", "type": "multiple_choice", "answers": [{"answer": "# bath, # bed", "correct": false, "feedback": "Not quite! While this is the best subset with two features, is this the one that our forward algorithm would end up picking?"}, {"answer": "# bath, sq ft", "correct": true, "feedback": "Correct! The first iteration would choose sq ft because it was the single feature with lowest validation error. Then on our second iteration, we will only consider adding one of the other unchosen features to be included with sq ft. The set of features that includes sq ft that minimizes validation error is # bath and sq ft. Note that this algorithm did not find the globally optimal subset of features of # bed and # bath"}, {"answer": "# bath, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, sq ft", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "sq ft, year built", "correct": false, "feedback": "Not quite!"}]}];
+}</style></div><script type="application/javascript">var questionsHOtMeAersKKg=[{"question": "Which set of features would be chosen following this Forward Stepwise model?", "type": "multiple_choice", "answers": [{"answer": "# bath, # bed", "correct": false, "feedback": "Not quite! While this is the best subset with two features, is this the one that our forward algorithm would end up picking?"}, {"answer": "# bath, sq ft", "correct": true, "feedback": "Correct! The first iteration would choose sq ft because it was the single feature with lowest validation error. Then on our second iteration, we will only consider adding one of the other unchosen features to be included with sq ft. The set of features that includes sq ft that minimizes validation error is # bath and sq ft. Note that this algorithm did not find the globally optimal subset of features of # bed and # bath"}, {"answer": "# bath, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, sq ft", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "sq ft, year built", "correct": false, "feedback": "Not quite!"}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1654,7 +1659,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsMQPWiVCAwwFc,  MQPWiVCAwwFc);
+        show_questions(questionsHOtMeAersKKg,  HOtMeAersKKg);
         }
         </script></div>
 </div>
@@ -1864,6 +1869,15 @@ if (typeof version == 'undefined') {
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title"><span class="section-number">3. </span><i class="fas fa-book fa-fw"></i> Ridge Regularization</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../../classification/intro/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5. </span><i class="fas fa-book fa-fw"></i> Classification Overview</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   

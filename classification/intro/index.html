@@ -1,0 +1,1251 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5. Classification Overview &#8212; AnIML: Another Introduction to Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "animlbook/AnIML");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "preferred-color-scheme");
+    script.setAttribute("label", "💬 Comments");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="../../_static/script.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1], "abs": ["\\lvert #1 \\rvert", 1], "indicator": ["\\mathbb{\\unicode{x1D7D9}}\\left\\{ #1 \\right\\}", 1], "norm": ["\\lVert #1 \\rVert", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'classification/intro/index';</script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="4. Feature Selection and LASSO Regularization" href="../../regression/lasso/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">This book is still under construction. We appreciate your patience as we get it completed. Feedback is welcome!</div>
+  </div>
+
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro/index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro/index.html">
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../regression/linear_regression/index.html">1. <i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/assessing_performance/index.html">2. <i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/ridge/index.html">3. <i class="fas fa-book fa-fw"></i> Ridge Regularization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/lasso/index.html">4. <i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. <i class="fas fa-book fa-fw"></i> Classification Overview</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/animlbook/AnIML/main?urlpath=lab/tree/book_source/source/classification/intro/index.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/edit/main/book_source/source/classification/intro/index.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/issues/new?title=Issue%20on%20page%20%2Fclassification/intro/index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/classification/intro/index.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/classification/intro/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><i class="fas fa-book fa-fw"></i> Classification Overview</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-recap">5.1. Regression Recap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-at-a-glance">5.2. Classification At a Glance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">5.3. Feature Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-classifier">5.4. Building a Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-threshold-classifier">5.4.1. 1. Simple Threshold Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-linear-classifier">5.4.2. 2. Simple Linear Classifier</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-boundaries">5.5. Decision Boundaries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-complicated-decision-boundaries">5.5.1. More Complicated Decision Boundaries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-our-classifier">5.6. Evaluating Our Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-error-accuracy">5.6.1. Interpreting Error/Accuracy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">5.7. Confusion Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laundry-list-of-classification-metrics">5.8. Laundry List of Classification Metrics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aside-learning-theory">5.9. Aside: Learning Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coming-up">5.10. Coming Up</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell tag_remove-input docutils container">
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-book-fa-fw-i-classification-overview">
+<h1><span class="section-number">5. </span><i class="fas fa-book fa-fw"></i> Classification Overview<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-classification-overview" title="Permalink to this heading">#</a></h1>
+<p>At this point, we are ready to move on to a relatively different part of our machine learning journey, in particular, discussing the concepts of <strong>classification</strong> models. Before introducing many new ideas, let’s take stock of the story we have been reading so far.</p>
+<section id="regression-recap">
+<h2><span class="section-number">5.1. </span>Regression Recap<a class="headerlink" href="#regression-recap" title="Permalink to this heading">#</a></h2>
+<p>We started the last section of the book discussion Regression models. We first introduced many of our foundational ideas for machine learning and our ML Pipeline. This included defining our data, model, quality metric, learning algorithms. We also discussed how different choices for these components are ar result of different modeling decisions and priorities, and how those choices impact the reliability of our learned model.</p>
+<p>We started our story talking about simple linear regression, where our model was in the form <span class="math notranslate nohighlight">\(y_i = w_0 + w_1x_i\)</span>. Our goal was to learn the assumed, but unknown, coefficients <span class="math notranslate nohighlight">\(w_0\)</span> and <span class="math notranslate nohighlight">\(w_1\)</span> directly from our training data <span class="math notranslate nohighlight">\(\{(x_i, y_i)\}_{i=1}^n\)</span>. We discussed all of the details of how to learn these coefficients by defining our quality metric <span class="math notranslate nohighlight">\(L(w) = \frac{1}{n} \sum_{i=1}^n \left(y_i - \hat{w}^Th(x)_i\right)^2\)</span> and finding the minimum of this function by using gradient descent. We highlighted the importance of choosing which feature(s) to include in our model affecting how well we can learn more complicated relationships in our data.</p>
+<p>We then began a discussion of how to evaluate our models. In particular, we discussed the trend that as we added more power (complexity) to our models, we would see a decrease in our training error, a hopefully good  thing, but maybe to an extreme that was actually costing us in how the model generalized in the future. We discussed the important of defining our evaluation metric that we care about to measure future performance, and how we approximate that with our test set. We discussed the abstract properties of how errors relate to model complexity in the discussion of bias and variance, and how to choose the right model complexity using a validation set or cross validation.</p>
+<p>While the techniques of evaluating models by comparing something like validation error are quite general, we also were interested in investigating if we could discourage the model from overfitting in the first place by adding a concept of regularization. We discussed the impact of changing our quality metric to include a term for regularize our model, and how choices of how much we penalized the model could affect its performance.</p>
+<p>We finally discussed the important modelling step of choosing which features to use in the first place, and a hope to find an automatic process to select the most important features for us. We saw that by using the specific regularizer of the L1 norm, we could  get feature selection as a useful side-effect. But, we importantly discussed the concept that our results of any feature selection algorithm are limited in the choices we include originally and how we define importance of features.</p>
+</section>
+<section id="classification-at-a-glance">
+<h2><span class="section-number">5.2. </span>Classification At a Glance<a class="headerlink" href="#classification-at-a-glance" title="Permalink to this heading">#</a></h2>
+<p>At a high-level, there is only a small change in our problem setup between regression and classification: the type of the labels/targets/outputs. In regression, our output <span class="math notranslate nohighlight">\(y\)</span> is a numeric value such as a house price, a student grade, some measure of population growth, some measure of air quality, etc. Mathematically, we write this as the outputs <span class="math notranslate nohighlight">\(y\)</span> in a regression task are either real numbers (<span class="math notranslate nohighlight">\(y \in \mathbb{R}\)</span>), integers (<span class="math notranslate nohighlight">\(y \in \mathbb{Z}\)</span>), or numbers in some range (such as <span class="math notranslate nohighlight">\(y \in [0, 1]\)</span>).</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>1. “Ham” is commonly used as the opposite of “spam” when trying to detect spam emails. Alternatively we could simply call them “not spam”, but “ham” is cuter.</p>
+</aside>
+<p>In classification, instead of trying to predict a numeric value, we are trying to predict a value from a distinct set of classes. For example, we might want to predict if an email is spam or ham<sup>1</sup> (<span class="math notranslate nohighlight">\(y \in \{spam, ham\}\)</span>), or if an image contains a picture of a cat, dog, or bird (<span class="math notranslate nohighlight">\(y \in \{cat, dog, bird\}\)</span>). When the set of classes has two elements, we call this a <strong>binary classification</strong> problem, while we call a <strong>multiclass classification</strong> problem one where there are greater than two options. For the vast majority of our conversation in this section, we will discuss binary classification since it is simpler and many of the techniques for multiclass classification extend quite naturally from the ones we will discuss.</p>
+<p>As mentioned in the <a class="reference internal" href="../../intro/index.html"><span class="doc"> Introduction</span></a> chapter, our book will commonly focus on a single application as a <em>case study</em> on how to use the techniques that we are introducing. For this section, we will focus on the application of <strong>sentiment analysis</strong> as our case study. We will be classifying online reviews as being positive sentiment (<span class="math notranslate nohighlight">\(y = +1\)</span>) or negative sentiment (<span class="math notranslate nohighlight">\(y = -1\)</span>). The inputs of this model will be the text of the review (sentences) and the output will be the predicted class (<span class="math notranslate nohighlight">\(y \in \{+1, -1\}\)</span>).</p>
+</section>
+<section id="feature-engineering">
+<h2><span class="section-number">5.3. </span>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Permalink to this heading">#</a></h2>
+<p>Before discussing how we can model and train a classification task, we have to discuss and important modeling prerequisite: how to represent our data.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>2. This is commonly notated that <span class="math notranslate nohighlight">\(x \in \mathbb{R}^d\)</span> when discussing data inputs and <span class="math notranslate nohighlight">\(h(x) \in \mathbb{R}^D\)</span> when discussing derived features. Reminder that in many cases, we simply use our data inputs directly as our features without doing any transformation or selection. But using <span class="math notranslate nohighlight">\(h(x) = x\)</span> is a (often implicit) modeling choice, and different choices for your features will impact your results.</p>
+</aside>
+<p>If you think carefully, you might realize there is potentially a glaring problem with how we might set up our problem, since we have not yet discussed how to represent text data such as sentences as data for our models. It turns out that most types of models assume your features are all numeric<sup>2</sup> and will not work natively with other types of data such as text data. So what can we do with our sentences to turn them into numbers? The field of <em>natural language processing</em> spends a lot of time thinking about how we can best represent text data. Just like our discussions of how you represent your features will affect your model, the same is true for how you transform text into numbers.</p>
+<p>One of the simplest approaches is to use the <strong>bag of words</strong> representation for text data that counts the number of times each word appears in the text. For example, the sentence “Sushi was great, the food was awesome, but the service was terrible” cold be represented by a vector of counts. Each position of this vector corresponds to a particular word and the value at that position is the number of times that word appeared.</p>
+<table class="table" id="bow-sushi">
+<caption><span class="caption-number">Table 5.1 </span><span class="caption-text">Bag of words representation of the sentence <br />”Sushi was great, the food was awesome, but the service was terrible”</span><a class="headerlink" href="#bow-sushi" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>sushi</p></th>
+<th class="head"><p>was</p></th>
+<th class="head"><p>great</p></th>
+<th class="head"><p>the</p></th>
+<th class="head"><p>food</p></th>
+<th class="head"><p>awesome</p></th>
+<th class="head"><p>but</p></th>
+<th class="head"><p>service</p></th>
+<th class="head"><p>terrible</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p>The terminology “bag of words” comes from the fact that this representation does not care about the order that the words appear in the sentence. In this feature representation, the sentences “John ate an apple” and “an apple at John” are equivalent. Obviously this is a simplification of all of the details necessary to represent text, but it is one that works decently in practice. There are many more advanced ways of representing text that we won’t discuss in too much detail other than the fact that many of them produce some vector of numbers in <span class="math notranslate nohighlight">\(\mathbb{R}^D\)</span>.</p>
+<p>An unspecified note is what to do with punctuation such as periods or apostrophes. This is generally quite tricky in practice, so we will use the simplifying assumption that we don’t care about punctuation and simply remove them. In effect, this would treat the words “it’s” and “its” as the same word, which you can tell is a limitation.</p>
+<p>So if we gathered a set of input data that is the review (text) and the predicted sentiment, we can apply this computation to every sentence in the dataset to come up with a numeric vector for each. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> provides a helpful pre-processor called <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html">CountVectorizer</a> to help us with this task. In the code cell below, we show how to use this class on a very small dataset. In our notation, we would treat the count in the output at row <span class="math notranslate nohighlight">\(i\)</span> and index <span class="math notranslate nohighlight">\(j\)</span> to be the feature <span class="math notranslate nohighlight">\(h_j(x_i)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="c1"># Make input data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+    <span class="p">{</span><span class="s2">&quot;review&quot;</span><span class="p">:</span> <span class="s2">&quot;Sushi was great, the food was awesome, but the service was terrible&quot;</span><span class="p">,</span> <span class="s2">&quot;sentiment&quot;</span><span class="p">:</span> <span class="o">+</span><span class="mi">1</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;review&quot;</span><span class="p">:</span> <span class="s2">&quot;Terrible food; the sushi was rancid.&quot;</span><span class="p">,</span> <span class="s2">&quot;sentiment&quot;</span><span class="p">:</span> <span class="o">+</span><span class="mi">1</span><span class="p">},</span>
+<span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input Data&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Transform into features with bag of words representation</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="n">bag_of_words</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;review&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Feature names&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Features&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bag_of_words</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Input Data
+                                              review  sentiment
+0  Sushi was great, the food was awesome, but the...          1
+1               Terrible food; the sushi was rancid.          1
+
+Feature names
+[&#39;awesome&#39; &#39;but&#39; &#39;food&#39; &#39;great&#39; &#39;rancid&#39; &#39;service&#39; &#39;sushi&#39; &#39;terrible&#39;
+ &#39;the&#39; &#39;was&#39;]
+
+Features
+[[1 1 1 1 0 1 1 1 2 3]
+ [0 0 1 0 1 0 1 1 1 1]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="building-a-classifier">
+<h2><span class="section-number">5.4. </span>Building a Classifier<a class="headerlink" href="#building-a-classifier" title="Permalink to this heading">#</a></h2>
+<p>Let’s now turn to how we can develop the ideas and concepts to build a classification model. In this chapter and the next, we will outline the idea for our first classification model called <strong>logistic regression</strong>. But before we get to that final model in the next chapter, we will start simple and build up to there with two other simpler models as starting points. The hope by telling the story in this way is we build up some important intuition and ideas before heading to some more complicated math and notation.</p>
+<ol class="arabic simple">
+<li><p>Simple Threshold Classifier</p></li>
+<li><p>Simple Linear Classifier</p></li>
+<li><p>End point: Logistic Regression</p></li>
+</ol>
+<section id="simple-threshold-classifier">
+<h3><span class="section-number">5.4.1. </span>1. Simple Threshold Classifier<a class="headerlink" href="#simple-threshold-classifier" title="Permalink to this heading">#</a></h3>
+<div class="tip admonition">
+<p class="admonition-title">Big Idea</p>
+<p>Use a list of “positive” and “negative” words to classify the review by which type of word appears most frequently.</p>
+</div>
+<p>Let’s start by assuming that some hard working netizen on the internet has done most of the hard work for us to identify which words in English are more likely to be related to “positive sentiment” and ones that are more likely to be related to “negative sentiment”. Suppose we downloaded their table of word categories shown in the table below.</p>
+<!-- TODO Easy to color? -->
+<table class="table" id="simple-model-1">
+<caption><span class="caption-number">Table 5.2 </span><span class="caption-text">Pre-defined list of words and their sentiments</span><a class="headerlink" href="#simple-model-1" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>word</p></th>
+<th class="head"><p>sentiment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>sushi</p></td>
+<td><p>Neutral</p></td>
+</tr>
+<tr class="row-odd"><td><p>was</p></td>
+<td><p>Neutral</p></td>
+</tr>
+<tr class="row-even"><td><p>great</p></td>
+<td><p>Good</p></td>
+</tr>
+<tr class="row-odd"><td><p>the</p></td>
+<td><p>Neutral</p></td>
+</tr>
+<tr class="row-even"><td><p>food</p></td>
+<td><p>Neutral</p></td>
+</tr>
+<tr class="row-odd"><td><p>but</p></td>
+<td><p>Neutral</p></td>
+</tr>
+<tr class="row-even"><td><p>awesome</p></td>
+<td><p>Good</p></td>
+</tr>
+<tr class="row-odd"><td><p>service</p></td>
+<td><p>Neutral</p></td>
+</tr>
+<tr class="row-even"><td><p>terrible</p></td>
+<td><p>Bad</p></td>
+</tr>
+<tr class="row-odd"><td><p>rancid</p></td>
+<td><p>Bad</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>Again, assuming we had such a reference in the first place, then we could build our first idea of a classifier.</p>
+<div class="proof algorithm admonition" id="simple-threshold-classifier">
+<p class="admonition-title"><span class="caption-number">Algorithm 5.1 </span> (Idea 1: Simple Threshold Classifier)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Input</strong> A sentence <span class="math notranslate nohighlight">\(x\)</span>, and a reference table of word sentiments <span class="math notranslate nohighlight">\(T\)</span></p>
+<p><strong>Output</strong> A prediction of the class <span class="math notranslate nohighlight">\(\hat{y} \in \{+1, -1\}\)</span></p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">num_positive</span></code> <span class="math notranslate nohighlight">\(\gets\)</span> Count the number of words in <span class="math notranslate nohighlight">\(x\)</span> that are <em>positive</em> according to <span class="math notranslate nohighlight">\(T\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_negative</span></code> <span class="math notranslate nohighlight">\(\gets\)</span> Count the number of words in <span class="math notranslate nohighlight">\(x\)</span> that are <em>negative</em> according to <span class="math notranslate nohighlight">\(T\)</span></p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">num_positive</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">num_negative</span></code>:</p>
+<ul class="simple">
+<li><p>predict <span class="math notranslate nohighlight">\(\hat{y} = +1\)</span></p></li>
+</ul>
+</li>
+<li><p>otherwise:</p>
+<ul class="simple">
+<li><p>predict <span class="math notranslate nohighlight">\(\hat{y} = -1\)</span></p></li>
+</ul>
+</li>
+</ol>
+</section>
+</div><p>So if we had this magical reference table, then this algorithm seems somewhat intuitive but you might imagine has some major limitations:</p>
+<ul class="simple">
+<li><p>Even amongst positive sentiment words, some words convey a more intense sentiment than others. “Awesome” is often considered to be a more positive claim than “good”. So we will likely need a way to weight how positive or negative a word is instead.</p></li>
+<li><p>Single words are often not enough to capture meaning. According to the algorithm above, the sentence “not good” would likely be considered a positive sentiment! In reality, looking one word at a time may not sufficiently catch the context of the preceding sentence.</p>
+<ul>
+<li><p>To be fair, this is not really a fault of the Simple Threshold Classifier, but a fault of our features only containing a single word. We will discuss later some approaches to potentially address this problem.</p></li>
+</ul>
+</li>
+<li><p>It’s not clear how we can even get this list of positive/negative words in the first place!</p></li>
+</ul>
+</section>
+<section id="simple-linear-classifier">
+<h3><span class="section-number">5.4.2. </span>2. Simple Linear Classifier<a class="headerlink" href="#simple-linear-classifier" title="Permalink to this heading">#</a></h3>
+<p>In our last section of the book on regression, we discussed the surprising effectiveness of using linear models where we learn coefficients related to our features to use in in our predictions. What if we try to borrow that idea for a classifier? Instead of using a list of good/bad words, we can instead somehow learn coefficients for each word. We will come back and discuss details for how to learn coefficients for the words in a bit, but our goal would be to learn something like:</p>
+<!-- TODO Easy to color? -->
+<table class="table" id="linear-model-1">
+<caption><span class="caption-number">Table 5.3 </span><span class="caption-text">Pre-defined list of words and their sentiments</span><a class="headerlink" href="#linear-model-1" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>feature</p></th>
+<th class="head"><p>word</p></th>
+<th class="head"><p>sentiment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>w_1</p></td>
+<td><p>sushi</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>w_2</p></td>
+<td><p>was</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>w_3</p></td>
+<td><p>great</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>w_4</p></td>
+<td><p>the</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>w_5</p></td>
+<td><p>food</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>w_6</p></td>
+<td><p>but</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>w_7</p></td>
+<td><p>awesome</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>w_8</p></td>
+<td><p>service</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>w_9</p></td>
+<td><p>terrible</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>The intent here is that the more positive a coefficient is for a word, the more positive its sentiment is, and vice versa for negative coefficients. Words with coefficient 0 have neutral sentiment.</p>
+<p>Then using our bag of words feature extraction <span class="math notranslate nohighlight">\(h(x)\)</span> on a sentence <span class="math notranslate nohighlight">\(x\)</span>, we can now use these coefficients to make predictions. We define the notion of a <span class="math notranslate nohighlight">\(Score(x_i)\)</span> to be a number that, if more positive means the sentence has more positive sentiment, and if more negative, has more negative sentiment. We use the notation <span class="math notranslate nohighlight">\(s_i\)</span> as shorthand for <span class="math notranslate nohighlight">\(Score(x_i)\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[s_i = Score(x_i) = \sum_{j=0}^D w_j h_j(x) = w^Th(x)\]</div>
+<p>Using this score, we can then make our prediction <span class="math notranslate nohighlight">\(+1\)</span> when the <span class="math notranslate nohighlight">\(Score\)</span> is positive, otherwise negative. The <span class="math notranslate nohighlight">\(sign\)</span> function returns <span class="math notranslate nohighlight">\(+1\)</span> if the number is positive, and <span class="math notranslate nohighlight">\(-1\)</span> otherwise. In the case of the <span class="math notranslate nohighlight">\(Score\)</span> being exactly 0, you have to make a determination of if you should predict positive, negative, or something else entirely. So now our predicted labels are:</p>
+<div class="math notranslate nohighlight">
+\[\hat{y}_i = sign(Score(x_i)) = sign(\hat{s}_i) = sign(\hat{w}^Th(x_i))\]</div>
+<p>With the sentence “The sushi was great, the food was awesome, but the service was terrible” (ignoring all 0 coefficients), <span class="math notranslate nohighlight">\(s_i = 1 c\dot 1 + 2 \cdot 1 -1 \cdot 1 = 2\)</span>, which means our prediction for this sentence is <span class="math notranslate nohighlight">\(\hat{y}_i = +1\)</span>.</p>
+<!-- TODO update reference -->
+<p>We actually won’t discuss how to learn the coefficients for our linear model in this chapter, instead saving that discussion for the next chapter. So for now, let’s just pretend we have some learning algorithm that tells us the coefficients based on our training data.</p>
+</section>
+</section>
+<section id="decision-boundaries">
+<h2><span class="section-number">5.5. </span>Decision Boundaries<a class="headerlink" href="#decision-boundaries" title="Permalink to this heading">#</a></h2>
+<p>Consider a simplified model where we only have two features/coefficients</p>
+<table class="table" id="linear-model-2">
+<caption><span class="caption-number">Table 5.4 </span><span class="caption-text">Pre-defined list of words and their sentiments</span><a class="headerlink" href="#linear-model-2" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>feature</p></th>
+<th class="head"><p>word</p></th>
+<th class="head"><p>sentiment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\hat{w}_0\)</span></p></td>
+<td><p><em>(intercept)</em></p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\hat{w}_1\)</span></p></td>
+<td><p>awesome</p></td>
+<td><p>1.0</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\hat{w}_2\)</span></p></td>
+<td><p>awful</p></td>
+<td><p>-1.5</p></td>
+</tr>
+</tbody>
+</table>
+<p>To understand the predictions of this model, it sometimes helps to visualize what the model would predict for any setting of the features <span class="math notranslate nohighlight">\(h_1(x)\)</span> and <span class="math notranslate nohighlight">\(h_2(x)\)</span>. In general, the score for a sentence with using these coefficients is the following.</p>
+<div class="math notranslate nohighlight">
+\[\hat{s} = 1 \cdot \text{#awesome} - 1.5 \cdot \text{#awful}\]</div>
+<p>So let’s consider plotting all possible values of <span class="math notranslate nohighlight">\((\text{#awesome}, \text{#awful})\)</span> and plotting all of the ones with score <span class="math notranslate nohighlight">\(\hat{s} &gt; 0\)</span> as positive and the one with score <span class="math notranslate nohighlight">\(\hat{s} &lt; 0\)</span> as negative. We highlight the region where <span class="math notranslate nohighlight">\(\hat{s} = 0\)</span> exactly as the <strong>decision boundary</strong> in black. Note that all of the places below the line are predicted positive, since in that region all of the scores are <em>positive</em>. Above the line all of the scores are <em>negative</em> so the predictions are negative. Also note that the decision <span class="math notranslate nohighlight">\(\hat{s} = 0\)</span> is a line! We call this model a <em>linear classifier</em> because its decision boundary, where the decisions would switch from positive/negative, is a linear function. To make this plot, we actually just imagined making a prediction for every possible <span class="math notranslate nohighlight">\((\text{#awesome}, \text{#awful})\)</span>, for example <span class="math notranslate nohighlight">\((5, 2)\)</span>, and then finding its prediction <span class="math notranslate nohighlight">\(Score((5, 2)) = 1 \cdot 5 - 1.5 \cdot 2 = 2\)</span>.</p>
+<figure class="align-default">
+<img alt="A picture of a decision boundary (explained in last paragraph)" src="../../_images/2d-decision-boundary.png" />
+</figure>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>3. Also called a hyperplane</p>
+</aside>
+<p>While we show this decision boundary  as a 2D plot (using color to highlight positive/negative predictions), we can also think about these predictions as a 3D plot where the z-axis shows the value of the <span class="math notranslate nohighlight">\(Score(x)\)</span>. Because coefficients are a linear function, when visualizing the outputs <span class="math notranslate nohighlight">\(Score(x)\)</span> for every input <span class="math notranslate nohighlight">\((h_1(x), h_2(x))\)</span>, we would draw this function as a <em>plane</em><sup>3</sup>. Note that the scores are linear in terms of the inputs and a higher point for the plan corresponds to a larger <span class="math notranslate nohighlight">\(Score\)</span>. What our last plot was showing was the <em>projection</em> of this 3D plot into 2D, where we used color to depict whether or not the <span class="math notranslate nohighlight">\(Score\)</span> was positive/negative. Usually these plots are less popular because they are more complicated, and sometimes hide the important details of where the decision boundary is. But they are still a helpful tool to think about what is going on here.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/3d-decision-boundary.png"><img alt="A picture of a decision boundary in 3D (explained in last paragraph)" src="../../_images/3d-decision-boundary.png" style="width: 50%;" /></a>
+</figure>
+<p>One final way to visualize these predictions and the decision boundary is to color the hue of the positive/negative regions by the magnitude of the score. Where the scores are very high, using a darker blue; when the scores are very low, using a darker yellow; when the scores are near 0, shading them more white. This view is essentially the same as the first, but is helpful to show some notion of <em>confidence</em> the model has in its predictions. If it is predicting something near the decision boundary, the scores are closer to 0 and the coloring shows it is less <em>confident</em> about the prediction in that region due to it being near the dividing line.</p>
+<figure class="align-default">
+<img alt="A side-by-side depiction of our original decision boundary, and one with the predictions shaded (described in last paragraph)." src="../../_images/shaded-decision-boundary.png" />
+</figure>
+<!-- TODO Add slido poll about shifting intercept -->
+<section id="more-complicated-decision-boundaries">
+<h3><span class="section-number">5.5.1. </span>More Complicated Decision Boundaries<a class="headerlink" href="#more-complicated-decision-boundaries" title="Permalink to this heading">#</a></h3>
+<p>Note that in all of these cases, with the model we are using being a linear model, the decision boundaries we learn will be linear. If we wanted to learn a more complicated boundary, we would need to use a more complicated model. As discussed in great detail earlier, one way of making a model more complex is using more features to hopefully capture more complicated relationships in the data.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/complex-boundary.png"><img alt="A more complicated decision boundary that does not just follow a line." src="../../_images/complex-boundary.png" style="width: 50%;" /></a>
+</figure>
+<p>For example, instead of just using simple word counts, we could also include the word counts squared or with other mathematical transformations. In text processing, one common way to represent more complicated features is to look at more words at a time. In our simple bag-of-words features, we were making our model a <strong>unigram</strong> model since it only looked at one word (uni) at a time. Remember we discussed that this feature representation is inherently limited as it is unable to capture concepts represented in multiple words such as “Not good.” Instead, another approach is to count up occurrences of pairs of words in a <strong>bigram</strong> model.</p>
+<p>So with our sentence, “Sushi was good, the food was good, the service was not good”, the unigram representation would have the features was shown above in <a class="reference internal" href="#bow-sushi"><span class="std std-ref">Bag of Words</span></a>. However, if we switched to a bigram representation of our data, we would have a feature for each adjacent pair of words that appear in this sentence as shown in the table below.</p>
+<table class="table" id="bigram-sushi">
+<caption><span class="caption-number">Table 5.5 </span><span class="caption-text">Bigram representation of the sentence <br />”Sushi was great, the food was awesome, but the service was terrible”</span><a class="headerlink" href="#bigram-sushi" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>sushi was</p></th>
+<th class="head"><p>was good</p></th>
+<th class="head"><p>good the</p></th>
+<th class="head"><p>the food</p></th>
+<th class="head"><p>food was</p></th>
+<th class="head"><p>the service</p></th>
+<th class="head"><p>service was</p></th>
+<th class="head"><p>was not</p></th>
+<th class="head"><p>not good</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p>We can generalize this concept to an <strong>n-gram</strong> model that looks at the last <span class="math notranslate nohighlight">\(n\)</span> words at each point. Clearly the larger <span class="math notranslate nohighlight">\(n\)</span> is, the more complicated our set of features will be as there are more and more possible combinations of <span class="math notranslate nohighlight">\(n\)</span> words as <span class="math notranslate nohighlight">\(n\)</span> grows. Everything we have discussed before about model complexity applies here when considering using more and more context in the counts.</p>
+</section>
+</section>
+<section id="evaluating-our-classifier">
+<h2><span class="section-number">5.6. </span>Evaluating Our Classifier<a class="headerlink" href="#evaluating-our-classifier" title="Permalink to this heading">#</a></h2>
+<p>TODO Quality Metric highlight ML Pipeline</p>
+<!-- TODO Update reference to next chapter -->
+<p>So again, supposing we have some way to learn coefficients for our linear classifier, let’s discuss how we might evaluate it. This will help us start the conversation of how we actually learn these coefficients in the next chapter. In this section, we will outline the <em>Quality Metric</em> we are interested in using to evaluate how good a particular predictor is.</p>
+<p>In some sense, it is a bit easier to discuss the error of a classification system. In binary classification, in particular, there are really only two possibilities for a prediction: it is either right or it is wrong. We can actually break down the “wrong” case into two possibilities that are often useful to name explicitly. The two types of being wrong are:</p>
+<ul class="simple">
+<li><p>If the true label was positive (<span class="math notranslate nohighlight">\(y = +1\)</span>), but the predicted label was negative (<span class="math notranslate nohighlight">\(\hat{y} = -1\)</span>). This is often called a <strong>False Negative</strong>.</p></li>
+<li><p>If the true label was negative (<span class="math notranslate nohighlight">\(y = -1\)</span>), but the predicted label was positive (<span class="math notranslate nohighlight">\(\hat{y} = +1\)</span>). This is often called a <strong>False Positive</strong>.</p></li>
+</ul>
+<p>In some scenarios you might care specifically about which type of error is happening, but in many cases, we simplify to ignore these sub-cases and just consider an error to be an error, regardless of type.</p>
+<!-- TODO It seems this is overflowing off the page if the browser is too small?-->
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>4. 📝 <em>Notation:</em> <span class="math notranslate nohighlight">\(\indicator{c}\)</span> is an indicator function that evaluates to 1 if <span class="math notranslate nohighlight">\(c\)</span> is true, else 0.</p>
+</aside>
+<p>We can then define the <strong>classification error</strong> of our predictor to be the following. Note that, as defined, the error will be a number between 0 and 1, where a higher number indicates a larger fraction of the examples were classified incorrectly.</p>
+<div class="math notranslate nohighlight">
+\[error(\hat{f}) = \frac{\text{# mistakes}}{\text{# examples}} = \frac{1}{n}\sum_{i=1}^n \indicator{\hat{y}_i \neq y}\]</div>
+<p>Similarly, we can also define the concept of <strong>classification accuracy</strong> as we do below. Note that the special relationship in how accuracy and error are opposites in the binary classification setting.</p>
+<div class="math notranslate nohighlight">
+\[accuracy(\hat{f}) = \frac{\text{# correct}}{\text{# examples}} = 1 - error(\hat{f}) = \frac{1}{n}\sum_{i=1}^n \indicator{\hat{y}_i = y}\]</div>
+<section id="interpreting-error-accuracy">
+<h3><span class="section-number">5.6.1. </span>Interpreting Error/Accuracy<a class="headerlink" href="#interpreting-error-accuracy" title="Permalink to this heading">#</a></h3>
+<p>While, in some sense, classification error/accuracy are easier to understand that our more complicate <span class="math notranslate nohighlight">\(MSE\)</span> from regression, we need to be careful with how we interpret our evaluation metrics here.</p>
+<p>We might expect that your model should beat at least random guessing. So if you compare your model to a baseline model that just randomly picks a label, our accuracy should be better than random.  For binary classification, we might expect that accuracy to be at least 50% and for multi-class classification an accuracy of at least <span class="math notranslate nohighlight">\(1/k\)</span>. Besides that, we might believe that a accuracy closer to 1 inherently means a model that is good at the learning task.</p>
+<p>However, consider the case of building a model to predict whether or not you would click on an ad on a webpage (positive label is you click, negative is you don’t). It turns out, that if we just always predict a negative label, we would have an accuracy around <a class="reference external" href="https://www.smartinsights.com/internet-advertising/internet-advertising-analytics/display-advertising-clickthrough-rates/">94%</a>! The reason for this is in this example, there is a <strong>class imbalance</strong> present, where most of the labels are negative since most people don’t click on most ads they see. This simple classifier that just always predicts the majority class is called the <strong>majority class classifier</strong>. So in order for an accuracy to be considered “good”, it should be doing at least better than the majority class classifier.</p>
+<p>So what should we do about this? Well, we should always be asking critical questions of why we see the accuracy we do and how we should interpret our results. So a common workflow to consider your model’s performance might ask the following questions:</p>
+<ul class="simple">
+<li><p>Is the a class imbalance present in my data?</p></li>
+<li><p>How does my model’s accuracy compare to some sort of baseline (e.g., a random guesser, or a majority class classifier)</p></li>
+<li><p><em>What does my application need in terms of our accuracy?</em> What’s good enough for the user experience? What are the impacts of the errors we make.</p></li>
+</ul>
+<p>Importantly with that last question, we don’t ask “What if an error happens?”, but “What is the cost of that error?” In machine learning applications, errors are a fact of life that cannot be avoided. Our hope is to minimize errors, but with statistical modeling, errors are guaranteed. So the question we have to ask is not “if” an error happens, but “how many” and what those errors “cost”.</p>
+</section>
+</section>
+<section id="confusion-matrix">
+<h2><span class="section-number">5.7. </span>Confusion Matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this heading">#</a></h2>
+<p>While classification accuracy and error are intuitive, they are often lacking in the fact that they smooth over all possible mistakes that can happen. We indicated before, that we might care about the specific types of error happening:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{y} = +1, y = -1\)</span> or a False Positive</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y} = -1, y = +1\)</span> or a False Negative</p></li>
+</ul>
+<p>It often helps to plot out the types of errors that occur in a <strong>confusion matrix</strong>. The rows of this matrix correspond to the possible true labels (positive, negative) and the columns, the possible predictions (positive, negative). The matrix outlines all possible combinations of these cases.</p>
+<figure class="align-default">
+<img alt="A grid showing the confusion matrix (described below)" src="../../_images/confusion_matrix.png" />
+</figure>
+<p>The four regions of this matrix correspond to the possible combinations of our labels and predictions.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{y} = +1, y = +1\)</span> is a <strong>True Positive</strong></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y} = +1, y = -1\)</span> is a <strong>False Negative</strong></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y} = -1, y = +1\)</span> is a <strong>False Positive</strong></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y} = -1, y = -1\)</span> is a <strong>True Negative</strong></p></li>
+</ul>
+<p>In the following code sample, we show a <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> function for plotting these confusion matrices on some synthetic examples of labels and predictions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">ConfusionMatrixDisplay</span>
+
+<span class="n">y</span> <span class="o">=</span>     <span class="p">[</span><span class="mi">1</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../_images/cc1dfb808742fc97a34fd8edb27f38a376f2978ff7cb4ca4d7940054ff8989ad.png"><img alt="../../_images/cc1dfb808742fc97a34fd8edb27f38a376f2978ff7cb4ca4d7940054ff8989ad.png" class="align-center" src="../../_images/cc1dfb808742fc97a34fd8edb27f38a376f2978ff7cb4ca4d7940054ff8989ad.png" style="width: 400px;" /></a>
+</div>
+</div>
+<p>This confusion matrix encodes more information than accuracy/error do on their own. You can always recover these from the confusion matrix though. For example, in that last code output the accuracy of that classifier would be <span class="math notranslate nohighlight">\(\frac{4 + 2}{4 + 3 + 1+ 2} = 0.6\)</span>.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>5. Note deciding which label is considered “positive” and “negative” is somewhat arbitrary. All of the terminology can be flipped if you change your terminology. Note that in many cases where are model is trying to detect something (e.g., spam or a disease), the “positive label” is often the presence of that thing even if that thing being present isn’t actually a good thing.</p>
+</aside>
+<p>So with this idea of a confusion matrix in mind, we might now ask “Which is worse? A false negative or a false positive?” Like most of our interpretations of our ML models, this entirely depends on context. Consider the “cost” of these two types of errors in two different scenarios. What is the cost incurred by each mistake in the following situations?<sup>5</sup></p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Spam Detection (where the positive label = spam email)<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">False Negative (<span class="math notranslate nohighlight">\(\hat{y} = -1, y = +1\)</span>): Annoying that we let a spam email into your inbox</p></li>
+<li><p class="sd-card-text">False Positive (<span class="math notranslate nohighlight">\(\hat{y} = +1, y = -1\)</span>): Blocked someone’s (ham) email and now you might get in trouble for not reading an email you were supposed to.</p></li>
+</ul>
+<p class="sd-card-text">I can tell you that even though I get a lot of emails, a False Positive for spam detection is <em>way</em> worse for being a teacher and potentially missing your students’ emails!</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Medical Diagnosis (where the positive label = condition/disease is present)<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">False Negative (<span class="math notranslate nohighlight">\(\hat{y} = -1, y = +1\)</span>): Condition/disease goes untreated</p></li>
+<li><p class="sd-card-text">False Positive (<span class="math notranslate nohighlight">\(\hat{y} = +1, y = -1\)</span>): Potentially give a wasteful treatment for that condition/disease</p></li>
+</ul>
+<p class="sd-card-text">Depending on the condition/disease, how we weigh these is vastly different. For example, in the COVID-19 pandemic it was likely that we can afford to have a at-home-test that was biased towards False Positives. The cost of incorrectly telling someone they had COVID when they didn’t is they stay home and isolate, but the cost of a False Negative is the potential spread to many other people.</p>
+</div>
+</details><p>So as we see from these examples, context entirely matters here when evaluating which type of error is worse. Remember, errors in ML systems are a given, so it’s a question of “when” and “how many” errors happen, not “if”. Depending on how you evaluate these types of errors, you may even choose to not use an ML system there in the first place. For example, many AI ethicists assert that we should draw a firm line in the use of AI in warfare, as the cost of mistakenly taking a life is far too great for any computer to decide.</p>
+<p>Another big question to ask is who is affected by these mistakes? As we saw earlier in the book, we provided an example of error rates in facial recognition systems vary across demographics such as sex and race (<a class="reference external" href="https://www.nytimes.com/2018/02/09/technology/facial-recognition-race-artificial-intelligence.html?module=inline">source</a>). So here the problem is not that the model makes errors (all models do), but the rates these errors disproportionately impact certain demographic groups negatively.</p>
+</section>
+<section id="laundry-list-of-classification-metrics">
+<h2><span class="section-number">5.8. </span>Laundry List of Classification Metrics<a class="headerlink" href="#laundry-list-of-classification-metrics" title="Permalink to this heading">#</a></h2>
+<p>With this concept of the confusion matrix, we can now introduce a laundry list of metrics that people use to weigh the cost of errors in various systems. We do not dive into most of these metrics in detail, but we provide some of the most commonly used ones here. If you’re interested, you can learn more about these metrics and many more possible ones <a class="reference external" href="https://en.wikipedia.org/wiki/Confusion_matrix">here</a>.</p>
+<p>For all of the following metrics, we use the following notation:</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row docutils">
+<div class="sd-col sd-d-flex-row sd-col-6 sd-col-xs-6 sd-col-sm-6 sd-col-md-6 sd-col-lg-6 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Individual Counts</div>
+<ul class="simple">
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\(C_{TP} = \text{# True Positive}\)</span></p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\(C_{FP} = \text{# False Positive}\)</span></p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\(C_{TN} = \text{# True Negative}\)</span></p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\(C_{FN} = \text{# False Negative}\)</span></p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-6 sd-col-xs-6 sd-col-sm-6 sd-col-md-6 sd-col-lg-6 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Aggregate Counts</div>
+<ul class="simple">
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\(N_P = C_{TP} + C_{FN}\)</span></p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\(N_N = C_{TN} + C_{FP}\)</span></p></li>
+<li><p class="sd-card-text"><span class="math notranslate nohighlight">\(N = N_P + N_N\)</span></p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Classification Metrics</strong></p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row docutils">
+<div class="sd-col sd-d-flex-row sd-col-4 sd-col-xs-4 sd-col-sm-4 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Error Rate</div>
+<div class="math notranslate nohighlight">
+\[\frac{C_{FP} + C_{FN}}{N}\]</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-4 sd-col-xs-4 sd-col-sm-4 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Accuracy Rate</div>
+<div class="math notranslate nohighlight">
+\[\frac{C_{TP} + C_{TN}}{N}\]</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-4 sd-col-xs-4 sd-col-sm-4 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+False Positive Rate (FPR)</div>
+<div class="math notranslate nohighlight">
+\[\frac{C_{FP}}{N_N}\]</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-4 sd-col-xs-4 sd-col-sm-4 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+False Negative Rate (FNR)</div>
+<div class="math notranslate nohighlight">
+\[\frac{C_{FN}}{N_P}\]</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-4 sd-col-xs-4 sd-col-sm-4 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+True Positive Rate (TPR) or Recall</div>
+<div class="math notranslate nohighlight">
+\[\frac{C_{TP}}{N_P}\]</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-4 sd-col-xs-4 sd-col-sm-4 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Precision</div>
+<div class="math notranslate nohighlight">
+\[\frac{C_{TP}}{C_{TP} + C_{FP}}\]</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-4 sd-col-xs-4 sd-col-sm-4 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+F1-Score</div>
+<div class="math notranslate nohighlight">
+\[2\cdot\frac{Precision \cdot Recall}{Precision + Recall}\]</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>An English explanation for what each means is outlined below:</p>
+<ul class="simple">
+<li><p>Accuracy/Error Rate: Already discussed</p></li>
+<li><p>FPR: The rate of all the examples that are truly negative that are labelled as positive. An FPR of 1 means every negative example was mistakenly labeled as positive.</p></li>
+<li><p>FNR: Same as FPR, but for truly positive examples that are labeled negative.</p></li>
+<li><p>TRP/Recall: Of all of the truly positive examples, what fraction of them were predicted positive. A Recall of 1 means every positive example was labelled positive. This is called “Recall” in the terminology that the positive label is often trying to find some condition (e.g., a disease) and we are interested in how many of the instances of that disease we correctly find.</p></li>
+<li><p>Precision: Of all of the things predicted as a positive label, which fraction of them are actually positive examples. A Precision of 1 means every example predicted positive is actually a positive example.</p></li>
+<li><p>F1-Score: A metric that tries to measure both precision and recall at the same time. An easy way to increase recall is to decrease precision (predict all examples positive), and vice versa. The F1-score combines both so you need both good precision and recall to get a high F1-Score.</p></li>
+</ul>
+<p>Don’t worry too much about those details right now, we just want to present these metrics as a reference to look back on when asked to interpret a particular metric.</p>
+</section>
+<section id="aside-learning-theory">
+<h2><span class="section-number">5.9. </span>Aside: Learning Theory<a class="headerlink" href="#aside-learning-theory" title="Permalink to this heading">#</a></h2>
+<p>Before concluding this introductory chapter on classification, we want to take a quick segue to the theoretical background behind machine learning. In particular, we want to discuss the role of how much training data we have on the quality of our models.</p>
+<p>There is a lot of theoretical machine learning research to find how much data we might need to guarantee a model with a particular error rate. Typically more (quality) data is better, but you can actually find bounds on how much data is necessary. We don’t discuss all of these results here, but provide a link to some extra resources ona the side here. What we do want to discuss is the role of how increasing our amount of training data affects our model’s error.</p>
+<figure class="align-center">
+<img alt="A graph showing how the true error decreases as training data size increases, but only down to some limit." src="../../_images/learning_rate.png" />
+</figure>
+<p>It’s important to note that in this graph we are considering a <em>single model complexity</em> and varying the amount of data we give it. When there is too little data, the model complexity might be too great and it will overfit. As we increase the training data size, but keep the model complexity the same, we see a decrease in true error. Do we expect the true error to go to zero in the limit that we have infinite training data?</p>
+<p>This decrease in error we are seeing is a result in the variance of the model decreasing as we add more data. A 20-degree polynomial has less room to wiggle around when there are 2 billion training points. But remember that variance is not the only source of error! Bias and the irreducible noise are too! Adding extra training data doesn’t actually remove our noise. Additionally, it doesn’t decrease our model’s bias either! If linear model is being used to approximate a degree 3 polynomial, that bias (being the wrong model type) will be wrong no matter how much data we throw at it. In other words, the true error in the limit of infinite training data will be the bias (squared) plus the irreducible noise.</p>
+<p>How do we expect a more complicated model would fair as you increase the training data size? So for example, what if we compared these learning curves for a model trained on unigram features vs one trained on bigram features. We would see the same overall pattern that true error decreases over time, but there might be some specifics differences to note.</p>
+<figure class="align-center">
+<img alt="Comparing two learning curves, the bigram model falls to a lower true error with infinite training data." src="../../_images/compare_learning_rate.png" />
+</figure>
+<p>So some things to note:</p>
+<ul class="simple">
+<li><p>We might expect that the true error for the more complicated model to be <em>higher</em> than the simpler model when there isn’t a lot of training data. This might be a result of overfitting causing the true error to be higher. We do note that this isn’t a guarantee though since it depends a lot on the data and modeling task.</p></li>
+<li><p>In the limit where we have infinite training data, the true error of the bigram model also doesn’t reach zero, but it is lower than the unigram model. Why is this? The irreducible noise is the same, but the bias of the more complicated is lower.</p></li>
+</ul>
+</section>
+<section id="coming-up">
+<h2><span class="section-number">5.10. </span>Coming Up<a class="headerlink" href="#coming-up" title="Permalink to this heading">#</a></h2>
+<!-- TODO upate reference below -->
+<p>So in this chapter, we have introduced the concept and terminology for classification and how to evaluate classification models. What we have not discussed is how we actually learn the coefficients for our linear model. We will discuss this in detail on our next chapter on Logistic Regression.</p>
+<!-- TODO add checkpoint questions --></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./classification/intro"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../regression/lasso/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4. </span><i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-recap">5.1. Regression Recap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-at-a-glance">5.2. Classification At a Glance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering">5.3. Feature Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-classifier">5.4. Building a Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-threshold-classifier">5.4.1. 1. Simple Threshold Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-linear-classifier">5.4.2. 2. Simple Linear Classifier</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-boundaries">5.5. Decision Boundaries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-complicated-decision-boundaries">5.5.1. More Complicated Decision Boundaries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-our-classifier">5.6. Evaluating Our Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-error-accuracy">5.6.1. Interpreting Error/Accuracy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">5.7. Confusion Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laundry-list-of-classification-metrics">5.8. Laundry List of Classification Metrics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aside-learning-theory">5.9. Aside: Learning Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coming-up">5.10. Coming Up</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hunter Schafer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="float: right">
+  <!-- 100% privacy friendly analytics -->
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+  <a href="https://simpleanalytics.com/?utm_source=&utm_content=badge" referrerpolicy="origin" target="_blank"><picture><source srcset="https://simpleanalyticsbadges.com/?mode=dark" media="(prefers-color-scheme: dark)" /><img src="https://simpleanalyticsbadges.com/?mode=light" loading="lazy" referrerpolicy="no-referrer" crossorigin="anonymous" /></picture></a>
+</div>
+
+<div>
+  <p>
+    Have feedback or spotted a bug? Please make a <a href="https://github.com/animlbook/AnIML/issues">GitHub issue</a>
+    or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
+  </p>
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
