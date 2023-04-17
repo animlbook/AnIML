@@ -8,3 +8,7 @@ parts:
       - file: regression/assessing_performance/index
       - file: regression/ridge/index
       - file: regression/lasso/index
+  - caption: Classification
+    numbered: True
+    chapters:
+      - file: classification/intro/index
