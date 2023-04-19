@@ -46,6 +46,76 @@ But as the maxim of every superhero movie says, "with great power comes great re
 
 Without being informed about what these models are doing and how they work, we have no hope of being able to assess and critique where we should and *should not* be using them. Our hope in this book is that we can show you the awesome potential of these systems and how you build them well. At the same time, we want you to be considering the serious ramifications of automation that these models afford and how to avoid some dangerous pitfalls that can end up harming people.
 
+### ML in the Real World
+
+One of my favorite(?) tweets about the ways machine learning is used in the real world is this one. While it's a few years old at this point, it highlights that these systems with huge amounts of uncertainty are being deployed in settings with extremely real consequences. Where high amounts of uncertainty in the part of the decision maker are probably undesirable.
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">It’s terrifying that both of these things are true at the same time in this world: <br><br>• computers drive cars around<br><br>• the state of the art test to check that you’re not a computer is whether you can successful identify stop signs in pictures</p>&mdash; Eddy Dever (@EddyDever) <a href="https://twitter.com/EddyDever/status/995565824164347904?ref_src=twsrc%5Etfw">May 13, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+```{figure} adversarial_attack.png
+---
+alt: A stop sign overlayed with text to cause it to be misclassified
+width: 100%
+align: center
+figclass: margin
+name: adversarial_stop_sign
+---
+
+An 'adversarial' stop sign that gets classified as a "45 MPH" sign.
+```
+
+Underscoring the fact that deployed ML systems have all of this uncertainty in the first place, actors can try to manipulate these systems for their own gain (or others harm). For example, some researchers have shown that by strategically manipulating a picture of a stop sign as in {numref}`adversarial_stop_sign`, they could make a real-world ML system make a mistake. for classifying images not only incorrectly, but confidently, predict the image was a sign indicating the speed limit was 45 MPH in that area .
+
+Not only are we concerned by bad actors maliciously manipulating ML systems to cause harm, even the systems themselves can be designed to do harm without the creators even intending it in the first place. For example, the famous [Gender Shades](http://gendershades.org/) project showed that production facial recognition systems disproportionately make errors on faces of darker skinned women then it does lighter skinned men as seen in {numref}`gender_shades`.
+
+```{figure} gender_shades.png
+---
+alt: Demonstration of differential accuracy on faces of various ethnicities/sexes
+width: 75%
+align: center
+name: gender_shades
+---
+
+["Facial Recognition is Accurate, if You're a White Guy"](https://www.nytimes.com/2018/02/09/technology/facial-recognition-race-artificial-intelligence.html?module=inline)
+```
+
+Most would assume that the creators of these facial recognition systems didn't *intentionally* code their systems to be worse on people of color, so where did these biased outcomes come from? Almost always with machine learning systems, they are just automated ways of reflecting trends in the data they trained on. A common phrase said by machine learning practitioners is "Garbage in, $\rightarrow$ Garbage out". The same is true for data that encodes structural bias in our society. Bias in $\rightarrow$ Bias out.
+
+You might be wondering how bias can enter the data our models train on. Well the simple answer is most data is drawn from the real world, and the real world encodes historical and present biases against certain populations of people.
+
+Take for example a model that is trained on records of criminal incidences in cities. Many such systems are trained on police records and used to deploy police across the city to help prevent crime; usually with a particular focus to prevent violent crimes. While these systems are often well-intentioned to stop these sorts of violent crimes, they often aren't the only types of crimes recorded. For example, they often record petty crimes like loitering, marijuana possession, etc. that police pick up on their patrols. The nature of theses crimes (or even if they are crimes at all) are far less severe than the violent crimes they were originally trying to stop. But these non-violent crimes then fill up the databases, and the models' predictions now reflect their presence and now predict crime is more likely in that area. Now a system designed to to stop violent crimes is primarily predicting where non-violent crimes occur. This now creates a cycle where the model now sends more police to those areas, where they find more non-violent crimes to report, further justifying even more police being sent to those neighborhoods. And these neighborhoods that end up being over-policed generally are poorer neighborhoods that are more likely to inhabit people of color ({numref}`pred_pol`).
+
+<!-- Hack: sphinx-video is weird and doesn't allow percents so make it larger than it needs to be and it will be scaled down by our CSS :( -->
+```{video} ../_static/intro/predpol.mp4
+:width: 1000
+```
+
+<!-- Hack 2: Figures don't allow videos, so make this figure have no image to sit below our video :)-->
+```{figure} ../_static/blank.png
+---
+alt: Video above shows various crime maps of crime predictions with heavier predicted crimes in communities of color.
+width: 0%
+align: center
+name: pred_pol
+---
+
+[Predictive Policing software disproportionately targets low-income, Black, and Latino neighborhoods](https://gizmodo.com/how-we-determined-predictive-policing-software-dispropo-1848139456)
+```
+
+But note, none of this is the "fault" of the machine learning model. It isn't intentionally setting out to over-police communities of color. In fact, it has no intentions as all as it is not a human being you can ascribe malintent towards. A more correct place to put "fault" in the system is the model builder, and what data they decide to include and exclude in their model. Even though they likely included this data without the intent of discrimination ("more data is better, right?"), they are the ones that made the decision to include it in the first place. They also, for example, chose to not include data such as the multitude of financial crimes perpetrated in business centers of cities ({numref}`white_collar`), despite this [white-collar crime costs citizens over $300 billion annually](https://www.law.cornell.edu/wex/white-collar_crime).
+
+```{figure} ./white_collar.png
+---
+alt: A map showing a heat map of white collar crime in NYC
+name: white_collar
+---
+
+[White Collar Crime Risk Zones](https://whitecollar.thenewinquiry.com/)
+```
+
+The (biased) outputs of a model are results of intentional and unintentional *modeling choices* of the ML practitioner. So it is our job, to ensure we are aware of the modeling choices we make as practitioners and take ownership of the potentially unintended consequences of them. Our job will be to understand the theoretical assumptions and limitations of these models, and practice how to apply them and be aware of their limitations to avoid many of the most common pitfalls when deploying models.
+
 The remaining part of this chapter is broken into 3 parts. Before we give a broad overview of what ML is and the things you will see in this book at the end of this chapter, we we want to establish some of the values we are bringing in as authors of this book and how to effectively learn from this book.
 
 
