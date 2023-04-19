@@ -12,3 +12,4 @@ parts:
     numbered: True
     chapters:
       - file: classification/intro/index
+      - file: classification/logistic_regression/index
