@@ -104,6 +104,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6. Logistic Regression" href="../logistic_regression/index.html" />
     <link rel="prev" title="4. Feature Selection and LASSO Regularization" href="../../regression/lasso/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -197,7 +198,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../intro/index.html">
-                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
+                    
                 </a>
             </li>
         </ul>
@@ -211,6 +212,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">5. <i class="fas fa-book fa-fw"></i> Classification Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logistic_regression/index.html">6. <i class="fas fa-book fa-fw"></i> Logistic Regression</a></li>
 </ul>
 
     </div>
@@ -521,7 +523,7 @@ document.write(`
 <p>1. “Ham” is commonly used as the opposite of “spam” when trying to detect spam emails. Alternatively we could simply call them “not spam”, but “ham” is cuter.</p>
 </aside>
 <p>In classification, instead of trying to predict a numeric value, we are trying to predict a value from a distinct set of classes. For example, we might want to predict if an email is spam or ham<sup>1</sup> (<span class="math notranslate nohighlight">\(y \in \{spam, ham\}\)</span>), or if an image contains a picture of a cat, dog, or bird (<span class="math notranslate nohighlight">\(y \in \{cat, dog, bird\}\)</span>). When the set of classes has two elements, we call this a <strong>binary classification</strong> problem, while we call a <strong>multiclass classification</strong> problem one where there are greater than two options. For the vast majority of our conversation in this section, we will discuss binary classification since it is simpler and many of the techniques for multiclass classification extend quite naturally from the ones we will discuss.</p>
-<p>As mentioned in the <a class="reference internal" href="../../intro/index.html"><span class="doc"> Introduction</span></a> chapter, our book will commonly focus on a single application as a <em>case study</em> on how to use the techniques that we are introducing. For this section, we will focus on the application of <strong>sentiment analysis</strong> as our case study. We will be classifying online reviews as being positive sentiment (<span class="math notranslate nohighlight">\(y = +1\)</span>) or negative sentiment (<span class="math notranslate nohighlight">\(y = -1\)</span>). The inputs of this model will be the text of the review (sentences) and the output will be the predicted class (<span class="math notranslate nohighlight">\(y \in \{+1, -1\}\)</span>).</p>
+<p>As mentioned in the <a class="reference internal" href="../../intro/index.html"><span class="doc"></span></a> chapter, our book will commonly focus on a single application as a <em>case study</em> on how to use the techniques that we are introducing. For this section, we will focus on the application of <strong>sentiment analysis</strong> as our case study. We will be classifying online reviews as being positive sentiment (<span class="math notranslate nohighlight">\(y = +1\)</span>) or negative sentiment (<span class="math notranslate nohighlight">\(y = -1\)</span>). The inputs of this model will be the text of the review (sentences) and the output will be the predicted class (<span class="math notranslate nohighlight">\(y \in \{+1, -1\}\)</span>).</p>
 </section>
 <section id="feature-engineering">
 <h2><span class="section-number">5.3. </span>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Permalink to this heading">#</a></h2>
@@ -1140,6 +1142,15 @@ F1-Score</div>
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title"><span class="section-number">4. </span><i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../logistic_regression/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6. </span><i class="fas fa-book fa-fw"></i> Logistic Regression</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
