@@ -13,3 +13,4 @@ parts:
     chapters:
       - file: classification/intro/index
       - file: classification/logistic_regression/index
+      - file: classification/bias_fairness/index
