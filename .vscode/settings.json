@@ -1,5 +1,18 @@
 {
     "cSpell.words": [
-        "hyperparameters"
+        "Bigram",
+        "hyperparameters",
+        "ipython",
+        "jupytext",
+        "kernelspec",
+        "mathbb",
+        "multiclass",
+        "mystnb",
+        "netizen",
+        "scikit",
+        "sklearn",
+        "toarray",
+        "unigram",
+        "Vectorizer"
     ]
 }

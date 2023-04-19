@@ -239,7 +239,7 @@ One final way to visualize these predictions and the decision boundary is to col
 :alt: A side-by-side depiction of our original decision boundary, and one with the predictions shaded (described in last paragraph).
 ```
 
-<!-- TODO Add slido poll about shifting intercept -->
+<!-- TODO Add sli.do poll about shifting intercept -->
 
 ### More Complicated Decision Boundaries
 Note that in all of these cases, with the model we are using being a linear model, the decision boundaries we learn will be linear. If we wanted to learn a more complicated boundary, we would need to use a more complicated model. As discussed in great detail earlier, one way of making a model more complex is using more features to hopefully capture more complicated relationships in the data.
@@ -474,7 +474,7 @@ So some things to note:
 
 ## Coming Up
 
-<!-- TODO upate reference below -->
+<!-- TODO update reference below -->
 
 So in this chapter, we have introduced the concept and terminology for classification and how to evaluate classification models. What we have not discussed is how we actually learn the coefficients for our linear model. We will discuss this in detail on our next chapter on Logistic Regression.
 
