@@ -29,7 +29,7 @@ Now that we have seen concrete examples of models and learning algorithms in bot
 
 You will have no trouble trying to find other examples of machine learning systems' biased outputs causing harm. From [Google's ad algorithm showing more prestigious jobs to men](https://www.washingtonpost.com/news/the-intersect/wp/2015/07/06/googles-algorithm-shows-prestigious-job-ads-to-men-but-not-to-women-heres-why-that-should-worry-you/), to [Amazon's recruiting tool that was biased against women](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G), to [the COMPAS model used in the criminal justice system falsely predicting Black individuals were more likely to commit crimes](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing).
 
-Clearly it is possible to spot model's that behaviors are not ideal and the results in these headlines are clear signs of bias *somewhere* in our ML system. But the question is where does that bias come from? How does it effect our models? And importantly, what steps can we take to detect and hopefully prevent these biased outcomes from happening in the first place? In this chapter and the next, we will highlight some of the current research into the workings of ML models when the interact with society, and how we can more formally define concepts of bias and fairness to prevent our models from causing harm before we deploy them.
+Clearly it is possible to spot model's that behaviors are not ideal and the results in these headlines are clear signs of bias *somewhere* in our ML system. But the question is where does that bias come from? How does it effect our models? And importantly, what steps can we take to detect and hopefully prevent these biased outcomes from happening in the first place? In this chapter, we will highlight some of the current research into the workings of ML models when the interact with society, and how we can more formally define concepts of bias and fairness to prevent our models from causing harm before we deploy them.
 
 This chapter will tell this story about defining bias and fairness in three major parts:
 * Background: The COMPAS Model
@@ -83,7 +83,7 @@ Distribution of defendants across risk categories by race. Black defendants reof
 
 In this graph, we can actually still see the truth of Northpointe's claim. Within each category (low/high), the proportion that reoffended are the same regardless of race. But the fact that a larger shade of "Did not reoffend" (dark blue) are labeled High Risk for Black people is Propublica's claim of bias.
 
-So how can both actually be right? Well, as we will see later in this chapter, defining notions of fairness can be a bit tricky and subtle. As a bit of a spoiler for the discussion we will have over this chapter and next, there will never be one, right, algorithmic answer for defining fairness. Different definitions fairness satisfy different social norms that we may wish to uphold. It's a question of which norms (e.g., non-discrimination) we want to enshrine in our algorithms that is the important discussion to be had, and that requires people with stakes in these systems to help decide. Our book, can't possibly answer what those decisions should be in every situation, so instead, we are going to try to introduce the ideas of some possible definitions of bias and fairness and talk about how they can be applied in different situations. This way, you have a set of "fairness tools" under your toolbelt to apply to the situation based on what you and your stakeholders decide are important to uphold in your system.
+So how can both actually be right? Well, as we will see later in this chapter, defining notions of fairness can be a bit tricky and subtle. As a bit of a spoiler for the discussion we will have over this chapter, there will never be one, right, algorithmic answer for defining fairness. Different definitions fairness satisfy different social norms that we may wish to uphold. It's a question of which norms (e.g., non-discrimination) we want to enshrine in our algorithms that is the important discussion to be had, and that requires people with stakes in these systems to help decide. Our book, can't possibly answer what those decisions should be in every situation, so instead, we are going to try to introduce the ideas of some possible definitions of bias and fairness and talk about how they can be applied in different situations. This way, you have a set of "fairness tools" under your toolbelt to apply to the situation based on what you and your stakeholders decide are important to uphold in your system.
 
 ## Bias
 
@@ -208,9 +208,9 @@ Now that we have discussed sources of bias in our model, we have a clearer idea 
 
 There is a lot of active research <sup>{{ref_facct}}</sup> on how to come up with mathematical definitions of fairness that we can enforce and verify. The hope is that by coming up with some mathematical definition, we can hopefully spot early in the process when the model might exhibit unfair outputs.
 
-In this chapter, we will introduce a few different possible definitions of fairness, and in the next chapter we will look at comparing them to see if they can be cohesive. In particular in this chapter, we will be interested in coming up with definitions for a concept known as **group fairness**. Group fairness, also called **non-discrimination** is the intuitive concept that fairness means your membership of some group based on some uncontrollable property of yourself (race, gender, age, nationality, etc.) shouldn't negatively impact the treatment you receive. Group fairness notions are ones that try to prevent discrimination such as racism, sexism, ageism, etc.
+In this chapter, we will introduce a few different possible definitions of fairness, and afterwards we will look at comparing them to see if they can be cohesive. In particular in this chapter, we will be interested in coming up with definitions for a concept known as **group fairness**. Group fairness, also called **non-discrimination** is the intuitive concept that fairness means your membership of some group based on some uncontrollable property of yourself (race, gender, age, nationality, etc.) shouldn't negatively impact the treatment you receive. Group fairness notions are ones that try to prevent discrimination such as racism, sexism, ageism, etc.
 
-For the remained of this chapter, we are going to focus on a cartoonishly simplified example of college admissions to try to reveal the key intuitions of how we can potentially define fairness. Note that the assumptions in this example are clearly not correct, but we use it for its simplicity and to act as a proof of concept. The intent is that by showing behaviors and properties of an overly simplified, contrived scenario, we can better understand what we can expect in real life. All of the things we will introduce in this chapter and next can be generalized to the complexities of the real world.
+For the remained of this chapter, we are going to focus on a cartoonishly simplified example of college admissions to try to reveal the key intuitions of how we can potentially define fairness. Note that the assumptions in this example are clearly not correct, but we use it for its simplicity and to act as a proof of concept. The intent is that by showing behaviors and properties of an overly simplified, contrived scenario, we can better understand what we can expect in real life. All of the things we will introduce in this chapter an be generalized to the complexities of the real world.
 
 ```{important} College Admissions - Credit
 This example is borrowed from the fantastic [The Ethical Algorithm](https://duckduckgo.com/?q=the+ethical+algorithm+1g&ia=web) by [Michael Kearns](https://www.cis.upenn.edu/~mkearns/) and [Aaron Roth](https://www.cis.upenn.edu/~aaroth/). This book is an incredible overview of the current work done to embed socially-aware values, such as fairness, into algorithms. We include their example scenario to introduce concepts of fairness because it is that good. Our contribution to the example is adding mathematical definitions and notation to make the ideas they present in this book for general audiences more suitable for a technical one.
@@ -223,14 +223,14 @@ So in this example, we are in charge of building a college admissions model. Thi
 * There is no notion of competition or limited spots. If everyone would truly meet the definition success, then everyone would be let in. But that doesn't mean we want to have our model let everyone in since if they ultimately wouldn't be successful, that could be a huge waste of time and money for us and the student.
 * ```{figure} circle_square.png
   ---
-  alt: A pie chart showing the 66% demographics of Squares and 33% circles
+  alt: A pie chart showing the 66% demographics of Circles and 33% Squares
   width: 60%
   figclass: margin
   align: center
   ---
   ```
 
-  To talk about demographics and concepts of group fairness, we will assume all of our applicants are part of one of two races: Circles and Squares. In this world, Circles make up a majority of the population (66%) and Circles (33%). Consider that in this world Circles also face systematic oppression, and often are economically disadvantaged due to the barriers they face in their lives.
+  To talk about demographics and concepts of group fairness, we will assume all of our applicants are part of one of two races: Circles and Squares. In this world, Circles make up a majority of the population (66%) and Squares (33%). Consider that in this world Squares also face systematic oppression, and often are economically disadvantaged due to the barriers they face in their lives.
 
 Now again, all of this is an extreme over simplification of the real world, but it will still be useful for us to get some key intuitions for what fairness might mean in the real world.
 
@@ -262,7 +262,7 @@ $\hat{Y} = \hat{f}(X)$: Our prediction of $Y$ using learned model $\hat{f}$
 {{ref_gerrymandering}}\. We see a similar problem in coming up with a rigorous notion of [Gerrymandering](https://en.wikipedia.org/wiki/Gerrymandering) in politics. When you see examples, it's sometimes easy to point out that something looks off. But coming up with a formal, working definition to work in all cases is challenging and is a choice of which priorities to include in your definition. See l
 ```
 
-In our setup, we might be concerned that our college admissions example may potentially be biased against Circles given the fact that they are a smaller portion of the population, and we may be concerned about the adverse affects of the discrimination they face in the world affecting our college admissions choices. But how can we definitively know what discrimination is or if our system is unfair? This is where we introduce the concept of coming up with measure to describe how fair a system is, and if we see that fairness is being violated, is a clear indicator that our system is discriminatory <sup>{{ref_gerrymandering}}</sup>. We'll see different
+In our setup, we might be concerned that our college admissions example may potentially be biased against Squares given the fact that they are a smaller portion of the population, and we may be concerned about the adverse affects of the discrimination they face in the world affecting our college admissions choices. But how can we definitively know what discrimination is or if our system is unfair? This is where we introduce the concept of coming up with measure to describe how fair a system is, and if we see that fairness is being violated, is a clear indicator that our system is discriminatory <sup>{{ref_gerrymandering}}</sup>. We'll see different
 
 In the following sections, let's explore some mathematical definitions of concepts of fairness using the notation we outlined above. Recall that we are focused on notions of group fairness, where we don't want someone's outcome to be negatively impact by membership in some protected group (in this case their race being Circle or Square).
 
@@ -280,7 +280,7 @@ While intuitive, this just doesn't work in practice. Think back to our COMPAS ex
 
 One reason this approach doesn't work in the real world is that there are often subtle correlations between other features not related to the attribute you may wish to protect (e.g., zip code and race). Even if we leave that feature out of our model, it can still inadvertently learn it from other features.
 
-You may think we could just remove any correlated features, but that would mean removing almost any data to use at all. For example, SAT scores are also correlated with race even if the Circles/Squares would be equally successful in college. One factor that impacts SAT scores is how much money you have to afford SAT prep. If the Squares are generally richer and can afford SAT prep, their scores are artificially higher even if they aren't necessarily more successful in college! So if we wanted to remove any features with correlation, then we couldn't even use our one feature SAT score!
+You may think we could just remove any correlated features, but that would mean removing almost any data to use at all. For example, SAT scores are also correlated with race even if the Circles/Squares would be equally successful in college. One factor that impacts SAT scores is how much money you have to afford SAT prep. If the Circles are generally richer and can afford SAT prep, their scores are artificially higher even if they aren't necessarily more successful in college! So if we wanted to remove any features with correlation, then we couldn't even use our one feature SAT score!
 
 #### Statistical Parity
 
@@ -305,7 +305,7 @@ Let's consider some tradeoffs of using this definition to define if our admissio
 
 Let's consider a different example to make that last point clearer. Consider a model that predicts if someone has breast cancer, and a positive label is the detection of breast cancer. Would we say the breast cancer model is discriminatory because $P(\hat{Y} = +1 | A = \text{woman}) = 1/8$ while $P(\hat{Y} = +1 | A = \text{man}) = 1/833$? No, because clearly the base-rate of the phenomena we are predicting is different between men and woman. Forcing statistical parity in this model to consider it fair would mean either incorrectly telling more women they don't have breast cancer (when they might actually) or telling more men that they do have breast cancer (when they in fact do not). In the case where the base rates differ, demanding statistical parity makes no sense.
 
-Back our college admissions example, the same critique could apply if we assume the base rates of success are different. However, many people argue that in the college setting, the base rates for success should be equal enough (i.e., race does not effect your success in college), so statistical parity is appropriate. We will see in our next chapter how this assumption is a statement of a particular worldview about how fairness should operate.
+Back our college admissions example, the same critique could apply if we assume the base rates of success are different. However, many people argue that in the college setting, the base rates for success should be equal enough (i.e., race does not effect your success in college), so statistical parity is appropriate. We will see later, how this assumption is a statement of a particular worldview about how fairness should operate.
 
 The following code example shows how to compute the numbers we care about for statistical parity.
 
@@ -377,7 +377,7 @@ Here we've just outlined 3, but there are [many many more](https://fairmlbook.or
 
 So which one should you use? Or more specifically, considering our COMPAS example which one would we use to measure as a determination of the models predictions are fair or not?
 
-Unfortunately, we cannot tell you in general. The reason is each definition makes its own statement on what fairness even means. Choosing a fairness metric is an explicit statement of values that we hold when thinking about fairness. Many of these values are important values, but are fundamentally assumptions about how we believe the world works. These assumptions are often unverifiable. In our next chapter, we will explore contrasting worldviews and how they impact our understanding of fairness.
+Unfortunately, we cannot tell you in general. The reason is each definition makes its own statement on what fairness even means. Choosing a fairness metric is an explicit statement of values that we hold when thinking about fairness. Many of these values are important values, but are fundamentally assumptions about how we believe the world works. These assumptions are often unverifiable. Later in this chapter, we will explore contrasting worldviews and how they impact our understanding of fairness.
 
 ### How do I Use These Metrics?
 
@@ -385,11 +385,241 @@ That is a simpler question to answer. A simple approach is to use them as part o
 
 There are also techniques to augment our standard learning algorithms to make them fairness-aware in the first place. Some algorithms are more complex than others, but they simply involve changing how we measure quality to care about fairness instead of just minimizing error. One simple approach is to use regularization, but instead of penalizing large coefficients, penalize coefficients that lead to larger disparities in some fairness metric.
 
-## Recap
+## (Im)Possibility of Fairness
 
-Discrimination in ML models is a crucial problem we need to work on. It has real impacts, on real people, and its happening right now whether or not we are aware of it.
+So while we have stated there is no single definition of fairness to use, since it depends on your context and values, one idea is to just satisfy them all! That seems like a good idea to form some super notion of fairness out of all of the individual definitions you could come up with.
 
-In general, this will not be a problem that will be solved algorithmically. We can use algorithms to help, but choosing which algorithms to use in the first place It’s not a problem that will only be solved algorithmically. We need people (e.g., policymakers, regulators, philosophers, developers) to be in the loop to determine the values we want to encode into our systems and which values we want to uphold.
+For example, what if we wanted to make our model meet the following four definitions of fairness:
 
-In the next chapter, we will explore some limitations of how we have defined fairness so far, and think more critically about the worldviews we assume when defining fairness ideas.
+* Statistical parity
+* Equal opportunity (equality of false negative rates)
+* Predictive equality (equality of false positive rates)
+* (Not yet discussed) Equally high accuracies of the model across the subgroups
 
+It turns out with even just four notions of fairness at once, you cannot satisfy them all simultaneously unless the distribution of the subgroups are exactly the same. Unfortunately, due to all of the sources of bias we introduced above, this rarely happens in practice. What this means is that in the real world where we are working with biased data, we have to choose which fairness definitions to use since we can't satisfy them all. This is often cited as a fairness "impossibility theorem" ([example](https://arxiv.org/abs/1610.07524)).
+
+### Fairness and Accuracy
+
+```{important}
+The following example and graphic for this section is borrowed from the [The Ethical Algorithm](https://duckduckgo.com/?q=the+ethical+algorithm+1g&ia=web) by [Michael Kearns](https://www.cis.upenn.edu/~mkearns/) and [Aaron Roth](https://www.cis.upenn.edu/~aaroth/).
+```
+
+We can see a special case of this impossibility as the general observation that we see a *tradeoff* between accuracy and fairness in our models. In general, constraining our models to be more fair will make them less accurate. Let's see an example as to why this might happen.
+
+Continuing with our over-simplistic college admissions example, let's add the following details:
+
+* The majority of the population (2/3) are Circles and remaining population (1/3) are Squares.
+* SAT scores for Circles tend to be inflated when compared to SAT scores of Squares. One possibility for why this could happen is that systematic barriers prevent Squares from accessing SAT prep at the same rate as Circles.
+* Despite this statistical difference in SAT scores, the rate that they are actually successful in college are the same.
+
+Consider a toy dataset below that encodes these three assumptions. Students are plotted on a number line based on their SAT scores and are indicated by 1) Circle/Square and 2) +/- for if they were ultimately successful. If you count out all of the examples, you can see all three conditions above are true.
+
+```{figure} tradeoff.png
+---
+alt: A numberline of circles and squares based on SAT score (described above).
+width: 100%
+align: center
+---
+A toy example for our college admissions scenario (source: The Ethical Algorithm)
+```
+
+Now if we phrase this as a machine learning problem, one of the simplest models is a simple threshold model that admits everyone above some chosen SAT score. We could find the "Optimal" threshold by trying out all of the thresholds and comparing them based on classification error. Note that in this case, there are finitely many thresholds to consider since with $n$ data points, there are $n + 1$ distinct thresholds that separate the points on the number line differently. The figure below shows the threshold that has the lowest classification error.
+
+```{figure} tradeoff_optimal.png
+---
+alt: A numberline of circles and squares based on SAT score (described above) with a threshold labeled "Optimal".
+width: 100%
+align: center
+---
+The optimal threshold for our toy scenario (source: The Ethical Algorithm)
+```
+
+If you wanted to check the math, you would see that the accuracy of this threshold is $(8 + 9) / 24 \approx 70%$ since correctly let in 8 successful applicants and denied 9 unsuccessful ones. Any other threshold would make more errors and would be less accurate, so this one is considered "Optimal" for our training set.
+
+But what if we wanted to consider how *fair* this model was? Let's consider the definition of equal opportunity (or the equality of false negative rates).
+
+* $P(\hat{Y} = -1 | A=\bigcirc, Y=+1) = \frac{1}{8 + 1} \approx 11%$
+* $P(\hat{Y} = -1 | A=\square, Y=+1) = \frac{0}{5 + 0} = 100%$
+
+So in terms of the false negative rates, this model seems completely unfair since it only falsely rejected 1/9 of the successful Circle applicants and *all* of the successful Square applicants. So this "optimal" model with the lowest classification error doesn't satisfy equal opportunity.
+
+Consider a lower threshold shown in the figure below labeled "More fair".
+
+```{figure} tradeoff_fairer.png
+---
+alt: A numberline of circles and squares based on SAT score (described above) with a threshold labeled "Optimal" and a threshold labeled "More fair".
+width: 100%
+align: center
+---
+The more fair threshold for our toy scenario (source: The Ethical Algorithm)
+```
+
+We can run the same computation to see that this threshold is more fair according to equal opportunity.
+
+* $P(\hat{Y} = -1 | A=\bigcirc, Y=+1) = \frac{1}{8 + 1} \approx 11%$ is unchanged since we didn't let in any more successful Circles
+* $P(\hat{Y} = -1 | A=\square, Y=+1) = \frac{3}{2 + 3} = 60%$ since we have now admitted 2 of the successful Squares
+
+This model is more fair when defined by equal opportunity than the first model that we claimed was "optimal". Note that this model is not necessarily fair since the FNR still are quite different, but it is more fair than the first model.
+
+But what if we consider the accuracy of this "more fair" model? Well by making the model more fair, we have actually *decreased* the accuracy of the model since it let more unsuccessful Circles. The accuracy of this second model is $(9 + 5) / 24 \approx 66.7%$ which is lower than the first.
+
+So in this toy example, we just saw that an increase in fairness was accommodated by an decrease in accuracy as well. You might argue that this is a result of our example being overly simplistic (and it is!), but this example is meant to by more of a proof-of-concept. The idea here is that this toy example shows the existence of a behavior even in a simple setting, implies it can happen in a real setting with more complexity. If you have doubts that this could happen in a real setting, consider all of the examples we pointed out at the beginning of this chapter of ML systems exhibiting biased outcomes. Those cases happened in the setting where we were trying to minimize classification error in the first place.
+
+Our original quality metrics care about minimizing error, and as a result, we saw biased outcomes that it made. Controlling for fairness would result in a different model than the one we would have originally found, which is by definition, a model with more error than that biased model. Intuitively this happens because the data we train and evaluate ourselves on contains bias. Our definition of accuracy on that biased data, will require that being accurate means our model is biased.
+
+In our toy example, the source of the problem was the artificial difference in SAT scores having no relation with the rate of success in college. In other words, the same scores are across Circles/Squares are not equally predictive of success. That difference is the source between this fairness and accuracy tradeoff. One way to address this problem is to recognize that statistical difference has no impact on the target we care about, and use different thresholds for each race. The figure below shows a two-threshold model and you can see that it has better fairness *and* accuracy in the predictions it makes.
+
+```{figure} tradeoff_separate.png
+---
+alt: A numberline of circles and squares based on SAT score (described above) separate thresholds
+width: 100%
+align: center
+---
+Using separate thresholds
+```
+
+While this model that accounts for bias explicitly by using separate models for each group does avoid this fairness/accuracy tradeoff, it might not be the solution to the problem. There are two main difficulties using a model like this one.
+
+* (Legal) In many contexts, it is *illegal* to use race explicitly as an input to change outcomes. For example, it is illegal to use race as a factor in Credit Score computations. These laws are usually well intentioned to *prevent* discrimination by preventing racist decision makers from being able to use race as an input. But unfortunately, those same laws stop those trying to fight bias use more tailored models to prevent the biases in data from leaking into the model's outcomes.
+* (Social) Despite this model being strictly better in terms of performance, it is often difficult to convince everyone that this model is actually better. In particular, many people argue that this model is in fact *unfair* because it lets admits "less qualified squares" an an affront to some concept of "merit". This claim is exacerbated in the real world where colleges can't admit everyone they predict will be successful and there is a notion of constrained seats. This causes a lot of debate over admissions policies that try to explicitly account biases present in the world. We'll come back to this discussion near the end of the chapter to discuss the idea of worldviews and how to choose what is fair and unfair in them.
+
+### The Frontier of Fairness
+
+To visualize this tradeoff between fairness and accuracy more explicitly, we can consider every possible threshold and compare some metric for how much error it makes and how unfair it is. So for every possible threshold, we will compute the following two numbers:
+
+* $error(w)$ = the classification error made by threshold $w$
+* $unfair(w) = |FNR_{Square}(w) - FNR_{Circle}(w)|$ is the difference in the false negative rates. Intuitively a high difference in FNRs means the model is more unfair under equal opportunity.
+
+So if we compute these numbers for every possible threshold, we can actually plot them out on a scatter plot where the x-axis is the error score and the y-axis is the unfairness score. Every possible model we considered would be one point on this graph that define its $(error, unfairness)$. The models in the top-right are models with high error and high unfairness, the models on the bottom right have high error and are more fair, and the models on the top left are more unfair but more accurate.
+
+```{figure} pareto.png
+---
+alt: A depiction of the model performances (described above) and the Pareto frontier (described below).
+width: 75%
+align: center
+---
+The fairness accuracy tradeoff and the Pareto Frontier (source: The Ethical Algorithm)
+```
+
+Now while each model technically represents a different tradeoff between fairness and accuracy, it turns out that some of the models are definitively worse than others and should not be considered. For example, the top-right model that has high error and high unfairness would never be chosen since it doesn't do well at either. Additionally, by moving from that model to another more to the down-and-to-the-left, you could improve its accuracy and fairness without hurting another. The same can't be said for other models though, such as the one in the top left; you can improve that models unfairness, but that would come at a cost of increasing error (moving to the right).
+
+The subset of these models that can't be improved in one dimension without making the other dimension worse comprise an interested set of unique tradeoffs between fairness and accuracy. We call these models on the **Pareto Frontier** to represent how they are the "interesting" models to consider the require choosing between fairness and accuracy. In the figure above, they are draw on a curve towards the bottom-left of the figure. In some sense, a Pareto Frontier defines the only models we actually need to consider, because any other model could be improved to one on the frontier. Importantly, the Pareto frontier does *not* tell you which of the models on the frontier to use, it just shows you that there are many models that represent different tradeoffs in fairness and accuracy.
+
+Michael Kearns and Aaron Roth provide the best commentary on Pareto Frontiers and how it might feel a bit weird to be so quantitative when considering if we care more about error or fairness. They write
+
+```{epigraph}
+While the idea of considering cold, quantitative trade-offs between accuracy and fairness might make you
+uncomfortable, the point is that there is simply no escaping the Pareto frontier. Machine learning engineers
+and policymakers alike can be ignorant of it or refuse to look at it. But once we pick a decision-making model
+(which might in fact be a human decision-maker), there are only two possibilities. Either that model is not on
+the Pareto frontier, in which case it’s a “bad” model (since it could be improved in at least one measure
+without harm in the other), or it is on the frontier, in which case it implicitly commits to a numerical weighting
+of the relative importance of error and unfairness. Thinking about fairness in less quantitative ways does
+nothing to change these realities—it only obscures them.
+
+Making the trade-off between accuracy and fairness quantitative does not remove the importance of human
+judgment, policy, and ethics—it simply focuses them where they are most crucial and useful, which is in
+deciding exactly which model on the Pareto frontier is best (in addition to choosing the notion of fairness in
+the first place, and which group or groups merit protection under it, […]). Such decisions should be informed
+by many factors that cannot be made quantitative, including what the societal goal of protecting a particular
+group is and what is at stake. Most of us would agree that while both racial bias in the ads users are shown
+online and racial bias in lending decisions are undesirable, the potential harms to individuals in the latter far
+exceed those in the former. So in choosing a point on the Pareto frontier for a lending algorithm, we might
+prefer to err strongly on the side of fairness—for example, insisting that the false rejection rate across
+different racial groups be very nearly equal, even at the cost of reducing bank profits. We’ll make more
+mistakes this way—both false rejections of creditworthy applicants and loans granted to parties who will
+default—but those mistakes will not be disproportionately concentrated in any one racial group.
+
+-- The Ethical Algorithm, Michael Kearns and Aaron Roth
+```
+
+## Fairness Worldviews
+
+In the concluding section of this chapter, we want to circle back on a discussion we have been putting off for most of the chapter involving thinking about the *worldviews* or *assumptions* we make when we are making certain fairness claims. So far we have focused on notions of group fairness or non-discrimination, but there are other forms of fairness we might consider. This last section is based primarily on the discussion in [Friedler et al. (2016)](https://arxiv.org/abs/1609.07236) that provides a framework for us to reflect on the assumptions we are making about our machine learning process and the data we train them on.
+
+### Moving Spaces
+
+The first thing they outline in this paper is a framework for more concretely thinking about how we model a learning task, and the assumptions we make along the way. Most learning tasks (including ones we have introduced in this book) start with the data we've gathered about the world, and then discuss modeling choices and algorithms to make predictions about the future.
+
+In their paper, Friedler et al. argue there is actually a more nuanced story there, that brings to question what things we can even measure in the first place. They outline the learning process as a mapping between three spaces. As sub-bullets, we give a concrete example of these spaces in an example related to college admissions.
+
+* The **Construct Space**: True quantities of interest that we would like to measure, but we don't actually have access to.
+  * College Admissions Example: What we actually care about in college admissions is measuring notions of intelligence, grit (perseverance), teamwork, leadership, etc. These are all qualitative and abstract concepts that don't have a precise definition for measurement.
+* The **Observed Space**: The data we actually gather to use in our model are all **proxy measurements** to (hopefully) represent the constructs we care about. These proxies may or may not be good measures and they might also be noisy measurements of the constructs we care about. Importantly, we can't verify if these proxies are good or not since we don't have access to the Construct Space to verify the measurements are good ones.
+  * College Admissions Example: The data we actually gather for college admissions are your grades, your SAT/ACT scores, how many clubs you were a part of, other extra curriculars, etc. All of these hopefully give signal into the constructs we care about, but again, there is no way to actually verify that claim.
+* The **Decision Space**: We then use our learning model trained on the data in the Observed Space to make predictions in the Decision Space, or the set of possible outcomes we are predicting.
+   * College Admissions Example: The learning algorithm could be any classification algorithm and the Decision Space is decision Admit/Deny.
+
+This process is depicted in the following graphic.
+
+```{figure} spaces.png
+---
+alt: The Construct Space, Observed Space, and Decision Space (described above)
+width: 100%
+align: center
+---
+The Construct Space, with Proxy Measures leading to the Observed Space, and the Decision Model leading to the Decision Space.
+```
+
+### Individual Fairness
+
+With this setup, we can now come up with a definition of fairness that also seems intuitive for us to try to follow named **individual fairness**. The intuition for this is that two people who look similar in the Construct Space should receive similar decisions in the Decision Space. Let's try to define this formally.
+
+Suppose we have a model $f: CS \gets DS$ that maps values from the Construct Space (CS) to the Decision Space (DS). $f$ is said to be individually fair if objects close in CS (based on some distance metric $d_{CS}$) end up close in DS (based on some distance metric $d_{DS}$). Specifically, $f$ is $(\varepsilon, \varepsilon')$-fair if for any $x, y \in CS$
+
+$$d_{CS}(x, y) \leq \varepsilon \rightarrow d_{DS}(f(x), f(y)) \leq \varepsilon'$$
+
+```{figure} spaces_individual.png
+---
+alt: A pictorial representation of individual fairness showing points close in the construct space being close in the decision space.
+width: 100%
+align: center
+---
+Individual fairness
+```
+
+Recall though, that we don't have access to the Construct Space (CS). That means there is no way to verify individually fairness unless you make an assumption about how you believe the world works. When we care about individual fairness, we have to make an assumption known as **What You See is What You Get (WYSIWYG)**. WYSIWYG is the assumption that the Observed Space (OS) *is in fact* a good measurement of the Construct Space. So for example, that means we are making the assumption that some numeric measurement such as SAT score is a good indicator for something like intelligence that we care about in the Construct Space (CS).
+
+Under this assumption, we modify the definition above to measure the inputs in the Observed Space (OS) and now we have verifiable algorithm. Again, it's only okay to do this because we are assuming the Observed Space is a good stand-in for the Construct Space. Under the WYSIWYG, you can easily compute the distances in Observed and Decision Spaces and report any unfairness when two applicants who are sufficiently close in the observed space get different decisions. In the College Admissions example, that case is when two students with similar SATs, grades, extracurricular activities, etc. get different admission decisions.
+
+```{admonition} Aside: Discrete Decisions
+
+One of the first results in Friedler et al. (2016) is to show that arbitrary individual fairness is not possible in the case that the decisions are discrete or categorical. The reasoning being if our construct space are real numbered values but our decision space is categorical, we can make two people arbitrarily close in the construct space that end up on opposite ends of the decision boundary.
+
+This is a common complaint by students when course grades are assigned. In some instances, one student who had a 94.6% got an A and a student who had a 94.5% got an A-. The dividing line has to be *somewhere* and when there are a lot of students, the distance between two students on opposite ends of the line can be quite small. But if the decision space were real numbers, this is not an issue since you could make them just as close in the decision space as well.
+```
+
+### Structural Bias
+
+But what if can't assume that the Observed Space is a good measurement of the Construct Space? What if we instead assume that there is some presence of **structural bias** that might make people that are close in the Construct Space (CS) look very different in the Observed Space (OS). What if that structural bias impacts certain groups dispraportionately than others?
+
+For example, SAT doesn't just measure intelligence but also your ability to afford SAT prep. People who are just as intelligent (similar in Construct Space), might end up looking worse in the Observed Space because they don't have the means to prepare and improve their SAT scores. So that means if a group is more likely to be economically disadvantaged due to current or historical barriers, then we would expect a distributional shift in their SAT scores looking worse despite them being just as intelligent.
+
+```{figure} spaces_bias.png
+---
+alt: Showing a shift in distribution from the Construct Space to Observed Space
+width:
+align: center
+---
+Groups that are similar in the Construct Space may look different in the Observed Space due to structural bias
+```
+
+When assuming the presence of structural bias, we normally also assume another claim that **We're All Equal (WAE)**. The WAE assumption states that all groups (e.g., race or sex) are equal enough that membership in that group should not make a meaningful difference for the task at hand (e.g., collegiate success). This is not saying the groups have to be *exactly* equal in every single way, but those differences are small and/or not related to the task at hand. In the college admissions example, the WAE attributes differences we see in SAT scores across races as the cause of structural bias instead of, say, that one race is "more intelligent" than another.
+
+When assuming structural bias and WAE, we commonly think of fairness in terms of the group fairness definitions we defined before. Since we assume structural bias might make one group look better/worse in a way unrelated to the task at hand, then making sure membership in that group doesn't disproportionally affect the decisions.
+
+### Which Worldview?
+
+So which worldview is right? WYSIWYG or structural bias + WAE? Unfortunately that question doesn't really make sense or have an answer. They are worldviews. They are assumptions or beliefs about how you think the world works. How you think the world operates dictates if you think WYSIWYG or WAE in the face of structural bias. More importantly, which worldview you take determines what fairness means and which actions you deem unfair.
+
+If you assume WYSIWYG, then individual fairness is easy to achieve. Recall WYSIWYG says the Observed Space is a good measure of the Construct Space. But under this world view, that means any attempt at group fairness or non-discrimination seem *unfair* because they may violate individual fairness (people that have similar data should get similar results). This worldview and critique of group fairness *is* the argument against policies such as affirmative action that people make: "My high achieving child didn't get in because someone 'less qualified' did". This statement is rooted in the assumption that the measurements of "high achieving" and "less qualified" are actually meaningful measurements, instead of having structural bias interfering.
+
+On the other hand, if you assume structural bias + WAE, then group fairness is the right thing to do and we have seen many such group fairness mechanisms to ensure it. However, in this worldview attempts to achieve individual fairness may potentially cause discrimination. But in a lot of cases, it's incredibly difficult to argue against this worldview with the sheer amount of evidence of structural barriers that our society puts up for certain groups.
+
+## Takeaways
+
+So what can we do with what we have learned in this chapter? Unfortunately we don't have a concrete set of action items or algorithms here and we are more asking for a call to action to think critically about the impacts and assumptions of your model.
+
+We clearly saw the importance of considering the impacts ML systems can have on society, both the positive and the negative. If we are not careful, these models can perpetuate, and worse, amplify injustices in our society.
+
+A lof of work in the past decade or so has gone into defining concepts of bias and fairness more formally so that we can make our models less dangerous. While there is a lot of progress and exciting ideas in this space, the most important lesson that keeps resurfacing is there is not going to be a universal definition of fairness or algorithm to fix the problem. Instead, this is a crucial problem that we will need to rely on humans (not just ML engineers) in the loop to determine which properties of the system we will want. These are a question of human values, and we need informed humans to make those decisions.
