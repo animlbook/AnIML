@@ -598,7 +598,7 @@ For example, SAT doesn't just measure intelligence but also your ability to affo
 ```{figure} spaces_bias.png
 ---
 alt: Showing a shift in distribution from the Construct Space to Observed Space
-width:
+width: 100%
 align: center
 ---
 Groups that are similar in the Construct Space may look different in the Observed Space due to structural bias
