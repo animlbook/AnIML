@@ -306,6 +306,7 @@ So what should we do about this? Well, we should always be asking critical quest
 
 Importantly with that last question, we don't ask "What if an error happens?", but "What is the cost of that error?" In machine learning applications, errors are a fact of life that cannot be avoided. Our hope is to minimize errors, but with statistical modeling, errors are guaranteed. So the question we have to ask is not "if" an error happens, but "how many" and what those errors "cost".
 
+(classification:confusion_matrix)=
 ## Confusion Matrix
 
 While classification accuracy and error are intuitive, they are often lacking in the fact that they smooth over all possible mistakes that can happen. We indicated before, that we might care about the specific types of error happening:

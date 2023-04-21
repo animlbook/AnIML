@@ -12,6 +12,8 @@ myst:
   substitutions:
     ref_propublica_follow_up: 1
     ref_product: 2
+    ref_facct: 3
+    ref_gerrymandering: 4
 ---
 
 ```{code-cell} ipython3
@@ -195,3 +197,199 @@ width: 100%
 align: center
 ---
 ```
+
+## Fairness
+
+Now that we have discussed sources of bias in our model, we have a clearer idea of precisely how they can enter our ML pipeline. While the outputs of the model being biased feels unfair, it turns out that we will not get fairness for free unless we can demand it from our models. What we are interested in exploring now is how to come up with mathematical definitions of fairness, such that we can compute some number(s) to tell us if biases in our model are ultimately affecting its predictions in an undesired way.
+
+```{margin}
+{{ref_facct}}\. See the ACM Conference on [Fairness Accountability, and Transparency (FAccT)](https://facctconference.org/)
+```
+
+There is a lot of active research <sup>{{ref_facct}}</sup> on how to come up with mathematical definitions of fairness that we can enforce and verify. The hope is that by coming up with some mathematical definition, we can hopefully spot early in the process when the model might exhibit unfair outputs.
+
+In this chapter, we will introduce a few different possible definitions of fairness, and in the next chapter we will look at comparing them to see if they can be cohesive. In particular in this chapter, we will be interested in coming up with definitions for a concept known as **group fairness**. Group fairness, also called **non-discrimination** is the intuitive concept that fairness means your membership of some group based on some uncontrollable property of yourself (race, gender, age, nationality, etc.) shouldn't negatively impact the treatment you receive. Group fairness notions are ones that try to prevent discrimination such as racism, sexism, ageism, etc.
+
+For the remained of this chapter, we are going to focus on a cartoonishly simplified example of college admissions to try to reveal the key intuitions of how we can potentially define fairness. Note that the assumptions in this example are clearly not correct, but we use it for its simplicity and to act as a proof of concept. The intent is that by showing behaviors and properties of an overly simplified, contrived scenario, we can better understand what we can expect in real life. All of the things we will introduce in this chapter and next can be generalized to the complexities of the real world.
+
+```{important} College Admissions - Credit
+This example is borrowed from the fantastic [The Ethical Algorithm](https://duckduckgo.com/?q=the+ethical+algorithm+1g&ia=web) by [Michael Kearns](https://www.cis.upenn.edu/~mkearns/) and [Aaron Roth](https://www.cis.upenn.edu/~aaroth/). This book is an incredible overview of the current work done to embed socially-aware values, such as fairness, into algorithms. We include their example scenario to introduce concepts of fairness because it is that good. Our contribution to the example is adding mathematical definitions and notation to make the ideas they present in this book for general audiences more suitable for a technical one.
+```
+
+So in this example, we are in charge of building a college admissions model. This model is supposed to take information about a college applicant, and predict whether or not we should let them in. In this scenario, we are going to make the following (unrealistic) assumptions:
+
+* The only thing we will use as an input to our model is the students' SAT score. Clearly real college admissions systems use more information and include holistic reviews, but we will limit this for simplicity.
+* For every applicant, there is some single measurable notion of "success" and the goal of our model is to let in students who will meet this definition of success. Depending on the priorities of your college, you could imagine defining success as 1) will the student graduate, or 2) will the student graduate and get a job or 3) will the student graduate and give a ton of money back to the school. Depending on how you define success, that defines which examples are considered "positive" and "negative" examples. Clearly "success in college" is more complex than just one goal, as every individual student might have their own notion of what being successful in college means. For simplicity though, we will assume there is a consistent and universal notion of "successful college student", whatever that may be.
+* There is no notion of competition or limited spots. If everyone would truly meet the definition success, then everyone would be let in. But that doesn't mean we want to have our model let everyone in since if they ultimately wouldn't be successful, that could be a huge waste of time and money for us and the student.
+* ```{figure} circle_square.png
+  ---
+  alt: A pie chart showing the 66% demographics of Squares and 33% circles
+  width: 60%
+  figclass: margin
+  align: center
+  ---
+  ```
+
+  To talk about demographics and concepts of group fairness, we will assume all of our applicants are part of one of two races: Circles and Squares. In this world, Circles make up a majority of the population (66%) and Circles (33%). Consider that in this world Circles also face systematic oppression, and often are economically disadvantaged due to the barriers they face in their lives.
+
+Now again, all of this is an extreme over simplification of the real world, but it will still be useful for us to get some key intuitions for what fairness might mean in the real world.
+
+### Notation
+
+Before defining fairness formally, we need to introduce some notation to describe the situation we defined above. In our ML system, our training data will be historical data of students and if they met our definition of success. Recall that the only input we will use in this example is the SAT score, but we will also track the demographics of Circle/Square to understand concepts of fairness. The notation will be general for more complex scenarios, and we highlight what values they take in our example
+
+```{admonition} Notation
+$X$: Input data about a person to use for prediction
+
+* Our Example $X = \text{SAT Score}$
+
+$A$: Variable indicating which group $X$ belongs to
+
+* Our Example: $A = \square$ or $A = \bigcirc$
+
+$Y$: The true label
+
+* Our Example: $Y = +1$ if truly successful in college, $Y = -1$ if not
+
+$\hat{Y} = \hat{f}(X)$: Our prediction of $Y$ using learned model $\hat{f}$
+
+* Our Example: $\hat{Y} = +1$ if predicted successful in college, $\hat{Y} = -1$ if not
+```
+
+### Fairness Definitions
+
+```{margin}
+{{ref_gerrymandering}}\. We see a similar problem in coming up with a rigorous notion of [Gerrymandering](https://en.wikipedia.org/wiki/Gerrymandering) in politics. When you see examples, it's sometimes easy to point out that something looks off. But coming up with a formal, working definition to work in all cases is challenging and is a choice of which priorities to include in your definition. See l
+```
+
+In our setup, we might be concerned that our college admissions example may potentially be biased against Circles given the fact that they are a smaller portion of the population, and we may be concerned about the adverse affects of the discrimination they face in the world affecting our college admissions choices. But how can we definitively know what discrimination is or if our system is unfair? This is where we introduce the concept of coming up with measure to describe how fair a system is, and if we see that fairness is being violated, is a clear indicator that our system is discriminatory <sup>{{ref_gerrymandering}}</sup>. We'll see different
+
+In the following sections, let's explore some mathematical definitions of concepts of fairness using the notation we outlined above. Recall that we are focused on notions of group fairness, where we don't want someone's outcome to be negatively impact by membership in some protected group (in this case their race being Circle or Square).
+
+We also show for each section a brief code example to show how to compute the numbers in question. The code examples assume you have a `DataFrame` `data` with the all of the data and predictions.
+
+| X   | A   | Y   | Y_hat |
+|-----|-----|-----|-------|
+| ... | ... | ... | ...   |
+
+#### "Shape Blind"
+
+One of the most intuitive notions to define fairness is the simple idea to make your process completely blind to the concept you may worry it can discriminate on. So in our example, the hope is by simply withholding the race of the applicant from our model, then discrimination is not possible since the model couldn't even use that as an input to discriminate on. This approach is often called **"fairness through unawareness."**
+
+While intuitive, this just doesn't work in practice. Think back to our COMPAS example. The model was able to have discriminatory outcomes *without* using race as an input. That means in the COMPAS example, even though it was "color blind", its decisions were anything but.
+
+One reason this approach doesn't work in the real world is that there are often subtle correlations between other features not related to the attribute you may wish to protect (e.g., zip code and race). Even if we leave that feature out of our model, it can still inadvertently learn it from other features.
+
+You may think we could just remove any correlated features, but that would mean removing almost any data to use at all. For example, SAT scores are also correlated with race even if the Circles/Squares would be equally successful in college. One factor that impacts SAT scores is how much money you have to afford SAT prep. If the Squares are generally richer and can afford SAT prep, their scores are artificially higher even if they aren't necessarily more successful in college! So if we wanted to remove any features with correlation, then we couldn't even use our one feature SAT score!
+
+#### Statistical Parity
+
+So since being completely unaware of race to achieve fairness wasn't feasible, let's explore notions that try to compare how the model behaves for each of the groups of our protected attribute $A$. The simplest notion to compare the behavior on groups is known as **statistical parity**. Statistical parity dictates that in order for a model to be considered fair, the predictions of the model need to satisfy the following property.
+
+$$P(\hat{Y} = +1 | A=\square) \approx P(\hat{Y} = +1 | A=\bigcirc)$$
+
+In English, this says that the rate that Squares are admitted by our system should be approximately equal to the rate that the rate that Circles are admitted. So for example, if the admitted rate for Squares is 45%, then the admitted rate for Circles should be 45% as well. Note that we use approximately here and in other definitions because demanding *exactly equal* probabilities is often hard. Instead we usually define a range of acceptable distance such as 0.1% and won't call it biased if the Square admission rate is 45% and the Circles is 45.1%.
+
+Let's consider some tradeoffs of using this definition to define if our admissions model is fair.
+
+**Pros**
+
+* The definition is simple, and easy to explain. This is a positive because now users can better understand what we are measuring and when this definition of fairness is violated.
+* It only depends on the model's predictions, so can be computed live as the model makes new predictions.
+* This definition aligns with certain legal definitions of equity so there is established precedent in it being used.
+
+**Cons**
+* In some sense, it is a rather weak notion of fairness because it says nothing about how we accept these applicants or if they are actually successful. For example, a random classifier satisfies this definition of fairness even though it completely disregards notions of success. There are other, more nefarious, models that could be used that still meet statistical parity such as a classifier that is accurate for Square applicants, and then just chooses the same percentage of non-successful Circle applicant. It doesn't seem fair that you can set up the Circles to fail even though they are equally represented.
+  * Do note that that the fact that a random classifier can satisfy this definition fairness is actually not all that much of a critique. In fact, it is a proof of concept that it is even possible to satisfy this definition of fairness. There are some useful notions of fairness which might not have algorithms that can actually satisfy them!
+* A more serious objection is that, in some settings, the rates for our labels might not be consistent across groups. Statistical parity is making the statement that the rates that which groups meet this positive label (collegiate success in our example), is consistent across groups. To be clear, it is very possible that the rates of success across groups is actually the same, but it's possible that it's not and forcing statistical parity in that case might not be right.
+
+Let's consider a different example to make that last point clearer. Consider a model that predicts if someone has breast cancer, and a positive label is the detection of breast cancer. Would we say the breast cancer model is discriminatory because $P(\hat{Y} = +1 | A = \text{woman}) = 1/8$ while $P(\hat{Y} = +1 | A = \text{man}) = 1/833$? No, because clearly the base-rate of the phenomena we are predicting is different between men and woman. Forcing statistical parity in this model to consider it fair would mean either incorrectly telling more women they don't have breast cancer (when they might actually) or telling more men that they do have breast cancer (when they in fact do not). In the case where the base rates differ, demanding statistical parity makes no sense.
+
+Back our college admissions example, the same critique could apply if we assume the base rates of success are different. However, many people argue that in the college setting, the base rates for success should be equal enough (i.e., race does not effect your success in college), so statistical parity is appropriate. We will see in our next chapter how this assumption is a statement of a particular worldview about how fairness should operate.
+
+The following code example shows how to compute the numbers we care about for statistical parity.
+
+```python
+squares = data[data["A"] == "Square"]
+circles = data[data["A"] == "Circle"]
+square_admit_rate = (squares["Y_hat"] == +1).sum() / len(squares)
+circle_admit_rate = (circles["Y_hat"] == +1).sum() / len(circles)
+
+assert math.isclose(square_admit_rate, circle_admit_rate, abs_tol=0.01)
+```
+
+
+#### Equal Opportunity
+
+To account for the critiques of statistical parity ignoring the actual success of the applicants, we arrive at a stronger fairness definition called **equal opportunity** or the **equality of false negative rates (FNR)**.
+
+Equal opportunity is defined as the following. Recall that a false negative and true positive are the only possibilities when we are considering the true label are positive.
+
+$$P(\hat{Y} = +1 | A=\square, Y=+1) \approx P(\hat{Y} = +1 | A=\bigcirc, Y=+1)$$
+
+Note that this definition is almost the same as statistical parity, but adds the requirement that we only care about consistent treatment of Squares/Circles that were ultimately successful. In English, this is saying the rate that successful Squares and successful Circles are admitted should be approximately equal.
+
+The intuition here is to remember our discussion on {ref}`the relative costs of false negatives and false positives <classification:confusion_matrix>`. If in our setting of college admissions, we assume the cost of a false negative (denying someone who would have ultimately been successful) is worse, then a reasonable definition of fairness would demand that the rate of those false negatives should be approximately equal across subgroups. Note that the definition above is about true positive rate (TPR) which is related to FNR by $TPR + FNR = 1$.
+
+As its own definition of fairness, equal opportunity has its own set of pros/cons in its use.
+
+**Pros**
+
+* Much better since it controls from the true outcome. Fixes all of the cons of statistical parity.
+
+**Cons**
+
+* This definition only controls for equality in terms of the positive outcomes. It doesn't make any care about fairness in terms of the negative outcomes.
+* It is more complex to explain to non-experts. With even a little complexity, challenges can occur since its important everyone understands and agrees on what is at stake to be considered fair.
+* It requires actually knowing the true labels. This is fine to check if your model is unfair on the training data, but it is not possible to actually measure equal opportunity on new examples if you don't know their true labels.
+
+```python
+success_squares = data[(data["A"] == "Square") & (data["Y"] == +1)]
+success_circles = data[(data["A"] == "Circle") & (data["Y"] == +1)]
+
+# Note TPR + FNR = 1
+tpr_squares = (success_squares["Y_hat"] == +1).sum() / len(success_squares)
+tpr_circles = (success_circles["Y_hat"] == +1).sum() / len(success_circles)
+
+assert math.isclose(tpr_squares, tpr_circles, abs_tol=0.01)
+```
+
+#### Predictive Equality
+
+Just like equal opportunity, **predictive equality** or the **equality of false positive rate (FPR)** takes the same form but for controlling the rate for negative examples. All of the commentary is the same for predictive equality but which numbers you compute are different. Useful when you care more about controlling equality in the negative outcome.
+
+$$P(\hat{Y} = -1 | A=\square, Y=-1) \approx P(\hat{Y} = -1 | A=\bigcirc, Y=-1)$$
+
+```python
+no_success_squares = data[(data["A"] == "Square") & (data["Y"] == -1)]
+no_success_circles = data[(data["A"] == "Circle") & (data["Y"] == -1)]
+
+# Note TNR + FPR = 1
+tnr_squares = (no_success_squares["Y_hat"] == -1).sum() / len(no_success_squares)
+tnr_circles = (no_success_circles["Y_hat"] == -1).sum() / len(no_success_circles)
+
+assert math.isclose(tnr_squares, tnr_circles, abs_tol=0.01)
+```
+
+### Which Metric Should I Use?
+
+Here we've just outlined 3, but there are [many many more](https://fairmlbook.org/) definitions you can consider.
+
+So which one should you use? Or more specifically, considering our COMPAS example which one would we use to measure as a determination of the models predictions are fair or not?
+
+Unfortunately, we cannot tell you in general. The reason is each definition makes its own statement on what fairness even means. Choosing a fairness metric is an explicit statement of values that we hold when thinking about fairness. Many of these values are important values, but are fundamentally assumptions about how we believe the world works. These assumptions are often unverifiable. In our next chapter, we will explore contrasting worldviews and how they impact our understanding of fairness.
+
+### How do I Use These Metrics?
+
+That is a simpler question to answer. A simple approach is to use them as part of your model evaluation. When comparing models of different types and complexities, you can use the metric of your choice to report a measure of each model's fairness on both the training set and some validation set. Depending on your context, you might demand a certain threshold for your fairness metric before deploying your model.
+
+There are also techniques to augment our standard learning algorithms to make them fairness-aware in the first place. Some algorithms are more complex than others, but they simply involve changing how we measure quality to care about fairness instead of just minimizing error. One simple approach is to use regularization, but instead of penalizing large coefficients, penalize coefficients that lead to larger disparities in some fairness metric.
+
+## Recap
+
+Discrimination in ML models is a crucial problem we need to work on. It has real impacts, on real people, and its happening right now whether or not we are aware of it.
+
+In general, this will not be a problem that will be solved algorithmically. We can use algorithms to help, but choosing which algorithms to use in the first place It’s not a problem that will only be solved algorithmically. We need people (e.g., policymakers, regulators, philosophers, developers) to be in the loop to determine the values we want to encode into our systems and which values we want to uphold.
+
+In the next chapter, we will explore some limitations of how we have defined fairness so far, and think more critically about the worldviews we assume when defining fairness ideas.
+
