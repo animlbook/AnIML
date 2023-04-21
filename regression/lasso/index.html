@@ -198,7 +198,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../intro/index.html">
-                    
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
                 </a>
             </li>
         </ul>
@@ -213,6 +213,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../classification/intro/index.html">5. <i class="fas fa-book fa-fw"></i> Classification Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../classification/logistic_regression/index.html">6. <i class="fas fa-book fa-fw"></i> Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../classification/bias_fairness/index.html">7. <i class="fas fa-book fa-fw"></i> Bias and Fairness</a></li>
 </ul>
 
     </div>
@@ -764,7 +765,7 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
 </div>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="uFahlBTdPWrK" data-shufflequestions="False"
+<div class="output text_html"><div id="DjUUKJGyQJwZ" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
                data-numquestions="1000000"> <style>:root {
@@ -926,7 +927,7 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
     100% {
         background-color: var(--correct-green);
     }
-}</style></div><script type="application/javascript">var questionsuFahlBTdPWrK=[{"question": "Which set of features would be chosen following this Forward Stepwise model?", "type": "multiple_choice", "answers": [{"answer": "# bath, # bed", "correct": false, "feedback": "Not quite! While this is the best subset with two features, is this the one that our forward algorithm would end up picking?"}, {"answer": "# bath, sq ft", "correct": true, "feedback": "Correct! The first iteration would choose sq ft because it was the single feature with lowest validation error. Then on our second iteration, we will only consider adding one of the other unchosen features to be included with sq ft. The set of features that includes sq ft that minimizes validation error is # bath and sq ft. Note that this algorithm did not find the globally optimal subset of features of # bed and # bath"}, {"answer": "# bath, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, sq ft", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "sq ft, year built", "correct": false, "feedback": "Not quite!"}]}];
+}</style></div><script type="application/javascript">var questionsDjUUKJGyQJwZ=[{"question": "Which set of features would be chosen following this Forward Stepwise model?", "type": "multiple_choice", "answers": [{"answer": "# bath, # bed", "correct": false, "feedback": "Not quite! While this is the best subset with two features, is this the one that our forward algorithm would end up picking?"}, {"answer": "# bath, sq ft", "correct": true, "feedback": "Correct! The first iteration would choose sq ft because it was the single feature with lowest validation error. Then on our second iteration, we will only consider adding one of the other unchosen features to be included with sq ft. The set of features that includes sq ft that minimizes validation error is # bath and sq ft. Note that this algorithm did not find the globally optimal subset of features of # bed and # bath"}, {"answer": "# bath, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, sq ft", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "sq ft, year built", "correct": false, "feedback": "Not quite!"}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1660,7 +1661,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsuFahlBTdPWrK,  uFahlBTdPWrK);
+        show_questions(questionsDjUUKJGyQJwZ,  DjUUKJGyQJwZ);
         }
         </script></div>
 </div>

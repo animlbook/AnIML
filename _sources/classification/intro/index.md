@@ -239,7 +239,7 @@ One final way to visualize these predictions and the decision boundary is to col
 :alt: A side-by-side depiction of our original decision boundary, and one with the predictions shaded (described in last paragraph).
 ```
 
-<!-- TODO Add slido poll about shifting intercept -->
+<!-- TODO Add sli.do poll about shifting intercept -->
 
 ### More Complicated Decision Boundaries
 Note that in all of these cases, with the model we are using being a linear model, the decision boundaries we learn will be linear. If we wanted to learn a more complicated boundary, we would need to use a more complicated model. As discussed in great detail earlier, one way of making a model more complex is using more features to hopefully capture more complicated relationships in the data.
@@ -306,6 +306,7 @@ So what should we do about this? Well, we should always be asking critical quest
 
 Importantly with that last question, we don't ask "What if an error happens?", but "What is the cost of that error?" In machine learning applications, errors are a fact of life that cannot be avoided. Our hope is to minimize errors, but with statistical modeling, errors are guaranteed. So the question we have to ask is not "if" an error happens, but "how many" and what those errors "cost".
 
+(classification:confusion_matrix)=
 ## Confusion Matrix
 
 While classification accuracy and error are intuitive, they are often lacking in the fact that they smooth over all possible mistakes that can happen. We indicated before, that we might care about the specific types of error happening:
@@ -474,7 +475,7 @@ So some things to note:
 
 ## Coming Up
 
-<!-- TODO upate reference below -->
+<!-- TODO update reference below -->
 
 So in this chapter, we have introduced the concept and terminology for classification and how to evaluate classification models. What we have not discussed is how we actually learn the coefficients for our linear model. We will discuss this in detail on our next chapter on Logistic Regression.
 

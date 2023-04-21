@@ -1,0 +1,995 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>7. Bias and Fairness &#8212; AnIML: Another Introduction to Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "animlbook/AnIML");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "preferred-color-scheme");
+    script.setAttribute("label", "💬 Comments");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="../../_static/script.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1], "abs": ["\\lvert #1 \\rvert", 1], "indicator": ["\\mathbb{\\unicode{x1D7D9}}\\left\\{ #1 \\right\\}", 1], "norm": ["\\lVert #1 \\rVert", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'classification/bias_fairness/index';</script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="6. Logistic Regression" href="../logistic_regression/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">This book is still under construction. We appreciate your patience as we get it completed. Feedback is welcome!</div>
+  </div>
+
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro/index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro/index.html">
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../regression/linear_regression/index.html">1. <i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/assessing_performance/index.html">2. <i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/ridge/index.html">3. <i class="fas fa-book fa-fw"></i> Ridge Regularization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/lasso/index.html">4. <i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">5. <i class="fas fa-book fa-fw"></i> Classification Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logistic_regression/index.html">6. <i class="fas fa-book fa-fw"></i> Logistic Regression</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. <i class="fas fa-book fa-fw"></i> Bias and Fairness</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/animlbook/AnIML/main?urlpath=lab/tree/book_source/source/classification/bias_fairness/index.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/edit/main/book_source/source/classification/bias_fairness/index.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/issues/new?title=Issue%20on%20page%20%2Fclassification/bias_fairness/index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/classification/bias_fairness/index.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/classification/bias_fairness/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><i class="fas fa-book fa-fw"></i> Bias and Fairness</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-the-compas-model">7.1. Background: The COMPAS Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">7.2. Bias</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#historical-bias">7.2.1. Historical Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation-bias">7.2.2. Representation Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measurement-bias">7.2.3. Measurement Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregation-bias">7.2.4. Aggregation Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-bias">7.2.5. Evaluation Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-bias">7.2.6. Deployment Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">7.2.7. Recap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fairness">7.3. Fairness</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">7.3.1. Notation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fairness-definitions">7.3.2. Fairness Definitions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-blind">7.3.2.1. “Shape Blind”</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-parity">7.3.2.2. Statistical Parity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#equal-opportunity">7.3.2.3. Equal Opportunity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#predictive-equality">7.3.2.4. Predictive Equality</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#which-metric-should-i-use">7.3.3. Which Metric Should I Use?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-use-these-metrics">7.3.4. How do I Use These Metrics?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">7.4. Recap</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell tag_remove-input docutils container">
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-book-fa-fw-i-bias-and-fairness">
+<h1><span class="section-number">7. </span><i class="fas fa-book fa-fw"></i> Bias and Fairness<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-bias-and-fairness" title="Permalink to this heading">#</a></h1>
+<p>Now that we have seen concrete examples of models and learning algorithms in both the settings of regression and classification, let’s turn back to the discussion we introduced at the beginning of the book about the use of ML systems in the real world. In the <a class="reference internal" href="../../intro/index.html"><span class="doc"> Introduction</span></a>, we discussed a few examples of deployed ML models that can be biased in terms of the errors or the predictions they make. We highlighted the Gender Shades study that showed that facial recognition systems were more accurate on faces of lighter-skinned males than darker-skinned females. We also discussed the PredPol model that predicted crime happening way more frequently in poorer communities of color, simply by the choices of which crimes to feed the model in the first place and the feedback loops that creates.</p>
+<p>You will have no trouble trying to find other examples of machine learning systems’ biased outputs causing harm. From <a class="reference external" href="https://www.washingtonpost.com/news/the-intersect/wp/2015/07/06/googles-algorithm-shows-prestigious-job-ads-to-men-but-not-to-women-heres-why-that-should-worry-you/">Google’s ad algorithm showing more prestigious jobs to men</a>, to <a class="reference external" href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G">Amazon’s recruiting tool that was biased against women</a>, to <a class="reference external" href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">the COMPAS model used in the criminal justice system falsely predicting Black individuals were more likely to commit crimes</a>.</p>
+<p>Clearly it is possible to spot model’s that behaviors are not ideal and the results in these headlines are clear signs of bias <em>somewhere</em> in our ML system. But the question is where does that bias come from? How does it effect our models? And importantly, what steps can we take to detect and hopefully prevent these biased outcomes from happening in the first place? In this chapter and the next, we will highlight some of the current research into the workings of ML models when the interact with society, and how we can more formally define concepts of bias and fairness to prevent our models from causing harm before we deploy them.</p>
+<p>This chapter will tell this story about defining bias and fairness in three major parts:</p>
+<ul class="simple">
+<li><p>Background: The COMPAS Model</p></li>
+<li><p>Where does Bias come from?</p></li>
+<li><p>How to define fairness?</p></li>
+</ul>
+<p>Before beginning this journey, it is important to note that my experience has being squarely from the field of machine learning and computer science. While many of these discussions of how to encode concepts of fairness into models are relatively new in our field (~15 years), these are not necessarily new concepts. Scholars of law, social justice, philosophy and more have all discussed these topics in depth long before we have, and we will only be successful by working with them in unison to decide how to build our models.</p>
+<section id="background-the-compas-model">
+<h2><span class="section-number">7.1. </span>Background: The COMPAS Model<a class="headerlink" href="#background-the-compas-model" title="Permalink to this heading">#</a></h2>
+<p>A few years ago, a company called NorthPointe created a machine learning model named COMPAS to predict the likelihood that an arrested person would <em>recidivate</em>. Recidivation is when a person is let out of jail, where they eventually recommit that crime. Recidivating is an undesirable property of the criminal justice system, as it potentially means that criminals were being let go just to go repeat the crimes they were originally arrested for. So the modelers were hoping use data to better predict who was more likely to recidivate could help the criminal justice system. This model was deployed and was used by judges to help them determine details of sentencing and parole, based on how likely the person was predicted to be a risk of reoffending.</p>
+<p>The modeling task COMPAS set out to solve was to take information about a person who was arrested, and predict how likely they would be to recidivate. The person who was arrested was given a survey asking questions about their life such as “Was one of your parents ever sent to jail or prison?” and “How many of your friends/acquaintances are taking drugs illegally?” Important to note for what will come up, the survey <em>never</em> asks the person about their race or ethnicity. The COMPAS model then takes this survey and computes a score from 0 to 10. This regression task indicates that a score near 0 is unlikely to recidivate and a score of 10 means they are very likely to recidivate. The training data for this model was based on survey results of past persons who were arrested and the labels to calibrate the scores were if that person was re-arrested in 2 years of being released.</p>
+<p><a class="reference external" href="https://www.propublica.org/about/">ProPublica</a>, an independent non-profit newsroom, did an <a class="reference external" href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">analysis in 2016</a> that claimed that this COMPAS model was biased against Black people who were arrested. ProPublica’s piece outlines that the risk scores that COMPAS predicted for Black people were more likely to be in the “high risk” category (scores closer to 10) than White people with comparable backgrounds. That, along with other details, led them to the conclusion that this COMPAS model was biased against Black people.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>1. ProPublica followed up on this response with their own. Read it <a class="reference external" href="https://www.propublica.org/article/technical-response-to-northpointe">here</a>.</p>
+</aside>
+<p>Northpointe, the model’s creators, <a class="reference external" href="https://www.documentcloud.org/documents/2998391-ProPublica-Commentary-Final-070616.html">countered in their own article</a> that the ProPublica analysis was flawed and that if you look at the data, the scores they predicted are well <strong>calibrated</strong>. Calibration is a measure for risk-score models like COMPAS to measure how likely their scores relate to the true probability of recidivating. So for example, a model is well calibrated if, when it predicts a risk score of 2/10, there is about a 20% chance that the person actually recidivates, as compared to when it predicts a score of 9/10, there is about a 90% chance that the person actually recidivates. So their claim is the that the model is in fact well calibrated, and their scores are accurate to reality<sup>1</sup>.</p>
+<p>So this leaves us with some key questions: Who is right here? Do either of these claims make us feel more or less confident about using a model like this in the criminal justice system?</p>
+<p>Well, in a sense, they are actually both correct. At least, you can use the same data to back up <em>both of their claims</em>.</p>
+<p>Consider Northpointe’s claim of the model being well calibrated. The following graph from the outputs of the model and comparing it to the rate of recidivism. The graph shows the calibration curve for the model separating its scores for Black/White people. Northpointe’s claim is that these scores are close to the line <span class="math notranslate nohighlight">\(y = x\)</span>, meaning good calibration. And to bolster their point, the calibration is more-or-less the same across the groups Black/White. Clearly the lines aren’t <em>exactly</em> the same, but the gray error regions show uncertainty due to the noise in the data, and those regions of uncertainty overlap by a lot indicating the two trends are reasonably close given the amount of certainty we have.</p>
+<figure class="align-center" id="northpointe-calibration">
+<a class="reference internal image-reference" href="../../_images/calibration.png"><img alt="Recidivism rate by risk score and race. White and black defendants with the same risk score are roughly equally likely to reoffend. The gray bands show 95 percent confidence intervals." src="../../_images/calibration.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.1 </span><span class="caption-text">Recidivism rate by risk score and race. White and black defendants with the same risk score are roughly equally likely to reoffend. The gray bands show 95 percent confidence intervals. (<a class="reference external" href="https://www.washingtonpost.com/news/monkey-cage/wp/2016/10/17/can-an-algorithm-be-racist-our-analysis-is-more-cautious-than-propublicas/">Source: The Washington Post</a>)</span><a class="headerlink" href="#northpointe-calibration" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>But it turns out that the <em>same data</em> can also back up ProPublica’s point! In particular, if you look at the rate of mistakes made by the model, it is more likely to label Black people who would ultimately not reoffend with a higher risk. Consider changing this problem from a regression one to a classification one, where the labels are “Low Risk” (negative) and “High Risk” (positive). In this setting, ProPublica is arguing that the <em>false positive rate</em> for Black people is much higher than the FPR for White people. This can be seen in the graph below, where a larger percentage of <em>Black People who did not reoffend</em> are disproportionately rated as higher risk.</p>
+<figure class="align-center" id="propublica-fpr">
+<a class="reference internal image-reference" href="../../_images/fpr.png"><img alt="Distribution of defendants across risk categories by race. Black defendants reoffended at a higher rate than whites, and accordingly, a higher proportion of black defendants are deemed medium or high risk. As a result, blacks who do not reoffend are also more likely to be classified higher risk than whites who do not reoffend." src="../../_images/fpr.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.2 </span><span class="caption-text">Distribution of defendants across risk categories by race. Black defendants reoffended at a higher rate than whites, and accordingly, a higher proportion of black defendants are deemed medium or high risk. As a result, blacks who do not reoffend are also more likely to be classified higher risk than whites who do not reoffend. (<a class="reference external" href="https://www.washingtonpost.com/news/monkey-cage/wp/2016/10/17/can-an-algorithm-be-racist-our-analysis-is-more-cautious-than-propublicas/">Source: The Washington Post</a>)</span><a class="headerlink" href="#propublica-fpr" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this graph, we can actually still see the truth of Northpointe’s claim. Within each category (low/high), the proportion that reoffended are the same regardless of race. But the fact that a larger shade of “Did not reoffend” (dark blue) are labeled High Risk for Black people is Propublica’s claim of bias.</p>
+<p>So how can both actually be right? Well, as we will see later in this chapter, defining notions of fairness can be a bit tricky and subtle. As a bit of a spoiler for the discussion we will have over this chapter and next, there will never be one, right, algorithmic answer for defining fairness. Different definitions fairness satisfy different social norms that we may wish to uphold. It’s a question of which norms (e.g., non-discrimination) we want to enshrine in our algorithms that is the important discussion to be had, and that requires people with stakes in these systems to help decide. Our book, can’t possibly answer what those decisions should be in every situation, so instead, we are going to try to introduce the ideas of some possible definitions of bias and fairness and talk about how they can be applied in different situations. This way, you have a set of “fairness tools” under your toolbelt to apply to the situation based on what you and your stakeholders decide are important to uphold in your system.</p>
+</section>
+<section id="bias">
+<h2><span class="section-number">7.2. </span>Bias<a class="headerlink" href="#bias" title="Permalink to this heading">#</a></h2>
+<p>Before defining concepts of “what is fair”, let’s first turn to a discussion of where this bias might sneak in to our learning systems. Importantly, if we believe this COMPAS model is making biased outcomes, we should ask “Where does this bias come from?”</p>
+<p>As we addressed in the <a class="reference internal" href="../../intro/index.html"><span class="doc"> Introduction</span></a>, most times bias enters our model through the data we train it on (Garbage in <span class="math notranslate nohighlight">\(\rightarrow\)</span> Garbage out. Bias in <span class="math notranslate nohighlight">\(\rightarrow\)</span> Bias out). It probably wasn’t the case that some rogue developer at Northpointe intentionally tried to make a racist model. Instead, it is more likely that they unintentionally encoded bias from the data the collected and fed to the model. However, if you remember carefully, we said earlier on in the description of the COMPAS model that it doesn’t even use race/ethnicity as a feature! How could it learn to discriminate based on race if it doesn’t have access to that data?</p>
+<p>The simple answer is even though it didn’t ask about race explicitly, many things it asks can be highly correlated to race. For example, due to historic laws that prevent Black families from purchasing property in certain areas in the past, continue trends today of certain demographics being overrepresented in some areas and underrepresented in areas. Zip code is a somewhat informative proxy of race. Now consider that with all of the other somewhat informative correlations you can find with race (health indicators, economic status, name, etc.) the model can inadvertently pick up the signal that is race from all of those proxy features.</p>
+<p>The story of where bias enters our model is as bit more complex than just that though. It is worth diving in to the various points of our ML pipeline that can be entry points for bias to our model. Most of this section of the chapter is based on the incredible <a class="reference external" href="https://arxiv.org/abs/1901.10002">A Framework for Understanding Unintended Consequences of Machine Learning (Suresh &amp; Guttag, 2020)</a>. In their paper, they outline six primary sources of bias in a machine learning pipeline that we will introduce and summarize. These sources are:</p>
+<ul class="simple">
+<li><p><strong>Historical bias</strong></p></li>
+<li><p><strong>Represenation bias</strong></p></li>
+<li><p><strong>Measurement bias</strong></p></li>
+<li><p><strong>Aggregation bias</strong></p></li>
+<li><p><strong>Evaluation bias</strong></p></li>
+<li><p><strong>Deployment bias</strong></p></li>
+</ul>
+<figure class="align-center" id="bias-pipeline">
+<a class="reference internal image-reference" href="../../_images/bias.png"><img alt="An ML pipeline with the sources of the six biases listed above" src="../../_images/bias.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 7.3 </span><span class="caption-text">An ML pipeline with the 6 sources of bias entering at various points.</span><a class="headerlink" href="#bias-pipeline" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="historical-bias">
+<h3><span class="section-number">7.2.1. </span>Historical Bias<a class="headerlink" href="#historical-bias" title="Permalink to this heading">#</a></h3>
+<p><strong>Historical bias</strong> is the reflection that data has on the real world it is drawn from. The world we live in is filled with biases for and against certain demographics. Some of these biases were ones that started a long time ago (e.g., slavery) that can have lasting impacts today, others are biases that emerge over time but can still be present and harmful (e.g., trans-panic). Even if the data is “accurately” drawn from the real world, that accuracy can reflect the historical and present injustices of the real world.</p>
+<p>Some examples:</p>
+<ul class="simple">
+<li><p>Earlier we introduced the concept of redlining. A common practice historical, illegal today, still has lasting effects due to housing affordability and transfer of generational wealth.</p></li>
+<li><p>The violence against Black communities on the part of police make data in the criminal justice system related to race <em>extremely biased</em> against Black people.</p></li>
+<li><p>In 2018 only about 5% of Fortune 500 CEOs were women. When you search for “CEO” in Google Images, is it appropriate for Google to only show 1 in 20 pictures of women? Could reflecting the accurate depiction of the world perpetuate more harm?</p></li>
+</ul>
+<p>Historical bias is one of the easiest forms of bias to understand because it draws from the concepts of bias we understand as human beings. That doesn’t mean it is always easy to recognize though. A huge source of biases come from <em>unconscious</em> biases that are not necessarily easy for us to spot when they are in our own blind-spots.</p>
+</section>
+<section id="representation-bias">
+<h3><span class="section-number">7.2.2. </span>Representation Bias<a class="headerlink" href="#representation-bias" title="Permalink to this heading">#</a></h3>
+<p><strong>Representation bias</strong> happens when the data we collect is not equally representative of all groups that should be represented in the true distribution. Recall that in our standard learning setup, we need our training to be a representative sample of some underlying true distribution that our model will be used in. If the training data is not representative, then our learning is mostly useless.</p>
+<p>Some examples of representation bias in machine learning include:</p>
+<ul class="simple">
+<li><p>Consider using smartphone GPS data to make predictions about some phenomena (e.g., how many people live in a city). In this case, our collected dataset now only contains people who own smartphones with GPSs. This would then underestimate counts for communities that are less likely to have smartphones such as older and poorer populations.</p></li>
+<li><p><a class="reference external" href="https://www.image-net.org/">ImageNet</a> is a very popular benchmark dataset used in computer vision applications with 1.2 million images. While this dataset is large, it is not necessarily representative of all settings in which computer vision systems will be deployed. For example, about 45% of all images in this dataset were taken in the US. A majority of the remaining photos were taken in the rest of North America and Western Europe. Only about 1% and 2.1% of the images come from China and India respectively. Do you think a model trained on this data would be accurate on images taken from China or India (or anywhere else in the world) if it has barely seen any pictures from there?</p></li>
+</ul>
+</section>
+<section id="measurement-bias">
+<h3><span class="section-number">7.2.3. </span>Measurement Bias<a class="headerlink" href="#measurement-bias" title="Permalink to this heading">#</a></h3>
+<p><strong>Measurement bias</strong> comes from the data we gather often only being a (noisy) proxy of the things we actually care about. This one can be subtle, but is extremely important due to how pervasiive it is. We provide many examples for this one to highlight its common themes.</p>
+<ul class="simple">
+<li><p>For assessing if we should give someone a loan, what we care about is whether or not they will repay that loan through some notion of financial responsibility. However, that is some abstract quantity we can’t measure, so we use someone’s Credit Score as a hopefully useful metric to measure something about financial responsibility.</p></li>
+<li><p>In general we can’t predict the rate that certain crimes happen. We don’t have an all-mighty observer who can tell us every time a certain crime happens. Instead, we have to use arrest data as a proxy for that crime. But note, that arrest rate is just a proxy for crime rate. There are many instances of that crime that may not lead to arrests, and people might be arrested for not that crime at all!</p></li>
+<li><p>For college admissions, we might care about some notion of intelligence for admissions to college. But intelligence, like financial responsibility, is some abstract quality not a number. We can try to come up with tests to measure <em>something</em> about intelligence, such as IQ tests or SAT scores and use those instead. But note those a proxies of what we want, not the real thing. And worse, those tests have been shown to not be equally accurate for all subgroups of our population; IQ tests are notoriously biased towards wealthier, whiter populations. It’s likely that these measure have <em>nothing</em> to do with the abstract quality we care about.</p></li>
+<li><p>If factory workers are predicted that they need to be monitored more often, more errors will be spotted. This can result in <strong>feedback loops</strong> to encourage more monitoring in the future.</p>
+<ul>
+<li><p>This is the <em>exact</em> thing we saw with PredPol system in the introduction, where more petty crimes fed into the model led to more policing, led to more petty crimes being fed to the model.</p></li>
+</ul>
+</li>
+<li><p>Women are more likely to be misdiagnosed (or not diagnosed) for conditions where self-reported pain is a symptom since doctors frequently discount women’s self-reported pain levels. In this case “Diagnosed with X” is a biased proxy of “Has condition X.”</p></li>
+</ul>
+<p>So measurement bias is bias that enters our models from what we choose to measure and how, and often that the things we measure are (noisy) proxies of what we care about or not even related at all!</p>
+<p>In particular, we have actually tricked you with a form of measurement bias throughout this whole chapter to highlight how tricky it can be to spot. Recall when we introduced the COMPAS we said the goal was to predict whether or not someone would recidivate. Again, recidivating is recommitting the crime they were arrested for sometime in the future. How did Northpointe gather their training data for make their model? They looked at past arrests and found whether or not that person was arrested again within two years. Think carefully: <strong>Is what they are measuring the same as the thing they want to measure?</strong></p>
+<p>No. They are not the same. The data “arrest within two years” is a <em>proxy</em> for recidivating. Consider how they differ:</p>
+<ul class="simple">
+<li><p>Someone can re-commit a crime but not be arrested.</p></li>
+<li><p>Someone can be arrested within two years, but not for the same crime they were originally arrested for.</p></li>
+<li><p>Someone can re-commit a crime more than two years after their original arrest.</p></li>
+</ul>
+<p>Now consider all of the ways that those differences can affect different populations inconsistently. With our PredPol (predictive policing) example earlier, and the discussion of over-policing of Black communities. It is completely unsurprising that there is a higher arrest rate among Black people who previously were arrested, even if it wasn’t some recidivating (e.g., maybe they were originally arrested for robbery, but then re-arrested for something petty like loitering). This is one of the reasons why when you look at the COMPAS data, you see a higher “recidivism” rate for Black people. Because they aren’t actually measure recidivsim, they are measuring arrests!</p>
+<p>Measurement bias sneaks in to ML systems in <em>so many</em> sneaky ways when model builders don’t think critically about what data they are including and why and what they are actually trying to model. A general rule of thumb is that anything interesting you would want to model about a person’s behavior rely on some, if not all, measures of proxy values.</p>
+</section>
+<section id="aggregation-bias">
+<h3><span class="section-number">7.2.4. </span>Aggregation Bias<a class="headerlink" href="#aggregation-bias" title="Permalink to this heading">#</a></h3>
+<p>Often times we try to find a “one size fits all” model that can be used universally. <strong>Aggregation bias</strong> occurs when using just one model fails to serve all groups being aggregated over equally.</p>
+<p>Some examples of aggregation bias:</p>
+<ul class="simple">
+<li><p>HbA1c levels are used to monitor and diagnose diabetes. It turns out HbA1c levels differ in complex ways across ethnicity and sex. One model to make predictions about HbA1c levels across all ethnicities and sexes may bne less accurate than using separate models, even if everyone was represented in the training data equally in the first place!</p></li>
+<li><p>General natural language processing models tend to fail on accurate analysis of text that comes from sub-populations with a high amount of slang or hyper-specific meanings for more general words. As a lame, Boomer example, “dope” (at one point) could have been recognized by a general language model as meaning “a drug”, when younger generations usually say it to mean “cool” by a general language model as meaning “a drug”, when younger generations usually say it to mean “cool”.</p></li>
+</ul>
+</section>
+<section id="evaluation-bias">
+<h3><span class="section-number">7.2.5. </span>Evaluation Bias<a class="headerlink" href="#evaluation-bias" title="Permalink to this heading">#</a></h3>
+<p><strong>Evaluation bias</strong> is similar to representation bias, but is more focused on how we evaluate and test our models and how we report those evalutions. If the evaluation dataset or the benchmark we are using doesn’t represent the world well, we can have an evaluation bias. A <strong>benchmark</strong> is a common dataset used to evaluate models from different researchers (such as ImageNet).</p>
+<p>Some example of evaluation bias:</p>
+<ul class="simple">
+<li><p>Similarly, the ImageNet example would also suffer from evaluation bias since its evaluation data is not representative of the real wrold.</p></li>
+<li><p>It is common to just report a total accuracy or error on some benchmark dataset and using a high number as a sign of a good model without thinking critically about the errors it makes.</p>
+<ul>
+<li><p>We saw earlier in the Gender Shades example that there was drastically worse facial recognition performance when used on faces of darker-skinned females. The common benchmarks for these tests that everyone was comparing themselves on only had 5-7% faces of darker-skinned women.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="deployment-bias">
+<h3><span class="section-number">7.2.6. </span>Deployment Bias<a class="headerlink" href="#deployment-bias" title="Permalink to this heading">#</a></h3>
+<p><strong>Deployment bias</strong> can happen when there is a difference between how a model was intended to be used, and how the model is actually used in real life.</p>
+<p>Some example of deployment bias include:</p>
+<ul class="simple">
+<li><p>Consider the context of predicting risk scores for recidivism rates. While it may be true that the model they developed was calibrated well (its scores were proportional to rate of recidivism), their model wasn’t designed or evaluated in the context of a judge using the scores to decide parole. Even if its calibrated in aggregate, how do they know how it performs on individual cases where a human then takes its output and then makes a decision. How the model was designed and evaluated didn’t match how it was used.</p>
+<ul>
+<li><p>People are complex, and often don’t understand the intricacies of modeling choices made by the modelers. They might make incorrect assumptions about what a model says and then make incorrect decisions.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="recap">
+<h3><span class="section-number">7.2.7. </span>Recap<a class="headerlink" href="#recap" title="Permalink to this heading">#</a></h3>
+<p>So now with a brief definition of all of these biases, it would be good to look back at this ML pipeline Suresh &amp; Guttag introduced to get a full picture of how they enter and propagate throughout and ML system (<a class="reference internal" href="#bias-pipeline"><span class="std std-numref">Fig. 7.3</span></a>).</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/bias.png"><img alt="An ML pipeline with the sources of the six biases listed above" src="../../_images/bias.png" style="width: 100%;" /></a>
+</figure>
+</section>
+</section>
+<section id="fairness">
+<h2><span class="section-number">7.3. </span>Fairness<a class="headerlink" href="#fairness" title="Permalink to this heading">#</a></h2>
+<p>Now that we have discussed sources of bias in our model, we have a clearer idea of precisely how they can enter our ML pipeline. While the outputs of the model being biased feels unfair, it turns out that we will not get fairness for free unless we can demand it from our models. What we are interested in exploring now is how to come up with mathematical definitions of fairness, such that we can compute some number(s) to tell us if biases in our model are ultimately affecting its predictions in an undesired way.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>3. See the ACM Conference on <a class="reference external" href="https://facctconference.org/">Fairness Accountability, and Transparency (FAccT)</a></p>
+</aside>
+<p>There is a lot of active research <sup>3</sup> on how to come up with mathematical definitions of fairness that we can enforce and verify. The hope is that by coming up with some mathematical definition, we can hopefully spot early in the process when the model might exhibit unfair outputs.</p>
+<p>In this chapter, we will introduce a few different possible definitions of fairness, and in the next chapter we will look at comparing them to see if they can be cohesive. In particular in this chapter, we will be interested in coming up with definitions for a concept known as <strong>group fairness</strong>. Group fairness, also called <strong>non-discrimination</strong> is the intuitive concept that fairness means your membership of some group based on some uncontrollable property of yourself (race, gender, age, nationality, etc.) shouldn’t negatively impact the treatment you receive. Group fairness notions are ones that try to prevent discrimination such as racism, sexism, ageism, etc.</p>
+<p>For the remained of this chapter, we are going to focus on a cartoonishly simplified example of college admissions to try to reveal the key intuitions of how we can potentially define fairness. Note that the assumptions in this example are clearly not correct, but we use it for its simplicity and to act as a proof of concept. The intent is that by showing behaviors and properties of an overly simplified, contrived scenario, we can better understand what we can expect in real life. All of the things we will introduce in this chapter and next can be generalized to the complexities of the real world.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>College Admissions - Credit
+This example is borrowed from the fantastic <a class="reference external" href="https://duckduckgo.com/?q=the+ethical+algorithm+1g&amp;ia=web">The Ethical Algorithm</a> by <a class="reference external" href="https://www.cis.upenn.edu/~mkearns/">Michael Kearns</a> and <a class="reference external" href="https://www.cis.upenn.edu/~aaroth/">Aaron Roth</a>. This book is an incredible overview of the current work done to embed socially-aware values, such as fairness, into algorithms. We include their example scenario to introduce concepts of fairness because it is that good. Our contribution to the example is adding mathematical definitions and notation to make the ideas they present in this book for general audiences more suitable for a technical one.</p>
+</div>
+<p>So in this example, we are in charge of building a college admissions model. This model is supposed to take information about a college applicant, and predict whether or not we should let them in. In this scenario, we are going to make the following (unrealistic) assumptions:</p>
+<ul>
+<li><p>The only thing we will use as an input to our model is the students’ SAT score. Clearly real college admissions systems use more information and include holistic reviews, but we will limit this for simplicity.</p></li>
+<li><p>For every applicant, there is some single measurable notion of “success” and the goal of our model is to let in students who will meet this definition of success. Depending on the priorities of your college, you could imagine defining success as 1) will the student graduate, or 2) will the student graduate and get a job or 3) will the student graduate and give a ton of money back to the school. Depending on how you define success, that defines which examples are considered “positive” and “negative” examples. Clearly “success in college” is more complex than just one goal, as every individual student might have their own notion of what being successful in college means. For simplicity though, we will assume there is a consistent and universal notion of “successful college student”, whatever that may be.</p></li>
+<li><p>There is no notion of competition or limited spots. If everyone would truly meet the definition success, then everyone would be let in. But that doesn’t mean we want to have our model let everyone in since if they ultimately wouldn’t be successful, that could be a huge waste of time and money for us and the student.</p></li>
+<li><figure class="margin align-center">
+<a class="reference internal image-reference" href="../../_images/circle_square.png"><img alt="A pie chart showing the 66% demographics of Squares and 33% circles" src="../../_images/circle_square.png" style="width: 60%;" /></a>
+</figure>
+<p>To talk about demographics and concepts of group fairness, we will assume all of our applicants are part of one of two races: Circles and Squares. In this world, Circles make up a majority of the population (66%) and Circles (33%). Consider that in this world Circles also face systematic oppression, and often are economically disadvantaged due to the barriers they face in their lives.</p>
+</li>
+</ul>
+<p>Now again, all of this is an extreme over simplification of the real world, but it will still be useful for us to get some key intuitions for what fairness might mean in the real world.</p>
+<section id="notation">
+<h3><span class="section-number">7.3.1. </span>Notation<a class="headerlink" href="#notation" title="Permalink to this heading">#</a></h3>
+<p>Before defining fairness formally, we need to introduce some notation to describe the situation we defined above. In our ML system, our training data will be historical data of students and if they met our definition of success. Recall that the only input we will use in this example is the SAT score, but we will also track the demographics of Circle/Square to understand concepts of fairness. The notation will be general for more complex scenarios, and we highlight what values they take in our example</p>
+<div class="admonition-notation admonition">
+<p class="admonition-title">Notation</p>
+<p><span class="math notranslate nohighlight">\(X\)</span>: Input data about a person to use for prediction</p>
+<ul class="simple">
+<li><p>Our Example <span class="math notranslate nohighlight">\(X = \text{SAT Score}\)</span></p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(A\)</span>: Variable indicating which group <span class="math notranslate nohighlight">\(X\)</span> belongs to</p>
+<ul class="simple">
+<li><p>Our Example: <span class="math notranslate nohighlight">\(A = \square\)</span> or <span class="math notranslate nohighlight">\(A = \bigcirc\)</span></p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(Y\)</span>: The true label</p>
+<ul class="simple">
+<li><p>Our Example: <span class="math notranslate nohighlight">\(Y = +1\)</span> if truly successful in college, <span class="math notranslate nohighlight">\(Y = -1\)</span> if not</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\hat{Y} = \hat{f}(X)\)</span>: Our prediction of <span class="math notranslate nohighlight">\(Y\)</span> using learned model <span class="math notranslate nohighlight">\(\hat{f}\)</span></p>
+<ul class="simple">
+<li><p>Our Example: <span class="math notranslate nohighlight">\(\hat{Y} = +1\)</span> if predicted successful in college, <span class="math notranslate nohighlight">\(\hat{Y} = -1\)</span> if not</p></li>
+</ul>
+</div>
+</section>
+<section id="fairness-definitions">
+<h3><span class="section-number">7.3.2. </span>Fairness Definitions<a class="headerlink" href="#fairness-definitions" title="Permalink to this heading">#</a></h3>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>4. We see a similar problem in coming up with a rigorous notion of <a class="reference external" href="https://en.wikipedia.org/wiki/Gerrymandering">Gerrymandering</a> in politics. When you see examples, it’s sometimes easy to point out that something looks off. But coming up with a formal, working definition to work in all cases is challenging and is a choice of which priorities to include in your definition. See l</p>
+</aside>
+<p>In our setup, we might be concerned that our college admissions example may potentially be biased against Circles given the fact that they are a smaller portion of the population, and we may be concerned about the adverse affects of the discrimination they face in the world affecting our college admissions choices. But how can we definitively know what discrimination is or if our system is unfair? This is where we introduce the concept of coming up with measure to describe how fair a system is, and if we see that fairness is being violated, is a clear indicator that our system is discriminatory <sup>4</sup>. We’ll see different</p>
+<p>In the following sections, let’s explore some mathematical definitions of concepts of fairness using the notation we outlined above. Recall that we are focused on notions of group fairness, where we don’t want someone’s outcome to be negatively impact by membership in some protected group (in this case their race being Circle or Square).</p>
+<p>We also show for each section a brief code example to show how to compute the numbers in question. The code examples assume you have a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> <code class="docutils literal notranslate"><span class="pre">data</span></code> with the all of the data and predictions.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>X</p></th>
+<th class="head"><p>A</p></th>
+<th class="head"><p>Y</p></th>
+<th class="head"><p>Y_hat</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<section id="shape-blind">
+<h4><span class="section-number">7.3.2.1. </span>“Shape Blind”<a class="headerlink" href="#shape-blind" title="Permalink to this heading">#</a></h4>
+<p>One of the most intuitive notions to define fairness is the simple idea to make your process completely blind to the concept you may worry it can discriminate on. So in our example, the hope is by simply withholding the race of the applicant from our model, then discrimination is not possible since the model couldn’t even use that as an input to discriminate on. This approach is often called <strong>“fairness through unawareness.”</strong></p>
+<p>While intuitive, this just doesn’t work in practice. Think back to our COMPAS example. The model was able to have discriminatory outcomes <em>without</em> using race as an input. That means in the COMPAS example, even though it was “color blind”, its decisions were anything but.</p>
+<p>One reason this approach doesn’t work in the real world is that there are often subtle correlations between other features not related to the attribute you may wish to protect (e.g., zip code and race). Even if we leave that feature out of our model, it can still inadvertently learn it from other features.</p>
+<p>You may think we could just remove any correlated features, but that would mean removing almost any data to use at all. For example, SAT scores are also correlated with race even if the Circles/Squares would be equally successful in college. One factor that impacts SAT scores is how much money you have to afford SAT prep. If the Squares are generally richer and can afford SAT prep, their scores are artificially higher even if they aren’t necessarily more successful in college! So if we wanted to remove any features with correlation, then we couldn’t even use our one feature SAT score!</p>
+</section>
+<section id="statistical-parity">
+<h4><span class="section-number">7.3.2.2. </span>Statistical Parity<a class="headerlink" href="#statistical-parity" title="Permalink to this heading">#</a></h4>
+<p>So since being completely unaware of race to achieve fairness wasn’t feasible, let’s explore notions that try to compare how the model behaves for each of the groups of our protected attribute <span class="math notranslate nohighlight">\(A\)</span>. The simplest notion to compare the behavior on groups is known as <strong>statistical parity</strong>. Statistical parity dictates that in order for a model to be considered fair, the predictions of the model need to satisfy the following property.</p>
+<div class="math notranslate nohighlight">
+\[P(\hat{Y} = +1 | A=\square) \approx P(\hat{Y} = +1 | A=\bigcirc)\]</div>
+<p>In English, this says that the rate that Squares are admitted by our system should be approximately equal to the rate that the rate that Circles are admitted. So for example, if the admitted rate for Squares is 45%, then the admitted rate for Circles should be 45% as well. Note that we use approximately here and in other definitions because demanding <em>exactly equal</em> probabilities is often hard. Instead we usually define a range of acceptable distance such as 0.1% and won’t call it biased if the Square admission rate is 45% and the Circles is 45.1%.</p>
+<p>Let’s consider some tradeoffs of using this definition to define if our admissions model is fair.</p>
+<p><strong>Pros</strong></p>
+<ul class="simple">
+<li><p>The definition is simple, and easy to explain. This is a positive because now users can better understand what we are measuring and when this definition of fairness is violated.</p></li>
+<li><p>It only depends on the model’s predictions, so can be computed live as the model makes new predictions.</p></li>
+<li><p>This definition aligns with certain legal definitions of equity so there is established precedent in it being used.</p></li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul class="simple">
+<li><p>In some sense, it is a rather weak notion of fairness because it says nothing about how we accept these applicants or if they are actually successful. For example, a random classifier satisfies this definition of fairness even though it completely disregards notions of success. There are other, more nefarious, models that could be used that still meet statistical parity such as a classifier that is accurate for Square applicants, and then just chooses the same percentage of non-successful Circle applicant. It doesn’t seem fair that you can set up the Circles to fail even though they are equally represented.</p>
+<ul>
+<li><p>Do note that that the fact that a random classifier can satisfy this definition fairness is actually not all that much of a critique. In fact, it is a proof of concept that it is even possible to satisfy this definition of fairness. There are some useful notions of fairness which might not have algorithms that can actually satisfy them!</p></li>
+</ul>
+</li>
+<li><p>A more serious objection is that, in some settings, the rates for our labels might not be consistent across groups. Statistical parity is making the statement that the rates that which groups meet this positive label (collegiate success in our example), is consistent across groups. To be clear, it is very possible that the rates of success across groups is actually the same, but it’s possible that it’s not and forcing statistical parity in that case might not be right.</p></li>
+</ul>
+<p>Let’s consider a different example to make that last point clearer. Consider a model that predicts if someone has breast cancer, and a positive label is the detection of breast cancer. Would we say the breast cancer model is discriminatory because <span class="math notranslate nohighlight">\(P(\hat{Y} = +1 | A = \text{woman}) = 1/8\)</span> while <span class="math notranslate nohighlight">\(P(\hat{Y} = +1 | A = \text{man}) = 1/833\)</span>? No, because clearly the base-rate of the phenomena we are predicting is different between men and woman. Forcing statistical parity in this model to consider it fair would mean either incorrectly telling more women they don’t have breast cancer (when they might actually) or telling more men that they do have breast cancer (when they in fact do not). In the case where the base rates differ, demanding statistical parity makes no sense.</p>
+<p>Back our college admissions example, the same critique could apply if we assume the base rates of success are different. However, many people argue that in the college setting, the base rates for success should be equal enough (i.e., race does not effect your success in college), so statistical parity is appropriate. We will see in our next chapter how this assumption is a statement of a particular worldview about how fairness should operate.</p>
+<p>The following code example shows how to compute the numbers we care about for statistical parity.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">squares</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Square&quot;</span><span class="p">]</span>
+<span class="n">circles</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Circle&quot;</span><span class="p">]</span>
+<span class="n">square_admit_rate</span> <span class="o">=</span> <span class="p">(</span><span class="n">squares</span><span class="p">[</span><span class="s2">&quot;Y_hat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">squares</span><span class="p">)</span>
+<span class="n">circle_admit_rate</span> <span class="o">=</span> <span class="p">(</span><span class="n">circles</span><span class="p">[</span><span class="s2">&quot;Y_hat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">circles</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">square_admit_rate</span><span class="p">,</span> <span class="n">circle_admit_rate</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="equal-opportunity">
+<h4><span class="section-number">7.3.2.3. </span>Equal Opportunity<a class="headerlink" href="#equal-opportunity" title="Permalink to this heading">#</a></h4>
+<p>To account for the critiques of statistical parity ignoring the actual success of the applicants, we arrive at a stronger fairness definition called <strong>equal opportunity</strong> or the <strong>equality of false negative rates (FNR)</strong>.</p>
+<p>Equal opportunity is defined as the following. Recall that a false negative and true positive are the only possibilities when we are considering the true label are positive.</p>
+<div class="math notranslate nohighlight">
+\[P(\hat{Y} = +1 | A=\square, Y=+1) \approx P(\hat{Y} = +1 | A=\bigcirc, Y=+1)\]</div>
+<p>Note that this definition is almost the same as statistical parity, but adds the requirement that we only care about consistent treatment of Squares/Circles that were ultimately successful. In English, this is saying the rate that successful Squares and successful Circles are admitted should be approximately equal.</p>
+<p>The intuition here is to remember our discussion on <a class="reference internal" href="../intro/index.html#classification-confusion-matrix"><span class="std std-ref">the relative costs of false negatives and false positives</span></a>. If in our setting of college admissions, we assume the cost of a false negative (denying someone who would have ultimately been successful) is worse, then a reasonable definition of fairness would demand that the rate of those false negatives should be approximately equal across subgroups. Note that the definition above is about true positive rate (TPR) which is related to FNR by <span class="math notranslate nohighlight">\(TPR + FNR = 1\)</span>.</p>
+<p>As its own definition of fairness, equal opportunity has its own set of pros/cons in its use.</p>
+<p><strong>Pros</strong></p>
+<ul class="simple">
+<li><p>Much better since it controls from the true outcome. Fixes all of the cons of statistical parity.</p></li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul class="simple">
+<li><p>This definition only controls for equality in terms of the positive outcomes. It doesn’t make any care about fairness in terms of the negative outcomes.</p></li>
+<li><p>It is more complex to explain to non-experts. With even a little complexity, challenges can occur since its important everyone understands and agrees on what is at stake to be considered fair.</p></li>
+<li><p>It requires actually knowing the true labels. This is fine to check if your model is unfair on the training data, but it is not possible to actually measure equal opportunity on new examples if you don’t know their true labels.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">success_squares</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Square&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">success_circles</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Circle&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="c1"># Note TPR + FNR = 1</span>
+<span class="n">tpr_squares</span> <span class="o">=</span> <span class="p">(</span><span class="n">success_squares</span><span class="p">[</span><span class="s2">&quot;Y_hat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">success_squares</span><span class="p">)</span>
+<span class="n">tpr_circles</span> <span class="o">=</span> <span class="p">(</span><span class="n">success_circles</span><span class="p">[</span><span class="s2">&quot;Y_hat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">success_circles</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">tpr_squares</span><span class="p">,</span> <span class="n">tpr_circles</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="predictive-equality">
+<h4><span class="section-number">7.3.2.4. </span>Predictive Equality<a class="headerlink" href="#predictive-equality" title="Permalink to this heading">#</a></h4>
+<p>Just like equal opportunity, <strong>predictive equality</strong> or the <strong>equality of false positive rate (FPR)</strong> takes the same form but for controlling the rate for negative examples. All of the commentary is the same for predictive equality but which numbers you compute are different. Useful when you care more about controlling equality in the negative outcome.</p>
+<div class="math notranslate nohighlight">
+\[P(\hat{Y} = -1 | A=\square, Y=-1) \approx P(\hat{Y} = -1 | A=\bigcirc, Y=-1)\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">no_success_squares</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Square&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">no_success_circles</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Circle&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="c1"># Note TNR + FPR = 1</span>
+<span class="n">tnr_squares</span> <span class="o">=</span> <span class="p">(</span><span class="n">no_success_squares</span><span class="p">[</span><span class="s2">&quot;Y_hat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">no_success_squares</span><span class="p">)</span>
+<span class="n">tnr_circles</span> <span class="o">=</span> <span class="p">(</span><span class="n">no_success_circles</span><span class="p">[</span><span class="s2">&quot;Y_hat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">no_success_circles</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">tnr_squares</span><span class="p">,</span> <span class="n">tnr_circles</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="which-metric-should-i-use">
+<h3><span class="section-number">7.3.3. </span>Which Metric Should I Use?<a class="headerlink" href="#which-metric-should-i-use" title="Permalink to this heading">#</a></h3>
+<p>Here we’ve just outlined 3, but there are <a class="reference external" href="https://fairmlbook.org/">many many more</a> definitions you can consider.</p>
+<p>So which one should you use? Or more specifically, considering our COMPAS example which one would we use to measure as a determination of the models predictions are fair or not?</p>
+<p>Unfortunately, we cannot tell you in general. The reason is each definition makes its own statement on what fairness even means. Choosing a fairness metric is an explicit statement of values that we hold when thinking about fairness. Many of these values are important values, but are fundamentally assumptions about how we believe the world works. These assumptions are often unverifiable. In our next chapter, we will explore contrasting worldviews and how they impact our understanding of fairness.</p>
+</section>
+<section id="how-do-i-use-these-metrics">
+<h3><span class="section-number">7.3.4. </span>How do I Use These Metrics?<a class="headerlink" href="#how-do-i-use-these-metrics" title="Permalink to this heading">#</a></h3>
+<p>That is a simpler question to answer. A simple approach is to use them as part of your model evaluation. When comparing models of different types and complexities, you can use the metric of your choice to report a measure of each model’s fairness on both the training set and some validation set. Depending on your context, you might demand a certain threshold for your fairness metric before deploying your model.</p>
+<p>There are also techniques to augment our standard learning algorithms to make them fairness-aware in the first place. Some algorithms are more complex than others, but they simply involve changing how we measure quality to care about fairness instead of just minimizing error. One simple approach is to use regularization, but instead of penalizing large coefficients, penalize coefficients that lead to larger disparities in some fairness metric.</p>
+</section>
+</section>
+<section id="id1">
+<h2><span class="section-number">7.4. </span>Recap<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Discrimination in ML models is a crucial problem we need to work on. It has real impacts, on real people, and its happening right now whether or not we are aware of it.</p>
+<p>In general, this will not be a problem that will be solved algorithmically. We can use algorithms to help, but choosing which algorithms to use in the first place It’s not a problem that will only be solved algorithmically. We need people (e.g., policymakers, regulators, philosophers, developers) to be in the loop to determine the values we want to encode into our systems and which values we want to uphold.</p>
+<p>In the next chapter, we will explore some limitations of how we have defined fairness so far, and think more critically about the worldviews we assume when defining fairness ideas.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./classification/bias_fairness"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../logistic_regression/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">6. </span><i class="fas fa-book fa-fw"></i> Logistic Regression</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-the-compas-model">7.1. Background: The COMPAS Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias">7.2. Bias</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#historical-bias">7.2.1. Historical Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representation-bias">7.2.2. Representation Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measurement-bias">7.2.3. Measurement Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregation-bias">7.2.4. Aggregation Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-bias">7.2.5. Evaluation Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-bias">7.2.6. Deployment Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">7.2.7. Recap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fairness">7.3. Fairness</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">7.3.1. Notation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fairness-definitions">7.3.2. Fairness Definitions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-blind">7.3.2.1. “Shape Blind”</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-parity">7.3.2.2. Statistical Parity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#equal-opportunity">7.3.2.3. Equal Opportunity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#predictive-equality">7.3.2.4. Predictive Equality</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#which-metric-should-i-use">7.3.3. Which Metric Should I Use?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-use-these-metrics">7.3.4. How do I Use These Metrics?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">7.4. Recap</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hunter Schafer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="float: right">
+  <!-- 100% privacy friendly analytics -->
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+  <a href="https://simpleanalytics.com/?utm_source=&utm_content=badge" referrerpolicy="origin" target="_blank"><picture><source srcset="https://simpleanalyticsbadges.com/?mode=dark" media="(prefers-color-scheme: dark)" /><img src="https://simpleanalyticsbadges.com/?mode=light" loading="lazy" referrerpolicy="no-referrer" crossorigin="anonymous" /></picture></a>
+</div>
+
+<div>
+  <p>
+    Have feedback or spotted a bug? Please make a <a href="https://github.com/animlbook/AnIML/issues">GitHub issue</a>
+    or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
+  </p>
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

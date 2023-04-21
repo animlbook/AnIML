@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title> &#8212; AnIML: Another Introduction to Machine Learning</title>
+    <title>Introduction &#8212; AnIML: Another Introduction to Machine Learning</title>
   
   
   
@@ -98,6 +98,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1], "abs": ["\\lvert #1 \\rvert", 1], "indicator": ["\\mathbb{\\unicode{x1D7D9}}\\left\\{ #1 \\right\\}", 1], "norm": ["\\lVert #1 \\rVert", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro/index';</script>
     <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -195,7 +197,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
                 </a>
             </li>
         </ul>
@@ -210,6 +212,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../classification/intro/index.html">5. <i class="fas fa-book fa-fw"></i> Classification Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../classification/logistic_regression/index.html">6. <i class="fas fa-book fa-fw"></i> Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../classification/bias_fairness/index.html">7. <i class="fas fa-book fa-fw"></i> Bias and Fairness</a></li>
 </ul>
 
     </div>
@@ -410,7 +413,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1></h1>
+    <h1><i class="fas fa-hand-sparkles fa-fw"></i> Introduction</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -420,10 +423,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#i-class-fas-fa-hand-sparkles-fa-fw-i-introduction"><i class="fas fa-hand-sparkles fa-fw"></i> Introduction</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-in-the-wild">Machine Learning in the Wild</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-learning-machine-learning-matters">Why Learning Machine Learning Matters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-learning-machine-learning-matters">Why Learning Machine Learning Matters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-in-the-real-world">ML in the Real World</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-this-book">What is this Book?</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#our-values">Our Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-learning-works">How Learning Works</a></li>
@@ -436,9 +440,6 @@ document.write(`
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -449,10 +450,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-hand-sparkles-fa-fw-i-introduction">
+  <section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-hand-sparkles-fa-fw-i-introduction">
 <h1><i class="fas fa-hand-sparkles fa-fw"></i> Introduction<a class="headerlink" href="#i-class-fas-fa-hand-sparkles-fa-fw-i-introduction" title="Permalink to this heading">#</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -487,7 +485,45 @@ document.write(`
 <p>Machine Learning has amazing power to make applications from ones that are fun (<a class="reference external" href="https://www.youtube.com/watch?v=Y_NvR5dIaOY">teaching a computer to make pasta</a>) to ones that can be used for great social good (<a class="reference external" href="https://www.youtube.com/watch?v=Y_NvR5dIaOY">detecting ear infections with a smartphone app</a>).</p>
 <p>But as the maxim of every superhero movie says, “with great power comes great responsibility.” These machine learning tools are also used in incredibly high-stakes applications such as the criminal justice system, <a class="reference external" href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">where they have been found to produce biased outcomes</a>. And what’s more, they are being used increasingly in more and more domains such as our elections, national defense, health, and transportation.</p>
 <p>Without being informed about what these models are doing and how they work, we have no hope of being able to assess and critique where we should and <em>should not</em> be using them. Our hope in this book is that we can show you the awesome potential of these systems and how you build them well. At the same time, we want you to be considering the serious ramifications of automation that these models afford and how to avoid some dangerous pitfalls that can end up harming people.</p>
+<section id="ml-in-the-real-world">
+<h3>ML in the Real World<a class="headerlink" href="#ml-in-the-real-world" title="Permalink to this heading">#</a></h3>
+<p>One of my favorite(?) tweets about the ways machine learning is used in the real world is this one. While it’s a few years old at this point, it highlights that these systems with huge amounts of uncertainty are being deployed in settings with extremely real consequences. Where high amounts of uncertainty in the part of the decision maker are probably undesirable.</p>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">It’s terrifying that both of these things are true at the same time in this world: <br><br>• computers drive cars around<br><br>• the state of the art test to check that you’re not a computer is whether you can successful identify stop signs in pictures</p>&mdash; Eddy Dever (@EddyDever) <a href="https://twitter.com/EddyDever/status/995565824164347904?ref_src=twsrc%5Etfw">May 13, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<figure class="margin align-center" id="adversarial-stop-sign">
+<a class="reference internal image-reference" href="../_images/adversarial_attack.png"><img alt="A stop sign overlayed with text to cause it to be misclassified" src="../_images/adversarial_attack.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">An ‘adversarial’ stop sign that gets classified as a “45 MPH” sign.</span><a class="headerlink" href="#adversarial-stop-sign" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Underscoring the fact that deployed ML systems have all of this uncertainty in the first place, actors can try to manipulate these systems for their own gain (or others harm). For example, some researchers have shown that by strategically manipulating a picture of a stop sign as in <a class="reference internal" href="#adversarial-stop-sign"><span class="std std-numref">Fig. 1</span></a>, they could make a real-world ML system make a mistake. for classifying images not only incorrectly, but confidently, predict the image was a sign indicating the speed limit was 45 MPH in that area .</p>
+<p>Not only are we concerned by bad actors maliciously manipulating ML systems to cause harm, even the systems themselves can be designed to do harm without the creators even intending it in the first place. For example, the famous <a class="reference external" href="http://gendershades.org/">Gender Shades</a> project showed that production facial recognition systems disproportionately make errors on faces of darker skinned women then it does lighter skinned men as seen in <a class="reference internal" href="#gender-shades"><span class="std std-numref">Fig. 2</span></a>.</p>
+<figure class="align-center" id="gender-shades">
+<a class="reference internal image-reference" href="../_images/gender_shades.png"><img alt="Demonstration of differential accuracy on faces of various ethnicities/sexes" src="../_images/gender_shades.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text"><a class="reference external" href="https://www.nytimes.com/2018/02/09/technology/facial-recognition-race-artificial-intelligence.html?module=inline">“Facial Recognition is Accurate, if You’re a White Guy”</a></span><a class="headerlink" href="#gender-shades" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Most would assume that the creators of these facial recognition systems didn’t <em>intentionally</em> code their systems to be worse on people of color, so where did these biased outcomes come from? Almost always with machine learning systems, they are just automated ways of reflecting trends in the data they trained on. A common phrase said by machine learning practitioners is “Garbage in, <span class="math notranslate nohighlight">\(\rightarrow\)</span> Garbage out”. The same is true for data that encodes structural bias in our society. Bias in <span class="math notranslate nohighlight">\(\rightarrow\)</span> Bias out.</p>
+<p>You might be wondering how bias can enter the data our models train on. Well the simple answer is most data is drawn from the real world, and the real world encodes historical and present biases against certain populations of people.</p>
+<p>Take for example a model that is trained on records of criminal incidences in cities. Many such systems are trained on police records and used to deploy police across the city to help prevent crime; usually with a particular focus to prevent violent crimes. While these systems are often well-intentioned to stop these sorts of violent crimes, they often aren’t the only types of crimes recorded. For example, they often record petty crimes like loitering, marijuana possession, etc. that police pick up on their patrols. The nature of theses crimes (or even if they are crimes at all) are far less severe than the violent crimes they were originally trying to stop. But these non-violent crimes then fill up the databases, and the models’ predictions now reflect their presence and now predict crime is more likely in that area. Now a system designed to to stop violent crimes is primarily predicting where non-violent crimes occur. This now creates a cycle where the model now sends more police to those areas, where they find more non-violent crimes to report, further justifying even more police being sent to those neighborhoods. And these neighborhoods that end up being over-policed generally are poorer neighborhoods that are more likely to inhabit people of color (<a class="reference internal" href="#pred-pol"><span class="std std-numref">Fig. 3</span></a>).</p>
+<!-- Hack: sphinx-video is weird and doesn't allow percents so make it larger than it needs to be and it will be scaled down by our CSS :( -->
+<video controls="True" preload="auto" width="1000"><source src="../_static/intro/predpol.mp4" type="video/mp4"></video><!-- Hack 2: Figures don't allow videos, so make this figure have no image to sit below our video :)-->
+<figure class="align-center" id="pred-pol">
+<a class="reference internal image-reference" href="../_images/blank.png"><img alt="Video above shows various crime maps of crime predictions with heavier predicted crimes in communities of color." src="../_images/blank.png" style="width: 0%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text"><a class="reference external" href="https://gizmodo.com/how-we-determined-predictive-policing-software-dispropo-1848139456">Predictive Policing software disproportionately targets low-income, Black, and Latino neighborhoods</a></span><a class="headerlink" href="#pred-pol" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>But note, none of this is the “fault” of the machine learning model. It isn’t intentionally setting out to over-police communities of color. In fact, it has no intentions as all as it is not a human being you can ascribe malintent towards. A more correct place to put “fault” in the system is the model builder, and what data they decide to include and exclude in their model. Even though they likely included this data without the intent of discrimination (“more data is better, right?”), they are the ones that made the decision to include it in the first place. They also, for example, chose to not include data such as the multitude of financial crimes perpetrated in business centers of cities (<a class="reference internal" href="#white-collar"><span class="std std-numref">Fig. 4</span></a>), despite this <a class="reference external" href="https://www.law.cornell.edu/wex/white-collar_crime">white-collar crime costs citizens over $300 billion annually</a>.</p>
+<figure class="align-default" id="white-collar">
+<img alt="A map showing a heat map of white collar crime in NYC" src="../_images/white_collar.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text"><a class="reference external" href="https://whitecollar.thenewinquiry.com/">White Collar Crime Risk Zones</a></span><a class="headerlink" href="#white-collar" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The (biased) outputs of a model are results of intentional and unintentional <em>modeling choices</em> of the ML practitioner. So it is our job, to ensure we are aware of the modeling choices we make as practitioners and take ownership of the potentially unintended consequences of them. Our job will be to understand the theoretical assumptions and limitations of these models, and practice how to apply them and be aware of their limitations to avoid many of the most common pitfalls when deploying models.</p>
 <p>The remaining part of this chapter is broken into 3 parts. Before we give a broad overview of what ML is and the things you will see in this book at the end of this chapter, we we want to establish some of the values we are bringing in as authors of this book and how to effectively learn from this book.</p>
+</section>
 </section>
 <section id="what-is-this-book">
 <h2>What is this Book?<a class="headerlink" href="#what-is-this-book" title="Permalink to this heading">#</a></h2>
@@ -550,10 +586,10 @@ document.write(`
 <div><p>A computer program is said to learn from experience <strong>E</strong> with respect to some class of tasks <strong>T</strong> and performance measure <strong>P</strong> if its performance at tasks in <strong>T</strong>, as measured by <strong>P</strong>, improves with experience <strong>E</strong>.</p>
 <p class="attribution">—Tom M. Mitchell</p>
 </div></blockquote>
-<figure class="margin align-default" id="id2">
+<figure class="margin align-default" id="id1">
 <a class="reference internal image-reference" href="../_images/ml-steps.png"><img alt="A visual pipeline showing &quot;Data&quot; to &quot;ML Method&quot; to &quot;Intelligence&quot;" src="../_images/ml-steps.png" style="width: 246.0px; height: 52.5px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Pictorial representation of these steps.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Pictorial representation of these steps.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>This is just trying to state in a very formal manner that machine learning is a program that improves at some task by learning from data rather than a human hard-coding the rules of the task.</p>
@@ -678,10 +714,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#i-class-fas-fa-hand-sparkles-fa-fw-i-introduction"><i class="fas fa-hand-sparkles fa-fw"></i> Introduction</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-in-the-wild">Machine Learning in the Wild</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-learning-machine-learning-matters">Why Learning Machine Learning Matters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-learning-machine-learning-matters">Why Learning Machine Learning Matters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-in-the-real-world">ML in the Real World</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-this-book">What is this Book?</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#our-values">Our Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-learning-works">How Learning Works</a></li>
@@ -694,9 +731,6 @@ document.write(`
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
