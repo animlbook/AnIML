@@ -15,3 +15,4 @@ parts:
       - file: classification/logistic_regression/index
       - file: classification/bias_fairness/index
       - file: classification/naive_bayes/index
+      - file: classification/trees/index
