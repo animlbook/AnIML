@@ -10,10 +10,7 @@ kernelspec:
   name: python3
 myst:
   substitutions:
-    ref_propublica_follow_up: 1
-    ref_product: 2
-    ref_facct: 3
-    ref_gerrymandering: 4
+    ref_error: 1
 ---
 
 ```{code-cell} ipython3
@@ -138,7 +135,14 @@ dot.edge("term2", "safe3", label=" 5 yrs")
 dot
 ```
 
-figure
+```{figure} ./tree1.png
+---
+alt: A decision tree for loan safety with branches for credit, term and income
+width: 75%
+align: center
+---
+A decision tree with **branch/internal nodes** that split based on the answer to a question, and **leaf nodes** that make predictions for the label.
+```
 
 Let's explore how to use this tree by finding the prediction for the sixth example in {numref}`loan_safety` with fair credit, a 5 year term, and low income. The tree makes the following steps starting from the top.
 
@@ -150,5 +154,102 @@ The decision tree itself is quite intuitive for making predictions since it real
 
 ##  Visualizing Trees
 
+To discuss how we will go about learning a decision tree directly from our dataset, we will add some visual notation to our trees. Importantly, we will need to think about how much data is at each point in the tree, and the distribution of the labels at each point. Starting at the root of the tree, we have all 9 data points (6 safe, 3 risky). If we chose, for example, to split up the data by the Credit feature, we would send each data point down the appropriate branch based on its answer to which value it has for Credit. We call a decision tree with just a single split a **decision stump**.
+
+```{figure} tree_split_credit.png
+---
+alt: A small decision stump with a split just on credit
+width: 75%
+align: center
+name: tree_credit
+---
+A decision stump on our small loans dataset split by credit
+```
+
+With our decision stump now having a branch node for credit, we will temporarily stop there and turn each child of this branch into a leaf node. In general, for classification problems, we determine the prediction for a leaf node to be the majority class of the data that ends up in that leaf node. So in the image above:
+
+* We would predict "Safe" for the "excellent" branch since there are 2 safe and 0 risky loans down that path
+* We would predict "Safe" for the "fair" branch since there are 3 safe and 1 risky loans down that path
+* We would predict "Risky" for the "poor" branch since there are 1 safe and 2 risky loans down that path
+
+Note that a decision stump like ours is quite a simple model (high bias), as it isn't allowed to learn any complicated relationships. Even in our toy example, we can see this tree makes mistakes on 3 of the 9 examples.
+
+## Learning a Tree
+
+In our example above, we arbitrarily chose to split the data by credit, but why? We could have just as well split the data based on the term length instead to get the following decision stump.
+
+```{figure} tree_split_term.png
+---
+alt: A small decision stump with a split just on term
+width: 75%
+align: center
+name: tree_term
+---
+A decision stump on our small loans dataset split by term
+```
+
+This tree would predict "Safe" for the left branch of 3-year terms (4 safe, 1 risky) and also predict "Safe" for the right branch of 5-year terms (2 safe, 1 risky).
+
+```{margin}
+{{ref_error}}\. Note that we will see at the end of this chapter we use a slightly different concept of a quality metric in practice. But for now, we will discuss classification error.
+```
+
+Which of these decision stumps is better? Well, like most of our machine learning algorithms, we need to define a *quality metric* to compare various predictors. One natural place to define a quality metric for a classification task is our *classification error*. Intuitively, we are interested in finding the decision tree that minimizes our classification error on the training set<sup>{{ref_error}}</sup>.
 
 
+If we look at {numref}`tree_credit`, we can see that its classification error is $2/9$, as it makes one mistake in the "fair" branch and two mistakes in the "poor" branch. In comparison, the tree in {numref}`tree_term` has a classification error of $1/3$, as it makes one mistake in the "3 years" branch and two mistakes in the "5 years" branch. Since $2/9 < 1/3$, we can claim that splitting on "credit" is a the better split according to our classification error quality metric.
+
+This now leads us to our general algorithm for splitting up a node into a branch node with children. The given node has some subset of the data $M$ (at the root node, $M$ is the whole dataset).
+
+
+```{prf:algorithm} Split Node in Decision Tree
+:label: split_node
+
+$Split(M)$
+
+**Input**: Subset of the dataset $M$
+
+**Output**: A branch node split on the optimal feature $h_{j^*}(x)$
+
+1. For each feature $h_j(x)$ in $M$
+    1. Split data $M$ based on feature $h_j(x)$
+    2. Compute classification error for the split
+2. Choose feature $h_{j^*}(x)$ with the lowest classification error
+3. Return a branch node with the data in $M$ subdivided based on $h_{j^*}(x)$
+```
+
+With everything we have described so far, all we have done is describe an algorithm to find the best decision stump. However, if we wanted to learn a more complicated tree with more depth of layers, it turns out we have all the tools we need to learn those trees as well! If we want to make a more complex tree, we just don't stop after one split, but instead, *recursively* continue to split the data in each child branch until we meet some *stopping criterion* (to be discussed). This leads us to a tree building algorithm as described below.
+
+```{prf:algorithm} Build Decision Tree
+:label: build_tree
+
+$BuildTree(M)$
+
+**Input**: A subset of the dataset $M$
+
+**Output**: A decision tree or leaf node
+
+1. If termination criterion has been met:
+    1. Return a leaf node that predicts the majority class of the data in $M$
+2. Else
+    1. $node \gets Split(M)$ split on best feature $h_{j^*}(x)$
+    2. For each distinct $v \in h_{j^*}(x)$ and its associated subset of $M$ called $M_v$
+        1. $subtree \gets BuildTree(M_v)$
+        2. Attach $subtree$ to $node$
+    3. Return $node$
+```
+Note that *recursion* refers to a type of algorithm that is self-referential. In order to build a tree, one of its sub-routines is calling the same method to build a tree on a subset of the data. This recursive algorithm stops in each branch once some termination criteria is met. For now, let's assume the termination criteria is simply if the subset of data $M$ is currently **pure**, or in other words, there are only values of a single class. If a dataset is pure, there is no further need to continue splitting the data up further. We'll see in a bit that we will likely want a more sophisticated stopping criterion.
+
+## Feature Types
+
+### Categorical Features
+
+### Numeric Features
+
+## Aside: Missing Data
+
+## Decision Boundaries
+
+## Trees and Overfitting
+
+## In Practice
