@@ -17,7 +17,7 @@ RUN apt-get update -qq \
         pkg-config \
         make \
         wget \
-        ghostscript
+        ghostscript 
 
 # setup a minimal texlive installation
 COPY .devcontainer/texlive-profile.txt /tmp/
@@ -33,6 +33,8 @@ RUN wget -O /tmp/install-tl-unx.tar.gz http://mirror.ctan.org/systems/texlive/tl
         setspace standalone tipa wasy wasysym xcolor xetex xkeyval
 
 ## End Manim Dockerfile
+
+RUN apt-get install graphviz
 
 ## Set up Env
 # ENV PATH="$HOME/.local/bin:$PATH"

@@ -79,20 +79,31 @@ We won't provide answers to these questions in this chapter, not because they ar
 
 At a high level, a **Decision Tree** is a flowchart about our data to make predictions about the labels. We ask questions, going left or right down the tree based on the answers, to come to a prediction. The nodes in the middle of the tree are called **branch nodes** or **internal nodes** that ask questions about the input data while the decisions (Safe/Risky) are stored in the **leaf nodes** at the bottom. You might find that terminology a bit backwards, but you can imagine it as an upside-down tree where the root is at the top and the leaves are at the bottom.
 
+
 ```{code-cell} ipython3
 ---
 tags:
   - remove-input
+  - remove-output
 mystnb:
   image:
     width: 60%
     align: center
 ---
+# TODO This doesn't work well for most of our diagrams so I'm hiding it entirely. Would love to come back and make these
+# look nice.
+
 from graphviz import Digraph
 
 BRANCH_STYLE = {"shape": "diamond", "fillcolor": "#F2F4FF", "fontcolor": "#474973", "style": "filled"}
 SAFE_STYLE = {"label": "Shape", "shape": "oval", "fillcolor": "#4B8F8C", "fontcolor": "#FFFFFF", "style": "filled"}
 RISKY_STYLE = {"label": "Risky", "shape": "oval", "fillcolor": "#BB7E8C", "fontcolor": "#FFFFFF", "style": "filled"}
+
+SAFE_FONT = "#6E8031"
+RISKY_FONT = "#963334"
+
+def font_color(text, color):
+  return f'<FONT COLOR="{color}">{text}</FONT>'
 
 # Create Digraph object
 dot = Digraph()
@@ -127,6 +138,8 @@ dot.edge("term2", "safe3", label=" 5 yrs")
 dot
 ```
 
+figure
+
 Let's explore how to use this tree by finding the prediction for the sixth example in {numref}`loan_safety` with fair credit, a 5 year term, and low income. The tree makes the following steps starting from the top.
 
 * What is the credit of the applicant? Their credit is fair, so we go down the middle branch.
@@ -137,21 +150,5 @@ The decision tree itself is quite intuitive for making predictions since it real
 
 ##  Visualizing Trees
 
-```{code-cell} ipython3
----
-tags:
-  - remove-input
-mystnb:
-  image:
-    width: 100%
-    align: center
----
 
-from sklearn.datasets import load_iris
-from sklearn import tree
 
-iris = load_iris()
-clf = tree.DecisionTreeClassifier(random_state=0)
-clf = clf.fit(iris.data, iris.target)
-tree.plot_tree(clf)
-```
