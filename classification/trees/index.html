@@ -1,0 +1,1258 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>9. Decision Trees &#8212; AnIML: Another Introduction to Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "animlbook/AnIML");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "preferred-color-scheme");
+    script.setAttribute("label", "💬 Comments");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="../../_static/script.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1], "abs": ["\\lvert #1 \\rvert", 1], "indicator": ["\\mathbb{\\unicode{x1D7D9}}\\left\\{ #1 \\right\\}", 1], "norm": ["\\lVert #1 \\rVert", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'classification/trees/index';</script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="8. Naïve Bayes" href="../naive_bayes/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">This book is still under construction. We appreciate your patience as we get it completed. Feedback is welcome!</div>
+  </div>
+
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro/index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro/index.html">
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../regression/linear_regression/index.html">1. <i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/assessing_performance/index.html">2. <i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/ridge/index.html">3. <i class="fas fa-book fa-fw"></i> Ridge Regularization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/lasso/index.html">4. <i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">5. <i class="fas fa-book fa-fw"></i> Classification Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logistic_regression/index.html">6. <i class="fas fa-book fa-fw"></i> Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bias_fairness/index.html">7. <i class="fas fa-book fa-fw"></i> Bias and Fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naive_bayes/index.html">8. <i class="fas fa-book fa-fw"></i> Naïve Bayes</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">9. <i class="fas fa-book fa-fw"></i> Decision Trees</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/animlbook/AnIML/main?urlpath=lab/tree/book_source/source/classification/trees/index.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/edit/main/book_source/source/classification/trees/index.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/issues/new?title=Issue%20on%20page%20%2Fclassification/trees/index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/classification/trees/index.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/classification/trees/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><i class="fas fa-book fa-fw"></i> Decision Trees</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-vs-non-parametric-methods">9.1. Parametric vs Non-parametric Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loan-safety">9.2. Loan Safety</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-trees">9.3. Decision Trees</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn">9.3.1. Scikit-Learn</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-trees">9.4. Visualizing Trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-a-tree">9.5. Learning a Tree</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#greedy-algorithms">9.5.1. Greedy Algorithms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-types-an-splits">9.6. Feature Types an Splits</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-features">9.6.1. Categorical Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-features">9.6.2. Numeric Features</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-boundaries">9.7. Decision Boundaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trees-and-overfitting">9.8. Trees and Overfitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-practice">9.9. In Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-tasks">9.9.1. Learning Tasks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-metrics">9.9.2. Quality Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-predictions">9.9.3. Probability Predictions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">9.10. Recap</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell tag_remove-input docutils container">
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-book-fa-fw-i-decision-trees">
+<h1><span class="section-number">9. </span><i class="fas fa-book fa-fw"></i> Decision Trees<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-decision-trees" title="Permalink to this heading">#</a></h1>
+<p>In this chapter, we will introduce a popular type of model called a <strong>Decision Tree</strong>. Decision trees are based on the intuitive decision-making tool humans often use called a flow chart. For example, here is the University of Washington’s flowchart that they share with students, staff, and faculty to help them determine which actions to take when they contract or are exposed to COVID. A flowchart (or decision tree) asks as sequence of questions, and you follow the path depending on how you answer the questions. Ultimately the path leads to a node that gives you a decision that you can act on.</p>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../../_images/uw_covid.png"><img alt="A flowchart describing what to do when exposed to COVID or test positive" src="../../_images/uw_covid.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.1 </span><span class="caption-text">University of Washington’s Public Health Flowchart for COVID-19 Pandemic (2023)</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="parametric-vs-non-parametric-methods">
+<h2><span class="section-number">9.1. </span>Parametric vs Non-parametric Methods<a class="headerlink" href="#parametric-vs-non-parametric-methods" title="Permalink to this heading">#</a></h2>
+<p>So as we’ve mentioned before, we will be learning a plethora of different models in the remainder of this book. As we suggested, it helps to compare/contrast models to better understand their properties and why you may want to use one over the other.</p>
+<p>One way to group models into what assumptions they make about the world and how they are formulated. One distinction that is commonly made is between <strong>parameteric models</strong> and <strong>non-parametric models</strong>.</p>
+<p><strong>Parametric models</strong> are ones that make an assumption about the distribution of the data and require learning some finite number of parameters. Linear regression, Logistic Regression, and Naïve Bayes are all examples of parametric models. Linear regression, for example, assumes there is a linear relationship between the inputs and outputs, and there is some normally-distributed noise around the the linear function. To learn the model, we learn a number of parameters <span class="math notranslate nohighlight">\(\hat{w} \in \mathbb{R}^D\)</span> for our <span class="math notranslate nohighlight">\(D\)</span>-dimensional features <span class="math notranslate nohighlight">\(h(x)\)</span>. A useful approximation for parametric models are ones where you can write down the predictions as a tidy formula such as <span class="math notranslate nohighlight">\(\hat{y} = \hat{w}^Th(x)\)</span>.</p>
+<p>On the other hand <strong>non-parametric models</strong> are ones that (mostly) don’t make strong assumptions about the data distribution, and/or aren’t represented by a fixed number of parameters. This is often described as models that can scale in complexity based on how much training data is available. In the rest of this chapter, we will discuss our first non-parametric model with Decision Trees.</p>
+</section>
+<section id="loan-safety">
+<h2><span class="section-number">9.2. </span>Loan Safety<a class="headerlink" href="#loan-safety" title="Permalink to this heading">#</a></h2>
+<p>For this chapter and the next, we will be switching our example scenario from predicting sentiment of a review, to predicting whether or not it is safe to give a loan to a potential applicant. In terms of a modelling task, we will gather information from the applicant about their credit history, their income, how long of a term they are looking for the loan, and other information about them. We will use that information as inputs for our model to lead to predictions of Safe (+1) or Risky (-1). Below, we show an (made up) example dataset for this task.</p>
+<table class="table" id="id1">
+<caption><span class="caption-number">Table 9.1 </span><span class="caption-text">Example Loan Safety Dataset</span><a class="headerlink" href="#id1" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Credit</p></th>
+<th class="head"><p>Term</p></th>
+<th class="head"><p>Income</p></th>
+<th class="head"><p>Label</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>excellent</p></td>
+<td><p>3 yrs</p></td>
+<td><p>high</p></td>
+<td><p>safe</p></td>
+</tr>
+<tr class="row-odd"><td><p>fair</p></td>
+<td><p>5 yrs</p></td>
+<td><p>low</p></td>
+<td><p>risky</p></td>
+</tr>
+<tr class="row-even"><td><p>fair</p></td>
+<td><p>3 yrs</p></td>
+<td><p>high</p></td>
+<td><p>safe</p></td>
+</tr>
+<tr class="row-odd"><td><p>poor</p></td>
+<td><p>5 yrs</p></td>
+<td><p>high</p></td>
+<td><p>risky</p></td>
+</tr>
+<tr class="row-even"><td><p>excellent</p></td>
+<td><p>3 yrs</p></td>
+<td><p>low</p></td>
+<td><p>safe</p></td>
+</tr>
+<tr class="row-odd"><td><p>fair</p></td>
+<td><p>5 yrs</p></td>
+<td><p>low</p></td>
+<td><p>safe</p></td>
+</tr>
+<tr class="row-even"><td><p>poor</p></td>
+<td><p>3 yrs</p></td>
+<td><p>high</p></td>
+<td><p>risky</p></td>
+</tr>
+<tr class="row-odd"><td><p>poor</p></td>
+<td><p>6 yrs</p></td>
+<td><p>low</p></td>
+<td><p>safe</p></td>
+</tr>
+<tr class="row-even"><td><p>fair</p></td>
+<td><p>3 yrs</p></td>
+<td><p>high</p></td>
+<td><p>safe</p></td>
+</tr>
+</tbody>
+</table>
+<p>Before discussing the ML algorithm we will discuss and how we make predictions, it’s important to make sure we are asking questions about what we are modeling and why. Consider our discussions from the last chapter on <a class="reference internal" href="../bias_fairness/index.html"><span class="doc"> Bias and Fairness</span></a>. What concerns might we have about potential biases in our data or fairness concerns we should consider for our predictions? We asked our students this question, and they outlined just a couple of many concerns or questions we should explore in depth before deploying such a model.</p>
+<ul class="simple">
+<li><p>What are the effects of the errors are model will make? Should we be concerned about disparate cost between a false-positive and false-negative? Can there be a compounding effect of using our model that might lead to a financial crisis like the one we went through in 2008? How do we audit our model to ensure it doesn’t cause those effects?</p></li>
+<li><p>There are likely biases present in our training data, which will cause biased outcomes of our predictions. Just for example, there are many economic factors that we think about affecting loan safety that may disproportionately make a group less qualified when they are actually just as loan-worthy. For example, black Americans have suffered from disproportionate economic hardships due to factors such as redlining, inequitable access to high-paying jobs, and any other reason we can imagine structural bias affecting information about loan safety.</p></li>
+<li><p>What legal constraints does are model need to abide by? Is there a requirement on how fairness should be defined? Even if there aren’t legal requirements, which fairness values to we care to uphold in our model?</p></li>
+</ul>
+<p>We won’t provide answers to these questions in this chapter, not because they aren’t important, but because they are fundamentally outside the realm of algorithmic solutions. Just like in <a class="reference internal" href="../bias_fairness/index.html"><span class="doc"> Bias and Fairness</span></a>, these are questions that need to be answered, but require human discussion and input for what social values we want to encode in our model and why. In this chapter, we will largely skip over these questions to focus on the core concepts of the modeling task. Everything we discuss in this chapter can be augmented with the fairness concepts we discussed earlier.</p>
+</section>
+<section id="decision-trees">
+<h2><span class="section-number">9.3. </span>Decision Trees<a class="headerlink" href="#decision-trees" title="Permalink to this heading">#</a></h2>
+<p>At a high level, a <strong>Decision Tree</strong> is a flowchart about our data to make predictions about the labels. We ask questions, going left or right down the tree based on the answers, to come to a prediction. The nodes in the middle of the tree are called <strong>branch nodes</strong> or <strong>internal nodes</strong> that ask questions about the input data while the decisions (Safe/Risky) are stored in the <strong>leaf nodes</strong> at the bottom. You might find that terminology a bit backwards, but you can imagine it as an upside-down tree where the root is at the top and the leaves are at the bottom.</p>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="../../_images/tree1.png"><img alt="A decision tree for loan safety with branches for credit, term and income" src="../../_images/tree1.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.2 </span><span class="caption-text">A decision tree with <strong>branch/internal nodes</strong> that split based on the answer to a question, and <strong>leaf nodes</strong> that make predictions for the label.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Let’s explore how to use this tree by finding the prediction for the sixth example in <a class="reference internal" href="#id1"><span class="std std-numref">Table 9.1</span></a> with fair credit, a 5 year term, and low income. The tree makes the following steps starting from the top.</p>
+<ul class="simple">
+<li><p>What is the credit of the applicant? Their credit is fair, so we go down the middle branch.</p></li>
+<li><p>What is the term limit of the loan? Their term limit is 5 years, so we go down the right branch.</p></li>
+<li><p>We are at a leaf node marked Safe, so we predict Safe.</p></li>
+</ul>
+<p>The decision tree itself is quite intuitive for making predictions since it really does mirror a flowchart. The challenge though is <em>learning the best decision tree from the data itself</em>. In the following sections, we will discuss the algorithm we will use for learning our tree.</p>
+<section id="scikit-learn">
+<h3><span class="section-number">9.3.1. </span>Scikit-Learn<a class="headerlink" href="#scikit-learn" title="Permalink to this heading">#</a></h3>
+<p>Just like our other machine learning models, libraries such as <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> provide pre-built classes to learn Decision Tres. Since the code you use as a practitioner tends to look pretty similar to other models we have used, we will spend most of this chapter trying to understand the inner-workings and assumptions of this model. For this example, we use a popular <a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/census+income">Census Income Dataset from UCI’s Machine Learning Repository</a> (converted to CSV <a class="reference external" href="https://www.kaggle.com/datasets/uciml/adult-census-income">here</a>). You can find the data file <a class="reference download internal" download="" href="../../_downloads/4c5926581f86dc16b58ac5064307f5f5/adult.csv"><span class="xref download myst">here</span></a>. There is one extra step we won’t discuss yet for how <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> requires a preprocessing step for categorical values, but we will come back to this in the next chapter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="c1"># Load in data, and separate features and label</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;adult.csv&quot;</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;income&quot;</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="n">label</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Features:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Label:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Train test split</span>
+<span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">test_labels</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">features</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">label</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train size:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test  size:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Not discussed: Transform categorical features</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>\
+    <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+
+<span class="c1"># Train model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
+
+<span class="c1"># Make predictions</span>
+<span class="n">train_predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+<span class="n">test_predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">train_labels</span><span class="p">,</span> <span class="n">train_predictions</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test  Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">test_labels</span><span class="p">,</span> <span class="n">test_predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Features:
+Index([&#39;age&#39;, &#39;workclass&#39;, &#39;fnlwgt&#39;, &#39;education&#39;, &#39;education.num&#39;,
+       &#39;marital.status&#39;, &#39;occupation&#39;, &#39;relationship&#39;, &#39;race&#39;, &#39;sex&#39;,
+       &#39;capital.gain&#39;, &#39;capital.loss&#39;, &#39;hours.per.week&#39;, &#39;native.country&#39;],
+      dtype=&#39;object&#39;)
+Label: income
+
+Train size: 26048
+Test  size: 6513
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Train Accuracy: 0.9999616093366094
+Test  Accuracy: 0.8499923230462153
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visualizing-trees">
+<h2><span class="section-number">9.4. </span>Visualizing Trees<a class="headerlink" href="#visualizing-trees" title="Permalink to this heading">#</a></h2>
+<p>To discuss how we will go about learning a decision tree directly from our dataset, we will add some visual notation to our trees. Importantly, we will need to think about how much data is at each point in the tree, and the distribution of the labels at each point. Starting at the root of the tree, we have all 9 data points (6 safe, 3 risky). If we chose, for example, to split up the data by the Credit feature, we would send each data point down the appropriate branch based on its answer to which value it has for Credit. We call a decision tree with just a single split a <strong>decision stump</strong>.</p>
+<figure class="align-center" id="tree-credit">
+<a class="reference internal image-reference" href="../../_images/tree_split_credit.png"><img alt="A small decision stump with a split just on credit" src="../../_images/tree_split_credit.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.3 </span><span class="caption-text">A decision stump on our small loans dataset split by credit</span><a class="headerlink" href="#tree-credit" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>With our decision stump now having a branch node for credit, we will temporarily stop there and turn each child of this branch into a leaf node. In general, for classification problems, we determine the prediction for a leaf node to be the majority class of the data that ends up in that leaf node. So in the image above:</p>
+<ul class="simple">
+<li><p>We would predict “Safe” for the “excellent” branch since there are 2 safe and 0 risky loans down that path</p></li>
+<li><p>We would predict “Safe” for the “fair” branch since there are 3 safe and 1 risky loans down that path</p></li>
+<li><p>We would predict “Risky” for the “poor” branch since there are 1 safe and 2 risky loans down that path</p></li>
+</ul>
+<p>Note that a decision stump like ours is quite a simple model (high bias), as it isn’t allowed to learn any complicated relationships. Even in our toy example, we can see this tree makes mistakes on 3 of the 9 examples.</p>
+</section>
+<section id="learning-a-tree">
+<h2><span class="section-number">9.5. </span>Learning a Tree<a class="headerlink" href="#learning-a-tree" title="Permalink to this heading">#</a></h2>
+<p>In our example above, we arbitrarily chose to split the data by credit, but why? We could have just as well split the data based on the term length instead to get the following decision stump.</p>
+<figure class="align-center" id="tree-term">
+<a class="reference internal image-reference" href="../../_images/tree_split_term.png"><img alt="A small decision stump with a split just on term" src="../../_images/tree_split_term.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.4 </span><span class="caption-text">A decision stump on our small loans dataset split by term</span><a class="headerlink" href="#tree-term" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This tree would predict “Safe” for the left branch of 3-year terms (4 safe, 1 risky) and also predict “Safe” for the right branch of 5-year terms (2 safe, 1 risky).</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>1. Note that we will see at the end of this chapter we use a slightly different concept of a quality metric in practice. But for now, we will discuss classification error.</p>
+</aside>
+<p>Which of these decision stumps is better? Well, like most of our machine learning algorithms, we need to define a <em>quality metric</em> to compare various predictors. One natural place to define a quality metric for a classification task is our <em>classification error</em>. Intuitively, we are interested in finding the decision tree that minimizes our classification error on the training set<sup>1</sup>.</p>
+<p>If we look at <a class="reference internal" href="#tree-credit"><span class="std std-numref">Fig. 9.3</span></a>, we can see that its classification error is <span class="math notranslate nohighlight">\(2/9\)</span>, as it makes one mistake in the “fair” branch and two mistakes in the “poor” branch. In comparison, the tree in <a class="reference internal" href="#tree-term"><span class="std std-numref">Fig. 9.4</span></a> has a classification error of <span class="math notranslate nohighlight">\(1/3\)</span>, as it makes one mistake in the “3 years” branch and two mistakes in the “5 years” branch. Since <span class="math notranslate nohighlight">\(2/9 &lt; 1/3\)</span>, we can claim that splitting on “credit” is a the better split according to our classification error quality metric.</p>
+<p>This now leads us to our general algorithm for splitting up a node into a branch node with children. The given node has some subset of the data <span class="math notranslate nohighlight">\(M\)</span> (at the root node, <span class="math notranslate nohighlight">\(M\)</span> is the whole dataset).</p>
+<div class="proof algorithm admonition" id="split_node">
+<p class="admonition-title"><span class="caption-number">Algorithm 9.1 </span> (Split Node in Decision Tree)</p>
+<section class="algorithm-content" id="proof-content">
+<p><span class="math notranslate nohighlight">\(Split(M)\)</span></p>
+<p><strong>Input</strong>: Subset of the dataset <span class="math notranslate nohighlight">\(M\)</span></p>
+<p><strong>Output</strong>: A branch node split on the optimal feature <span class="math notranslate nohighlight">\(h_{j^*}(x)\)</span></p>
+<ol class="arabic simple">
+<li><p>For each feature <span class="math notranslate nohighlight">\(h_j(x)\)</span> in <span class="math notranslate nohighlight">\(M\)</span></p>
+<ol class="arabic simple">
+<li><p>Split data <span class="math notranslate nohighlight">\(M\)</span> based on feature <span class="math notranslate nohighlight">\(h_j(x)\)</span></p></li>
+<li><p>Compute classification error for the split</p></li>
+</ol>
+</li>
+<li><p>Choose feature <span class="math notranslate nohighlight">\(h_{j^*}(x)\)</span> with the lowest classification error</p></li>
+<li><p>Return a branch node with the data in <span class="math notranslate nohighlight">\(M\)</span> subdivided based on <span class="math notranslate nohighlight">\(h_{j^*}(x)\)</span></p></li>
+</ol>
+</section>
+</div><p>With everything we have described so far, all we have done is describe an algorithm to find the best decision stump. However, if we wanted to learn a more complicated tree with more depth of layers, it turns out we have all the tools we need to learn those trees as well! If we want to make a more complex tree, we just don’t stop after one split, but instead, <em>recursively</em> continue to split the data in each child branch until we meet some <em>stopping criterion</em> (to be discussed). This leads us to a tree building algorithm as described below.</p>
+<div class="proof algorithm admonition" id="build_tree">
+<p class="admonition-title"><span class="caption-number">Algorithm 9.2 </span> (Build Decision Tree)</p>
+<section class="algorithm-content" id="proof-content">
+<p><span class="math notranslate nohighlight">\(BuildTree(M)\)</span></p>
+<p><strong>Input</strong>: A subset of the dataset <span class="math notranslate nohighlight">\(M\)</span></p>
+<p><strong>Output</strong>: A decision tree or leaf node</p>
+<ol class="arabic simple">
+<li><p>If termination criterion has been met:</p>
+<ol class="arabic simple">
+<li><p>Return a leaf node that predicts the majority class of the data in <span class="math notranslate nohighlight">\(M\)</span></p></li>
+</ol>
+</li>
+<li><p>Else</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(node \gets Split(M)\)</span> split on best feature <span class="math notranslate nohighlight">\(h_{j^*}(x)\)</span></p></li>
+<li><p>For each distinct <span class="math notranslate nohighlight">\(v \in h_{j^*}(x)\)</span> and its associated subset of <span class="math notranslate nohighlight">\(M\)</span> called <span class="math notranslate nohighlight">\(M_v\)</span></p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(subtree \gets BuildTree(M_v)\)</span></p></li>
+<li><p>Attach <span class="math notranslate nohighlight">\(subtree\)</span> to <span class="math notranslate nohighlight">\(node\)</span></p></li>
+</ol>
+</li>
+<li><p>Return <span class="math notranslate nohighlight">\(node\)</span></p></li>
+</ol>
+</li>
+</ol>
+</section>
+</div><p>Note that <em>recursion</em> refers to a type of algorithm that is self-referential. In order to build a tree, one of its sub-routines is calling the same method to build a tree on a subset of the data. This recursive algorithm stops in each branch once some termination criteria is met. For now, let’s assume the termination criteria is simply if the subset of data <span class="math notranslate nohighlight">\(M\)</span> is currently <strong>pure</strong>, or in other words, there are only values of a single class. If a dataset is pure, there is no further need to continue splitting the data up further. We’ll see in a bit that we will likely want a more sophisticated stopping criterion.</p>
+<section id="greedy-algorithms">
+<h3><span class="section-number">9.5.1. </span>Greedy Algorithms<a class="headerlink" href="#greedy-algorithms" title="Permalink to this heading">#</a></h3>
+<p>The decision tree growing algorithm we discussed is another example of a <strong>greedy algorithm</strong>. Instead of trying every possible tree, we greedily choose the best split to grow the tree one at a time. We can’t enumerate all possible trees since there are an exponential number of them, so this greedy algorithm suffices in practice.</p>
+<p>This algorithm is reasonably efficient, but does require a lot of computations at every branch since it requires finding the best split for every feature. In practice, many libraries that have implementations of Decision Trees that allow an even further approximation by only considering a random subset of the features at each point.</p>
+</section>
+</section>
+<section id="feature-types-an-splits">
+<h2><span class="section-number">9.6. </span>Feature Types an Splits<a class="headerlink" href="#feature-types-an-splits" title="Permalink to this heading">#</a></h2>
+<p>Depending on the type of values we have in our features, the exact procedure for how we do splits will be slightly different. It’s useful to understand how these values are treated differently and how we modify our learning algorithm to be more flexible.</p>
+<section id="categorical-features">
+<h3><span class="section-number">9.6.1. </span>Categorical Features<a class="headerlink" href="#categorical-features" title="Permalink to this heading">#</a></h3>
+<p>The algorithm we have discussed has already been designed to work for categorical features. A branch node can have a split for each value of the categorical feature.</p>
+<p>While our discussed algorithm works, many libraries such as <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> chose to not actually implement categorical splits in the way we described. Instead, they create  binary splits by asking if the categorical feature takes a particular value. This “yes/no” question takes you down one path of the tree based on that feature having that particular value. This model is equivalent to the one we discussed, albeit the trees will tend to be slightly taller. For example, to fully split on the Credit feature, we would need two splits such as.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../_images/2f8dfeeeee4d68e7c3866d98f4dcb710e612436800fdc60416ea81b7e8a2098a.svg"><img alt="../../_images/2f8dfeeeee4d68e7c3866d98f4dcb710e612436800fdc60416ea81b7e8a2098a.svg" class="align-center" src="../../_images/2f8dfeeeee4d68e7c3866d98f4dcb710e612436800fdc60416ea81b7e8a2098a.svg" width="60%" /></a>
+</div>
+</div>
+<p>This also aligns with how many models deal with categorical features using a <em>one-hot encoding</em> that we will discuss in more detail in a later chapter.</p>
+</section>
+<section id="numeric-features">
+<h3><span class="section-number">9.6.2. </span>Numeric Features<a class="headerlink" href="#numeric-features" title="Permalink to this heading">#</a></h3>
+<p>Dealing with numeric features requires a little bit of extra work for our decision tree model. We can’t have a branch for every value of a numeric feature, since there could be an infinite number of possible values in a feature such as income (if numeric). So instead of having many splits per branch, we will need to also adapt to binary splits for numeric features as well.</p>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="../../_images/tree_split_income.png"><img alt="A decision stump split on income (numeric) with values less than $60k going left and values greater than or equal to $60k going right." src="../../_images/tree_split_income.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.5 </span><span class="caption-text">A numeric split on income being more/less than $60k</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>2. This is similar to the threshold algorithm we discussed in <a class="reference internal" href="../bias_fairness/index.html"><span class="doc"> Bias and Fairness</span></a> when discussing the threshold classifier for SAT score.</p>
+</aside>
+<p>The natural problem that comes up when we try to split this way is: how do we choose the optimal split point? In the example above, we arbitrarily chose <span class="math notranslate nohighlight">\(60k. But in general, how would we go about choose the best split? Just like we chose the best feature to split on that minimizes classification error, we also can imagine a similar algorithm that tries every possible threshold for a numeric feature to determine the best threshold. To efficiently implement this algorithm, we start by sorting the data based on the numeric feature of interest (income), and then trying every threshold to split the data into left/right groups. Our goal is to find an optimal threshold \)</span>t^*$ that minimizes the classification error if we predict the majority class for each subsection<sup>2</sup>.</p>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="../../_images/threshold.png"><img alt="Sorting all of the examples by income and choosing some optimal split t*" src="../../_images/threshold.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.6 </span><span class="caption-text">Goal: Find some optimal threshold <span class="math notranslate nohighlight">\(t^*\)</span> to divide the points by income</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Clearly one problem with this algorithm, as described, is it’s not obvious which thresholds <span class="math notranslate nohighlight">\(t\)</span> we should try as candidates. Since the numeric feature can be a real number, there are technically an infinite number of possible thresholds to consider, which would not be very practical. However, we can make this problem tractable with one key observation: The classification error doesn’t change for any of the thresholds that are between two points. Consider two adjacent examples <span class="math notranslate nohighlight">\(v_a\)</span> and <span class="math notranslate nohighlight">\(v_b\)</span>. Any threshold <span class="math notranslate nohighlight">\(v_a \leq t \leq v_b\)</span> will make the same predictions, therefore will have the  same classification error. So we don’t really need to try every possible threshold, but just each distinct threshold between pairs of adjacent points.</p>
+<figure class="align-center" id="id6">
+<a class="reference internal image-reference" href="../../_images/finite_thresholds.png"><img alt="Finite many thresholds that make distinct predictions between points" src="../../_images/finite_thresholds.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.7 </span><span class="caption-text">Finite many thresholds that make distinct predictions between points</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>It’s arbitrary how we choose the exact number between two points, but taking the average <span class="math notranslate nohighlight">\(\frac{v_a + v_b}{2}\)</span> is a common default. This now leads us to a special case of our <a class="reference internal" href="#split_node">Algorithm 9.1</a> algorithm when we run into a numeric feature <span class="math notranslate nohighlight">\(h_j(x)\)</span> that we are considering as a split.</p>
+<div class="proof algorithm admonition" id="numeric_split_node">
+<p class="admonition-title"><span class="caption-number">Algorithm 9.3 </span> (Special Case: Split Node on Numeric Feature)</p>
+<section class="algorithm-content" id="proof-content">
+<p><span class="math notranslate nohighlight">\(Split(M)\)</span> - Numeric case</p>
+<ol class="arabic simple">
+<li><p>Sort the values of a numeric feature <span class="math notranslate nohighlight">\(h_j(x)\)</span>. Let <span class="math notranslate nohighlight">\([v_1, v_2, ..., v_n]\)</span> denote the sorted values.</p></li>
+<li><p>for <span class="math notranslate nohighlight">\(i \in [1, ..., n - 1]\)</span></p>
+<ol class="arabic simple">
+<li><p>Compute split point <span class="math notranslate nohighlight">\(t_i = \frac{v_i + v_{i+1}}{2}\)</span></p></li>
+<li><p>Compute classification error for threshold split <span class="math notranslate nohighlight">\(h_j(x) \geq t_i\)</span></p></li>
+</ol>
+</li>
+<li><p>Return <span class="math notranslate nohighlight">\(t^*\)</span> with minimum classification error</p></li>
+</ol>
+</section>
+</div><p>And with that, we now have a full algorithm to learn a tree from decision trees that can handle categorical or numeric features!</p>
+<p>We now move to discuss thinking about what trees are learning at a high level, and some practicalities for training trees.</p>
+</section>
+</section>
+<section id="decision-boundaries">
+<h2><span class="section-number">9.7. </span>Decision Boundaries<a class="headerlink" href="#decision-boundaries" title="Permalink to this heading">#</a></h2>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>3. Note that <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> shows information at every node in the tree, branch and leaf, including how many datapoints ended up at that node. They also write down the majority class at the branch nodes even though we usually only ask for predictions at the leaf nodes. To distinguish between a branch and a leaf in <code class="docutils literal notranslate"><span class="pre">scikit-learns</span></code> display, look for a feature split at the top or the fact that leaf nodes have no children.</p>
+</aside>
+<p>Just like our other classification methods, it helps to understand what decision trees are learning by inspecting the decision boundaries. Let’s consider a small, <a class="reference download internal" download="" href="../../_downloads/4f5dece670462bfec2a385b7074b896c/synthetic.csv"><span class="xref download myst">synthetic dataset</span></a>, for our investigation. The following code cell shows a decision stump (tree of heigh 1) trained on this dataset. It displays the tree as well as the decision boundary for that learned tree<sup>3</sup>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.gridspec</span> <span class="kn">import</span> <span class="n">GridSpec</span>
+<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
+
+<span class="n">X_LIM</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">Y_LIM</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">animl_plot_tree</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">tree_title</span><span class="p">,</span> <span class="n">figsize</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+    <span class="n">gs</span> <span class="o">=</span>  <span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">ax3</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># First plot the tree</span>
+    <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span>
+              <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">],</span>
+              <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;negative&quot;</span><span class="p">,</span> <span class="s2">&quot;positive&quot;</span><span class="p">],</span>
+              <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">impurity</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">tree_title</span><span class="p">)</span>
+
+    <span class="c1"># Then plot the data and boundary</span>
+    <span class="k">def</span> <span class="nf">data_scatter</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+        <span class="n">pos_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;positive&quot;</span><span class="p">]</span>
+        <span class="n">neg_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;negative&quot;</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">pos_data</span><span class="p">[</span><span class="s2">&quot;feature1&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">pos_data</span><span class="p">[</span><span class="s2">&quot;feature2&quot;</span><span class="p">],</span>
+                   <span class="n">c</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">neg_data</span><span class="p">[</span><span class="s2">&quot;feature1&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">neg_data</span><span class="p">[</span><span class="s2">&quot;feature2&quot;</span><span class="p">],</span>
+                   <span class="n">c</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;feature1&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;feature2&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">X_LIM</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">Y_LIM</span><span class="p">)</span>
+
+    <span class="c1"># Plot data</span>
+    <span class="n">data_scatter</span><span class="p">(</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Synthetic Data&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Plot boundary</span>
+    <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+        <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">]],</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+        <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;feature2&quot;</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">],</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+    <span class="n">data_scatter</span><span class="p">(</span><span class="n">ax3</span><span class="p">)</span>
+
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">]])</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">],</span> <span class="n">preds</span><span class="p">)</span>
+
+    <span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision Boundary (Acc: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;synthetic.csv&quot;</span><span class="p">)</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">]],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
+
+<span class="n">animl_plot_tree</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="s2">&quot;Decision Tree - Depth 1&quot;</span><span class="p">,</span>
+                <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<figure class="align-default" id="example-decision-tree-1">
+<a class="reference internal image-reference" href="../../_images/9f8e7cc9aa7bb1e4bae1032dce53c21f1638082c8b8f5947db25b2bc9fe8cabc.png"><img alt="A decision tree of depth one and its decision boundary. Looks like vertical line dividing the points horizontally." class="align-center" src="../../_images/9f8e7cc9aa7bb1e4bae1032dce53c21f1638082c8b8f5947db25b2bc9fe8cabc.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.8 </span><span class="caption-text">Decision Tree of depth 1 and its decision boundary</span><a class="headerlink" href="#example-decision-tree-1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<p>So with a single decision stump, it’s not too surprising that the decision boundary is not too complex. The learning algorithm tried every possible split for <code class="docutils literal notranslate"><span class="pre">feature1</span></code> and every possible split for <code class="docutils literal notranslate"><span class="pre">feature2</span></code>, and found the split above to minimize the classification error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">]],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
+
+<span class="n">animl_plot_tree</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="s2">&quot;Decision Tree - Depth 2&quot;</span><span class="p">,</span>
+                <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<figure class="align-default" id="example-decision-tree-2">
+<a class="reference internal image-reference" href="../../_images/913ffcea4a6b24ecfdd930b5cb8ff6f96c54da2843c1359a89c8f25bac9609bb.png"><img alt="A decision tree of depth two and its decision boundary. Looks like a square of positive predictions in the bottom right, and the rest negative." class="align-center" src="../../_images/913ffcea4a6b24ecfdd930b5cb8ff6f96c54da2843c1359a89c8f25bac9609bb.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.9 </span><span class="caption-text">Decision Tree of depth 2 and its decision boundary</span><a class="headerlink" href="#example-decision-tree-2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<p>By allowing multiple splits instead of just one, we can learn more complex decision boundaries. Note that each branch node is a simple less than / greater than split. So the overall tree is learning decision boundaries in the form of <strong>axis-aligned rectangles</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;feature2&quot;</span><span class="p">]],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
+
+<span class="n">animl_plot_tree</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="s2">&quot;Decision Tree - Depth 4&quot;</span><span class="p">,</span>
+                <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<figure class="align-default" id="example-decision-tree-4">
+<a class="reference internal image-reference" href="../../_images/76414a262da56b9f21972e5c4cfa481bc138cc586c4c10508a980948fde088b0.png"><img alt="A decision tree of depth four and its decision boundary. Looks much more complex with a few rectangles of positive predictions and the rest negative" class="align-center" src="../../_images/76414a262da56b9f21972e5c4cfa481bc138cc586c4c10508a980948fde088b0.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.10 </span><span class="caption-text">Decision Tree of depth 4 and its decision boundary</span><a class="headerlink" href="#example-decision-tree-4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Note that as the tree depth increases, the decision boundaries get more complex. They are still axis-align rectangles, but it can learn more and more fine-grained boundaries with a higher depth. With the complexity of this made up dataset, it turns out that 4 is the most complex depth possible and increasing the depth leads to the same model due to the greedy nature of the decision tree splits and it runs out of further splits to improve the model.</p>
+<p>As you can probably guess from the progression we saw above, it seems to be the case that the taller a tree gets, it seems to make the model more complex which will make it more prone to overfit the data.</p>
+</section>
+<section id="trees-and-overfitting">
+<h2><span class="section-number">9.8. </span>Trees and Overfitting<a class="headerlink" href="#trees-and-overfitting" title="Permalink to this heading">#</a></h2>
+<p>In practice, decision trees are very prone to overfitting unless you are careful to control their model complexities. If you look back to the first code cell we showed to train a decision tree, you can see without specifying anything, it was able to get a training accuracy of 99% and only a test accuracy of 84%. That is a pretty good sign that our model is overfit. Everything we’ve talked about with high complexity models (likely to overfit, high variance, low bias, sensitive to changes in the training data) apply here as well.</p>
+<p>You might have noticed in the examples in the last section, that one way to control for overfitting is to explicitly limit the depth of the tree. This is a natural and intuitive way to control for overfitting as you can see the effect of the hyperparameter on the learned model be shorter/taller. If you set this hyperparameter to be large, the model will be more complex, and if is small, the model will be more simple.</p>
+<p>This is not the only way to control complexity in trees though, here are some other popular hyperparameters to control complexity:</p>
+<ul class="simple">
+<li><p>Stop splitting when there are too few data points to split on (e.g., 10 points). The idea being that if we aren’t determining a split based on a lot of data points, such as when we are deciding earlier splits at the root, then those splits are much more likely to be just noise. A larger value for the minimum number of data points required to split, make the resulting model more simple.</p></li>
+<li><p>Stop splitting if the split doesn’t significantly decrease the classification error. The idea here is that if the split only marginally improves the model (e.g., 0.5% decrease in error), that gain may not be worth the cost of having a more complex model with the additional split. A larger value for the decrease in error required for a split will make the model simpler.</p></li>
+</ul>
+<p>There are technically other methods (such as pruning back fully grown trees), but these three comprise some of the most commonly used ones.</p>
+<p>How do you pick which hyperparameters to consider and which values to try out for each one? Just like every other model, trial and error! You’ll need to use cross validation or a validation set to find the best possible hyperparameters. Recall that you need to try all combinations of hyperparameters you are considering to find the best ones!</p>
+</section>
+<section id="in-practice">
+<h2><span class="section-number">9.9. </span>In Practice<a class="headerlink" href="#in-practice" title="Permalink to this heading">#</a></h2>
+<p>Trees are a great model to consider, especially in circumstances when you care about <em>interpretable predictions</em>. Due to the structure of the tree being a sequence of questions until you reach an answer, it is often easy for non-machine learning experts to understand why a particular outcome was chosen.</p>
+<p>Trees are not the perfect model though, as we discussed they are prone to overfitting without careful hyperparameter tuning. Additionally, they tend to not be the most performant models in terms of training or accuracy, but they are often used because of their interpretability.</p>
+<p>There are a few other minor details we want to mention about decision trees before we conclude:</p>
+<section id="learning-tasks">
+<h3><span class="section-number">9.9.1. </span>Learning Tasks<a class="headerlink" href="#learning-tasks" title="Permalink to this heading">#</a></h3>
+<p>While we have talked in detail about how to use trees for binary classification, they can actually work well in other contexts too:</p>
+<ul class="simple">
+<li><p>Trees can naturally handle multi-class classification problems as well. Each leaf node just predicts which class is most represented in the leaf node. In this case, it would technically be more appropriate to say the leaf nodes select the “plurality class”, but almost everyone just says “majority class”.</p></li>
+<li><p>Trees can also be used for regression tasks! Instead of predicting a class in the leaf nodes, you commonly predict a number such as the average label or median label. So we still have model predictions in the form of axis-aligned rectangles, but instead of predicting a class in each rectangle, the model will predict a constant numeric value. Naturally we would also change the quality metric for determining the best split to be something like mean squared error.</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This code was authored by ChatGPT and edited by Hunter</span>
+<span class="c1"># Prompt:</span>
+<span class="c1"># Consider a decision tree model for a regression task. Write code to train an example</span>
+<span class="c1"># tree on a dataset with two input features and the predictions it makes in a plot.</span>
+<span class="c1"># The plot should have two sets of axes. The axes on the left should just show the data,</span>
+<span class="c1"># and the one on the right should show the predictions. Both axes should be 3D plots.</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+
+<span class="c1"># Generate some random data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Train a decision tree model</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Create a grid of points to visualize the predictions</span>
+<span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Plot the data and the predictions</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Model Predictions&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<figure class="align-default" id="id7">
+<a class="reference internal image-reference" href="../../_images/b7bdcf88d49ba7449b6d6302aa25d150c15093c08055516830265d516dd2c9f9.png"><img alt="../../_images/b7bdcf88d49ba7449b6d6302aa25d150c15093c08055516830265d516dd2c9f9.png" class="align-center" src="../../_images/b7bdcf88d49ba7449b6d6302aa25d150c15093c08055516830265d516dd2c9f9.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9.11 </span><span class="caption-text">A regression tree on a small, synthetic dataset</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="quality-metrics">
+<h3><span class="section-number">9.9.2. </span>Quality Metrics<a class="headerlink" href="#quality-metrics" title="Permalink to this heading">#</a></h3>
+<p>While intuitively finding the tree splits that minimize classification error to determine which splits to choose, we actually tend to not use that quality metric in practice. The reason being, while classification error is a good ideal to minimize, it doesn’t quite capture everything we might hope to capture in a quality metric.</p>
+<p>For example, consider an example loan dataset with 90 Safe applicants and 10 Risky ones. Consider the following two splits on made up features <span class="math notranslate nohighlight">\(F\)</span> and <span class="math notranslate nohighlight">\(F'\)</span>.</p>
+<ul class="simple">
+<li><p>Split on feature <span class="math notranslate nohighlight">\(F\)</span>.</p>
+<ul>
+<li><p>Left Branch: 70 Safe examples, 10 Risky examples</p></li>
+<li><p>Right Branch: 20 Safe examples, 0 Risky examples</p></li>
+</ul>
+</li>
+<li><p>Split on feature <span class="math notranslate nohighlight">\(F'\)</span></p>
+<ul>
+<li><p>Left Branch: 40 Safe examples, 5 Risky examples</p></li>
+<li><p>Right Branch: 50 Safe examples, 5 Risky Examples</p></li>
+</ul>
+</li>
+</ul>
+<p>Both of these potential splits have the same accuracy of 90%. But doesn’t it feel like the split on <span class="math notranslate nohighlight">\(F\)</span> is better than the split on <span class="math notranslate nohighlight">\(F'\)</span> since it was able to perfectly classify the examples in the right branch? Intuitively we don’t want to just minimize error, but also want to reward splits that provide a lot of information by making the data in its children more pure (same label).</p>
+<p>In practice, instead of minimizing classification error directly, we use other measurements to capture this notion of rewarding purer splits. Common metrics include <strong>Gini Impurity</strong> or <strong>Information Gain</strong>. The formulas for these metrics are outside the scope of our book, but we wanted to mention they are commonly used. The intuition for these metrics are precisely to make the split of <span class="math notranslate nohighlight">\(F\)</span> look better than <span class="math notranslate nohighlight">\(F'\)</span> because <span class="math notranslate nohighlight">\(F\)</span> resulted in a purer split.</p>
+</section>
+<section id="probability-predictions">
+<h3><span class="section-number">9.9.3. </span>Probability Predictions<a class="headerlink" href="#probability-predictions" title="Permalink to this heading">#</a></h3>
+<p>Finally, Decision Trees can also be used in classification to make probability predictions. Recall from Logistic Regression, that we generally like the ability for the model to not only predict a class, but how likely it thinks the example is that class with a probability output. This can be done by predicting the fraction of examples in a leaf node that belong to a particular class.</p>
+<p>For example, if you consider the tree in <a class="reference internal" href="#example-decision-tree-1"><span class="std std-numref">Fig. 9.8</span></a>, it would make the following probability predictions:</p>
+<ul class="simple">
+<li><p>The left leaf node would predict negative with probability <span class="math notranslate nohighlight">\(P(\hat{y} = =1|x) = \frac{13}{13 + 1} \approx 0.93\)</span>.</p></li>
+<li><p>The right leaf node would predict positive with probability <span class="math notranslate nohighlight">\(P(\hat{y} = +1|x) = \frac{11}{5 + 11} \approx 0.69\)</span>.</p></li>
+</ul>
+<p>The probability predictions are constant across each axis-aligned rectangle since the same leaf node makes the predictions across that entire region. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> shows this probability predictions in each of <a class="reference internal" href="#example-decision-tree-1"><span class="std std-numref">Fig. 9.8</span></a>, <a class="reference internal" href="#example-decision-tree-2"><span class="std std-numref">Fig. 9.9</span></a>, <a class="reference internal" href="#example-decision-tree-4"><span class="std std-numref">Fig. 9.10</span></a> in the shade of blue/orange.</p>
+</section>
+</section>
+<section id="recap">
+<h2><span class="section-number">9.10. </span>Recap<a class="headerlink" href="#recap" title="Permalink to this heading">#</a></h2>
+<p>In this chapter, we introduced the concept of decision trees and how to train them. You can use the content in this chapter to practice the following skills:</p>
+<ul class="simple">
+<li><p>Define what a decision tree classifier is.</p></li>
+<li><p>Interpret the output of a decision tree classifier.</p></li>
+<li><p>Assess the use of a decision tree classifier for a modeling task.</p></li>
+<li><p>Describe the decision tree learning algorithm and its limitations.</p></li>
+<li><p>Describe why a decision tree can overfit, and how various hyperparameters can prevent that.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./classification/trees"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../naive_bayes/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">8. </span><i class="fas fa-book fa-fw"></i> Naïve Bayes</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-vs-non-parametric-methods">9.1. Parametric vs Non-parametric Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loan-safety">9.2. Loan Safety</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-trees">9.3. Decision Trees</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn">9.3.1. Scikit-Learn</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-trees">9.4. Visualizing Trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-a-tree">9.5. Learning a Tree</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#greedy-algorithms">9.5.1. Greedy Algorithms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-types-an-splits">9.6. Feature Types an Splits</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-features">9.6.1. Categorical Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-features">9.6.2. Numeric Features</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-boundaries">9.7. Decision Boundaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trees-and-overfitting">9.8. Trees and Overfitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-practice">9.9. In Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-tasks">9.9.1. Learning Tasks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-metrics">9.9.2. Quality Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-predictions">9.9.3. Probability Predictions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">9.10. Recap</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hunter Schafer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="float: right">
+  <!-- 100% privacy friendly analytics -->
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+  <a href="https://simpleanalytics.com/?utm_source=&utm_content=badge" referrerpolicy="origin" target="_blank"><picture><source srcset="https://simpleanalyticsbadges.com/?mode=dark" media="(prefers-color-scheme: dark)" /><img src="https://simpleanalyticsbadges.com/?mode=light" loading="lazy" referrerpolicy="no-referrer" crossorigin="anonymous" /></picture></a>
+</div>
+
+<div>
+  <p>
+    Have feedback or spotted a bug? Please make a <a href="https://github.com/animlbook/AnIML/issues">GitHub issue</a>
+    or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
+  </p>
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

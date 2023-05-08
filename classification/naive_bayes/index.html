@@ -1,0 +1,757 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>8. Naïve Bayes &#8212; AnIML: Another Introduction to Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "animlbook/AnIML");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "preferred-color-scheme");
+    script.setAttribute("label", "💬 Comments");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="../../_static/script.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"argmin": ["\\underset{#1}{\\operatorname{argmin}}", 1], "argmax": ["\\underset{#1}{\\operatorname{argmax}}", 1], "abs": ["\\lvert #1 \\rvert", 1], "indicator": ["\\mathbb{\\unicode{x1D7D9}}\\left\\{ #1 \\right\\}", 1], "norm": ["\\lVert #1 \\rVert", 1]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'classification/naive_bayes/index';</script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="9. Decision Trees" href="../trees/index.html" />
+    <link rel="prev" title="7. Bias and Fairness" href="../bias_fairness/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">This book is still under construction. We appreciate your patience as we get it completed. Feedback is welcome!</div>
+  </div>
+
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro/index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro/index.html">
+                    <i class="fas fa-hand-sparkles fa-fw"></i> Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../regression/linear_regression/index.html">1. <i class="fas fa-book fa-fw"></i> Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/assessing_performance/index.html">2. <i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/ridge/index.html">3. <i class="fas fa-book fa-fw"></i> Ridge Regularization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../regression/lasso/index.html">4. <i class="fas fa-book fa-fw"></i> Feature Selection and LASSO Regularization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">5. <i class="fas fa-book fa-fw"></i> Classification Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logistic_regression/index.html">6. <i class="fas fa-book fa-fw"></i> Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bias_fairness/index.html">7. <i class="fas fa-book fa-fw"></i> Bias and Fairness</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. <i class="fas fa-book fa-fw"></i> Naïve Bayes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trees/index.html">9. <i class="fas fa-book fa-fw"></i> Decision Trees</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/animlbook/AnIML/main?urlpath=lab/tree/book_source/source/classification/naive_bayes/index.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/edit/main/book_source/source/classification/naive_bayes/index.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/animlbook/AnIML/issues/new?title=Issue%20on%20page%20%2Fclassification/naive_bayes/index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/classification/naive_bayes/index.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/classification/naive_bayes/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><i class="fas fa-book fa-fw"></i> Naïve Bayes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-predictions">8.1. Probability Predictions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-theorem">8.1.1. Bayes Theorem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">8.2. Naïve Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-assumption">8.2.1. Naïve Assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">8.2.2. Recap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practicalities">8.3. Practicalities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-probabilities">8.3.1. Log Probabilities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zeroes">8.3.2. Zeroes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generative-vs-discriminative">8.4. Generative vs. Discriminative</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell tag_remove-input docutils container">
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="i-class-fas-fa-book-fa-fw-i-naive-bayes">
+<h1><span class="section-number">8. </span><i class="fas fa-book fa-fw"></i> Naïve Bayes<a class="headerlink" href="#i-class-fas-fa-book-fa-fw-i-naive-bayes" title="Permalink to this heading">#</a></h1>
+<p>While we have learned a lot about machine learning and ML models so far, our scope has been fairly narrow considering models that follow a similar structure. For both classification and regression, we have mostly talked about linear models that take the form of some coefficients <span class="math notranslate nohighlight">\(w\)</span> that we multiply with feature values to make some prediction <span class="math notranslate nohighlight">\(w^Th(x)\)</span>. While there were some adjustments we had to make to that model in the classification setting to get Logistic Regression, the models we have discussed have had remarkable similarities.</p>
+<p>While linear models are very popular and commonly used, they are not the only type of model. Now that we have a lot of the ML fundamentals down, we can now start introducing you to the wide world of various ML models. Each chapter from now on, more or less, will introduce a completely new type of model that makes different assumptions about how the world works. In this chapter, we will introduce the <strong>Naïve Bayes</strong> model for classification.</p>
+<div class="tip admonition">
+<p class="admonition-title">Learning Tip</p>
+<p>With new models being introduced all of the time, it’s important to form a <strong>mental map</strong> of the concepts you are learning. Whenever we introduce a new model, make sure you reflect on how it relates to previous models or concepts we have discussed before. How are they similar? How are they different? What scenarios should one concept be used over another?</p>
+</div>
+<section id="probability-predictions">
+<h2><span class="section-number">8.1. </span>Probability Predictions<a class="headerlink" href="#probability-predictions" title="Permalink to this heading">#</a></h2>
+<p>At extremely high level, Naïve Bayes is similar to Logistic Regression in that it tries to predict probabilities of the form:</p>
+<div class="math notranslate nohighlight">
+\[P(y=+1|x=\text{&quot;The sushi and everything else was awesome&quot;})\]</div>
+<div class="math notranslate nohighlight">
+\[P(y=-1|x=\text{&quot;The sushi and everything else was awesome&quot;})\]</div>
+<p>Where they differ, however, is in the details of how this probability is actually computed. Recall that Logistic Regression learned a linear Score model and converted Scores to probabilities with the sigmoid</p>
+<div class="math notranslate nohighlight">
+\[P(y=+1|x=\text{&quot;The sushi and everything else was awesome&quot;}) = \frac{1}{1 + e^{-w^Th(x)}}\]</div>
+<p>Naïve Bayes will take a very different approach to computing these probabilities though. Instead of learning a linear model, it uses a theorem from probability about conditional probabilities called <strong>Bayes Theorem</strong>.</p>
+<section id="bayes-theorem">
+<h3><span class="section-number">8.1.1. </span>Bayes Theorem<a class="headerlink" href="#bayes-theorem" title="Permalink to this heading">#</a></h3>
+<p>Bayes Theorem is an extremely well-known result in probability theory concerning conditional probabilities <span class="math notranslate nohighlight">\(P(A|B)\)</span>. In English, this statement reads “The probability of A happening, conditioned on the fact that you know B happened.” So for example <span class="math notranslate nohighlight">\(P(Raining|Umbrella)\)</span> means the probability it is raining outside given the event that I have an umbrella with me.</p>
+<p>How do we think <span class="math notranslate nohighlight">\(P(A|B)\)</span> relates to <span class="math notranslate nohighlight">\(P(B|A)\)</span>? Should they be the same? Or would they be different? Consider the rain and umbrella scenario. Is the likelihood of the two events the same?</p>
+<ul class="simple">
+<li><p>The likelihood that it is raining (A), given the fact that I have an umbrella on me (B)</p></li>
+<li><p>The likelihood that I have an umbrella on me (B), given the fact that it is raining (A)</p></li>
+</ul>
+<p>Clearly these probabilities are related since I usually don’t carry an umbrella out when it is sunny, but we wouldn’t expect these probabilities to be exactly <em>the same</em>. In fact, Bayes Theorem gives a mathematical formula for how to convert between these two statements since they differ in value.</p>
+<div class="math notranslate nohighlight">
+\[P(A|B) = \frac{P(B|A)P(A)}{P(B)}\]</div>
+<p>This formulation is incredibly useful because often times it is difficult to calculate <span class="math notranslate nohighlight">\(P(A|B)\)</span>, but might be easier to compute the other values such as <span class="math notranslate nohighlight">\(P(B|A)\)</span>, <span class="math notranslate nohighlight">\(P(A)\)</span>, <span class="math notranslate nohighlight">\(P(B)\)</span>.</p>
+</section>
+</section>
+<section id="naive-bayes">
+<h2><span class="section-number">8.2. </span>Naïve Bayes<a class="headerlink" href="#naive-bayes" title="Permalink to this heading">#</a></h2>
+<p>Back to our discussion of our probability classifier, and how <strong>Naïve Bayes</strong> differs from Logistic Regression. To compute the probability we care about, we use Bayes Theorem to flip the probabilities we are actually interested in computing the following. These terms on the right are ones we can actually compute in practice (more below).</p>
+<div class="math notranslate nohighlight">
+\[\frac{P(x=\text{&quot;The sushi and everything else was awesome&quot;}|y=+1)P(y=+1)}{P(x=\text{&quot;The sushi and everything else was awesome&quot;})}\]</div>
+<p>The way we use these probabilities is to choose the class with the highest probability. Note that because the denominator term is always <span class="math notranslate nohighlight">\(P(x)\)</span>, we can actually drop that term since it’s a constant in our optimization problem.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{y} &amp;= \argmax{b} P(y=b|x=\text{&quot;The sushi and everything else was awesome&quot;}) \\
+    &amp;= \argmax{b} \frac{P(x=\text{&quot;The sushi and everything else was awesome&quot;}|y=b)P(y=b)}{P(x=\text{&quot;The sushi and everything else was awesome&quot;})} \\
+    &amp;= \argmax{b} P(x=\text{&quot;The sushi and everything else was awesome&quot;}|y=b)P(y=b)\end{split}\]</div>
+<p>Now at first, this doesn’t seem like any help because it looks like the same (if not a more complicated) problem. But we will make one simplifying assumption that will allow us to compute <span class="math notranslate nohighlight">\(P(x|y)\)</span> where we couldn’t directly compute <span class="math notranslate nohighlight">\(P(y|x)\)</span> originally.</p>
+<section id="naive-assumption">
+<h3><span class="section-number">8.2.1. </span>Naïve Assumption<a class="headerlink" href="#naive-assumption" title="Permalink to this heading">#</a></h3>
+<p>The big challenge in computing this probability is it’s incredibly unlikely that we have seen this exact sentence <span class="math notranslate nohighlight">\(x\)</span> before. So we likely don’t have a historical record of positive/negative sentences to compute which fraction of them had this sentence exactly. So instead, we have to make a simplifying assumption about how sentences work so that we can compute this probability. The <strong>naïve assumption</strong> for our model is that each word in a sentence appears independently of every other word. In reality, this assumption is completely wrong since sentences have a lot of structure, and it’s unlikely to have a random “the” anywhere in the sentence. But it turns out this assumption actually works well enough when modeling.</p>
+<p>With this assumption, we can break down this probability we care about that we don’t know how to compute into the product of smaller probabilities we do know how to compute. The naïve assumption lets us compute the following.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;P(x=\text{&quot;The sushi and everything else was awesome&quot;}|y=+1)P(y=+1) \\
+&amp;= P(\text{&quot;The&quot;}|y=+1)\cdot P(\text{&quot;sushi&quot;}|y=+1)\cdot P(\text{&quot;and&quot;}|y=+1)\cdot P(\text{&quot;everything&quot;}|y=+1)\\
+&amp; \cdot P(\text{&quot;else&quot;}|y=+1)\cdot P(\text{&quot;was&quot;}|y=+1)\cdot P(\text{&quot;awesome&quot;}|y=+1)P(y=+1)\end{split}\]</div>
+<p>It turns out that this assumption greatly simplifies the probabilities here because we can actually compute all of these numbers quite simply.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(y=+1)\)</span> is the probability of the sentence being positive, regardless of its text. This is simply the ratio of our examples in our training set that are positive.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(word|y=+1)\)</span> is the probability of seeing that word in a positive sentence. This is simply the fraction of words in positive sentences that are “word”. So if there are 10,000 total words in all positive sentences, the word “great” appears 30 times in these sentences, then <span class="math notranslate nohighlight">\(P(\text{&quot;great&quot;}|y=+1)\)</span> is 0.003.</p></li>
+</ul>
+</section>
+<section id="recap">
+<h3><span class="section-number">8.2.2. </span>Recap<a class="headerlink" href="#recap" title="Permalink to this heading">#</a></h3>
+<p>In recap Naïve Bayes computes the most likely label using the tricks of Bayes Theorem and the naïve assumption to compute the following, where <span class="math notranslate nohighlight">\(h_j(x)\)</span> is the count of word <span class="math notranslate nohighlight">\(j\)</span> in sentence <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\hat{y} = \argmax{y} P(y)\prod_{i=1}^D P(h_j(x) | y)\]</div>
+</section>
+</section>
+<section id="practicalities">
+<h2><span class="section-number">8.3. </span>Practicalities<a class="headerlink" href="#practicalities" title="Permalink to this heading">#</a></h2>
+<p>There are a couple of extra details that we generally have to handle to make Naïve Bayes work in practice that we will discuss below.</p>
+<section id="log-probabilities">
+<h3><span class="section-number">8.3.1. </span>Log Probabilities<a class="headerlink" href="#log-probabilities" title="Permalink to this heading">#</a></h3>
+<p>Just like with the likelihood function for the Logistic Regression quality metric, we will run into the same issue of numeric stability for a computation that involves the product of small numbers. So just like in that setting, it’s common that we maximize the log probabilities instead.</p>
+<div class="math notranslate nohighlight">
+\[\hat{y} = \argmax{y} \log(P(y)) + \sum_{i=1}^D \log(P(h_j(x) | y))\]</div>
+</section>
+<section id="zeroes">
+<h3><span class="section-number">8.3.2. </span>Zeroes<a class="headerlink" href="#zeroes" title="Permalink to this heading">#</a></h3>
+<p>It turns out that in our formulation of our problem, there is a big issue with the fact that we won’t see every combination of words and labels. For example, what if the word “dogs” only appear in positive sentiment sentences and not negative ones (as they should). In that case, the <span class="math notranslate nohighlight">\(P(\text{&quot;dog}|y=-1) = 0\)</span>, in which case the whole product will go to 0! This poses a problem since it’s entirely possible to have one word that wasn’t seen in the training data, and we don’t want that to completely derail our predictions.</p>
+<p>There are two ways of primarily handling this issue:</p>
+<ul class="simple">
+<li><p>Ignore the words entirely. If you run into a word with probability 0, just ignore that one specifically. In the log-formulation of the problem, that is equivalent to defining <span class="math notranslate nohighlight">\(\log(0) = 0\)</span> out of convenience.</p></li>
+<li><p>Introduce <strong>Laplace Smoothing</strong> to add a pseudo-count to every word so the probabilities are never 0. The intuition is by adding a small number to all counts, then none of the probabilities will be 0. The details are a little more complicated because we want to make sure the probabilities are still valid probabilities (sum to 1). You also have a choice of increasing the count by more than one, so you could choose some number <span class="math notranslate nohighlight">\(\alpha\)</span> instead (commonly 1). So the Laplace Smoothed probabilities are as follows. <span class="math notranslate nohighlight">\(V\)</span> is the number of unique words in all documents.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[P(w|y) = \frac{(\text{# count of $w$ in all docs with label $y$}) + \alpha}{(\text{# total words in all docs with label $y$}) + \alpha \cdot V}\]</div>
+</section>
+</section>
+<section id="generative-vs-discriminative">
+<h2><span class="section-number">8.4. </span>Generative vs. Discriminative<a class="headerlink" href="#generative-vs-discriminative" title="Permalink to this heading">#</a></h2>
+<p>One thing we want to highlight is that Naïve Bayes actually takes a fundamentally different perspective on the classification task than a model like Logistic Regression. This fundamental is important enough that we have the terms <strong>Discriminative Models</strong> and <strong>Generative Models</strong> to describe their difference.</p>
+<p>Models like Logistic Regression are called <strong>Discriminative Models</strong>, as their main task is to find a decision boundary (i.e., discriminator) that separates the classes of interest. In a probabilistic sense, it is only concerned about learning the probabilities of the form <span class="math notranslate nohighlight">\(P(y|x)\)</span> to make a prediction about some particular input <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>A <strong>Generative Model</strong> like Naïve Bayes, on the other hand, takes a very different approach. Instead of learning a decision boundary, it is more focused on learning the complete <em>underlying distribution</em> of the data and their labels. In particular, its task is to learn the complete joint probability <span class="math notranslate nohighlight">\(P(X, Y)\)</span> of all inputs and their related outputs. Of course, we can still use a generative model for prediction tasks by computing <span class="math notranslate nohighlight">\(P(y|x)\)</span> using our information about the distribution. But generative models are more general in a sense because they can also be used to compute <span class="math notranslate nohighlight">\(P(x|y)\)</span>, or in other words, generate inputs that are likely for a particular class.</p>
+<p>At a high level, it helps to ask if your model is only interested in learning a decision boundary, or if it’s more generally interested in modeling the probabilities of not just the outputs, but also the inputs. If we only care about a decision boundary for prediction, a discriminative model is usually appropriate. If we care about modeling the probability distributions, and potentially want to generate new inputs, then we might care for a generative model. Often, although not always, discriminative models tend to have better performance in terms of classification accuracy. But that doesn’t mean generative models don’t have their own place! You are most likely familiar with one of the worlds most popular generative models right now, ChatGPT. One of the major purposes of large language models like ChatGPT is to learn a generative model of human speech to generate authentic looking chat conversations.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../../_images/discriminator_generative.png"><img alt="A visual depiction of learning a decision boundary vs. learning distributions." src="../../_images/discriminator_generative.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 8.1 </span><span class="caption-text">A discriminative model (left) and generative model (right)</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./classification/naive_bayes"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../bias_fairness/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">7. </span><i class="fas fa-book fa-fw"></i> Bias and Fairness</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../trees/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">9. </span><i class="fas fa-book fa-fw"></i> Decision Trees</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-predictions">8.1. Probability Predictions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-theorem">8.1.1. Bayes Theorem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">8.2. Naïve Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-assumption">8.2.1. Naïve Assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">8.2.2. Recap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practicalities">8.3. Practicalities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-probabilities">8.3.1. Log Probabilities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zeroes">8.3.2. Zeroes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generative-vs-discriminative">8.4. Generative vs. Discriminative</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hunter Schafer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div style="float: right">
+  <!-- 100% privacy friendly analytics -->
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+  <a href="https://simpleanalytics.com/?utm_source=&utm_content=badge" referrerpolicy="origin" target="_blank"><picture><source srcset="https://simpleanalyticsbadges.com/?mode=dark" media="(prefers-color-scheme: dark)" /><img src="https://simpleanalyticsbadges.com/?mode=light" loading="lazy" referrerpolicy="no-referrer" crossorigin="anonymous" /></picture></a>
+</div>
+
+<div>
+  <p>
+    Have feedback or spotted a bug? Please make a <a href="https://github.com/animlbook/AnIML/issues">GitHub issue</a>
+    or contact <a href="https://homes.cs.washington.edu/~hschafer/">Hunter Schafer</a>!
+  </p>
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

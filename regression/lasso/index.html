@@ -214,6 +214,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../../classification/intro/index.html">5. <i class="fas fa-book fa-fw"></i> Classification Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../classification/logistic_regression/index.html">6. <i class="fas fa-book fa-fw"></i> Logistic Regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../classification/bias_fairness/index.html">7. <i class="fas fa-book fa-fw"></i> Bias and Fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../classification/naive_bayes/index.html">8. <i class="fas fa-book fa-fw"></i> Naïve Bayes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../classification/trees/index.html">9. <i class="fas fa-book fa-fw"></i> Decision Trees</a></li>
 </ul>
 
     </div>
@@ -765,17 +767,25 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
 </div>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><div id="ArfMpkXERZdQ" data-shufflequestions="False"
+<div class="output text_html"><div id="QaWXWcbhCJuA" data-shufflequestions="False"
                data-shuffleanswers="False"
                data-preserveresponses="false"
-               data-numquestions="1000000"> <style>:root {
-    --medium-slate-blue: #6f78ffff;
-    --orange-pantone: #f75c03ff;
-    --russian-violet: #392061ff;
-    --maximum-yellow-red: #ffc857ff;
-    --viridian-green: #119da4ff;
-    --incorrect-red: #c80202;
-    --correct-green: #009113;
+               data-numquestions="1000000"
+               data-maxwidth="600"
+               style="border-radius: 10px; text-align: left"> <style>
+#QaWXWcbhCJuA {
+   --jq-multiple-choice-bg: #6f78ffff;
+   --jq-mc-button-bg: #fafafa;
+   --jq-mc-button-border: #e0e0e0e0;
+   --jq-mc-button-inset-shadow: #555555;
+   --jq-many-choice-bg: #f75c03ff;
+   --jq-numeric-bg: #392061ff;
+   --jq-numeric-input-bg: #c0c0c0;
+   --jq-numeric-input-label: #101010;
+   --jq-numeric-input-shadow: #999999;
+   --jq-incorrect-color: #c80202;
+   --jq-correct-color: #009113;
+   --jq-text-color: #fafafa;
 }
 
 .Quiz {
@@ -788,6 +798,7 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
     padding-top: 4px;
     line-height: 1.1;
     font-size: 16pt;
+    border-radius: inherit;
 }
 
 .QuizCode {
@@ -804,8 +815,9 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
 .Answer {
     margin: 10px 0;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
+    border-radius: inherit;
 }
 
 .Feedback {
@@ -824,8 +836,8 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
     margin: 10px;
     color: inherit;
     width: 140px;
-    background-color: #c0c0c0;
-    color: #fff;
+    background-color: var(--jq-numeric-input-bg);
+    color: var(--jq-text-color);
     padding: 5px;
     padding-left: 10px;
     font-family: inherit;
@@ -839,18 +851,21 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
 
 .Input-text:focus {
     outline: none;
-    background-color: #c0c0c0;
-    box-shadow: 0.6rem 0.8rem 1.4rem -0.5rem #999999;
+    background-color: var(--jq-numeric-input-bg);
+    box-shadow: 0.6rem 0.8rem 1.4rem -0.5rem var(--jq-numeric-input-shadow);
 }
 
 .MCButton {
-    background: #fafafa;
-    border: 1px solid #eee;
-    border-radius: 10px;
+    background: var(--jq-mc-button-bg);
+    border: 1px solid var(--jq-mc-button-border);
+    border-radius: inherit;
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .MCButton p {
@@ -859,23 +874,23 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
 
 .MultipleChoiceQn {
     padding: 10px;
-    background: var(--medium-slate-blue);
-    color: #fafafa;
-    border-radius: 10px;
+    background: var(--jq-multiple-choice-bg);
+    color: var(--jq-text-color);
+    border-radius: inherit;
 }
 
 .ManyChoiceQn {
     padding: 10px;
-    background: var(--orange-pantone);
-    color: #fafafa;
-    border-radius: 10px;
+    background: var(--jq-many-choice-bg);
+    color: var(--jq-text-color);
+    border-radius: inherit;
 }
 
 .NumericQn {
     padding: 10px;
-    background: var(--russian-violet);
-    color: #fafafa;
-    border-radius: 10px;
+    background: var(--jq-numeric-bg);
+    color: var(--jq-text-color);
+    border-radius: inherit;
 }
 
 .NumericQn p {
@@ -886,48 +901,49 @@ What if we tried all subsets of 100 features?<div class="sd-summary-down docutil
     line-height: 34px;
     float: left;
     margin-right: 10px;
-    color: #101010;
+    color: var(--jq-numeric-input-label);
     font-size: 15pt;
 }
 
 .incorrect {
-    color: var(--incorrect-red);
+    color: var(--jq-incorrect-color);
 }
 
 .correct {
-    color: var(--correct-green);
+    color: var(--jq-correct-color);
 }
 
 .correctButton {
     /*
-    background: var(--correct-green);
+    background: var(--jq-correct-color);
    */
     animation: correct-anim 0.6s ease;
     animation-fill-mode: forwards;
-    color: #fafafa;
-    box-shadow: inset 0px 0px 5px #555555;
+    color: var(--jq-text-color);
+    box-shadow: inset 0px 0px 5px var(--jq-mc-button-inset-shadow);
     outline: none;
 }
 
 .incorrectButton {
     animation: incorrect-anim 0.8s ease;
     animation-fill-mode: forwards;
-    color: #fafafa;
-    box-shadow: inset 0px 0px 5px #555555;
+    color: var(--jq-text-color);
+    box-shadow: inset 0px 0px 5px var(--jq-mc-button-inset-shadow);
     outline: none;
 }
 
 @keyframes incorrect-anim {
     100% {
-        background-color: var(--incorrect-red);
+        background-color: var(--jq-incorrect-color);
     }
 }
 
 @keyframes correct-anim {
     100% {
-        background-color: var(--correct-green);
+        background-color: var(--jq-correct-color);
     }
-}</style></div><script type="application/javascript">var questionsArfMpkXERZdQ=[{"question": "Which set of features would be chosen following this Forward Stepwise model?", "type": "multiple_choice", "answers": [{"answer": "# bath, # bed", "correct": false, "feedback": "Not quite! While this is the best subset with two features, is this the one that our forward algorithm would end up picking?"}, {"answer": "# bath, sq ft", "correct": true, "feedback": "Correct! The first iteration would choose sq ft because it was the single feature with lowest validation error. Then on our second iteration, we will only consider adding one of the other unchosen features to be included with sq ft. The set of features that includes sq ft that minimizes validation error is # bath and sq ft. Note that this algorithm did not find the globally optimal subset of features of # bed and # bath"}, {"answer": "# bath, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, sq ft", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "sq ft, year built", "correct": false, "feedback": "Not quite!"}]}];
+}
+</style></div><script type="application/javascript">var questionsQaWXWcbhCJuA=[{"question": "Which set of features would be chosen following this Forward Stepwise model?", "type": "multiple_choice", "answers": [{"answer": "# bath, # bed", "correct": false, "feedback": "Not quite! While this is the best subset with two features, is this the one that our forward algorithm would end up picking?"}, {"answer": "# bath, sq ft", "correct": true, "feedback": "Correct! The first iteration would choose sq ft because it was the single feature with lowest validation error. Then on our second iteration, we will only consider adding one of the other unchosen features to be included with sq ft. The set of features that includes sq ft that minimizes validation error is # bath and sq ft. Note that this algorithm did not find the globally optimal subset of features of # bed and # bath"}, {"answer": "# bath, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, sq ft", "correct": false, "feedback": "Not quite!"}, {"answer": "# bed, year built", "correct": false, "feedback": "Not quite!"}, {"answer": "sq ft, year built", "correct": false, "feedback": "Not quite!"}]}];
     // Make a random ID
 function makeid(length) {
     var result = [];
@@ -1524,6 +1540,7 @@ function show_questions(json, mydiv) {
     var shuffle_questions = mydiv.dataset.shufflequestions;
     var num_questions = mydiv.dataset.numquestions;
     var shuffle_answers = mydiv.dataset.shuffleanswers;
+    var max_width = mydiv.dataset.maxwidth;
 
     if (num_questions > json.length) {
         num_questions = json.length;
@@ -1553,21 +1570,23 @@ function show_questions(json, mydiv) {
         iDiv.id = 'quizWrap' + id;
         iDiv.className = 'Quiz';
         iDiv.setAttribute('data-qnum', index);
+        iDiv.style.maxWidth  =max_width+"px";
         mydiv.appendChild(iDiv);
         // iDiv.innerHTML=qa.question;
-
+        
         var outerqDiv = document.createElement('div');
         outerqDiv.id = "OuterquizQn" + id + index;
-
-        iDiv.append(outerqDiv);
-
         // Create div to contain question part
         var qDiv = document.createElement('div');
         qDiv.id = "quizQn" + id + index;
-        //qDiv.textContent=qa.question;
-        qDiv.innerHTML = jaxify(qa.question);
+        
+        if (qa.question) {
+            iDiv.append(outerqDiv);
 
-        outerqDiv.append(qDiv);
+            //qDiv.textContent=qa.question;
+            qDiv.innerHTML = jaxify(qa.question);
+            outerqDiv.append(qDiv);
+        }
 
         // Create div for code inside question
         var codeDiv;
@@ -1594,10 +1613,12 @@ function show_questions(json, mydiv) {
         //console.log(qa.type);
 
         var num_correct;
-        if (qa.type == "multiple_choice") {
+        if ((qa.type == "multiple_choice") || (qa.type == "many_choice") ) {
             num_correct = make_mc(qa, shuffle_answers, outerqDiv, qDiv, aDiv, id);
-        } else if (qa.type == "many_choice") {
-            num_correct = make_mc(qa, shuffle_answers, outerqDiv, qDiv, aDiv, id);
+            if ("answer_cols" in qa) {
+                //aDiv.style.gridTemplateColumns = 'auto '.repeat(qa.answer_cols);
+                aDiv.style.gridTemplateColumns = 'repeat(' + qa.answer_cols + ', 1fr)';
+            }
         } else if (qa.type == "numeric") {
             //console.log("numeric");
             make_numeric(qa, outerqDiv, qDiv, aDiv, id);
@@ -1661,7 +1682,7 @@ if (typeof version == 'undefined') {
 }
 
         {
-        show_questions(questionsArfMpkXERZdQ,  ArfMpkXERZdQ);
+        show_questions(questionsQaWXWcbhCJuA,  QaWXWcbhCJuA);
         }
         </script></div>
 </div>
