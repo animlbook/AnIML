@@ -34,6 +34,8 @@ RUN wget -O /tmp/install-tl-unx.tar.gz http://mirror.ctan.org/systems/texlive/tl
 
 ## End Manim Dockerfile
 
+RUN apt-get install --no-install-recommends -y graphviz
+
 ## Set up Env
 # ENV PATH="$HOME/.local/bin:$PATH"
 
