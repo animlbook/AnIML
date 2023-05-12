@@ -9,6 +9,7 @@ logo: _static/logo.png
 # Execution settings
 execute:
   execute_notebooks: cache
+  timeout: -1
 
 #######################################################################################
 # Parse and render settings

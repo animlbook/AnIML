@@ -16,3 +16,4 @@ parts:
       - file: classification/bias_fairness/index
       - file: classification/naive_bayes/index
       - file: classification/trees/index
+      - file: classification/ensembles/index

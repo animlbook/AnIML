@@ -3,6 +3,10 @@ __pycache__
 **/__pycache__
 .ipynb_checkpoints
 
+# Latex files
+*.aux
+*.log
+
 # Ignore build output
 book_source/source/_build
 book_source/source/_static/**/manim_animations/
