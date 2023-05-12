@@ -104,6 +104,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="10. Ensemble Methods" href="../ensembles/index.html" />
     <link rel="prev" title="8. Naïve Bayes" href="../naive_bayes/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -215,6 +216,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../bias_fairness/index.html">7. <i class="fas fa-book fa-fw"></i> Bias and Fairness</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../naive_bayes/index.html">8. <i class="fas fa-book fa-fw"></i> Naïve Bayes</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">9. <i class="fas fa-book fa-fw"></i> Decision Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ensembles/index.html">10. <i class="fas fa-book fa-fw"></i> Ensemble Methods</a></li>
 </ul>
 
     </div>
@@ -958,7 +960,7 @@ Test  Accuracy: 0.8499923230462153
 </div>
 <div class="cell_output docutils container">
 <figure class="align-default" id="example-decision-tree-4">
-<a class="reference internal image-reference" href="../../_images/76414a262da56b9f21972e5c4cfa481bc138cc586c4c10508a980948fde088b0.png"><img alt="A decision tree of depth four and its decision boundary. Looks much more complex with a few rectangles of positive predictions and the rest negative" class="align-center" src="../../_images/76414a262da56b9f21972e5c4cfa481bc138cc586c4c10508a980948fde088b0.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="../../_images/19cfeb5ffca49c5d2f1b255023ce5017c5080267e45e2f70a709f78290af4381.png"><img alt="A decision tree of depth four and its decision boundary. Looks much more complex with a few rectangles of positive predictions and the rest negative" class="align-center" src="../../_images/19cfeb5ffca49c5d2f1b255023ce5017c5080267e45e2f70a709f78290af4381.png" style="width: 100%;" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 9.10 </span><span class="caption-text">Decision Tree of depth 4 and its decision boundary</span><a class="headerlink" href="#example-decision-tree-4" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -1100,6 +1102,12 @@ Test  Accuracy: 0.8499923230462153
 <li><p>Describe the decision tree learning algorithm and its limitations.</p></li>
 <li><p>Describe why a decision tree can overfit, and how various hyperparameters can prevent that.</p></li>
 </ul>
+<p>It also helps to remember some key properties about trees that we generally associate with this type of model. Do note that these are generalizations, and might not exactly fit every case you will run into.</p>
+<ul class="simple">
+<li><p><strong>Interpretable Model</strong> Decision trees are very interpretable, following flow-charts that humans are familiar with. You can always follow the path a tree followed to understand why it came to the decision it did.</p></li>
+<li><p><strong>Pretty efficient</strong> Compared to a lot of complicated models (e.g., deep learning), training a decision tree is pretty fast!</p></li>
+<li><p><strong>Sensitive to Depth Tuning</strong> Tuning the depth of the tree (or other hyperparameters that control depth) is crucial for an effective tree. If the depth is too small, the model will be too weak to learn a complicated function (high bias). If the depth is too tall, the model will be too complicated and is prone to overfitting (high variance). Even when you carefully choose the depth, decision trees often don’t get the same accuracies that other models can get.</p></li>
+</ul>
 </section>
 </section>
 
@@ -1142,6 +1150,15 @@ Test  Accuracy: 0.8499923230462153
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title"><span class="section-number">8. </span><i class="fas fa-book fa-fw"></i> Naïve Bayes</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../ensembles/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">10. </span><i class="fas fa-book fa-fw"></i> Ensemble Methods</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
