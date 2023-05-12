@@ -681,3 +681,9 @@ In this chapter, we introduced the concept of decision trees and how to train th
 * Assess the use of a decision tree classifier for a modeling task.
 * Describe the decision tree learning algorithm and its limitations.
 * Describe why a decision tree can overfit, and how various hyperparameters can prevent that.
+
+It also helps to remember some key properties about trees that we generally associate with this type of model. Do note that these are generalizations, and might not exactly fit every case you will run into.
+
+* **Interpretable Model** Decision trees are very interpretable, following flow-charts that humans are familiar with. You can always follow the path a tree followed to understand why it came to the decision it did.
+* **Pretty efficient** Compared to a lot of complicated models (e.g., deep learning), training a decision tree is pretty fast!
+* **Sensitive to Depth Tuning** Tuning the depth of the tree (or other hyperparameters that control depth) is crucial for an effective tree. If the depth is too small, the model will be too weak to learn a complicated function (high bias). If the depth is too tall, the model will be too complicated and is prone to overfitting (high variance). Even when you carefully choose the depth, decision trees often don't get the same accuracies that other models can get.
