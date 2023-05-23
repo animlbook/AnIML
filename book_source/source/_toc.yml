@@ -17,3 +17,20 @@ parts:
       - file: classification/naive_bayes/index
       - file: classification/trees/index
       - file: classification/ensembles/index
+  - caption: Deep Learning
+    numbered: True
+    chapters:
+      - file: deep_learning/intro/index
+      - file: deep_learning/conv_nets/index
+  - caption: Document Retrieval / Local Methods
+    numbered: True
+    chapters:
+      - file: document_retrieval/knn/index
+      - file: document_retrieval/kernels/index
+      - file: document_retrieval/lsh/index
+      - file: document_retrieval/clustering/index
+      - file: document_retrieval/other_clustering/index
+  - caption: Recommender Systems
+    numbered: True
+    chapters:
+      - file: recommender_systems/pca/index
