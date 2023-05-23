@@ -34,3 +34,4 @@ parts:
     numbered: True
     chapters:
       - file: recommender_systems/pca/index
+      - file: recommender_systems/recommendation/index
