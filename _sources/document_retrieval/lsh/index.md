@@ -13,6 +13,6 @@ myst:
     ref_index: 1
 ---
 
-# <i class="fas fa-book fa-fw"></i> Locality Sensitive Hashing
+# <i class="fas fa-book fa-fw"></i> Locality Sensitive Hashing (coming soon)
 
 Coming soon

@@ -13,6 +13,6 @@ myst:
     ref_index: 1
 ---
 
-# <i class="fas fa-book fa-fw"></i> Clustering & k-means
+# <i class="fas fa-book fa-fw"></i> Clustering & k-means (coming soon)
 
 Coming soon

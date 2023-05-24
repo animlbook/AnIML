@@ -13,6 +13,6 @@ myst:
     ref_index: 1
 ---
 
-# <i class="fas fa-book fa-fw"></i> Kernel Methods
+# <i class="fas fa-book fa-fw"></i> Kernel Methods (coming soon)
 
 Coming soon
