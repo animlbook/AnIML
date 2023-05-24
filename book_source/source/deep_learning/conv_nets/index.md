@@ -13,6 +13,6 @@ myst:
     ref_index: 1
 ---
 
-# <i class="fas fa-book fa-fw"></i> Convolutional Neural Networks
+# <i class="fas fa-book fa-fw"></i> Convolutional Neural Networks (coming soon)
 
 Coming soon

@@ -13,6 +13,6 @@ myst:
     ref_index: 1
 ---
 
-# <i class="fas fa-book fa-fw"></i> Introduction, Precision/Recall, k-Nearest Neighbors
+# <i class="fas fa-book fa-fw"></i> Introduction, Precision/Recall, k-Nearest Neighbors (coming soon)
 
 Coming soon

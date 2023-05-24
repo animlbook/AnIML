@@ -13,6 +13,6 @@ myst:
     ref_index: 1
 ---
 
-# <i class="fas fa-book fa-fw"></i> Hierarchical Clustering
+# <i class="fas fa-book fa-fw"></i> Hierarchical Clustering (coming soon)
 
 Coming soon
