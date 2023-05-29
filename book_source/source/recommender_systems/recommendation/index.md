@@ -310,4 +310,20 @@ Again, let us consider the pros/cons of this feature-based approach.
 * Collaborative Filtering: Model Based
 ```
 
-Coming soon
+The major downside with the Feature-Based approach was the requirement that we had to hand-specify features for the task. While common in most ML setups, modeling user preferences is quite challenging and it's not always clear which features to include or exclude from our model.
+
+The idea of our next recommender system called, **Matrix Factorization**. The idea behind Matrix Factorization is that there is some low-dimensional representation of our data to describe the relationship between users preferences and the items in the catalogue. We will have to choose how many dimensions to represent users/items with a hyperparameter $k$ (also called the **latent dimensionality**). Before discussing how to choose $k$ and how the whole algorithm works, let's explore this idea of representing users/items with a low-dimensional representation.
+
+The big idea in Matrix Factorization is that we can find describe each item $v$ with some feature vector $R_v \in \mathbb{R}^k$. These features won't have some pre-defined meaning, but the hope is that they describe something about the content of the item. For example if the items are movies and we use dimension $k=3$, we might expect the movie vector for movie $v$ to be something like this
+
+$$R_v = [0.3, 0.01, 1.5]$$
+
+Where there are $k$ numbers and maybe the first one describes how much the movie is an action movie, the second how much it is a romance movie, the third how much it is a sci-fi movie. We won't specify these dimensions ahead of time, but the hope is the algorithm will learn them if they are useful to the task.
+
+Similarly, we will represent each user $u$ with a user vector $L_u$ that is also of length $k$. These correspond to how much the user prefers each of the $k$ topics described in the example earlier. For example, a user vector could look something like this.
+
+$$L_u = [2.3, 0, 0.7]$$
+
+If we learn these two user/item vectors, we can use them to predict how much user $u$ will like item $v$. Using our example numbers, we would come to the following conclusion about this predicted rating.
+
+$$\hat{r}_{u, v} = L_u^TR_v = 2.3 \cdot 0.3 + 0 \cdot 0.01 + 0.7 \cdot 1.5 $$c
